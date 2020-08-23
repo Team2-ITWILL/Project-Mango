@@ -483,8 +483,8 @@
 
 
 
-	<!-- Team -->
-
+	<h1>깃허브 깃녹차 깃홍차 깃민트 엌ㅋ</h1>
+	
 <!-- 	<div class="team">
 		<div class="team_background parallax-window" data-parallax="scroll" data-speed="0.8"></div>
 		<div class="container">
