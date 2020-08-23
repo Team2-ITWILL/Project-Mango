@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -179,12 +178,6 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                     
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=3main.jsp"
-                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i>
-                                <span class="hide-menu">메인으로 가기</span>
-                            </a>
-                        </li>
                         
 <!---------------------------------------------[설정 및 관리 영역 ]-------------------------------------------------------------->
                         <li class="list-divider"></li> <!-- 구분선 -->
@@ -844,5 +837,4 @@
     
     
 </body>
->>>>>>> refs/heads/master
 </html>
