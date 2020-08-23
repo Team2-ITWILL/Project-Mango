@@ -26,7 +26,7 @@
 
 <!------------- 편의를 위해 admin으로 로그인했다고 가정하고 작성해두었음.--------------------------------------->
 
-<c:set var="id" value="usertop"/>
+<c:set var="id" value="branchTestUserChange"/>
 
 
 
