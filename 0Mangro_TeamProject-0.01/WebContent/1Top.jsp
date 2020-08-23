@@ -71,7 +71,7 @@
 											</div>
 										</c:when>
 										
-										<c:when test="${id == 'admin' }">
+										<c:when test="${id == 'admin1' }">
 											<div class="top_bar_button admin_page">
 												<a href="">관리자 메뉴</a>
 											</div>
