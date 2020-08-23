@@ -43,7 +43,7 @@ public class CommentQnaBoardBean {
 
     public void setQnaBoardNum(int qnaBoardNum) {
         this.qnaBoardNum = qnaBoardNum;
-    }
+    }  
 
     public String getQnaCommentContent() {
         return qnaCommentContent;

@@ -20,169 +20,9 @@
   
   
   
-    
-
-  
-    
-  <!-- 학원 키워드 -->
-  <servlet>
-  	<servlet-name>AcademyKeywordFrontController</servlet-name>
-  	<servlet-class>mango.academy_keyword.action.AcademyKeywordFrontController</servlet-class>
-  </servlet>
-   
-  <servlet-mapping>
-  	<servlet-name>AcademyKeywordFrontController</servlet-name>
-  	<url-pattern>*.akey</url-pattern>
-  </servlet-mapping>
-    
-    
-    
-  <!-- 학원 등록 -->
-  <servlet>
-  	<servlet-name>AcademyRegisterFrontController</servlet-name>
-  	<servlet-class>mango.academy_register.action.AcademyRegisterFrontController</servlet-class>
-  </servlet>
-   
-  <servlet-mapping>
-  	<servlet-name>AcademyRegisterFrontController</servlet-name>
-  	<url-pattern>*.areg</url-pattern>
-  </servlet-mapping>
   
   
   
-  
-  <!-- 학원 후기 -->
-  <servlet>
-  	<servlet-name>AcademyReviewFrontController</servlet-name>
-  	<servlet-class>mango.academy_review.action.AcademyReviewFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AcademyReviewFrontController</servlet-name>
-  	<url-pattern>*.arev</url-pattern>
-  </servlet-mapping>
-  
-  
-    
-  <!-- 학원 -->
-  <servlet>
-  	<servlet-name>AcademyFrontController</servlet-name>
-  	<servlet-class>mango.academy.action.AcademyFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AcademyFrontController</servlet-name>
-  	<url-pattern>*.aca</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  <!-- 익명사담방(익명게시판) -->
-  <servlet>
-  	<servlet-name>AnonyBoardFrontController</servlet-name>
-  	<servlet-class>mango.anony_board.action.AnonyBoardFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AnonyBoardFrontController</servlet-name>
-  	<url-pattern>*.anb</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  
-  <!-- 청강 관리 -->
-  <servlet>
-  	<servlet-name>AuditMangementFrontController</servlet-name>
-  	<servlet-class>mango.audit_management.action.AuditMangementFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AuditMangementFrontController</servlet-name>
-  	<url-pattern>*.am</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  <!-- 청강 신청 -->
-  <servlet>
-  	<servlet-name>AuditRequestFrontController</servlet-name>
-  	<servlet-class>mango.audit_request.action.AuditRequestFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>AuditRequestFrontController</servlet-name>
-  	<url-pattern>*.ar</url-pattern>
-  </servlet-mapping>
-  
-  
-    
-  <!-- 익명사담방(익명게시판)댓글 -->
-  <servlet>
-  	<servlet-name>CommentAnonyFrontController</servlet-name>
-  	<servlet-class>mango.comment_anony_board.action.CommentAnonyFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>CommentAnonyFrontController</servlet-name>
-  	<url-pattern>*.cano</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  
-  
-  <!-- 고객센터(문의게시판)댓글 -->
-  <servlet>
-  	<servlet-name>CommentQnaFrontController</servlet-name>
-  	<servlet-class>mango.comment_qna_board.action.CommentQnaFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>CommentQnaFrontController</servlet-name>
-  	<url-pattern>*.cqna</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  <!-- 도움된 학원 후기(리뷰) -->
-  <servlet>
-  	<servlet-name>LikedAcaReviewFrontController</servlet-name>
-  	<servlet-class>mango.liked_aca_review.action.LikedAcaReviewFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>LikedAcaReviewFrontController</servlet-name>
-  	<url-pattern>*.lrev</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  
-  
-  <!-- 학원 좋아요 -->
-  <servlet>
-  	<servlet-name>LikedAcademyFrontController</servlet-name>
-  	<servlet-class>mango.liked_academy.action.LikedAcademyFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>LikedAcademyFrontController</servlet-name>
-  	<url-pattern>*.laca</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
-  
-  
-  
-  <!-- 회원 -->
   <servlet>
   	<servlet-name>MemberFrontController</servlet-name>
   	<servlet-class>mango.member.action.MemberFrontController</servlet-class>
@@ -193,14 +33,6 @@
   	<url-pattern>*.me</url-pattern>
   </servlet-mapping>
   
-  
-  
-  
-  
-  
-  
-  
-  <!-- 결제 -->
   <servlet>
   	<servlet-name>PaymentFrontController</servlet-name>
   	<servlet-class>mango.payment.action.PaymentFrontController</servlet-class>
@@ -211,23 +43,15 @@
   	<url-pattern>*.pay</url-pattern>
   </servlet-mapping>
   
-  
- 
- 
- 
-  <!-- 고객센터(문의게시판) -->
   <servlet>
   	<servlet-name>QnaBoardFrontController</servlet-name>
   	<servlet-class>mango.qna_board.action.QnaBoardFrontController</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>QnaBoardFrontController</servlet-name>
-  	<url-pattern>*.qnb</url-pattern>
+  	<servlet-name>PaymentFrontController</servlet-name>
+  	<url-pattern>*.pay</url-pattern>
   </servlet-mapping>
-  
-  
-
   
   
   

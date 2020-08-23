@@ -41,12 +41,19 @@ public class AcademyBean {
 
     // 상세주소 
     private String acaAddrDetailed;
-
-    // 학원 관리자
+    
+    //학원 관리자
     private String mem_email;
-    
-    
-    public int getAcaNum() {
+
+    public String getMem_Email() {
+		return mem_email;
+	}
+
+	public void setMem_Email(String mem_email) {
+		this.mem_email = mem_email;
+	}
+
+	public int getAcaNum() {
         return acaNum;
     }
 

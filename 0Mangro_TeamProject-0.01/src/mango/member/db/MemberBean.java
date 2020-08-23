@@ -3,9 +3,7 @@ package mango.member.db;
 // 회원 테이블 
 public class MemberBean {
 
-    // 회원번호 
-    private int memNum;
-
+  
     // 이메일 
     private String memEmail;
 
@@ -27,13 +25,7 @@ public class MemberBean {
     // 탈퇴일자 
     private String memSeceded;
 
-    public int getMemNum() {
-        return memNum;
-    }
 
-    public void setMemNum(int memNum) {
-        this.memNum = memNum;
-    }
 
     public String getMemEmail() {
         return memEmail;

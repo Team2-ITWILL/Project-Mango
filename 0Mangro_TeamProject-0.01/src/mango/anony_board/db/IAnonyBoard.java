@@ -9,11 +9,11 @@ public interface IAnonyBoard {
 	
 	/*//게시판 글 목록 갖고오기
 	public List<BoardBean> getBoardList(int StartRow,int pageSize);
-	*/	
-	
+	*/	    
+	        
 	//게시판 글 저장
 	public int InsertBoard(AnonyBoardBean board);
-		
+		 
 	//게시판 글 수정
 	public int UpdateBoard(AnonyBoardBean board);
 	

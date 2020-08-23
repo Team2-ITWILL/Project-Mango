@@ -7,7 +7,7 @@ public class LikedAcademyBean {
 	 private String memEmail;
 	
 	 // 학원지정번호 
-	 private Integer acaNum;
+	 private int acaNum;
 	
 	 // 학원명 
 	 private String acaName;
@@ -23,11 +23,11 @@ public class LikedAcademyBean {
 	     this.memEmail = memEmail;
 	 }
 	
-	 public Integer getAcaNum() {
+	 public int getAcaNum() {
 	     return acaNum;
 	 }
 	
-	 public void setAcaNum(Integer acaNum) {
+	 public void setAcaNum(int acaNum) {
 	     this.acaNum = acaNum;
 	 }
 	
