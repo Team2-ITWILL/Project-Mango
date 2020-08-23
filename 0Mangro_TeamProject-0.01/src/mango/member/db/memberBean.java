@@ -53,7 +53,7 @@ public class memberBean {
 		
 	}//getConnection() : DB연결 메소드
 	
-	// 브랜치테스트2
+	// 브랜치테스트
 	
 	// [자원 해제 메소드]
 		public void resourceClose(){
