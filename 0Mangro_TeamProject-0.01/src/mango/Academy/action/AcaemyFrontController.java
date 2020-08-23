@@ -16,7 +16,7 @@ public class AcaemyFrontController extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
 												throws ServletException, IOException{
 		
-		
+		   
 		//가상요청 주소 가져오기
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
