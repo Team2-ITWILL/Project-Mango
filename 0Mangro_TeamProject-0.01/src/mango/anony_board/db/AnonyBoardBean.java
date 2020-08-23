@@ -1,15 +1,12 @@
 package mango.anony_board.db;
 
-public class AnonyBoardBean {
+public class AnonyBoardBean{
 		//익명 게시판
 	// 글번호 
 	private int anoBoardNum;
 	
 	// 이메일 
 	private String memEmail;
-	
-	// 비밀번호 
-	private String anoBoardPwd;
 	
 	// 제목 
 	private String anoBoardTitle;
@@ -40,14 +37,6 @@ public class AnonyBoardBean {
 	
 	public void setMemEmail(String memEmail) {
 	this.memEmail = memEmail;
-	}
-	
-	public String getAnoBoardPwd() {
-	return anoBoardPwd;
-	}
-	
-	public void setAnoBoardPwd(String anoBoardPwd) {
-	this.anoBoardPwd = anoBoardPwd;
 	}
 	
 	public String getAnoBoardTitle() {

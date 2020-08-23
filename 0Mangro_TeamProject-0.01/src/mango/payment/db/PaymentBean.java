@@ -7,7 +7,7 @@ public class PaymentBean {
 	 private String memEmail;
 	
 	 // 사용회차 
-	 private String pmUseNum;
+	 private int pmUseNum;
 	
 	 // 이용서비스 
 	 private String pmName;
@@ -26,11 +26,11 @@ public class PaymentBean {
 	     this.memEmail = memEmail;
 	 }
 	
-	 public String getPmUseNum() {
+	 public int getPmUseNum() {
 	     return pmUseNum;
 	 }
 	
-	 public void setPmUseNum(String pmUseNum) {
+	 public void setPmUseNum(int pmUseNum) {
 	     this.pmUseNum = pmUseNum;
 	 }
 	

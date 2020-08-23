@@ -4,7 +4,7 @@ import java.util.List;
 
 import mango.academy_review.db.AcademyReviewBean;
 import mango.member.db.MemberBean;
-
+ 
 public interface ILikedAcaReview {
 	
 	

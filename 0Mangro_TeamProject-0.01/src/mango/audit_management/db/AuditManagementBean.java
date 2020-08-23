@@ -16,8 +16,19 @@ public class AuditManagementBean {
 
     // 해당 수업지속시간 
     private int auditLastTime;
+    
+    //청강 가능 인원
+    private int auditAblemem;
 
-    public int getAcaNum() {
+    public int getAuditAblemem() {
+		return auditAblemem;
+	}
+
+	public void setAuditAblemem(int auditAblemem) {
+		this.auditAblemem = auditAblemem;
+	}
+
+	public int getAcaNum() {
         return acaNum;
     }
 

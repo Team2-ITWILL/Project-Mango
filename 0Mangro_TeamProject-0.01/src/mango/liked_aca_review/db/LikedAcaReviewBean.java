@@ -21,7 +21,7 @@ public class LikedAcaReviewBean {
     }
 
     public String getMemEmail() {
-        return memEmail;
+        return memEmail; 
     }
 
     public void setMemEmail(String memEmail) {

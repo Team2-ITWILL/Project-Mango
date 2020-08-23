@@ -1,7 +1,7 @@
 package mango.qna_board.db;
 
 //문의게시판 
-public class QnaBoardBean {
+public class QnaBoardBean{
 
 	 // 글번호 
   private int qnaBoardNum;
