@@ -41,7 +41,7 @@
 						<div class="col">
 							<div class="top_bar_content d-flex flex-row align-items-center justify-content-start">
 								<ul class="top_bar_contact_list">
-									<li><div class="question">Have any questions?</div></li>
+									<li><div class="question">ㅎㅎㅎ</div></li>
 									<li>
 										<i class="fa fa-phone" aria-hidden="true"></i>
 										<div>001-1234-88888</div>
