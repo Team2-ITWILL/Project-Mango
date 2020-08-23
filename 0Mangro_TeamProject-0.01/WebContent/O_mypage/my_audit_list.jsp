@@ -8,63 +8,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <!------------------------------------------ [ 메타데이터 ] --------------------------------------------------------------->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 <!------------------------------------------ [ 제이쿼리 ] --------------------------------------------------------------->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-
-
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
     
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
-    <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="styles/dist/css/style.min.css" rel="stylesheet">
-    <link href="styles/mypage_additional.css" rel="stylesheet">
-    <link href="styles/table_style.css" rel="stylesheet">
+<link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+<link href="styles/dist/css/style.min.css" rel="stylesheet">
+<link href="styles/mypage_additional.css" rel="stylesheet">
+<link href="styles/table_style.css" rel="stylesheet">
   
   
-  <style type="text/css">
-  
-  .u-tagsinput .bootstrap-tagsinput::before {
-    content: "|";
-    display: inline-block;
-    width: 1px;
-    line-height: 1;
-    font-size: .625rem;
-    opacity: 0;
-    padding: .75rem 0;
-}
- 
- 
-.bootstrap-tagsinput {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    display: block;
-    padding: 4px 6px;
-    color: #555;
-    vertical-align: middle;
-    border-radius: 4px;
-    max-width: 100%;
-    line-height: 22px;
-    cursor: text;
-}
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0 6px;
-    margin: 0;
-    width: auto;
-    max-width: inherit;
-} 
-  
-  </style>  
     
 </head>
 
@@ -178,12 +137,6 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                     
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=3main.jsp"
-                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i>
-                                <span class="hide-menu">메인으로 가기</span>
-                            </a>
-                        </li>
                         
 <!---------------------------------------------[설정 및 관리 영역 ]-------------------------------------------------------------->
                         <li class="list-divider"></li> <!-- 구분선 -->
