@@ -24,7 +24,7 @@ public interface IAcademy {
 	public List<AcademyBean> getListSearch(AcademyBean address);
 	
 	//학원에 대한정보를 갖고오는 메서드
-	public AcademyBean getAcademyContent(AcademyBean ab);
+	public AcademyBean getAcademyContent(int acaNum);
 	
 	/*//학원을 등록하는 메서드
 	public void InsertAcademy(AcademyBean ab);
