@@ -38,7 +38,10 @@
 
 
 
-<c:set var="email" value="${sessionScope.email}"/>
+<%--  <c:set var="email" value="${sessionScope.email}"/> --%>
+<c:set var="email" value="lim222"/> 
+
+
 
 <script type="text/javascript">
 	
@@ -112,34 +115,36 @@
 		
 		if(${email != null}){
 			
+			  $(".money").val(money);
+			   $('#frm').attr("action", "PayMentPort.pay");
+			   $('#frm').attr("method", "post");
+			   $('#frm').attr("target", "formInfo");
+			   $(".option").val(option);
+			 	 open("","formInfo","width=1100,height=800");
+			   $("#frm").submit();		
 			
-			$.ajax({
-				type:"get",
-				async:true,
-				url:"CheckPayId.pay?email=${email}",
-				dataType:"text",
-				success:function(data,textStatus){
-				if(data==0){	
-				  $(".money").val(money);
-				   $('#frm').attr("action", "PayMentPort.pay");
-				   $('#frm').attr("method", "post");
-				   $('#frm').attr("target", "formInfo");
-				   $(".option").val(option);
-				 	 open("","formInfo","width=1100,height=800");
-				   $("#frm").submit();		
-				}else{
+			
+// 			$.ajax({
+// 				type:"get",
+// 				async:true,
+// 				url:"CheckPayId.pay?email="+${email},
+// 				dataType:"text",
+// 				success:function(data,textStatus){
+// 				if(data==0){	
+			
+// 				}else{
 					
-					alert("이미 결제하신 상품이 있습니다");
+// 					alert("이미 결제하신 상품이 있습니다");
 					
-				}
+// 				}
 					
-				},
-				error:function(){
-					alert("에러가 발생했습니다");
+// 				},
+// 				error:function(){
+// 					alert("에러가 발생했습니다");
 					
-				}
+// 				}
 				
-			});	
+// 			});	
 	
 	}else{
 		

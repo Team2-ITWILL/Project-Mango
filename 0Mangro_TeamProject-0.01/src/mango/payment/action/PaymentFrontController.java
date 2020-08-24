@@ -46,40 +46,16 @@ public class PaymentFrontController extends HttpServlet {
 		
 		
 		if(command.equals("/PayMentPort.pay")){
-			
-			
-			System.out.println(request.getParameter("email"));
-			
-			
-			/*forward=new ActionForward();
+				
+			forward=new ActionForward();
 			
 			System.out.println("여기까지");
 		
-			forward.setPath("/O_payment/payment_Port.jsp");
+			forward.setPath("./O_payment/payment_Port.jsp");
 			
-			forward.setRedirect(false);*/
+			forward.setRedirect(false);
 			
 		
-		}else if(command.equals("/CheckPayId.pay")){//아이디 이미 결제 했는지 확인
-			
-			
-			action=new CheckPayIdaction();
-			
-			
-			
-			try {
-				
-				forward=action.excute(request, response);
-				
-				
-			} catch (Exception e) {
-				
-				System.out.println("CheckPayId.pay 처리과정에서 에러");
-				
-			}
-			
-			
-			
 		}
 	
 		

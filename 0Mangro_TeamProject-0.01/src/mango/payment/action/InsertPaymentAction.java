@@ -7,7 +7,7 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.payment.db.PayMentDAO;
 
-public class CheckPayIdaction implements Action{
+public class InsertPaymentAction implements Action{
 
 	
 	
@@ -17,10 +17,15 @@ public class CheckPayIdaction implements Action{
 	
 		request.setCharacterEncoding("UTF-8");
 		
+		
 		PayMentDAO pdao = new PayMentDAO();
 		
+		
+		
+		
+		//pdao.InsertPayment();
 	
-		int check=pdao.checkPayId();
+
 		
 		
 		

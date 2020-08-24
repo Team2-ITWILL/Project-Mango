@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 
 <% 
-	request.setCharacterEncoding("utf-8");
 	
+request.setCharacterEncoding("utf-8");	
 
 %>
 
@@ -42,8 +42,28 @@
 				msg += '결제 금액 : ' + rsp.paid_amount;
 				msg += '카드 승인번호 : ' + rsp.apply_num;
 				
-				window.opener.location.href="InsertPayMember.pay";
-				window.close();
+				
+				$.ajax({
+	 				type:"post",
+	 				async:true,
+	 				url:"InsertPayMent.pay",
+	 				data:{email:${param.email},option:${param.option} },
+	 				dataType:"text",
+	 				success:function(data,textStatus){
+	 			
+						
+	 				},
+	 				error:function(){
+	 					alert("에러가 발생했습니다");
+						
+	 				}
+				
+				
+				
+				
+				
+				});		
+				
 				
 			} else { // 실패시
 				var msg = '결제에 실패하였습니다.';
@@ -52,9 +72,14 @@
 				window.close();
 			
 			}
-		});
+			
+	}
+		
+	});
+				
+		
 	
-	})
+
 
 	
 	
