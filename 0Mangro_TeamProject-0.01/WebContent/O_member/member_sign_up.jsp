@@ -24,12 +24,66 @@
 	.btn-primary:hover {background-color: #6610f2 !important;}
 	#yackuan-check {margin-left: -25px; z-index: 1 ; opacity: 1;}
 	.right-btn {margin-left: 500px;width: 100px;}
-</style> 
-
+</style>
 
 
 </head>
 <body>
+<script type="text/javascript">
+
+	<!------- [회원가입 필수 입력란 확인] --------->
+	$(function check() {
+		
+		$("#join").submit(function() {
+				
+			// 이름
+			if($("#id_name").val() == ""){
+				alert("이름을 입력하세요.");
+				$("#id_name").focus();
+				return false;
+			}
+			
+			// 이메일
+			if($("#id_email").val() == ""){
+				alert("이메일을 입력하세요.");
+				$("#id_email").focus();
+				return false;
+			}
+			
+			// 인증번호
+			if($("#emailcheck").val == ""){
+				alert("인증번호를 확인하세요.");
+				$("#emailcheck").focus();
+				return false;
+			}
+			
+			// 비밀번호
+			if($("#id_password1").val() == ""){
+				alert("비밀번호를 입력하세요.");
+				$("#id_password1").focus();
+				return false;
+			}
+		
+			// 비밀번호 일치 확인
+			if($("#id_password1").val() != $("#id_password2").val()){
+				alert("비밀번호를 동일하게 입력하세요.");
+				$("#id_password1").focus();
+				return false;
+			}
+			
+			// 이용약관 체크박스
+			if(!($("#yackuan-check").is("checked")) ){
+				alert("이용 약관에 동의해주세요.")
+				$("#yackuan-check").focus();
+				return false;
+			}
+	
+		}); // submit() 끝	
+			
+	}); // check() 끝
+		
+</script>
+
 
 		<div class="container">
 			<div class="row">
@@ -39,7 +93,7 @@
 						
 						
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-					      <form class="sign_upClass" action="" method="post">
+					      <form class="sign_upClass" action="" method="post" id="join" onsubmit="check()">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>아래 3개 필수 데이터를 모두 입력해주세요.</p>
@@ -73,11 +127,10 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일</label>
 						        <input type="email" class="form-control is-invalid" name="" id="id_email" placeholder="이메일" 
-						               required
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"> 
-						        <button type="button" class="btn btn-primary right-btn" >전송</button>
+						        <button type="button" class="btn btn-primary right-btn" onclick="">전송</button>
 					      </div>
 					               
 					        
@@ -87,7 +140,7 @@
 						        <label class="form-label" for="id_password1">
 						          <span class="d-flex justify-content-between align-items-center">인증번호</span>
 						        </label>
-						        <input type="text" class="form-control" name="" id="" placeholder="인증번호 입력"
+						        <input type="text" class="form-control" name="" id="emailcheck" placeholder="인증번호 입력"
 						               aria-label="인증번호 입력" required
 						               data-msg="올바른 비밀번호를 입력해주세요."
 						               data-error-class="form-error"
@@ -160,7 +213,6 @@
 				</div> <!-- col -->
 			</div> <!-- row -->
 		</div> <!-- container -->
-
 
 </body>
 </html>

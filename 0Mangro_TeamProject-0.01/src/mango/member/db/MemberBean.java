@@ -83,4 +83,11 @@ public class MemberBean {
         this.memSeceded = memSeceded;
     }
 
+	@Override
+	public String toString() {
+		return "MemberBean [memEmail=" + memEmail + ", memName=" + memName + ", memPwd=" + memPwd + ", memAdmin="
+				+ memAdmin + ", memJoindate=" + memJoindate + ", memBaned=" + memBaned + ", memSeceded=" + memSeceded
+				+ "]";
+	}
+    
 }
