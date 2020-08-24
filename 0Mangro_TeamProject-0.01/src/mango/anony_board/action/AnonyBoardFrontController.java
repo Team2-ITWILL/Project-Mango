@@ -43,10 +43,15 @@ public class AnonyBoardFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		
-		
-		
-		
+		if(command.equals("/AnoBoard.anob")){
+			action = new AnonyBoardListAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoard.anb에서 예외");
+				e.printStackTrace();
+			}
+		}
 		
 		
 		
