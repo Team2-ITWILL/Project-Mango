@@ -90,7 +90,6 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		try {
 			getConnection();
-			System.out.println("DB연결 성공");
 			sql = "select * from academy where aca_num=?";
 			
 			pstmt = con.prepareStatement(sql);
