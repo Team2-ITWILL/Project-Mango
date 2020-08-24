@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -70,13 +74,31 @@
 	
 	$(function(){
 		
-		var d =new Date();
+		
+		 var a =new Date();
+		var d =new Date(a.getFullYear(),a.getMonth(),a.getDate());
+		
+		
+		
+		a.setDate(d.getDate()+30)
+		
+		
+		 
+		
+		$(".month1").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate());
+	
+		$(".month2").text(d.getFullYear()+"-"+(d.getMonth()+2)+"-"+a.getDate());
 
-		$(".month1").text(d.getFullYear()+"-"+(d.getMonth())+"-"+d.getDate() );
-		$(".month2").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() );
+		a.setDate(d.getDate()+90)
+		
+		$(".month3").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate());
+	
+		$(".month4").text(d.getFullYear()+"-"+(d.getMonth()+4)+"-"+a.getDate());
+	
 		
 		
 		
+	
 	})	
 		
 		
@@ -173,7 +195,7 @@
 										</div>
 										<div class="comment_text start_end_date">
 											<p>시작일 : <span class="month1"></span></p>  <!-- 현재날짜 -->
-											<p>종료일 : <span class="month2">2020-09-18</span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
+											<p>종료일 : <span class="month2"></span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
 										</div>
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra">
@@ -200,8 +222,8 @@
 											<div class="comment_author"><span class="span_title">무제한 이용권<br>(30일)<br></div> 
 										</div>
 										<div class="comment_text start_end_date">
-											<p>시작일 : <span>2020-08-20</span></p>  <!-- 현재날짜 -->
-											<p>종료일 : <span>2020-09-18</span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
+											<p>시작일 : <span class="month1"></span></p>  <!-- 현재날짜 -->
+											<p>종료일 : <span class="month2"></span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
 										</div>
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra">
@@ -228,8 +250,8 @@
 											<div class="comment_author"><span class="span_title">무제한 이용권<br>(90일)</div>
 										</div>
 										<div class="comment_text start_end_date">
-											<p>시작일 : <span>2020-08-20</span></p>  <!-- 현재날짜 -->
-											<p>종료일 : <span>2020-09-18</span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
+											<p>시작일 : <span class="month3"></span></p>  <!-- 현재날짜 -->
+											<p>종료일 : <span class="month4"></span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
 										</div>
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra"> 
