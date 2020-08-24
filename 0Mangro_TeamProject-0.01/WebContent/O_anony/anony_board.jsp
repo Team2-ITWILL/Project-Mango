@@ -45,7 +45,7 @@
 
 <!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
 					<div class="comments_container">
-						<div class="comments_write_button" onclick="location.href='4index.jsp?center=O_anony/anony_board_write.jsp'">글쓰기</div>
+						<div class="comments_write_button" onclick="location.href='./AnoBoardWriteView.anob'">글쓰기</div>
 						<div class="comments_title">익명사담방</div>
 						<h6 class="boardCount">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
 						
