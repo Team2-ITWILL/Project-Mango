@@ -130,11 +130,12 @@
 // 				url:"CheckPayId.pay?email="+${email},
 // 				dataType:"text",
 // 				success:function(data,textStatus){
-// 				if(data==0){	
+// 				if(data==1){	
 			
-// 				}else{
+// 					alert("결제 되었습니다");
+// 					location.href=""
 					
-// 					alert("이미 결제하신 상품이 있습니다");
+// 				}else{
 					
 // 				}
 					
@@ -146,13 +147,14 @@
 				
 // 			});	
 	
-	}else{
-		
-		alert("로그인 후 이용해주세요");
-		
-		
+			}else{
+				
+				alert("로그인 후 이용해주세요");
+				
+				
+			}
+				
 	}
-		}
 		
 		
 		

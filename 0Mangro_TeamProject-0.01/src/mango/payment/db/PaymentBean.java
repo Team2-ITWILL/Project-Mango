@@ -1,5 +1,8 @@
 package mango.payment.db;
 
+import java.sql.Date;
+
+
 //결제테이블 
 public class PaymentBean {
 
@@ -13,10 +16,10 @@ public class PaymentBean {
 	 private String pmName;
 	
 	 // 결제일자 
-	 private String pmStartDate;
+	 private Date pmStartDate;
 	
 	 // 만료예정일자 
-	 private String pmExpDate;
+	 private Date pmExpDate;
 	
 	 public String getMemEmail() {
 	     return memEmail;
@@ -42,19 +45,19 @@ public class PaymentBean {
 	     this.pmName = pmName;
 	 }
 	
-	 public String getPmStartDate() {
+	 public Date getPmStartDate() {
 	     return pmStartDate;
 	 }
 	
-	 public void setPmStartDate(String pmStartDate) {
+	 public void setPmStartDate(Date pmStartDate) {
 	     this.pmStartDate = pmStartDate;
 	 }
 	
-	 public String getPmExpDate() {
+	 public Date getPmExpDate() {
 	     return pmExpDate;
 	 }
 	
-	 public void setPmExpDate(String pmExpDate) {
+	 public void setPmExpDate(Date pmExpDate) {
 	     this.pmExpDate = pmExpDate;
 	 }
 	
