@@ -165,14 +165,13 @@ li.thirdKey {
 							<!-- Course -->
 							<div class="courses_container">
 								<div class="courses_row">
-									<div class="col-md-8 course_col" onclick="location.href='4index.jsp?center=O_academy/academy_single.jsp'">
+									<div class="col-md-8 course_col">
 										<div class="course">
 										
 												<!-- course_body -->
 												<div class="course_body">
 													<!-- 학원 사진 -->
-													<div onclick="location.href='4index.jsp?center=O_academy/academy_single.jsp?num=01569&pageNum=1'"
-		 											style="cursor: pointer" class="aca_profile_div" style="display: inline-block;">
+													<div class="aca_profile_div" style="display: inline-block;">
 														<img src="images/etc/default_mango.png" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">

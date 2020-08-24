@@ -99,7 +99,8 @@
 </style>
 
 <%
-
+	
+	request.setCharacterEncoding("utf-8");
 %>
 </head>
 <body>
