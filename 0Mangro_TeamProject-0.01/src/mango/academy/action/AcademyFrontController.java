@@ -42,7 +42,12 @@ public class AcademyFrontController extends HttpServlet {
 		Action action=null;
 	
 		
-		
+		if(command.equals("/academyContent.aca")){
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("");
+			
+		}
 		
 		
 		

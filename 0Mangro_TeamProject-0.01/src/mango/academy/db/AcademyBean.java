@@ -45,6 +45,32 @@ public class AcademyBean {
     //학원 관리자
     private String mem_email;
 
+    public AcademyBean() { }
+    public AcademyBean(
+    		int acaNum, String acaCode, 
+        	String acaSearchAddr1, String acaSearchAddr2, String acaSearchAddr3,
+        	String acaAttr, String acaName, String acaStartDate,
+        	String acaCategory1, String acaCategory2, 
+        	String acaAddrZip, String acaAddrDoro, String acaAddrDetailed,
+        	String mem_email
+    		) 
+    {
+    	this.acaNum = acaNum;
+    	this.acaCode = acaCode;
+    	this.acaSearchAddr1 = acaSearchAddr1;
+    	this.acaSearchAddr2 = acaSearchAddr2;
+    	this.acaSearchAddr3 = acaSearchAddr3;
+    	this.acaAttr = acaAttr;
+    	this.acaName = acaName;
+    	this.acaStartDate = acaStartDate;
+    	this.acaCategory1 = acaCategory1;
+    	this.acaCategory2 = acaCategory2;
+    	this.acaAddrZip = acaAddrZip;
+    	this.acaAddrDoro = acaAddrDoro;
+    	this.acaAddrDetailed = acaAddrDetailed;
+    	this.mem_email = mem_email;    	
+    }
+
     public String getMem_Email() {
 		return mem_email;
 	}
