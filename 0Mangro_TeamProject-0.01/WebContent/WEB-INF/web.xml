@@ -22,40 +22,6 @@
   
   
   
-  
-  <servlet>
-  	<servlet-name>MemberFrontController</servlet-name>
-  	<servlet-class>mango.member.action.MemberFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>MemberFrontController</servlet-name>
-  	<url-pattern>*.me</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>PaymentFrontController</servlet-name>
-  	<servlet-class>mango.payment.action.PaymentFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>PaymentFrontController</servlet-name>
-  	<url-pattern>*.pay</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  	<servlet-name>QnaBoardFrontController</servlet-name>
-  	<servlet-class>mango.qna_board.action.QnaBoardFrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>PaymentFrontController</servlet-name>
-  	<url-pattern>*.pay</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
 
 
   
