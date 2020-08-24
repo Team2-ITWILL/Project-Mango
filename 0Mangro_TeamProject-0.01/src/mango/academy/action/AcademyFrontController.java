@@ -42,10 +42,15 @@ public class AcademyFrontController extends HttpServlet {
 		Action action=null;
 	
 		
-		if(command.equals("/academyContent.aca")){
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("");
+		if(command.equals("/AcademyContentAction.aca")){
+			action = new AcademyContentAction();
+			
+			try {
+				forward= action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 		}
 		
@@ -60,7 +65,6 @@ public class AcademyFrontController extends HttpServlet {
 				
 				//리다이렉트 방식으로 페이지 이동!  페이지 주소 경로 노출 함 
 				
-				//join.jsp화면 이동
 				
 				response.sendRedirect(forward.getPath());
 				
