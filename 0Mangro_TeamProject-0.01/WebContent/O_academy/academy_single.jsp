@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<head>
+>>>>>>> refs/heads/master
 <title>Course Details</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -121,15 +124,15 @@
 						<div class="aca_profile_div" style="display: inline-block;">
 							<img src="images/etc/default_mango.png" class="aca_profile_img" width="50">
 						</div>					
-						<div class="course_title">부산학원</div> 
+						<div class="course_title">${academyBean.acaName }</div> 
 						<div class="aca_like_button">
 						<!---------- 학원 좋아요 버튼 -------------->
 							<img src="images/like/like_full.png" width="25">
 							<img src="images/like/like_empty.png" width="30">
 						<!---------- 학원 좋아요 버튼 -------------->
 						</div>
-						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; 부산광역시 부산진구 부전동 동천로 109</div>
-						<div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; 051-111-2222</div>
+						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
+						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
 						<div class="cheongang tab_panel_registerBtn"
 							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp'"
 						>
@@ -148,13 +151,13 @@
 							<!-- Course Info Item -->
 							<div class="course_info_item">
 								<div class="course_info_title">카테고리 대분류</div>
-								<div class="course_info_text"><a href="#">외국어</a></div>
+								<div class="course_info_text"><a href="#">${academyBean.acaCategory1 }</a></div>
 							</div>
 							
 							<!-- Course Info Item -->
 							<div class="course_info_item">
 								<div class="course_info_title">카테고리 소분류</div>
-								<div class="course_info_text"><a href="#">영어</a></div>
+								<div class="course_info_text"><a href="#">${academyBean.acaCategory2 }</a></div>
 							</div>
 
 						</div>
@@ -622,7 +625,7 @@
 	</div>
 
 
-
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
