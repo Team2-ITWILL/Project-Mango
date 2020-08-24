@@ -3,81 +3,94 @@ package mango.anony_board.db;
 public class AnonyBoardBean{
 		//익명 게시판
 	// 글번호 
-	private int anoBoardNum;
+	private int ano_board_num;
 	
 	// 이메일 
-	private String memEmail;
+	private String mem_email;
 	
 	// 제목 
-	private String anoBoardTitle;
+	private String ano_board_title;
 	
 	// 내용 
-	private String anoBoardContent;
+	private String ano_board_content;
 	
 	// 조회수 
-	private int anoBoardRead;
+	private int ano_board_read;
 	
 	// 작성일자 
-	private String anoBoardDate;
+	private String ano_board_date;
 	
 	// 아이피 
-	private String anoBoardIp;
-	
-	public int getAnoBoardNum() {
-	return anoBoardNum;
-	}
-	
-	public void setAnoBoardNum(int anoBoardNum) {
-	this.anoBoardNum = anoBoardNum;
-	}
-	
-	public String getMemEmail() {
-	return memEmail;
-	}
-	
-	public void setMemEmail(String memEmail) {
-	this.memEmail = memEmail;
-	}
-	
-	public String getAnoBoardTitle() {
-	return anoBoardTitle;
-	}
-	
-	public void setAnoBoardTitle(String anoBoardTitle) {
-	this.anoBoardTitle = anoBoardTitle;
-	}
-	
-	public String getAnoBoardContent() {
-	return anoBoardContent;
-	}
-	
-	public void setAnoBoardContent(String anoBoardContent) {
-	this.anoBoardContent = anoBoardContent;
-	}
-	
-	public int getAnoBoardRead() {
-	return anoBoardRead;
-	}
-	
-	public void setAnoBoardRead(int anoBoardRead) {
-	this.anoBoardRead = anoBoardRead;
-	}
-	
-	public String getAnoBoardDate() {
-	return anoBoardDate;
-	}
-	
-	public void setAnoBoardDate(String anoBoardDate) {
-	this.anoBoardDate = anoBoardDate;
-	}
-	
-	public String getAnoBoardIp() {
-	return anoBoardIp;
-	}
-	
-	public void setAnoBoardIp(String anoBoardIp) {
-	this.anoBoardIp = anoBoardIp;
-	}
+	private String ano_board_ip;
 
+	
+	
+	// 생성자
+	
+	public AnonyBoardBean(){}
+	public AnonyBoardBean(int ano_board_num, String mem_email, String ano_board_title, String ano_board_content,
+			int ano_board_read, String ano_board_date, String ano_board_ip) {
+		super();
+		this.ano_board_num = ano_board_num;
+		this.mem_email = mem_email;
+		this.ano_board_title = ano_board_title;
+		this.ano_board_content = ano_board_content;
+		this.ano_board_read = ano_board_read;
+		this.ano_board_date = ano_board_date;
+		this.ano_board_ip = ano_board_ip;
+	}
+	
+	
+	
+	// setter/getter
+	public int getAno_board_num() {
+		return ano_board_num;
+	}
+	public void setAno_board_num(int ano_board_num) {
+		this.ano_board_num = ano_board_num;
+	}
+	public String getMem_email() {
+		return mem_email;
+	}
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
+	}
+	public String getAno_board_title() {
+		return ano_board_title;
+	}
+	public void setAno_board_title(String ano_board_title) {
+		this.ano_board_title = ano_board_title;
+	}
+	public String getAno_board_content() {
+		return ano_board_content;
+	}
+	public void setAno_board_content(String ano_board_content) {
+		this.ano_board_content = ano_board_content;
+	}
+	public int getAno_board_read() {
+		return ano_board_read;
+	}
+	public void setAno_board_read(int ano_board_read) {
+		this.ano_board_read = ano_board_read;
+	}
+	public String getAno_board_date() {
+		return ano_board_date;
+	}
+	public void setAno_board_date(String ano_board_date) {
+		this.ano_board_date = ano_board_date;
+	}
+	public String getAno_board_ip() {
+		return ano_board_ip;
+	}
+	public void setAno_board_ip(String ano_board_ip) {
+		this.ano_board_ip = ano_board_ip;
+	}
+	
+	
+	
+
+	
+	
+	
 
 }

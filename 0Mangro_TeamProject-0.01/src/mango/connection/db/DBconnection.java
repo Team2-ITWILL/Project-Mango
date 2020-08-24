@@ -13,10 +13,10 @@ public class DBconnection {
 
 		
 		// DB 연결 객체
-		Connection con;
-		PreparedStatement pstmt;
-		ResultSet rs;
-		String sql = "";
+		protected Connection con;
+		protected PreparedStatement pstmt;
+		protected ResultSet rs;
+		protected String sql = "";
 		
 		protected void resourceClose(){
 			
