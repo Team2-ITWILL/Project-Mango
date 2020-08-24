@@ -56,6 +56,11 @@ public class PaymentFrontController extends HttpServlet {
 			forward.setRedirect(false);
 			
 		
+		}else if(command.equals("/InsertPayMent.pay")){
+			
+			
+			
+			
 		}
 	
 		
