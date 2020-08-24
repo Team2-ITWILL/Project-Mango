@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -32,12 +33,120 @@
 </head>
 
 
+
+<c:set var="email" value="${sessionScope.email}"/>
+
+<script type="text/javascript">
+	
+	
+	
+	
+	function MonthPay() {
+		
+		
+		var money =7900;
+		var option="30일 이용권";
+		submit(money,option);
+		
+	}
+	
+	
+	function MemberPay() {
+// 	var money =5900;
+// 	var option="30일 이용권 정기결제";	
+// 	submit(money,option);
+		alert("서비스 준비중 입니다")
+	}
+
+
+	function ThMonthPay() {
+		var money =12900;
+		var option="90일 이용권";	
+		submit(money,option);
+	}
+	
+	
+
+	
+	$(function(){
+		
+		var d =new Date();
+
+		$(".month1").text(d.getFullYear()+"-"+(d.getMonth())+"-"+d.getDate() );
+		$(".month2").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate() );
+		
+		
+		
+	})	
+		
+		
+		
+	
+	
+	
+	
+	
+		function submit(money,option) {
+		
+		if(${email != null}){
+			
+			
+			$.ajax({
+				type:"get",
+				async:true,
+				url:"CheckPayId.pay?email=${email}",
+				dataType:"text",
+				success:function(data,textStatus){
+				if(data==0){	
+				  $(".money").val(money);
+				   $('#frm').attr("action", "PayMentPort.pay");
+				   $('#frm').attr("method", "post");
+				   $('#frm').attr("target", "formInfo");
+				   $(".option").val(option);
+				 	 open("","formInfo","width=1100,height=800");
+				   $("#frm").submit();		
+				}else{
+					
+					alert("이미 결제하신 상품이 있습니다");
+					
+				}
+					
+				},
+				error:function(){
+					alert("에러가 발생했습니다");
+					
+				}
+				
+			});	
+	
+	}else{
+		
+		alert("로그인 후 이용해주세요");
+		
+		
+	}
+		}
+		
+		
+		
+		
+		
+	
+	
+	
+
+</script>
+
+
 <body>
 
+	<form id="frm"> 
+	<input type="hidden" name="money" class="money" >
+	<input type="hidden" name="option" class="option">
+	<input type="hidden" name="email" class="email" value="2221325">
+	
 		<div class="container">
 			<div class="row">
-
-
 					
 <!-------------------------------------------------- [제목영역]  -------------------------------------------------------------------------->
 				    <div class="space_paid">
@@ -63,8 +172,8 @@
 											<div class="comment_author"><span class="span_title">무제한 이용권<br>(30일)</div>
 										</div>
 										<div class="comment_text start_end_date">
-											<p>시작일 : <span>2020-08-20</span></p>  <!-- 현재날짜 -->
-											<p>종료일 : <span>2020-09-18</span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
+											<p>시작일 : <span class="month1"></span></p>  <!-- 현재날짜 -->
+											<p>종료일 : <span class="month2">2020-09-18</span></p>  <!-- 현재날짜로부터 30일 후 --> <br><hr>
 										</div>
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra">
@@ -74,7 +183,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="paid_service_btn" onclick="">멤버십 결제하기</div>
+								<div class="paid_service_btn" onclick="MonthPay()">멤버십 결제하기</div>
 							</li> 
 <!-------------------------------------------------------- [▲ 멤버십 30일 ]  -------------------------------------------------------------------------->
 <!-------------------------------------------------------- [▼ 멤버십 30일(정기결제)]  -------------------------------------------------------------------------->
@@ -102,7 +211,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="paid_service_btn" onclick="">멤버십 결제하기</div>
+								<div class="paid_service_btn" onclick="MemberPay()">멤버십 결제하기</div>
 							</li> 
 <!-------------------------------------------------------- [▲ 멤버십 이용권 30일(정기결제) ]  -------------------------------------------------------------------------->
 <!-------------------------------------------------------- [▼ 멤버십 이용권 90일 ]  -------------------------------------------------------------------------->
@@ -131,7 +240,7 @@
 									</div>
 								</div>
 								
-								<div class="paid_service_btn" onclick="">멤버십 결제하기</div>
+								<div class="paid_service_btn" onclick="ThMonthPay()">멤버십 결제하기</div>
 							</li> 
 <!-------------------------------------------------------- [▲ 멤버십 쿠폰 1장 ]  -------------------------------------------------------------------------->
 
@@ -141,7 +250,7 @@
 			
 			</div> <!-- row -->
 		</div> <!-- container -->
-
+</form>
 
 </body>
 </html>

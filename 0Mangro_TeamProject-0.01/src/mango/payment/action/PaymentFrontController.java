@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.ACTIVITY_COMPLETED;
+
 import mango.action.Action;
 import mango.action.ActionForward;
 
@@ -41,6 +43,44 @@ public class PaymentFrontController extends HttpServlet {
 		
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action=null;
+		
+		
+		if(command.equals("/PayMentPort.pay")){
+			
+			
+			System.out.println(request.getParameter("email"));
+			
+			
+			/*forward=new ActionForward();
+			
+			System.out.println("여기까지");
+		
+			forward.setPath("/O_payment/payment_Port.jsp");
+			
+			forward.setRedirect(false);*/
+			
+		
+		}else if(command.equals("/CheckPayId.pay")){//아이디 이미 결제 했는지 확인
+			
+			
+			action=new CheckPayIdaction();
+			
+			
+			
+			try {
+				
+				forward=action.excute(request, response);
+				
+				
+			} catch (Exception e) {
+				
+				System.out.println("CheckPayId.pay 처리과정에서 에러");
+				
+			}
+			
+			
+			
+		}
 	
 		
 		
