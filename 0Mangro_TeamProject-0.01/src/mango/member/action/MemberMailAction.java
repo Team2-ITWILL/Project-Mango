@@ -1,5 +1,8 @@
 package mango.member.action;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.PrintWriter;
 import java.util.Properties;
 
@@ -9,8 +12,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
@@ -148,13 +149,14 @@ public class MemberMailAction implements Action {
 	        response.setContentType("text/html; charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 	        out.println("<script>");
-	        out.println("alert('이메일 인증이 실패 하였습니다.');");
+	        out.println("alert('이메일 인증이 실패하였습니다.');");
             out.println("alert('다시 시도해 주십시오.');");
 	        out.println("window.close();");
 	        out.println("</script>");
-		}
+		
+		} // try문 끝
 		
 		return null;
 	} // excute() 끝
-
+	
 }
