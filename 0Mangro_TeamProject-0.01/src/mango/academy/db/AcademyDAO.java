@@ -84,9 +84,33 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	
 	// 학원 정보 출력
 	@Override
-	public AcademyBean getAcademyContent(int acaNum) {
+	public AcademyBean getAcademyContent(int boardNum) {
+		
+		AcademyBean bean = null;
+		
 		try {
 			getConnection();
+			
+			sql = "select * from academy where aca_num=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				bean.setAcaNum(rs.getInt(1));
+				bean.setAcaCode(rs.getString(2));
+				bean.setAcaAttr(rs.getString(6));
+				bean.setAcaName(rs.getString(7));
+				bean.setAcaStartDate(rs.getString(8));
+				bean.setAcaCategory1(rs.getString(9));
+				bean.setAcaCategory2(rs.getString(10));
+				bean.setAcaAddrZip(rs.getString(11));
+				bean.setAcaAddrDoro(rs.getString(12));
+				bean.setAcaAddrDetailed(rs.getString(13));
+				bean.setMem_Email(rs.getString(14));
+				
+			}
 		} catch (Exception e) {
 			System.out.println("getAcademyContent()에서 예외 발생");
 			e.printStackTrace();
@@ -94,7 +118,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			resourceClose();
 		}
 		
-		return null;
+		return bean;
 	}
 
 	@Override
