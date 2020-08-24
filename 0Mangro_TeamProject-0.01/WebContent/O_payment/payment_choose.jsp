@@ -39,7 +39,7 @@
 
 
 <%--  <c:set var="email" value="${sessionScope.email}"/> --%>
-<c:set var="email" value="lim222"/> 
+<c:set var="email" value="2221325"/> 
 
 
 
@@ -49,7 +49,6 @@
 	
 	
 	function MonthPay() {
-		
 		
 		var money =7900;
 		var option="30일 이용권";

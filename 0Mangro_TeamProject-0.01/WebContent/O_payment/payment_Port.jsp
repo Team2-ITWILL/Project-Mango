@@ -44,27 +44,27 @@ request.setCharacterEncoding("utf-8");
 				
 				
 				$.ajax({
-	 				type:"post",
-	 				async:true,
-	 				url:"InsertPayMent.pay",
-	 				data:{email : ${param.email}, option:${param.option} },
-	 				dataType:"text",
-	 				success:function(data,textStatus){
+ 	 				type:"post",
+  	 				async:true,
+ 					url:"InsertPayMent.pay",
+	 				data:{email : '${param.email}', option:'${param.option}', money:'${param.money}' },
+ 	 				dataType:"text",
+ 	 				success:function(data,textStatus){
 	 			
-	 					if(data==1){
+ 	 					if(data==1){
 	 						
-	 						alert("결제 되었습니다");
-	 						
-	 						location.href="4index.jsp?center=3main.jsp";
+ 	 						alert("결제 되었습니다");
+	 						window.close();
+ 	 						opener.location.href="4index.jsp?center=3main.jsp";
 	 					
 	 						
-	 					}
+ 	 					}
 	 					
 	 					
 						
-	 				},
+ 	 				},
 	 				error:function(){
-	 					alert("에러가 발생했습니다");
+ 	 					alert("에러가 발생했습니다");
 						
  	 				}
 				
@@ -72,11 +72,10 @@ request.setCharacterEncoding("utf-8");
 				
 				
 				
- 				});		
+  				});		
 				
 				
-			} //if
-			else { // 실패시
+			} else { // 실패시
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
 				alert("결제가 취소되었습니다")

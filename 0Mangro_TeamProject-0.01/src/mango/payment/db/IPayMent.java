@@ -3,7 +3,7 @@ package mango.payment.db;
 public interface IPayMent {
 
 	
-	
-	public int InsertPayment(PaymentBean pb);
+											//몇일인지
+	public int InsertPayment(PaymentBean pb,int Day);
 	
 }

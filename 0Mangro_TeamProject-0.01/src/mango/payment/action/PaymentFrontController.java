@@ -51,12 +51,25 @@ public class PaymentFrontController extends HttpServlet {
 			
 			System.out.println("여기까지");
 		
-			forward.setPath("./O_payment/payment_Port.jsp");
+			forward.setPath("/O_payment/payment_Port.jsp");
 			
 			forward.setRedirect(false);
 			
 		
 		}else if(command.equals("/InsertPayMent.pay")){
+			
+			
+			action = new InsertPaymentAction();
+			
+			 try {
+			
+				 forward=action.excute(request, response);
+				
+				
+			} catch (Exception e) {
+				System.out.println("/InsertPayMent.pay에서 오류");
+			}
+			
 			
 			
 			

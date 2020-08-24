@@ -20,12 +20,22 @@ public class PaymentBean {
 	
 	 // 만료예정일자 
 	 private Date pmExpDate;
+	 
+	 private String pmCheck;
 	
 	 public String getMemEmail() {
 	     return memEmail;
 	 }
 	
-	 public void setMemEmail(String memEmail) {
+	 public String getPmCheck() {
+		return pmCheck;
+	}
+
+	public void setPmCheck(String pmCheck) {
+		this.pmCheck = pmCheck;
+	}
+
+	public void setMemEmail(String memEmail) {
 	     this.memEmail = memEmail;
 	 }
 	
