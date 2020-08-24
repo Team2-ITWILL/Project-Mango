@@ -17,7 +17,7 @@
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/academy_list.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_list_responsive.css">
-
+<link href="styles/table_style.css" rel="stylesheet">
 
 
 <style type="text/css">
@@ -171,11 +171,12 @@ li.thirdKey {
 												<!-- course_body -->
 												<div class="course_body">
 													<!-- 학원 사진 -->
-													<div class="aca_profile_div" style="display: inline-block;">
+													<div onclick="location.href='4index.jsp?center=O_academy/academy_single.jsp?num=01569&pageNum=1'"
+		 											style="cursor: pointer" class="aca_profile_div" style="display: inline-block;">
 														<img src="images/etc/default_mango.png" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
-														<a href="4index.jsp?center=O_academy/academy_single.jsp">
+														<a href="4index.jsp?center=O_academy/academy_single.jsp?num=01569&pageNum=1">
 															부산학원
 														</a>
 													</h3>
@@ -301,6 +302,41 @@ li.thirdKey {
 									</div> <!-- col-md-8 course_col(페이지이동 링크걸린영역) -->
 																			
 							 </div> <!-- courses_row -->
+							 
+							 
+							 <ul class="pagination">
+                    <!-- << (첫페이지로 가기) -->
+					  <li class="page-item"> 
+					  	<a class="page-link prev" href="#">
+					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+					  	</a>
+					  </li>
+					  
+                    <!-- < (이전페이지 가기)-->
+					  <li class="page-item active">
+					  	<a class="page-link prev" href="#">
+					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+					  	</a>
+					  </li>
+					  
+					  <li class="page-item"><a class="page-link" href="#">1</a></li>
+					  <li class="page-item"><a class="page-link" href="#">2</a></li>
+					  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <!-- > (다음페이지 가기)-->
+					  <li class="page-item">
+					  	<a class="page-link next" href="#">
+						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+						</a>
+					  </li>
+                    <!-- >> (마지막페이지 가기)-->
+					  <li class="page-item">
+					  	<a class="page-link next" href="#">
+						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+						</a>
+					  </li>
+					</ul>  
+							 
+							 
 						</div>  <!-- courses_container -->
 						
 <!------------------------------------------ [  학원 1곳 목록 표시 영역 끝  ] --------------------------------------------------------------->
@@ -329,6 +365,20 @@ li.thirdKey {
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="js/courses.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+ <script src="styles/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="styles/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
+<script src="styles/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
+<script src="styles/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="styles/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- apps -->
+<script src="styles/dist/js/app-style-switcher.js"></script>
+<script src="styles/dist/js/feather.min.js"></script>
+<script src="styles/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script src="styles/dist/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="styles/dist/js/custom.min.js"></script>
 </body>
 </html>
 
