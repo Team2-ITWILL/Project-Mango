@@ -23,16 +23,26 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		int result = 0;
 		try {
 			getConnection();
-			String sql = "insert into audit_request values(null, ?,?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
+			String sql = "insert into audit_request("
+					+ "mem_email, aca_num, aca_name, "
+					+ "audit_wish_subject, audit_wish_date, "
+					+ "audit_request_date, "
+					+ "audit_confirm_date) "					
+					+ " values(?, ?, ?, ?, ?, ?, ?)";
+			
+			pstmt = con.prepareStatement(sql);	
+			
+			System.out.println(insert.getMemEmail());
+			System.out.println(insert.getAcaNum());
+			System.out.println(insert.getAcaName());
 			
 			
 			pstmt.setString(1, insert.getMemEmail());
 			pstmt.setInt(2, insert.getAcaNum());
 			pstmt.setString(3, insert.getAcaName());
 			pstmt.setString(4, insert.getAuditSubject());
-			pstmt.setString(5, insert.getAuditRequestDate());
-			pstmt.setString(6, insert.getAuditWishDate());
+			pstmt.setString(5, insert.getAuditWishDate());
+			pstmt.setString(6, insert.getAuditRequestDate());		
 			pstmt.setString(7, insert.getAuditConfirmDate());		
 			
 			result = pstmt.executeUpdate();

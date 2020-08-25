@@ -1,5 +1,7 @@
 package mango.audit_request.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,44 +15,56 @@ public class AuditRequestAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.print("AuditRequestAction 실행");		
+		//System.out.print("AuditRequestAction 실행");		
 		
-		AuditRequestDAO dao = new AuditRequestDAO();		
-				
-		//int acaNum = Integer.parseInt(request.getParameter("aca_num"));
-		int acaNum = 123;
+		AuditRequestDAO dao = new AuditRequestDAO();			
+	
 		String auditConfirmDate = request.getParameter("audit_request_date");
 		
 		AuditRequestBean bean 
 		 = new AuditRequestBean(
-				 0, //Auto-Increment
-				 request.getParameter("mem_email"),
-				 acaNum,
-				 request.getParameter("aca_name"),
-				 request.getParameter("audit_subject"),
+				 0, //auditNum : Auto Increment
+				 
+				 //(String)request.getSession().getAttribute("mem_email"),
+				 //request.getParameter("mem_email"),
+				 
+				 //Integer.parseInt(request.getParameter("aca_num")),
+				 //request.getParameter("aca_name"),	
+				 //request.getParameter("audit_subject"),
+				 
+				 "1@1.com",
+				 301569,
+				 "(주)그루샘수학보습학원",		
+				 "hihi",
+				
+				
 				 request.getParameter("audit_request_date"),
 				 request.getParameter("audit_wish_date"),
 				 auditConfirmDate			 
 				 );
 		
-		int result = dao.InsertAudit(bean);
+		int result = dao.InsertAudit(bean);	
 		
-		String msg = "";
-		if(result == 0){
-			msg += "<script>";
-			msg += "alert('청강 신청 실패')";
-			msg += "</script>";				
+		/*if(result == 0){
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('register failed')");
+			out.println("history.back();");
+			out.println("</script>");	
+			out.close();			
 		}else{
-			msg += "<script>";
-			msg += "alert('청강 신청 성공')";
-			msg += "</script>";		
-		}
-		
-		request.setAttribute("msg", msg);
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('register success')");		
+			out.println("</script>");				
+			out.close();		
+		}		*/
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("../4index.jsp");
+		forward.setRedirect(true);
+		forward.setPath("./4index.jsp");
 		
 		return forward;
 	}
