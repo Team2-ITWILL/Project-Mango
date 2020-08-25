@@ -87,6 +87,16 @@ public class AnonyBoardBean{
 	}
 	
 	
+
+
+	public String toString() {
+		return "AnonyBoardBean [ano_board_num=" + ano_board_num + ", mem_email=" + mem_email + ", ano_board_title="
+				+ ano_board_title + ", ano_board_content=" + ano_board_content + ", ano_board_read=" + ano_board_read
+				+ ", ano_board_date=" + ano_board_date + ", ano_board_ip=" + ano_board_ip + "]";
+	}
+	
+	
+
 	
 
 	
