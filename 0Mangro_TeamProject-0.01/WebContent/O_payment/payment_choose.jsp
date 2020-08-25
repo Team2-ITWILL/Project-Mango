@@ -37,11 +37,27 @@
 </head>
 
 
+<%
+	//String email=(String)session.getAttribute("email");
 
-<%--  <c:set var="email" value="${sessionScope.email}"/> --%>
-<c:set var="email" value="2221325"/> 
+	String email="2221325";
+
+	if(email==null){
+	%>	
+	<script type="text/javascript">
+	
+		alert("로그인을 하셔야 합니다");
+	
+		location.href="4index.jsp?center=O_member/member_sign_in.jsp";
+		
+		</script>
+		
+		
+	<%	
+	}
 
 
+%>
 
 <script type="text/javascript">
 	
@@ -51,7 +67,7 @@
 	function MonthPay() {
 		
 		var money =7900;
-		var option="30일 이용권";
+		var option="무제한 이용권 (30일)";
 		submit(money,option);
 		
 	}
@@ -67,7 +83,7 @@
 
 	function ThMonthPay() {
 		var money =12900;
-		var option="90일 이용권";	
+		var option="무제한 이용권 (30일)";	
 		submit(money,option);
 	}
 	
@@ -75,32 +91,14 @@
 
 	
 	$(function(){
-		
-		
-		 var a =new Date();
-		var d =new Date(a.getFullYear(),a.getMonth(),a.getDate());
-		
-		
-		
+		var a =new Date();
+		var d =new Date(a.getFullYear(),a.getMonth(),a.getDate());	
 		a.setDate(d.getDate()+30)
-		
-		
-		 
-		
 		$(".month1").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate());
-	
 		$(".month2").text(d.getFullYear()+"-"+(d.getMonth()+2)+"-"+a.getDate());
-
 		a.setDate(d.getDate()+90)
-		
 		$(".month3").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate());
-	
 		$(".month4").text(d.getFullYear()+"-"+(d.getMonth()+4)+"-"+a.getDate());
-	
-		
-		
-		
-	
 	})	
 		
 		
@@ -123,28 +121,7 @@
 			   $("#frm").submit();		
 			
 			
-// 			$.ajax({
-// 				type:"get",
-// 				async:true,
-// 				url:"CheckPayId.pay?email="+${email},
-// 				dataType:"text",
-// 				success:function(data,textStatus){
-// 				if(data==1){	
-			
-// 					alert("결제 되었습니다");
-// 					location.href=""
-					
-// 				}else{
-					
-// 				}
-					
-// 				},
-// 				error:function(){
-// 					alert("에러가 발생했습니다");
-					
-// 				}
-				
-// 			});	
+
 	
 			}else{
 				
@@ -168,6 +145,8 @@
 
 <body>
 
+	<c:set var="email" value="<%=email%>"/>
+
 	<form id="frm"> 
 	<input type="hidden" name="money" class="money" >
 	<input type="hidden" name="option" class="option">
@@ -179,7 +158,28 @@
 <!-------------------------------------------------- [제목영역]  -------------------------------------------------------------------------->
 				    <div class="space_paid">
 						<div class="comments_title">멤버십 결제 선택</div>
-						<h6 class="svc_use_num">회원님의 최근 이용 서비스는 <span>무제한 이용권 30일</span>입니다.</h6> 
+							
+												
+							
+							<c:if  test="${newName.pmName != null}"><!--if문 -->
+							
+							
+									<h6 class="svc_use_num">회원님의 최근 이용 서비스는 <span>${newName.pmName}</span>입니다.</h6> 								
+							
+								
+						
+							
+							</c:if>
+							
+							<c:if test="${newName.pmName == null}">							
+							
+								<h6 class="svc_use_num"><span>이용중인 서비스가 없습니다</span></h6>  
+							
+ 							</c:if> 
+
+							
+					
+				    
 				    </div>
 <!-------------------------------------------------- [멤버십 이용권 표시]  -------------------------------------------------------------------------->
 				    

@@ -21,6 +21,7 @@ public class PaymentBean {
 	 // 만료예정일자 
 	 private Date pmExpDate;
 	 
+	 // 유효한지 안한지 체크
 	 private String pmCheck;
 	
 	 public String getMemEmail() {
