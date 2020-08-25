@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -83,12 +85,10 @@
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
+							        <!-- 제목 -->
 								        <label class="form-label" for="anony_title">제목</label>
-								        <input type="text" class="form-control" name="" id="anony_title" placeholder="제목을 입력해 주세요."> 
-								    </div>
-							        <div class="form-group mb-8">
-								        <label class="form-label" for="anony_pwd">비밀번호</label>
-								        <input type="password" class="form-control" name="" id="anony_pwd" placeholder="비밀번호를 입력해 주세요."> 
+								        <input type="text" class="form-control" name="" id="anony_title" 
+								               value="${requestScope.member_email  }" placeholder="제목을 입력해 주세요."> 
 								    </div>
 								    
 							        <div class="form-group mb-8">
