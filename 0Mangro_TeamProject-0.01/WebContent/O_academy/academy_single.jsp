@@ -135,7 +135,7 @@
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
 						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
 						<div class="cheongang tab_panel_registerBtn"
-							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp'"
+							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaNum=${academyBean.acaNum }&acaName=${academyBean.acaName}'"
 						>
 						청강신청하기
 						</div>
@@ -151,13 +151,13 @@
 							<!-- Course Info Item -->
 							<div class="course_info_item">
 								<div class="course_info_title">카테고리 대분류</div>
-								<div class="course_info_text"><a href="#">${academyBean.acaCategory1 }</a></div>
+								<div class="course_info_text">${academyBean.acaCategory1 }</div>
 							</div>
 							
 							<!-- Course Info Item -->
 							<div class="course_info_item">
 								<div class="course_info_title">카테고리 소분류</div>
-								<div class="course_info_text"><a href="#">${academyBean.acaCategory2 }</a></div>
+								<div class="course_info_text">${academyBean.acaCategory2 }</div>
 							</div>
 
 						</div>
@@ -193,65 +193,58 @@
 										
 										
  										<div class="tab_panel_section">
-											<div class="tab_panel_subtitle">Requirements</div>
+											<div class="tab_panel_subtitle">당 사이트의 소유권</div>
 											<ul class="tab_panel_bullets">
-												<li>Lorem Ipsn gravida nibh vel velit auctor aliquet. Class aptent taciti sociosquad litora torquent.</li>
-												<li>Cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a.</li>
-												<li>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat.</li>
-												<li>Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio.</li>
+												<li>당 사이트가 제공하는 서비스, 그에 필요한 소프트웨어, 이미지, 마크, 로고, 디자인, 서비스명칭, 정보 및 상표 등과 관련된 지적재산권 및 기타 권리는 당 사이트에 소유권이 있습니다.</li>
+												<li>이용자는 당 사이트가 명시적으로 승인한 경우를 제외하고는 전항의 소정의 각 재산에 대한 전부 또는 일부의 수정, 대여, 대출, 판매, 배포, 제작, 양도, 재라이센스, 담보권 설정 행위, 상업적 이용 행위를 할 수 없으며, 제3자로 하여금 이와 같은 행위를 하도록 허락할 수 없습니다.</li>
 											</ul>
-										</div>
-										<div class="tab_panel_section">
-											<div class="tab_panel_subtitle">What is the target audience?</div>
-											<div class="tab_panel_text">
-												<p>This course is intended for anyone interested in learning to master his or her own body.This course is aimed at beginners, so no previous experience with hand balancing skillts is necessary Aenean viverra tincidunt nibh, in imperdiet nunc. Suspendisse eu ante pretium, consectetur leo at, congue quam. Nullam hendrerit porta ante vitae tristique. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-											</div>
 										</div>
 										 
 										 
 										<!-- FAQ -->
  										<div class="tab_panel_faq">
-											<div class="tab_panel_title">FAQ</div>
+											<div class="tab_panel_title">정보 이용 약관</div>
 
-											Accordions
+											정보 제공 및 홍보물 게재
 											<div class="accordions">
 												
 												<div class="elements_accordions">
 
 													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>Can I just enroll in a single course?</div></div>
+														<div class="accordion d-flex flex-row align-items-center"><div>게시물의 내용에 대한 권리</div></div>
 														<div class="accordion_panel">
-															<p>Lorem ipsun gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a.</p>
+															<p>
+															이용자가 게시한 게시물의 내용에 대한 권리는 해당 게시물을 등록한 이용자에게 있습니다.
+															</p>
 														</div>
 													</div>
 
 													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center active"><div>I'm not interested in the entire Specialization?</div></div>
+														<div class="accordion d-flex flex-row align-items-center active"><div>사전 통지 없이 게시물이 삭제되는 경우</div></div>
 														<div class="accordion_panel">
-															<p>Lorem ipsun gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a.</p>
+															<p>당 사이트는 게시된 내용을 사전 통지 없이 편집, 이동할 수 있는 권리를 보유하며, 다음의 경우 사전 통지 없이 삭제할 수 있습니다.</p>
+															
+																<ul class="tab_panel_bullets">
+																<li>욕설·특정인에 대한 비방 등 인권침해 소지가 있는 경우</li>
+																<li>성인 게시물 등 공공질서 및 미풍양속에 위반되는 내용인 경우</li>
+																<li>악의적으로 허위사실을 유포한 경우</li>
+																<li>제3자의 저작권 등 기타 권리를 침해하는 내용인 경우</li>
+																<li>상업적 목적이 있는 경우</li>
+																<li>동일한 내용의 반복 게시</li>
+																<li>게시자가 자신이 등록한 게시물의 삭제를 요구한 경우</li>
+																<li>기타 홈페이지의 정상적인 운영을 저해하는 표현 또는 내용</li>
+																</ul>
+																
 														</div>
 													</div>
 
 													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>What is the refund policy?</div></div>
+														<div class="accordion d-flex flex-row align-items-center"><div>게시물이 타인의 저작권을 침해할 경우</div></div>
 														<div class="accordion_panel">
-															<p>Lorem ipsun gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a.</p>
+															<p>이용자의 게시물이 타인의 저작권을 침해함으로써 발생하는 민, 형사상의 책임은 전적으로 해당 게시물을 등록한 이용자가 부담하여야 합니다.</p>
 														</div>
 													</div>
 
-													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>What background knowledge is necessary?</div></div>
-														<div class="accordion_panel">
-															<p>Lorem ipsun gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a.</p>
-														</div>
-													</div>
-
-													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>Do i need to take the courses in a specific order?</div></div>
-														<div class="accordion_panel">
-															<p>Lorem ipsun gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a.</p>
-														</div>
-													</div>
 
 												</div>
 
@@ -418,7 +411,7 @@
 													<div class="comment_content">
 														<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
 															<div class="comment_author"><a href="#">${reBean.reviewTitle}</a></div>
-															<div class="comment_rating"><div class="rating_r rating_r_4"><i></i><i></i><i></i><i></i><i></i></div></div>
+															<div class="comment_rating"><div class="rating_r rating_r_${reBean.reviewScore}"><i></i><i></i><i></i><i></i><i></i></div></div>
 															<div class="comment_time ml-auto">${reBean.reviewDate}</div>
 														</div>
 														<div class="comment_text">
@@ -504,91 +497,135 @@
 				</div>
 <!-------------------------------------------[ 학원 대표 키워드 ]-------------------------------------------------------------->
 				<!-- Course Sidebar -->
+				
+			<c:if test="${empty keyList}">
+			</c:if>
+			<c:if test="${not empty keyList}">
 				<div class="col-lg-4">
 					<div class="sidebar">
-
+						
 						<!-- Feature -->
 						<div class="sidebar_section">
+						
 							<div class="sidebar_section_title">학원을 대표하는 키워드</div>
 							<div class="sidebar_feature">
-								<div class="course_price">"교통이 편리한 중심지"</div>
+								<div class="course_price">"${keyList[0].acakeyword} 학원"</div>
 
 								<!-- Features -->
 								<div class="feature_list">
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
+				<c:forEach var="keywordVO" items="${keyList}">
+									
+						<c:choose>
+						
+							
+							<c:when test="${keywordVO.acakeyword eq '교통이 편리한'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-subway" aria-hidden="true"></i>
 											<span>교통이 편리한</span>
 										</div>
 									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
-											<span>시설이 깨끗한</span>
-										</div>
-									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
-											<span>청강신청이 가능한</span>
-										</div>
-									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
-											<span>스터디룸이 있는</span>
-										</div>
-									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
-											<span>식당가 인근</span>
-										</div>
-									</div>
-									
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
-											<span>기숙사 있는</span>
-										</div>
-									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '중장기(6개월)'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-clock-o" aria-hidden="true"></i>
 											<span>중장기(6개월)</span>
 										</div>
 									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
+							</c:when>
+							
+							
+							<c:when test="${keywordVO.acakeyword eq '시설이 깨끗한'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
+											<span>시설이 깨끗한</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '청강신청이 가능한'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
+											<span>청강신청이 가능한</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '스터디룸이 있는'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
+											<span>스터디룸이 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '식당가 인근'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
+											<span>식당가 인근</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '기숙사 있는'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
+											<span>기숙사 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '학원 차량 운행이 있는'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-bus" aria-hidden="true"></i>
 											<span>학원 차량 운행이 있는</span>
 										</div>
 									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '레벨 테스트가 있는'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-file-text-o" aria-hidden="true"></i>
 											<span>레벨 테스트가 있는</span>
 										</div>
 									</div>
-
-									<!-- Feature -->
-									<div class="feature d-flex flex-row align-items-center justify-content-start">
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq '수능 대비 강의가 있는'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 											<span>수능 대비 강의가 있는</span>
 										</div>
 									</div>
-
+							</c:when>
+							
+										
+						</c:choose>
+						
+					</c:forEach>
+					
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			
+			
+	</c:if>
+	
+					</div>
+				</div>
+				
+		</div>					
+								
+										
+										
+								
+								
+
+
+
+									
 
 
 
@@ -627,11 +664,9 @@
 							</div>
 						</div> --> <!-- 지울것 --> 
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+					
+		
+	
 
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

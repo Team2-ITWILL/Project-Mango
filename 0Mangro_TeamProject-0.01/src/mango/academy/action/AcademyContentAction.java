@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
+import mango.academy_keyword.db.AcademyKeywordBean;
+import mango.academy_keyword.db.AcademyKeywordDAO;
 import mango.academy_review.db.AcademyReviewBean;
 import mango.academy_review.db.AcademyReviewDAO;
 import mango.action.Action;
@@ -16,17 +18,35 @@ public class AcademyContentAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		request.setCharacterEncoding("utf-8");
 		int boardNum = Integer.parseInt(request.getParameter("num"));
+		/*String id = (String)request.getSession().getAttribute("userid");*/
 		
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
+		// 학원조아DAO
+		
 		// 학원후기DAO
 		AcademyReviewDAO rdao = new AcademyReviewDAO();
+		// 후기좋아요DAO
+		
+		// 학원키워드DAO
+		AcademyKeywordDAO akdao = new AcademyKeywordDAO();
+		
 		
 		AcademyBean bean = dao.getAcademyContent(boardNum);
 		int count = rdao.getAcademyReviewCount(boardNum);
-		double avgScore =  (int)(rdao.getAvgReviewScore(boardNum)*5)/100.0;
+		List<AcademyKeywordBean> keyList = null;
+		keyList = akdao.getAcademyKeyword(boardNum);
+		for(int i=0;i<keyList.size();i++){
+			
+		}
+		
+		double avgScore = 
+				Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(boardNum)));
+
 		System.out.println(avgScore);
 		//  한 페이지에 4개 글 목록 반환
 		int pageSize = 4;
@@ -72,6 +92,7 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("avgScore", avgScore);
 		request.setAttribute("iAvgScore", iAvgScore);
+		request.setAttribute("keyList", keyList);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

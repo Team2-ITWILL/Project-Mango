@@ -75,8 +75,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	
 	// 평균 후기점수 반환
-	public int getAvgReviewScore(int boardNum){
-		int result = 0;
+	public double getAvgReviewScore(int boardNum){
+		double result = 0;
 		
 		try {
 			getConnection();
@@ -87,7 +87,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
-				result = rs.getInt(1);
+				result = rs.getDouble(1);
 			}
 			
 		} catch (Exception e) {
