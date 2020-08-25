@@ -1,5 +1,7 @@
 package mango.member.db;
 
+import java.util.Date;
+
 // 회원 테이블 
 public class MemberBean {
 
@@ -17,7 +19,7 @@ public class MemberBean {
     private String memAdmin;
 
     // 가입일자 
-    private String memJoindate;
+    private Date memJoindate;
 
     // 계정정지일자 
     private String memBaned;
@@ -25,64 +27,22 @@ public class MemberBean {
     // 탈퇴일자 
     private String memSeceded;
 
-
-
-    public String getMemEmail() {
-        return memEmail;
-    }
-
-    public void setMemEmail(String memEmail) {
-        this.memEmail = memEmail;
-    }
-
-    public String getMemName() {
-        return memName;
-    }
-
-    public void setMemName(String memName) {
-        this.memName = memName;
-    }
-
-    public String getMemPwd() {
-        return memPwd;
-    }
-
-    public void setMemPwd(String memPwd) {
-        this.memPwd = memPwd;
-    }
-
-    public String getMemAdmin() {
-        return memAdmin;
-    }
-
-    public void setMemAdmin(String memAdmin) {
-        this.memAdmin = memAdmin;
-    }
-
-    public String getMemJoindate() {
-        return memJoindate;
-    }
-
-    public void setMemJoindate(String memJoindate) {
-        this.memJoindate = memJoindate;
-    }
-
-    public String getMemBaned() {
-        return memBaned;
-    }
-
-    public void setMemBaned(String memBaned) {
-        this.memBaned = memBaned;
-    }
-
-    public String getMemSeceded() {
-        return memSeceded;
-    }
-
-    public void setMemSeceded(String memSeceded) {
-        this.memSeceded = memSeceded;
-    }
-
+	public String getMemEmail() {return memEmail;}
+	public String getMemName() {return memName;}
+	public String getMemPwd() {	return memPwd;}
+	public String getMemAdmin() {return memAdmin;}
+	public Date getMemJoindate() {return memJoindate;}
+	public String getMemBaned() {return memBaned;}
+	public String getMemSeceded() {return memSeceded;}
+	
+	public void setMemEmail(String memEmail) {this.memEmail = memEmail;}
+	public void setMemName(String memName) {this.memName = memName;}
+	public void setMemPwd(String memPwd) {this.memPwd = memPwd;}
+	public void setMemAdmin(String memAdmin) {this.memAdmin = memAdmin;}
+	public void setMemJoindate(Date memJoindate) {this.memJoindate = memJoindate;}
+	public void setMemBaned(String memBaned) {this.memBaned = memBaned;}
+	public void setMemSeceded(String memSeceded) {this.memSeceded = memSeceded;}
+	
 	@Override
 	public String toString() {
 		return "MemberBean [memEmail=" + memEmail + ", memName=" + memName + ", memPwd=" + memPwd + ", memAdmin="

@@ -4,41 +4,32 @@ import mango.connection.db.DBconnection;
 
 public class MemberDAO extends DBconnection{
 	
-	DBconnection conn = new DBconnection();
-	
-	// DB 연결 해제 메서드 오버라이딩
-	@Override
-	protected void resourceClose() {
-	} // resourceClose() 끝
-
-	
-	// DB 연결 메서드 오버라이딩
-	@Override
-	protected void getConnection() throws Exception {
-	} // getConnection() 끝
-
-	
 	/* 회원 가입  메서드 */
-	public void insertMember(MemberBean mb){
+	public boolean insertMember(MemberBean mb){
+		
+		int result = 0;
 		
 		try {
 			getConnection();
 			System.out.println("DB 연결 성공 !!");
 			
-			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, mem_admin, "
-					+ "mem_joindate, mem_baned)"
-					+ " VALUES (?,?,?,?,now(),?)";
+			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, "
+					+ "mem_joindate)"
+					+ " VALUES (?,?,?,now())";
 
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, mb.getMemEmail());
 			pstmt.setString(2, mb.getMemName());
 			pstmt.setString(3, mb.getMemPwd());
-			pstmt.setString(4, mb.getMemAdmin());
-			pstmt.setString(5, mb.getMemJoindate());
-			pstmt.setString(6, mb.getMemBaned());
 			
-			pstmt.executeUpdate();
+			System.out.println(mb);
+			
+			result = pstmt.executeUpdate();
+			
+			if(result != 0){
+				return true;
+			}
 			
 			System.out.println("회원 가입 완료 !!");
 			
@@ -49,6 +40,7 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		} // try문 끝
 		
+		return false;
 	} // 회원 가입 / insertMember() 끝
 	
 	

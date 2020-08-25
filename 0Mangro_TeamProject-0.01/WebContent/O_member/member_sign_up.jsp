@@ -72,7 +72,7 @@
 			}
 			
 			// 이용약관 체크박스
-			if(!($("#yackuan-check").is("checked")) ){
+			if(!($("#yackuan-check").is(":checked")) ){
 				alert("이용 약관에 동의해주세요.")
 				$("#yackuan-check").focus();
 				return false;
@@ -93,7 +93,7 @@
 						
 						
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-					      <form class="sign_upClass" action="" method="post" id="join" onsubmit="check()">
+					      <form class="sign_upClass" action="./MemberJoinAction.me" method="post" id="join" onsubmit="check()">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>아래 3개 필수 데이터를 모두 입력해주세요.</p>
@@ -199,7 +199,7 @@
 					          	<a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a>
 					        </div> 
 					        <div class="col-5 text-right">
-					          <button type="submit" class="btn btn-primary">가입하기</button>
+					          <input type="submit" class="btn btn-primary" value="가입">
 					        </div>
 					
 					      </div>
