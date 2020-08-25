@@ -1,5 +1,6 @@
 package mango.audit_request.db;
 
+import java.util.Date;
 
 public class AuditRequestBean {
 
@@ -19,19 +20,19 @@ public class AuditRequestBean {
     private String auditSubject;
 
     // 청강신청일자 
-    private String auditRequestDate;
+    private Date auditRequestDate;
 
     // 청강희망일자 
-    private String auditWishDate;
+    private Date auditWishDate;
 
     // 청강승인일자 
-    private String auditConfirmDate;
+    private Date auditConfirmDate;
     
     public AuditRequestBean(){ }
     public AuditRequestBean(
     		int auditNum, String memEmail, 
     		int acaNum, String acaName, String auditSubject,
-    		String auditRequestDate, String auditWishDate, String auditConfirmDate
+    		Date auditRequestDate, Date auditWishDate, Date auditConfirmDate
     		){
     	this.auditNum = auditNum;
     	this.memEmail = memEmail;
@@ -43,70 +44,57 @@ public class AuditRequestBean {
     	this.auditConfirmDate = auditConfirmDate;
     	
     }
+    
+    
+	public int getAuditNum() {
+		return auditNum;
+	}
+	public void setAuditNum(int auditNum) {
+		this.auditNum = auditNum;
+	}
+	public String getMemEmail() {
+		return memEmail;
+	}
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+	}
+	public int getAcaNum() {
+		return acaNum;
+	}
+	public void setAcaNum(int acaNum) {
+		this.acaNum = acaNum;
+	}
+	public String getAcaName() {
+		return acaName;
+	}
+	public void setAcaName(String acaName) {
+		this.acaName = acaName;
+	}
+	public String getAuditSubject() {
+		return auditSubject;
+	}
+	public void setAuditSubject(String auditSubject) {
+		this.auditSubject = auditSubject;
+	}
+	public Date getAuditRequestDate() {
+		return auditRequestDate;
+	}
+	public void setAuditRequestDate(Date auditRequestDate) {
+		this.auditRequestDate = auditRequestDate;
+	}
+	public Date getAuditWishDate() {
+		return auditWishDate;
+	}
+	public void setAuditWishDate(Date auditWishDate) {
+		this.auditWishDate = auditWishDate;
+	}
+	public Date getAuditConfirmDate() {
+		return auditConfirmDate;
+	}
+	public void setAuditConfirmDate(Date auditConfirmDate) {
+		this.auditConfirmDate = auditConfirmDate;
+	}
 
-    public int getAuditNum() {
-        return auditNum;
-    }
-
-    public void setAuditNum(int auditNum) {
-        this.auditNum = auditNum;
-    }
-
-    public String getMemEmail() {
-        return memEmail;
-    }
-
-    public void setMemEmail(String memEmail) {
-        this.memEmail = memEmail;
-    }
-
-    public int getAcaNum() {
-        return acaNum;
-    }
-
-    public void setAcaNum(int acaNum) {
-        this.acaNum = acaNum;
-    }
-
-    public String getAcaName() {
-        return acaName;
-    }
-
-    public void setAcaName(String acaName) {
-        this.acaName = acaName;
-    }
-
-    public String getAuditSubject() {
-        return auditSubject;
-    }
-
-    public void setAuditSubject(String auditSubject) {
-        this.auditSubject = auditSubject;
-    }
-
-    public String getAuditRequestDate() {
-        return auditRequestDate;
-    }
-
-    public void setAuditRequestDate(String auditRequestDate) {
-        this.auditRequestDate = auditRequestDate;
-    }
-
-    public String getAuditWishDate() {
-        return auditWishDate;
-    }
-
-    public void setAuditWishDate(String auditWishDate) {
-        this.auditWishDate = auditWishDate;
-    }
-
-    public String getAuditConfirmDate() {
-        return auditConfirmDate;
-    }
-
-    public void setAuditConfirmDate(String auditConfirmDate) {
-        this.auditConfirmDate = auditConfirmDate;
-    }
-
+   
  
 }

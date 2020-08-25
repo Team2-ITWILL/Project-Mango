@@ -1,5 +1,6 @@
 package mango.audit_request.db;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 						rs.getInt(3),
 						rs.getString(4),
 						rs.getString(5),
-						rs.getString(6),
-						rs.getString(7),
-						rs.getString(7)
+						rs.getDate(6),
+						rs.getDate(7),
+						rs.getDate(8)
 						);
 				list.add(bean);
 			}
@@ -63,18 +64,18 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			
 			pstmt = con.prepareStatement(sql);	
 			
-			System.out.println(insert.getMemEmail());
-			System.out.println(insert.getAcaNum());
-			System.out.println(insert.getAcaName());
-			
+//			System.out.println(insert.getMemEmail());
+//			System.out.println(insert.getAcaNum());
+//			System.out.println(insert.getAcaName());
+
 			
 			pstmt.setString(1, insert.getMemEmail());
 			pstmt.setInt(2, insert.getAcaNum());
 			pstmt.setString(3, insert.getAcaName());
 			pstmt.setString(4, insert.getAuditSubject());
-			pstmt.setString(5, insert.getAuditWishDate());
-			pstmt.setString(6, insert.getAuditRequestDate());		
-			pstmt.setString(7, insert.getAuditConfirmDate());		
+			pstmt.setDate(5, insert.getAuditWishDate());
+			pstmt.setDate(6, insert.getAuditRequestDate());		
+			pstmt.setDate(7, null);		//가입승인날짜는 최초에 null
 			
 			result = pstmt.executeUpdate();
 			
@@ -101,8 +102,26 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 
 	@Override
 	public int ApprovalAudit(AuditRequestBean app) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = 0;
+		try {
+			getConnection();
+			String sql = "update audit_request "
+					+ "set audit_confirm_date now() "
+					+ "where aca_num = ?";
+			
+			pstmt = con.prepareStatement(sql);	
+			pstmt.setInt(1, app.getAcaNum());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("ApprovalAudit()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return result;
 	}
 
 }

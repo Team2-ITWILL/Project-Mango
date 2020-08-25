@@ -338,7 +338,7 @@
                                        </c:forEach> 
                                        
                                        
-                                        <tr>
+                                        <!-- <tr>
                                             <th scope="row">12345678</th>
                                             <td>user1@naver.com</td>
                                             <td>456541</td>
@@ -387,7 +387,7 @@
 	                                            	<input type="radio" name="a">
                                             	</label>
                                             </td>
-                                        </tr>
+                                        </tr> -->
 
                                     </tbody>
                                 </table>

@@ -1,5 +1,7 @@
 package mango.audit_management.db;
 
+import java.util.Date;
+
 public class AuditManagementBean {
 	
 	// 학원지정번호 
@@ -12,7 +14,7 @@ public class AuditManagementBean {
     private String auditAvailSubj;
 
     // 청강가능일시 
-    private String auditAvailDate;
+    private Date auditAvailDate;
 
     // 해당 수업지속시간 
     private int auditLastTime;
@@ -52,11 +54,11 @@ public class AuditManagementBean {
         this.auditAvailSubj = auditAvailSubj;
     }
 
-    public String getAuditAvailDate() {
+    public Date getAuditAvailDate() {
         return auditAvailDate;
     }
 
-    public void setAuditAvailDate(String auditAvailDate) {
+    public void setAuditAvailDate(Date auditAvailDate) {
         this.auditAvailDate = auditAvailDate;
     }
 

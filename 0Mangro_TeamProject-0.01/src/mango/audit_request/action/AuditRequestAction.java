@@ -1,6 +1,8 @@
 package mango.audit_request.action;
 
-import java.io.PrintWriter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +19,12 @@ public class AuditRequestAction implements Action{
 		
 		//System.out.print("AuditRequestAction 실행");		
 		
+		String audit_wish_date = request.getParameter("audit_wish_date");
+		String audit_request_date = request.getParameter("audit_request_date");
+		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		Date date = format.parse(audit_wish_date);
+		
 		AuditRequestDAO dao = new AuditRequestDAO();			
-	
-		String auditConfirmDate = request.getParameter("audit_request_date");
 		
 		AuditRequestBean bean 
 		 = new AuditRequestBean(
@@ -37,10 +42,10 @@ public class AuditRequestAction implements Action{
 				 "(주)그루샘수학보습학원",		
 				 "hihi",
 				
-				
-				 request.getParameter("audit_request_date"),
-				 request.getParameter("audit_wish_date"),
-				 auditConfirmDate			 
+				 
+				 (Date)request.getParameter("audit_request_date"),
+				 (Date)request.getParameter("audit_wish_date"),
+				 null			 
 				 );
 		
 		int result = dao.InsertAudit(bean);	
