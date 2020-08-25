@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <!-- <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css"> -->
@@ -82,6 +83,12 @@
 			
 	}); // check() 끝
 		
+	
+	// ------- [ 네이버 아이디로 로그인 초기화 Script ] ---------
+	
+		
+	// --------- [ 네이버 아이디로 로그인 초기화 Script ] ---------
+	
 </script>
 
 
@@ -98,7 +105,7 @@
 					      <div class="mb-5 mt-2">
 					        <p>아래 3개 필수 데이터를 모두 입력해주세요.</p>
 					      </div>
-					      <div class="social_signup">네이버로 가입하기</div> <br>
+					     <div class="social_signup" id="naverIdLogin">네이버로 가입하기</div> <br>
 					
       
       <!-------------------------------------------- [이름, 이메일, 비밀번호 입력창] -------------------------------------------->
@@ -115,7 +122,7 @@
 					      <!-- 이름 -->
 					      <div class="form-group">
 						        <label class="form-label" for="id_name">이름</label>
-						        <input type="text" class="form-control is-valid" name="" id="id_name" placeholder="이름" aria-label="Email address"
+						        <input type="text" class="form-control is-valid" name="id_name" id="id_name" placeholder="이름" aria-label="Email address"
 						               required
 						               data-msg="이름을 입력해주세요."
 						               data-error-class="form-error"
@@ -126,7 +133,7 @@
 					      <!-- 이메일 -->
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일</label>
-						        <input type="email" class="form-control is-invalid" name="" id="id_email" placeholder="이메일" 
+						        <input type="email" class="form-control is-invalid" name="id_email" id="id_email" placeholder="이메일" 
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"> 
@@ -156,7 +163,7 @@
 					          <span class="d-flex justify-content-between align-items-center">비밀번호</span>
 					        </label>
 					        
-					        <input type="password" class="form-control" name="" id="id_password1" placeholder="********"
+					        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
 					               aria-label="********" required
 					               data-msg="올바른 비밀번호를 입력해주세요."
 					               data-error-class="form-error"
@@ -167,7 +174,7 @@
 					          <span class="d-flex justify-content-between align-items-center">비밀번호 확인</span>
 					        </label>
 					        
-					        <input type="password" class="form-control" name="" id="id_password2" placeholder="********"
+					        <input type="password" class="form-control" name="id_password2" id="id_password2" placeholder="********"
 					               aria-label="********" required
 					               data-msg="비밀번호가 일치하지 않습니다."
 					               data-error-class="form-error"
@@ -199,7 +206,7 @@
 					          	<a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a>
 					        </div> 
 					        <div class="col-5 text-right">
-					          <input type="submit" class="btn btn-primary" value="가입">
+					          <input type="submit" class="btn btn-primary" value="가입하기">
 					        </div>
 					
 					      </div>
