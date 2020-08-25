@@ -1,5 +1,6 @@
 package mango.audit_request.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mango.connection.db.DBconnection;
@@ -7,9 +8,39 @@ import mango.connection.db.DBconnection;
 public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 
 	@Override
-	public List<AuditRequestBean> getAuditList(AuditRequestBean aab) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AuditRequestBean> getAuditList(AuditRequestBean aab) {		
+		List<AuditRequestBean> list = new ArrayList<AuditRequestBean>();
+		try {
+			getConnection();
+			String sql = "select * from audit_request "
+					+ "where aca_num=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, aab.getAcaNum());
+			
+			rs = pstmt.executeQuery();		
+			
+			AuditRequestBean bean;
+			while(rs.next()){
+				bean = new AuditRequestBean(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(7)
+						);
+				list.add(bean);
+			}
+		
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}	
+		return list;	
 	}
 
 	@Override

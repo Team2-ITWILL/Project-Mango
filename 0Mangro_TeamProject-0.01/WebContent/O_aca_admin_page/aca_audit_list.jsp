@@ -56,7 +56,8 @@
   	.audit_yes {background-color: #378ffd;}
   	.audit_no {background-color: #fff; border: 1px solid; color: #000;}
   
-  </style>  
+  </style>  	
+ 
     
 </head>
 
@@ -227,8 +228,11 @@
 							</a>
 						</li>
 						
+						<!-- 청강신청현황 버튼 클릭 시 AuditList 가져오는 서블릿 페이지 실행 -->
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_aca_admin_page/aca_audit_list.jsp"
+                       <!--  href="4index.jsp?center=O_aca_admin_page/aca_audit_list.jsp" -->
+                        	<a class="sidebar-link sidebar-link" 
+                        		href="../ListAction.adrq"
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>
@@ -310,6 +314,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    	<c:forEach var="list" items="${requestScope.AuditList}">                                    
+                                        <tr>
+                                            <th scope="row">${list.auditNum}</th>
+                                            <td>${list.memEmail}</td>
+                                            <td>${list.acaNum}</td>
+                                            <td>${list.acaName}</td>
+                                            <td>${list.auditSubject}</td>
+                                            <td>${list.auditRequestDate}</td>
+                                            <td>${list.auditWishDate}</td>
+                                            <td>${list.auditConfirmDate}</td>
+                                            <td>
+                                            	<label class="audit_yes">승인
+	                                            	<input type="radio" name="a" >
+                                            	</label>
+                                            </td>
+                                            <td>
+                                            	<label class="audit_no">취소
+	                                            	<input type="radio" name="a">
+                                            	</label>
+                                            </td>
+                                        </tr>                                        
+                                       </c:forEach> 
+                                       
+                                       
                                         <tr>
                                             <th scope="row">12345678</th>
                                             <td>user1@naver.com</td>
