@@ -87,7 +87,8 @@ public class AnonyBoardBean{
 	}
 	
 	
-	@Override
+
+
 	public String toString() {
 		return "AnonyBoardBean [ano_board_num=" + ano_board_num + ", mem_email=" + mem_email + ", ano_board_title="
 				+ ano_board_title + ", ano_board_content=" + ano_board_content + ", ano_board_read=" + ano_board_read
@@ -95,6 +96,7 @@ public class AnonyBoardBean{
 	}
 	
 	
+
 	
 
 	
