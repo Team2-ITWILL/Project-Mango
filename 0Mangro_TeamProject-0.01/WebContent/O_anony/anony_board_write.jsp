@@ -78,28 +78,41 @@
 			<div class="row">
 				<div class="col">
 					<div class="section_title_container text-center">
-						<h4 class="section_title">글쓰기</h4>
+						<h4 class="section_title">익명사담방 글쓰기</h4>
 							<br>
 <!-------------------------------------------------------- [글쓰기 영역 (form)] ----------------------------------------------------------->
-					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" action="" method="post" enctype="multipart/form-data">
+					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
+					      
+					         <!-- 세션에 있는 멤버email계정  -->
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" >
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
+							        <!-- 닉네임 -->
+								        <label
+								         class="form-label" for="anony_title">닉네임 : 글 다 쓰면 공개</label>
+								        <input type="hidden" class="form-control" name="ano_board_nick" id="anony_title" 
+								               value="${nick}" readonly> 
+								    </div>
+								    
+								    <!-- ---------------------------------------------------- -->
+								    
+							        <div class="form-group mb-8">
 							        <!-- 제목 -->
 								        <label class="form-label" for="anony_title">제목</label>
-								        <input type="text" class="form-control" name="" id="anony_title" 
-								               value="${requestScope.member_email  }" placeholder="제목을 입력해 주세요."> 
+								        <input type="text" class="form-control" name="ano_board_title" id="anony_title" 
+								               placeholder="제목을 입력해 주세요."> 
 								    </div>
 								    
 							        <div class="form-group mb-8">
 							        	<label class="form-label" for="anony_content">본문</label>
-										<textarea name="text" class="form-control" placeholder="내용을 입력해주세요." data-msg="내용을 입력해주세요." 
+										<textarea name="ano_board_content" class="form-control" placeholder="내용을 입력해주세요." data-msg="내용을 입력해주세요." 
 										rows="10" required id="id_text"></textarea>
 		       						</div>
 				       							 
 							        	<label class="form-label" for="anony_file">파일업로드</label>
 						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
+						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf"  multiple="">
 							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
 
 						                	
