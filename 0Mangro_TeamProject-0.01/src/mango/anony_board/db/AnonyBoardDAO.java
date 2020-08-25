@@ -31,7 +31,11 @@ public class AnonyBoardDAO {
 	private Connection getConnection() throws Exception {
 		con = null;
 		Context init = new InitialContext();
-		ds = (DataSource) init.lookup("java:comp/env/jdbc/mango");
+
+
+
+		ds = (DataSource) init.lookup("java:comp/env/mango");
+
 		
 		con = ds.getConnection();
 		
@@ -71,7 +75,9 @@ public class AnonyBoardDAO {
 	
 	
 	// [INSERT 게시판 글 저장 메소드]
-	public void InsertANBoard(AnonyBoardBean anb){
+
+	public void insertANBoard(AnonyBoardBean anb){
+
 		
 		int num = 0;
 		
@@ -80,12 +86,13 @@ public class AnonyBoardDAO {
 			sql = "INSERT INTO anony_board "
 				 + "(ano_board_num, " 
 				 + " mem_email, " 
-			+		"ano_board_title, " 
-			+		"ano_board_content, "
-			+		"ano_board_read, "
-			+		"ano_board_date, "
-			+		"ano_board_ip) "
-			+		"VALUES(?,?,?,?,?,?,?)"; 
+				 + "ano_board_title, " 
+				 + "ano_board_content, "
+				 + "ano_board_read, "
+				 + "ano_board_date, "
+				 + "ano_board_ip) "
+				 + "VALUES(?,?,?,?,?,?,?)"; 
+
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -119,6 +126,7 @@ public class AnonyBoardDAO {
 	public void updateANBoardRead(int ano_board_num){
 		try {
 			con = getConnection();
+
 			sql = "UPDATE anony_board "
 					+ "SET ano_board_read=ano_board_read + 1 "
 					+ "WHERE ano_board_num = ?";
@@ -144,7 +152,9 @@ public class AnonyBoardDAO {
 	
 	
 	// [게시판 글 삭제] : 비밀번호 없이 글번호만 매개변수로 전달받음.
-	public void DeleteANBoard(int ano_board_num){
+
+	public void deleteANBoard(int ano_board_num){
+
 		
 		try {
 			
@@ -221,7 +231,10 @@ public class AnonyBoardDAO {
 		
 		try {
 			con = getConnection();
-			sql = "SELECT * FROM anony_board ";
+
+			sql = "SELECT * FROM anony_board "
+					+ "ORDER BY ano_board_num desc";
+
 			pstmt = con.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -243,7 +256,9 @@ public class AnonyBoardDAO {
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList()메소드 쿼리에서 예외 발생 : "+ e);				
-			
+
+			e.printStackTrace();
+      
 		} finally {
 			resourceClose();
 		}

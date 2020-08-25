@@ -43,7 +43,16 @@ public class AuditMangementFrontController  extends HttpServlet{
 		Action action=null;
 	
 		
-		
+		if(command.equals("/auditInfoRegister.adma")){			
+			try {
+				action = new AuditInfoRegisterAction();
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
 		

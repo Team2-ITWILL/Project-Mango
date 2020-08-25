@@ -43,10 +43,25 @@ public class AnonyBoardFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		
-		
-		
-		
+		if(command.equals("/AnoBoard.anob")){
+			action = new AnonyBoardListAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /noBoard.anob에서 예외");
+				e.printStackTrace();
+			}
+		}else if(command.equals("/AnoBoardWriteView.anob")){
+			String member_email = "new_face12";
+			request.setAttribute("member_email", member_email);
+			System.out.println("/AnoBoardWriteView.anob로 "+member_email+" 전송");
+			
+			forward = new ActionForward();
+			System.out.println(forward);
+			forward.setRedirect(false);
+			forward.setPath("4index.jsp?center=O_anony/anony_board_write.jsp?member_email="+member_email);
+			
+		}
 		
 		
 		

@@ -1,3 +1,4 @@
+
 package mango.payment.action;
 
 import java.io.PrintWriter;
@@ -73,5 +74,7 @@ public class InsertPaymentAction implements Action{
 	
 	
 	
+
 	
 }
+

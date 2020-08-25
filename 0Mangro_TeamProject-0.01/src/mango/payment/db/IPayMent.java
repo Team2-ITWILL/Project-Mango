@@ -1,3 +1,4 @@
+
 package mango.payment.db;
 
 import org.json.simple.JSONArray;
@@ -15,3 +16,4 @@ public interface IPayMent {
 	//자신의 사용권리스트를 갖고오는
 	public JSONArray getListMyPayMent(PaymentBean mypay);
 }
+
