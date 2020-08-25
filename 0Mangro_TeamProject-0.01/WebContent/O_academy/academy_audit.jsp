@@ -62,7 +62,7 @@
 					      </div>
 				      
 				      <!-- form 시작 -->
-				      <form class="sign_upClass" action="" method="post">
+				      <form class="sign_upClass" action="./request.adrq" method="post">
 				      
 				      	  <!-- 학원지정번호 hidden으로 보내기 -->
 					        <input type="hidden" class="form-control" name="aca_num" readonly> 

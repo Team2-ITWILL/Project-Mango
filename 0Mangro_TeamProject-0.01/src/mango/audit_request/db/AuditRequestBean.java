@@ -26,6 +26,23 @@ public class AuditRequestBean {
 
     // 청강승인일자 
     private String auditConfirmDate;
+    
+    public AuditRequestBean(){ }
+    public AuditRequestBean(
+    		int auditNum, String memEmail, 
+    		int acaNum, String acaName, String auditSubject,
+    		String auditRequestDate, String auditWishDate, String auditConfirmDate
+    		){
+    	this.auditNum = auditNum;
+    	this.memEmail = memEmail;
+    	this.acaNum = acaNum;
+    	this.acaName = acaName;
+    	this.auditSubject = auditSubject;
+    	this.auditRequestDate = auditRequestDate;
+    	this.auditWishDate = auditWishDate;
+    	this.auditConfirmDate = auditConfirmDate;
+    	
+    }
 
     public int getAuditNum() {
         return auditNum;
