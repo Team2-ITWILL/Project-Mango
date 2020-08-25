@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원가입</title>
+<title>망고 - 로그인</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Unicat project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,61 @@
 
 </head>
 <body>
+<script type="text/javascript">
+
+	/* 로그인 아이디, 비밀번호 필수 입력 확인 */
+	$(function loginCheck() {
+		
+		$("#login").submit(function(){
+			
+			// 이메일
+			if($("#id_email").val() == ""){
+				alert("이메일을 입력하세요.");
+				$("#id_email").focus();
+				return false;
+			}
+			
+			if($("#id_password1").val() == ""){
+				alert("비밀번호를 입력하세요.");
+				$("#id_password1").focus();
+				return false;
+			}
+
+			
+		/* 이메일 기억하기  */
+		$(function remember(){
+			
+			$("#id_email").val(Cookies.get('key'));
+			
+			if($("#id_email").val != "") $().attr("checked", true);
+				
+			$("#rememberid").change(function(){
+				
+				if($("#rememberid").is(":checked")) 
+					Cookies.set('key', $("#id").val(), 
+					{expires:900});
+				else Cookies.remove('key');
+				
+			}); // change() 끝
+				
+			$("#rememberid").keyup(function(){
+				
+				if($("#rememberid").is(":checked"))
+					Cookies.set('key', $("#id_email").val(),
+					{expires:900});
+					
+			}); // keyup() 끝
+			
+		  }); // remember() 끝
+		
+	   }); // submit() 끝
+		
+	}); // loginCheck() 끝
+
+</script>
+
+
+
 
 		<div class="container">
 			<div class="row">
@@ -35,7 +90,7 @@
 
 
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-			      <form class="sign_upClass" action="" method="post">
+			      <form class="sign_upClass" action="" method="post" id="login" onsubmit="loginCheck()">
 				      
 				      <div class="mb-5 mt-2">
 				        <p>반갑습니다. 로그인하고 Mango를 시작해보세요.</p>
