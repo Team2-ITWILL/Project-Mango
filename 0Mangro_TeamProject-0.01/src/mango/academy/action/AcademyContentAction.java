@@ -26,6 +26,8 @@ public class AcademyContentAction implements Action{
 		
 		AcademyBean bean = dao.getAcademyContent(boardNum);
 		int count = rdao.getAcademyReviewCount(boardNum);
+		double avgScore =  (int)(rdao.getAvgReviewScore(boardNum)*5)/100.0;
+		System.out.println(avgScore);
 		//  한 페이지에 4개 글 목록 반환
 		int pageSize = 4;
 		
@@ -57,6 +59,8 @@ public class AcademyContentAction implements Action{
 		if(endPage > pageCount){
 			endPage = pageCount;
 		}
+		int iAvgScore = (int)avgScore;
+		System.out.println(iAvgScore);
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
@@ -66,6 +70,8 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("pageBlock", pageBlock);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
+		request.setAttribute("avgScore", avgScore);
+		request.setAttribute("iAvgScore", iAvgScore);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

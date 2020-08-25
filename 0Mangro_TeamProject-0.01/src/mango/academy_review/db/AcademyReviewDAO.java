@@ -60,12 +60,14 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 				arBean.setReviewSubject(rs.getString(7));
 				arBean.setReviewScore(rs.getInt(8));
 				arBean.setMemEmail(rs.getString(9));
-				arBean.setReviewDate(rs.getString(10));
+				arBean.setReviewDate( rs.getString(10).substring(0, 10));
 				reviewList.add(arBean);
 			}
 		} catch (Exception e) {
 			System.out.println("getAcademyReviewList()에서 예외 발생");
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return reviewList;
@@ -73,8 +75,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	
 	// 평균 후기점수 반환
-	public int getAvgReviewScore(AcademyReviewBean ab){
-		int AcaNum = ab.getAcaNum();
+	public int getAvgReviewScore(int boardNum){
 		int result = 0;
 		
 		try {
@@ -82,7 +83,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			sql = "select avg(review_score) from academy_review group by aca_num having aca_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, AcaNum);
+			pstmt.setInt(1, boardNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -92,27 +93,56 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAvgReviewScore()에서 예외발생");
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		return result;
 	} // getAvgReviewScore() 끝
 	
 	@Override
 	public int InsertAcademyReview(AcademyReviewBean ab) {
-		// TODO Auto-generated method stub
+
+		try {
+			getConnection();
+		} catch (Exception e) {
+			System.out.println("InsertAcademyReview()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
 		return 0;
-	}
+	} // InsertAcademyReview() 끝
 
 	@Override
 	public int DeleteAcademyReview(AcademyReviewBean ab) {
-		int reNum = ab.getReviewNum();
+
+		try {
+			getConnection();
+		} catch (Exception e) {
+			System.out.println("DeleteAcademyReview()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
 		return 0;
-	}
+	} // DeleteAcademyReview()끝
 
 	@Override
 	public int UpdateAcademyReview(AcademyReviewBean ab) {
-		// TODO Auto-generated method stub
+
+		try {
+			getConnection();
+		} catch (Exception e) {
+			System.out.println("UpdateAcademyReview()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
 		return 0;
-	}
+	} //UpdateAcademyReview() 끝
 
 
 	

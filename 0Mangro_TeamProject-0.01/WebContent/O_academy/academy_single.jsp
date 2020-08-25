@@ -4,6 +4,8 @@
 <html lang="ko">
 <head> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <head>
 <title>Course Details</title>
 <meta charset="utf-8">
@@ -139,12 +141,11 @@
 						</div>
 						<div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 
-
-
+						
 							<!-- Course Info Item -->
 							<div class="course_info_item">
 								<div class="course_info_title">평점</div>
-								<div class="rating_r rating_r_4"><i></i><i></i><i></i><i></i><i></i></div>
+								<div class="rating_r rating_r_${iAvgScore}"><i></i><i></i><i></i><i></i><i></i></div>
 							</div>
 
 							<!-- Course Info Item -->
@@ -366,11 +367,11 @@
 									<!-- Rating -->
 									<div class="review_rating_container">
 										<div class="review_rating">
-											<div class="review_rating_num">4.5</div>
+											<div class="review_rating_num">${avgScore}</div>
 											<div class="review_rating_stars">
-												<div class="rating_r rating_r_4"><i></i><i></i><i></i><i></i><i></i></div>
+												<div class="rating_r rating_r_${iAvgScore}"><i></i><i></i><i></i><i></i><i></i></div>
 											</div>
-											<div class="review_rating_text">28 개의 평가</div>
+											<div class="review_rating_text">${count}개의 평가</div>
 										</div>
 										<div class="review_rating_bars">
 											<ul>
@@ -385,6 +386,7 @@
 									
 								<!-- 등록된 후기가 없을 경우 -->
 								
+							<c:if test="${count eq '0'}">
 								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
@@ -393,21 +395,31 @@
 									<div class="tab_panel_registerBtn"
 										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
 									
+							</c:if>
+							<c:if test="${count eq null}">
+								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
+									<div class="tab_panel_content">
+										<div class="tab_panel_text">
+											<p>이 학원의 후기를 작성해 보세요!</p>
+										</div>
+									<div class="tab_panel_registerBtn"
+										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
 									
-									
+							</c:if>				
 									<!-- Comments -->
 									<div class="comments_container">
 										<ul class="comments_list">
 										
 										<!--------------------------------  ▼ 후기 1개 영역-------------------------------------->
+										<c:forEach var="reBean" items="${reList}">
 											<li>
 												<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 													<div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div>
 													<div class="comment_content">
 														<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
-															<div class="comment_author"><a href="#">주차장이 있어서 편리해요.</a></div>
+															<div class="comment_author"><a href="#">${reBean.reviewTitle}</a></div>
 															<div class="comment_rating"><div class="rating_r rating_r_4"><i></i><i></i><i></i><i></i><i></i></div></div>
-															<div class="comment_time ml-auto">2020-09-15</div>
+															<div class="comment_time ml-auto">${reBean.reviewDate}</div>
 														</div>
 														<div class="comment_text">
 															결제안한 회원에게 보이는 형태
@@ -416,13 +428,10 @@
 															<!-- 유료회원이면 보이는 형태 -->
 															
 																<p><span class="strength">장점</span><br>
-																	There are many variations of passages of Lorem Ipsum available, 
+																	${reBean.reviewGood}
 																</p>
 																<p><span class="weakness">단점</span><br>
-																	There are many variations of passages of Lorem Ipsum a 
-																	but the majority have alteratio
-																	There are many variations of passages of Lorem Ipsum a
-																	but the majority have alteration in some form, by injected hum
+																	${reBean.reviewBad}
 																</p>
 															
 															</div>
@@ -437,6 +446,7 @@
 													</div>
 												</div>
 											</li>
+										</c:forEach>
 										<!--------------------------------  ▲ 후기 1개 영역-------------------------------------->
 											
 										<!--------------------------------  ▼ 후기 1개 영역-------------------------------------->
