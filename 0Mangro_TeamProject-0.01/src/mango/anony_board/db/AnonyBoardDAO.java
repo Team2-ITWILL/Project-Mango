@@ -1,88 +1,73 @@
 package mango.anony_board.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
-
+import mango.connection.db.DBconnection;
 
 
 // 1. 게시판 insert
 // 2. 게시판 delete
 // 3. 게시글 조회수 증가
-// 4. 해당 글 넘버의 글정보 가져오기
-public class AnonyBoardDAO {
-	// [멤버변수 선언]
-	Connection con;
-	DataSource ds;
-	String sql;
-	PreparedStatement pstmt;
-	ResultSet rs;
+// 4. 해당 글 넘버의 글정보 가져오기(글 1개)
+// 5. 익명게시판 전체 글 가져오기(글 목록)
+// 6. 익명게시판 전체 글개수 가져오기
+public class AnonyBoardDAO extends DBconnection {
 	
-	
-	// [DB연결 공통메소드]
-	private Connection getConnection() throws Exception {
-		con = null;
-		Context init = new InitialContext();
 
-
-
-		ds = (DataSource) init.lookup("java:comp/env/mango");
-
+	// 1-1.[랜덤 닉네임] :  AnoBoardWriteAction에서 호출
+	public String getRandomNickname(){
+		String nick = ""; // 1번 리스트의 단어 
 		
-		con = ds.getConnection();
 		
-		return con;
-		
-	}//getConnection()------------------------------------
-	
-	
-	
-	
-	
-	// [공용 자원해제 메소드]
-	public void resourceClose(){
-		// ResultSet 자원해제
-		try{
-			if(rs != null) rs.close();
-		}catch(Exception e){
-			System.out.println("ResultSet 자원해제 중 예외 발생 !");
+		try {
+			
+			List<String> list1 = new ArrayList<String>();
+			list1.add("행복한"); list1.add("좋은"); list1.add("멋진"); list1.add("감회가 새로운"); list1.add("기대되는");
+			list1.add("별난"); list1.add("종속적인"); list1.add("웃긴"); list1.add("뒤틀린"); list1.add("좋아하는");
+			list1.add("행복한"); list1.add("좋은"); list1.add("감기에 걸린"); list1.add("아이스크림이 먹고싶은"); list1.add("질색하는");
+			list1.add("귀여운"); list1.add("예쁜 마음의"); list1.add("잠을 못 잔"); list1.add("지겨운"); list1.add("이상적인");
+			
+			List<String> list2 = new ArrayList<String>();
+			list2.add("사자"); list2.add("노자"); list2.add("노스트라다무스"); list2.add("오라클"); list2.add("돼지"); list2.add("뉴런");
+			list2.add("우산"); list2.add("가우시안"); list2.add("빅터"); list2.add("띵문"); list2.add("개발자"); list2.add("주머니");
+			list2.add("아메리카노"); list2.add("무말랭이"); list2.add("우주의 먼지"); list2.add("표준편차"); list2.add("닭발"); list2.add("토끼");
+			list2.add("빗자루"); list2.add("부지깽이"); list2.add("카오스를 겪는 선생님"); list2.add("전생"); list2.add("날씨"); list2.add("약쟁이");
+			
+			
+			for( int i = 0; i < list1.size(); i++){
+				Collections.shuffle(list1);
+				Collections.shuffle(list2);
+				
+				nick = list1.get(i) +" "+ list2.get(i);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("AnonyBoardDAO의 getRandomNickname()메소드에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
-		// PreparedStatement 자원해제
-		try{
-			if(pstmt != null) pstmt.close();
-		}catch(Exception e){
-			System.out.println("PreparedStatement 자원해제 중 예외 발생 !");
-		}
-		
-		// Connection 자원해제
-		try{
-			if(con != null) con.close();
-		}catch(Exception e){
-			System.out.println("Connection 자원해제 중 예외 발생 !");
-		}
+		return nick;
 		
 		
-	}//공용 자원해제 메소드 resourceClose()-----------------------------------
-	
-	
-	// [INSERT 게시판 글 저장 메소드]
+	}// getRandomNickname()	
 
+	
+	
+	// 1-2. [INSERT 게시판 글 저장 메소드] : AnoBoardInsertAction에서 호출
 	public void insertANBoard(AnonyBoardBean anb){
-
 		
 		int num = 0;
 		
 		try {
-			
+			getConnection();
 			sql = "INSERT INTO anony_board "
 				 + "(ano_board_num, " 
 				 + " mem_email, " 
@@ -92,7 +77,6 @@ public class AnonyBoardDAO {
 				 + "ano_board_date, "
 				 + "ano_board_ip) "
 				 + "VALUES(?,?,?,?,?,?,?)"; 
-
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -100,9 +84,11 @@ public class AnonyBoardDAO {
 			pstmt.setString(2, anb.getMem_email());
 			pstmt.setString(3, anb.getAno_board_title());
 			pstmt.setString(4, anb.getAno_board_content());
-			pstmt.setInt(5, anb.getAno_board_read());  // 조회수
-			pstmt.setString(6, anb.getAno_board_date());
+			pstmt.setInt(5, 0);  // 조회수
+			pstmt.setTimestamp(6, anb.getAno_board_date());
 			pstmt.setString(7, anb.getAno_board_ip());
+			pstmt.setString(8, anb.getAno_board_nick());
+			pstmt.setString(9, anb.getAno_board_file());
 			
 			pstmt.executeUpdate();
 			
@@ -121,12 +107,15 @@ public class AnonyBoardDAO {
 		
 		
 	};
+
 	
-	// [조회수 증가메소드]
+	
+	
+	// [2.조회수 증가메소드]
 	public void updateANBoardRead(int ano_board_num){
 		try {
-			con = getConnection();
-
+			getConnection();
+			
 			sql = "UPDATE anony_board "
 					+ "SET ano_board_read=ano_board_read + 1 "
 					+ "WHERE ano_board_num = ?";
@@ -151,14 +140,12 @@ public class AnonyBoardDAO {
 	
 	
 	
-	// [게시판 글 삭제] : 비밀번호 없이 글번호만 매개변수로 전달받음.
-
+	// [3.게시판 글 삭제] : 비밀번호 없이 글번호만 매개변수로 전달받음.
 	public void deleteANBoard(int ano_board_num){
-
 		
 		try {
 			
-			con = getConnection();
+			getConnection();
 			sql = "DELETE FROM anony_board "
 					+ "WHERE ano_board_num = ?";
 			
@@ -184,13 +171,13 @@ public class AnonyBoardDAO {
 	
 	//------------------------게시글 불러오기---------------------------
 	
-	// [게시판 글 불러오기]
+	// [4.익명사담방 게시판 글 1개 불러오기]
 	public AnonyBoardBean getANBoard(int ano_board_num){
 		
 		AnonyBoardBean anb = null;
 		
 		try{
-			con = getConnection();
+			getConnection();
 			sql = "SELECT * FROM anony_board "
 					+ "WHERE ano_board_num = ?";
 			
@@ -207,7 +194,7 @@ public class AnonyBoardDAO {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getString("ano_board_date"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 			}// if
@@ -225,16 +212,14 @@ public class AnonyBoardDAO {
 	
 	
 	
-	// [게시판 전체 글목록 불러오기 ]
+	// [5.익명사담방 전체 글목록 불러오기 ]
 	public List<AnonyBoardBean> getANBoardList(){
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		
 		try {
-			con = getConnection();
-
+			getConnection();
 			sql = "SELECT * FROM anony_board "
 					+ "ORDER BY ano_board_num desc";
-
 			pstmt = con.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -246,7 +231,7 @@ public class AnonyBoardDAO {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getString("ano_board_date"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 				anbList.add(anb);
@@ -256,9 +241,7 @@ public class AnonyBoardDAO {
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList()메소드 쿼리에서 예외 발생 : "+ e);				
-
 			e.printStackTrace();
-      
 		} finally {
 			resourceClose();
 		}
@@ -266,12 +249,12 @@ public class AnonyBoardDAO {
 		return anbList;
 	}
 	
-	// [전체 글 개수 반환 메소드]
+	// [6.전체 글 개수 반환 메소드]
 	public int getAnonyBoardCount(){
 		int count = 0;
 		
 		try {
-			con = getConnection();
+			getConnection();
 			sql = "SELECT count(*) FROM anony_board ";
 			
 			pstmt = con.prepareStatement(sql);
@@ -293,6 +276,9 @@ public class AnonyBoardDAO {
 		return count;
 		
 	}//getAnonyBoardCount()
+	
+	
+
 	
 	
 
