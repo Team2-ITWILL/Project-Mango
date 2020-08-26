@@ -1,6 +1,6 @@
 package mango.audit_request.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class AuditRequestBean {
 
@@ -20,19 +20,19 @@ public class AuditRequestBean {
     private String auditSubject;
 
     // 청강신청일자 
-    private Date auditRequestDate;
+    private LocalDate auditRequestDate;
 
     // 청강희망일자 
-    private Date auditWishDate;
+    private LocalDate auditWishDate;
 
     // 청강승인일자 
-    private Date auditConfirmDate;
+    private LocalDate auditConfirmDate;
     
     public AuditRequestBean(){ }
     public AuditRequestBean(
     		int auditNum, String memEmail, 
     		int acaNum, String acaName, String auditSubject,
-    		Date auditRequestDate, Date auditWishDate, Date auditConfirmDate
+    		LocalDate auditRequestDate, LocalDate auditWishDate, LocalDate auditConfirmDate
     		){
     	this.auditNum = auditNum;
     	this.memEmail = memEmail;
@@ -75,25 +75,27 @@ public class AuditRequestBean {
 	public void setAuditSubject(String auditSubject) {
 		this.auditSubject = auditSubject;
 	}
-	public Date getAuditRequestDate() {
+	public LocalDate getAuditRequestDate() {
 		return auditRequestDate;
 	}
-	public void setAuditRequestDate(Date auditRequestDate) {
+	public void setAuditRequestDate(LocalDate auditRequestDate) {
 		this.auditRequestDate = auditRequestDate;
 	}
-	public Date getAuditWishDate() {
+	public LocalDate getAuditWishDate() {
 		return auditWishDate;
 	}
-	public void setAuditWishDate(Date auditWishDate) {
+	public void setAuditWishDate(LocalDate auditWishDate) {
 		this.auditWishDate = auditWishDate;
 	}
-	public Date getAuditConfirmDate() {
+	public LocalDate getAuditConfirmDate() {
 		return auditConfirmDate;
 	}
-	public void setAuditConfirmDate(Date auditConfirmDate) {
+	public void setAuditConfirmDate(LocalDate auditConfirmDate) {
 		this.auditConfirmDate = auditConfirmDate;
 	}
-	
+    
+    
+
    
  
 }

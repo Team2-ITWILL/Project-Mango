@@ -49,7 +49,7 @@ public class AuditManagementDAO extends DBconnection implements IAuditManagement
 			pstmt.setInt(1, abc.getAcaNum());
 			pstmt.setString(2, abc.getAcaName());
 			pstmt.setString(3, abc.getAuditAvailSubj());
-			pstmt.setString(4, abc.getAuditAvailDate());
+			pstmt.setDate(4, java.sql.Date.valueOf(abc.getAuditAvailDate()));
 			pstmt.setInt(5, abc.getAuditLastTime());
 			pstmt.setInt(6, abc.getAuditAblemem());			
 			
