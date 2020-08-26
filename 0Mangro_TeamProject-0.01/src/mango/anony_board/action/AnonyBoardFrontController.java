@@ -17,9 +17,6 @@ public class AnonyBoardFrontController extends HttpServlet{
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
 												throws ServletException, IOException{
 		
-		
-		
-		
 		//가상요청 주소 가져오기
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
@@ -87,27 +84,6 @@ public class AnonyBoardFrontController extends HttpServlet{
 		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		if(forward!=null){ //new ActionForward()객체가 존재 하고..
 			
 			if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..
@@ -126,15 +102,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 		
 		}//if 
 		
-	
-	
-	
 }//doProcess
-	
-	
-	
-	
-	
 	
 	
 	
