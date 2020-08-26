@@ -70,7 +70,7 @@ public class AnoBoardInsertAction implements Action {
 //				ano_board_read int(11) 
 				
 				// [Action에서 처리할 값]
-				Timestamp ano_board_date = new Timestamp(System.currentTimeMillis());
+				Timestamp ano_board_date = new Timestamp(System.currentTimeMillis().);
 				String ano_board_ip = (String)request.getRemoteAddr();
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);
@@ -79,7 +79,8 @@ public class AnoBoardInsertAction implements Action {
 				
 				ActionForward forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setPath("./4index.jsp?center=O_anony/anony_board.jsp");
+				//forward.setPath("./4index.jsp?center=O_anony/anony_board.jsp");
+				forward.setPath("/AnonyBoardListAction.anob");
 				
 				return forward;
 		

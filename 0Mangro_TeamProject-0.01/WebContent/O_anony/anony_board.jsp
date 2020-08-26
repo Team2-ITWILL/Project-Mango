@@ -1,3 +1,5 @@
+<%@page import="mango.anony_board.db.AnonyBoardBean"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -89,13 +91,23 @@
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/eye.png" width="20">
 												<!-- 조회수  -->
-												<span>${anbList.ano_board_read}</span>
+												<%
+												AnonyBoardBean bean = request.getAttribute("ano_board_date");
+									            SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm"); //같은 형식으로 맞춰줌
+									            Date n = fDate.parse(bean);
+									           
+									            
+												
+												
+												%>
+												
+												<span><%=anbList.ano_board_read%></span>
 												
 											</div>&nbsp;&nbsp;&nbsp;
 											
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/date.png" width="20">
-												<!-- 날짜  -->
+												<!-- 날짜  --> 
 												<span>${anbList.ano_board_date}</span>
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>

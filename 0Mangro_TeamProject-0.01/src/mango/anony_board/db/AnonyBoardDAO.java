@@ -1,10 +1,13 @@
 package mango.anony_board.db;
 
+import java.util.Date;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 
 import mango.connection.db.DBconnection;
 
@@ -77,7 +80,7 @@ public class AnonyBoardDAO extends DBconnection {
 				 + "ano_board_ip, "
 				 + "ano_board_nick, "
 				 + "ano_board_file) "
-				 + "VALUES(?,?,?,0,now(),111111,?,?) "; 
+				 + "VALUES(?,?,?,0,?,111111,?,?) "; 
 			
 //			ano_board_num int(11) AI PK 
 //			mem_email varchar(20) 
@@ -88,14 +91,19 @@ public class AnonyBoardDAO extends DBconnection {
 //			ano_board_ip varchar(100) 
 //			ano_board_nick varchar(100) 
 //			ano_board_file varchar(255)
-			
 			pstmt = con.prepareStatement(sql);
+			SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			Date date = fDate.parse(new Timestamp(System.currentTimeMillis()).toString());
+			
+			String datetest= "2020-08-26";
+			Timestamp test123 = Timestamp.valueOf(datetest);
 			
 			pstmt.setString(1, anb.getMem_email());
 			pstmt.setString(2, anb.getAno_board_title());
 			pstmt.setString(3, anb.getAno_board_content());
-			pstmt.setString(4, anb.getAno_board_nick());
-			pstmt.setString(5, anb.getAno_board_file());
+			pstmt.setTimestamp(4,  test123);
+			pstmt.setString(5, anb.getAno_board_nick());
+			pstmt.setString(6, anb.getAno_board_file());
 			
 			pstmt.executeUpdate();
 			
@@ -201,7 +209,7 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
+				anb.setAno_board_date(rs.getString("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 			}// if
@@ -238,7 +246,7 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
+				anb.setAno_board_date(rs.getString("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 				anbList.add(anb);
@@ -286,6 +294,29 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
