@@ -44,10 +44,19 @@ public class AuditRequestFrontController extends HttpServlet {
 		Action action=null;
 	
 		
+		if(command.equals("/request.adrq")) {			
+			
+			try {
+				action = new AuditRequestAction();
+				
+				//academy_audit.jsp에서 넘어온 request값들을 AuditRequestAction 객체에 넘겨준다
+				forward = action.excute(request, response);			
 		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
 		
-		
-		
+		}		
 		
 		
 		

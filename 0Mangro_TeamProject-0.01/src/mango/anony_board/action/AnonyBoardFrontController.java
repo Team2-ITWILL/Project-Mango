@@ -18,6 +18,8 @@ public class AnonyBoardFrontController extends HttpServlet{
 												throws ServletException, IOException{
 		
 		
+		
+		
 		//가상요청 주소 가져오기
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
@@ -42,6 +44,62 @@ public class AnonyBoardFrontController extends HttpServlet{
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action=null;
 	
+		
+		if(command.equals("/AnonyBoardListAction.anob")){
+			action = new AnonyBoardListAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /noBoard.anob에서 예외");
+				e.printStackTrace();
+			} 
+			
+			
+		}else if(command.equals("/AnoBoardWriteAction.anob")){
+
+
+			action = new AnonyBoardWriteAction();
+
+			
+			try {
+				forward = action.excute(request, response);
+				
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoardWriteView.anob에서 예외");
+				e.printStackTrace();
+				
+			}
+			
+		}else if(command.equals("/AnoBoardInsertAction.anob")){
+
+			action = new AnonyBoardWriteAction();
+
+			
+			try{
+				forward = action.excute(request, response);
+				
+			}catch(Exception e){
+				System.out.println("AnonyBoardFrontController의 /AnoBoardWriteView.anob에서 예외");
+				e.printStackTrace();
+				
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

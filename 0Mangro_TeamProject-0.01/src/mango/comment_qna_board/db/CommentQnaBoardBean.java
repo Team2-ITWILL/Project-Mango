@@ -1,5 +1,6 @@
 package mango.comment_qna_board.db;
 
+import java.sql.Date;
 
 public class CommentQnaBoardBean {
 	 // 댓글번호 
@@ -24,81 +25,89 @@ public class CommentQnaBoardBean {
     private int qnaReSeq;
 
     // 작성일자 
-    private String qnaCommentDate;
+    private Date qnaCommentDate;
 
     // 아이피 
     private String qnaCommentIp;
 
-    public int getQnaCommentNum() {
-        return qnaCommentNum;
-    }
+    
+    
+    // getter/setter
+	public int getQnaCommentNum() {
+		return qnaCommentNum;
+	}
 
-    public void setQnaCommentNum(int qnaCommentNum) {
-        this.qnaCommentNum = qnaCommentNum;
-    }
+	public void setQnaCommentNum(int qnaCommentNum) {
+		this.qnaCommentNum = qnaCommentNum;
+	}
 
-    public int getQnaBoardNum() {
-        return qnaBoardNum;
-    }
+	public int getQnaBoardNum() {
+		return qnaBoardNum;
+	}
 
-    public void setQnaBoardNum(int qnaBoardNum) {
-        this.qnaBoardNum = qnaBoardNum;
-    }  
+	public void setQnaBoardNum(int qnaBoardNum) {
+		this.qnaBoardNum = qnaBoardNum;
+	}
 
-    public String getQnaCommentContent() {
-        return qnaCommentContent;
-    }
+	public String getQnaCommentContent() {
+		return qnaCommentContent;
+	}
 
-    public void setQnaCommentContent(String qnaCommentContent) {
-        this.qnaCommentContent = qnaCommentContent;
-    }
+	public void setQnaCommentContent(String qnaCommentContent) {
+		this.qnaCommentContent = qnaCommentContent;
+	}
 
-    public String getMemEmail() {
-        return memEmail;
-    }
+	public String getMemEmail() {
+		return memEmail;
+	}
 
-    public void setMemEmail(String memEmail) {
-        this.memEmail = memEmail;
-    }
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+	}
 
-    public int getQnaReRef() {
-        return qnaReRef;
-    }
+	public int getQnaReRef() {
+		return qnaReRef;
+	}
 
-    public void setQnaReRef(int qnaReRef) {
-        this.qnaReRef = qnaReRef;
-    }
+	public void setQnaReRef(int qnaReRef) {
+		this.qnaReRef = qnaReRef;
+	}
 
-    public int getQnaReLev() {
-        return qnaReLev;
-    }
+	public int getQnaReLev() {
+		return qnaReLev;
+	}
 
-    public void setQnaReLev(int qnaReLev) {
-        this.qnaReLev = qnaReLev;
-    }
+	public void setQnaReLev(int qnaReLev) {
+		this.qnaReLev = qnaReLev;
+	}
 
-    public int getQnaReSeq() {
-        return qnaReSeq;
-    }
+	public int getQnaReSeq() {
+		return qnaReSeq;
+	}
 
-    public void setQnaReSeq(int qnaReSeq) {
-        this.qnaReSeq = qnaReSeq;
-    }
+	public void setQnaReSeq(int qnaReSeq) {
+		this.qnaReSeq = qnaReSeq;
+	}
 
-    public String getQnaCommentDate() {
-        return qnaCommentDate;
-    }
+	public Date getQnaCommentDate() {
+		return qnaCommentDate;
+	}
 
-    public void setQnaCommentDate(String qnaCommentDate) {
-        this.qnaCommentDate = qnaCommentDate;
-    }
+	public void setQnaCommentDate(Date qnaCommentDate) {
+		this.qnaCommentDate = qnaCommentDate;
+	}
 
-    public String getQnaCommentIp() {
-        return qnaCommentIp;
-    }
+	public String getQnaCommentIp() {
+		return qnaCommentIp;
+	}
 
-    public void setQnaCommentIp(String qnaCommentIp) {
-        this.qnaCommentIp = qnaCommentIp;
-    }
+	public void setQnaCommentIp(String qnaCommentIp) {
+		this.qnaCommentIp = qnaCommentIp;
+	}
+
+    
+    
+    
+    
 
 }

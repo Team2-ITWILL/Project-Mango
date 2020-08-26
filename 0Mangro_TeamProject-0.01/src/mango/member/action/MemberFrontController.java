@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import MemberLogin.MemberLoginAction;
 import mango.action.Action;
 import mango.action.ActionForward;
 
@@ -63,16 +62,6 @@ public class MemberFrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./4index.jsp?O_member/member_sign_in.jsp");
-			
-		}else if(command.equals("/MemberLoginAction.me")){
-			
-			action = new MemberLoginAction();
-			
-			try {
-				forward = action.excute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
 		}
 	

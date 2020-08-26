@@ -90,7 +90,6 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		try {
 			getConnection();
-			
 			sql = "select * from academy where aca_num=?";
 			
 			pstmt = con.prepareStatement(sql);
@@ -98,6 +97,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
+				bean = new AcademyBean();
 				bean.setAcaNum(rs.getInt(1));
 				bean.setAcaCode(rs.getString(2));
 				bean.setAcaAttr(rs.getString(6));

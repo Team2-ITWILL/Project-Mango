@@ -9,11 +9,11 @@ public interface IAcademyReview {
 	
 
    
-	//학원 후기내용을 갖고오는 메서드
-	public AcademyReviewBean getAcademyReview(AcademyReviewBean ab);
+	//학원 후기숫자을 갖고오는 메서드
+	public int getAcademyReviewCount(int acaNum);
 
 	//후기리스트 갖고오는 
-	public List<AcademyReviewBean> getAcademyReviewList(AcademyReviewBean ab);
+	public List<AcademyReviewBean> getAcademyReviewList(int acaNum,int startRow,int pageSize);
  
 	//학원 후기 등록
 	public int InsertAcademyReview(AcademyReviewBean ab);

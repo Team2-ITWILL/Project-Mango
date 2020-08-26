@@ -9,7 +9,7 @@ public class AuditManagementBean {
     private String acaName;
 
     // 청강가능과목1 
-    private String auditAvailSubj1;
+    private String auditAvailSubj;
 
     // 청강가능일시 
     private String auditAvailDate;
@@ -44,12 +44,12 @@ public class AuditManagementBean {
         this.acaName = acaName;
     }
 
-    public String getAuditAvailSubj1() {
-        return auditAvailSubj1;
+    public String getAuditAvailSubj() {
+        return auditAvailSubj;
     }
 
-    public void setAuditAvailSubj1(String auditAvailSubj1) {
-        this.auditAvailSubj1 = auditAvailSubj1;
+    public void setAuditAvailSubj(String auditAvailSubj) {
+        this.auditAvailSubj = auditAvailSubj;
     }
 
     public String getAuditAvailDate() {

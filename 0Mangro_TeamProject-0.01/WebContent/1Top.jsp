@@ -111,7 +111,7 @@
 								<ul class="main_nav">
 									<li><a href="4index.jsp?center=about.jsp">소개</a></li>
 									<li><a href="4index.jsp?center=O_academy/academy_list.jsp">학원찾기</a></li>
-									<li><a href="4index.jsp?center=O_anony/anony_board.jsp">익명사담방</a></li>
+									<li><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
 									<li><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">학원관리자</a></li>
 									<li><a href="4index.jsp?center=O_qna/qna_board.jsp">고객센터</a></li>
 								</ul>
@@ -171,7 +171,7 @@
 			
 				<li class="menu_mm"><a href="4index.jsp?center=about.jsp">소개</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_academy/academy_list.jsp">학원찾기</a></li>
-				<li class="menu_mm"><a href="4index.jsp?center=O_anony/anony_board.jsp">익명사담방</a></li>
+				<li class="menu_mm"><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">학원관리자</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_qna/qna_board.jsp">고객센터</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_mypage/mypage_main.jsp">마이페이지</a></li>

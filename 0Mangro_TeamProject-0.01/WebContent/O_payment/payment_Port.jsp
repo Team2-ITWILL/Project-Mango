@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,35 +48,48 @@ request.setCharacterEncoding("utf-8");
 	 				type:"post",
 	 				async:true,
 	 				url:"InsertPayMent.pay",
-	 				data:{email:${param.email},option:${param.option} },
+	 				data:{email : ${param.email}, option : ${param.option} },
 	 				dataType:"text",
 	 				success:function(data,textStatus){
 	 			
+	 					if(data==1){
+	 						
+	 						alert("결제 되었습니다");
+	 						
+	 						location.href="4index.jsp?center=3main.jsp";
+	 					
+	 						
+	 					}
+	 					
+	 					
 						
 	 				},
 	 				error:function(){
 	 					alert("에러가 발생했습니다");
 						
-	 				}
+ 	 				}
 				
 				
 				
 				
 				
-				});		
+ 				});		
 				
 				
-			} else { // 실패시
+			} //if
+			else { // 실패시
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
 				alert("결제가 취소되었습니다")
 				window.close();
 			
-			}
+			}//else
 			
-	}
+
 		
-	});
+	})//request_pay
+	
+	});	//메인
 				
 		
 	
@@ -90,4 +104,5 @@ request.setCharacterEncoding("utf-8");
 
 
 </body>
+
 </html>
