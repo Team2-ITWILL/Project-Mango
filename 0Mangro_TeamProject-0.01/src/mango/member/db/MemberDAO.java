@@ -85,4 +85,37 @@ public class MemberDAO extends DBconnection{
 	} // 로그인 / loginCheck() 끝
 	
 	
+	/* 회원 탈퇴 메서드 */
+	public int deleteMember(MemberBean mb){
+		
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "DELETE FROM member WHERE mem_email = ? "
+					+ "AND mem_pwd = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, mb.getMemEmail());
+			pstmt.setString(2, mb.getMemPwd());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("deleteMember()에서 SQL 구문 오류 : "+ e);
+			e.printStackTrace();
+			
+		} finally {
+			resourceClose();
+		}
+		
+		return check;
+	} // 회원 탈퇴 / deleteMember() 끝
+	
+	
+	
+	
+	
+	
 }

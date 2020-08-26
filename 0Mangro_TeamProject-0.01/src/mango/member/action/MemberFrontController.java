@@ -46,7 +46,6 @@ public class MemberFrontController extends HttpServlet {
 			forward.setRedirect(false);
 			forward.setPath("/4index.jsp?center=O_member/member_sign_up.jsp");
 		
-		// 회원 가입 요청이 들어왔을 때
 		}else if(command.equals("/MemberJoinAction.me")){
 			
 			action = new MemberJoinAction();
@@ -80,6 +79,35 @@ public class MemberFrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./4index.jsp");
+		
+		}else if(command.equals("/MemberLogout.me")){
+			
+			action = new MemberLogoutAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/MemberLogout.me : " + e);
+				e.printStackTrace();
+			}
+			
+		}else if(command.equals("/MemberDelete.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./4index.jsp?center=O_member/member_secede.jsp");
+			
+		}else if(command.equals("/MemberDeleteAction.me")){
+			
+			action = new MemberDeleteAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("");
+				e.printStackTrace();
+			}
+			
 		}
 	
 		

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원가입</title>
+<title>망고 - 회원탈퇴</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Unicat project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,34 @@
 
 </head>
 <body>
+<script type="text/javascript">
+
+	/* 회원 탈퇴 필수 입력 확인 */
+	$(function del_check(){
+		
+		$("#mem_del").submit(function(){
+			
+			if($("#mem_pwd").val() == ""){
+				alert("비밀번호를 입력하세요.");
+				$("#mem_pwd").focus();
+				return false;
+			}
+			
+			if($("#del_ck").is(":checked")){
+				alert("동의해주셔야 탈퇴 가능합니다. ");
+				$("#del_ck").focus();
+				return false;
+			}
+			
+		}); // submit() 끝
+	
+	}); // del_check() 끝
+
+</script>
+
+
+
+
 
 		<div class="container">
 			<div class="row">
@@ -33,7 +61,7 @@
 					<div class="section_title_container text-center">
 						<h4 class="section_title">회원탈퇴</h4>
       
-					      <form class="sign_upClass" action="" method="post">
+					      <form class="sign_upClass" action="/MemberDeleteAction.me" method="post" id="mem_del" onsubmit="del_check()">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>회원탈퇴 후에는 작성된 요청서 및 제안서에 영구적으로 접근이 불가능합니다.</p>
@@ -54,7 +82,7 @@
 					        
 					      </div>
 					
-					      <input type="checkbox">상기 내용을 모두 확인했으며 회원 탈퇴 진행에 동의합니다.
+					      <input type="checkbox" id="del_ck">상기 내용을 모두 확인했으며 회원 탈퇴 진행에 동의합니다.
 					
 					      <div class="row align-items-center mb-5">
 					        <div class="col-5 secede" >
