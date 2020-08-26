@@ -51,7 +51,7 @@ public class PaymentFrontController extends HttpServlet {
 			
 			System.out.println("여기까지");
 		
-			forward.setPath("./O_payment/payment_Port.jsp");
+			forward.setPath("/O_payment/payment_Port.jsp");
 			
 			forward.setRedirect(false);
 			
@@ -59,9 +59,60 @@ public class PaymentFrontController extends HttpServlet {
 		}else if(command.equals("/InsertPayMent.pay")){
 			
 			
+			action = new InsertPaymentAction();
+			
+			 try {
+			
+				 forward=action.excute(request, response);
+				
+				
+			} catch (Exception e) {
+				System.out.println("/InsertPayMent.pay에서 오류");
+			}
+			
+		}else if(command.equals("/NewGetPayMent.pay")){
+			
+			System.out.println("newPayment");
+			action = new NewGetPayMentAction();
+			
+			 try {
+			
+				 forward=action.excute(request, response);
+				
+				
+			} catch (Exception e) {
+				System.out.println("/InsertPayMent.pay에서 오류");
+			}
+			
+		}else if(command.equals("/MainPayMent.pay")){
+			
+			forward=new ActionForward();
+			
+			System.out.println("여기까지");
+		
+			forward.setPath("4index.jsp?center=O_payment/payment_choose.jsp");
+			
+			forward.setRedirect(false);
 			
 			
+		}else if(command.equals("/getListMyPayMent.pay")){
+			
+			System.out.println("/getListMyPayMent.pay 옴");
+			
+			action = new ListMypayMentaciton();
+			
+			try {
+				forward=action.excute(request, response);
+			}catch (Exception e) {
+				System.out.println("/getListMyPayMent.pay에서 오류");
+			
+			}
+			
+			
+		
 		}
+	
+		
 	
 		
 		

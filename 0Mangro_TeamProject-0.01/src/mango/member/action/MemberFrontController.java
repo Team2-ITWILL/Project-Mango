@@ -20,27 +20,50 @@ public class MemberFrontController extends HttpServlet {
 		
 		//가상요청 주소 가져오기
 		//예)MangoProject/MemberLogin.me 
-		String RequestURI=request.getRequestURI();
-		
+		String RequestURI = request.getRequestURI();
 		System.out.println(RequestURI);
 		
 		//MangoProject 얻기
-		String contextPath=request.getContextPath();
+		String contextPath = request.getContextPath();
 		System.out.println(contextPath);
-		
 		
 		System.out.println(contextPath.length());//path에 길이 얻기
 	
 		//MemberLogin.me 얻기
-		String command=RequestURI.substring(contextPath.length());
+		String command = RequestURI.substring(contextPath.length());
 		System.out.println(command);
 		
 		//주소비교
 		//페이지 이동 방식 여부 값,이동페이지 경로 값 저장 하여 리턴 해주는 객체를 저장할 참조변수 선언 
-		ActionForward forward=null;
+		ActionForward forward = null;
 		
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
-		Action action=null;
+		Action action = null;
+		
+		if(command.equals("/MemberJoin.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/4index.jsp?O_member/member_sign_up.jsp");
+		
+		// 회원 가입 요청이 들어왔을 때
+		}else if(command.equals("/MemberJoinAction.me")){
+			
+			action = new MemberJoinAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}else if(command.equals("/MemberLogin.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./4index.jsp?O_member/member_sign_in.jsp");
+			
+		}
 	
 		
 		
@@ -50,7 +73,7 @@ public class MemberFrontController extends HttpServlet {
 		
 		
 		
-		if(forward!=null){ //new ActionForward()객체가 존재 하고..
+		if(forward != null){ //new ActionForward()객체가 존재 하고..
 			
 			if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..
 				
@@ -62,7 +85,7 @@ public class MemberFrontController extends HttpServlet {
 				
 			}else{//false -> forward() 방식일때...
 				
-				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
 				dispatcher.forward(request, response);
 			}
 		
@@ -82,13 +105,11 @@ public class MemberFrontController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 
