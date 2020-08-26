@@ -54,7 +54,7 @@
 									<a href="4index.jsp?center=O_academy/academy_register.jsp">학원관리자 등록</a>
 									</div>
 									<div class="top_bar_button sign-up">
-										<a href="4index.jsp?center=O_member/member_sign_up.jsp">회원가입</a>
+										<a href="./MemberJoin.me">회원가입</a>
 									</div>
 									
 								<!--  1.아이디가 null값이면 [로그인] 로그인된 상태면 
