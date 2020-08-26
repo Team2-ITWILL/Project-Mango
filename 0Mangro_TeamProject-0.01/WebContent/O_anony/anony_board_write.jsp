@@ -84,14 +84,12 @@
 					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
 					         <!-- 1.세션에 있는 멤버email계정  -->
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="user1@naver.com">
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="mem1@naver.com">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
 							        <!-- 2.닉네임 -->
-								        <label class="form-label" for="anony_board_nick">랜덤닉</label>
-								        <input type="text" class="form-control" name="ano_board_nick" id="anony_board_nick" 
-								               value="${nick}" readonly> 
+								        <input type="hidden" class="form-control" name="ano_board_nick" id="anony_board_nick" value="${nick}"> 
 								    </div>
 								    
 								    <!-- ---------------------------------------------------- -->
@@ -115,6 +113,7 @@
 						              	<div class="form-group files">
 						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf"  multiple="">
 							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
+							         
 
 
 <!-- 

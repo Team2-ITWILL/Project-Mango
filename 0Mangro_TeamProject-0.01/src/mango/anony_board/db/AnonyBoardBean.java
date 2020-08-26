@@ -39,8 +39,9 @@ public class AnonyBoardBean{
 
 	public AnonyBoardBean(){}
 
+
 	public AnonyBoardBean(int ano_board_num, String mem_email, String ano_board_title, String ano_board_content,
-			int ano_board_read, String ano_board_date, String ano_board_ip, String ano_board_nick,
+			int ano_board_read, Timestamp ano_board_date, String ano_board_ip, String ano_board_nick,
 			String ano_board_file) {
 		super();
 		this.ano_board_num = ano_board_num;
@@ -53,8 +54,6 @@ public class AnonyBoardBean{
 		this.ano_board_nick = ano_board_nick;
 		this.ano_board_file = ano_board_file;
 	}
-
-
 
 
 
@@ -147,4 +146,17 @@ public class AnonyBoardBean{
 	}
 
 
+	@Override
+	public String toString() {
+		return "AnonyBoardBean [ano_board_num=" + ano_board_num + ", mem_email=" + mem_email + ", ano_board_title="
+				+ ano_board_title + ", ano_board_content=" + ano_board_content + ", ano_board_read=" + ano_board_read
+				+ ", ano_board_date=" + ano_board_date + ", ano_board_ip=" + ano_board_ip + ", ano_board_nick="
+				+ ano_board_nick + ", ano_board_file=" + ano_board_file + "]";
+	}
+
+
+	
+	
+	
+	
 }

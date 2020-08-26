@@ -11,7 +11,6 @@ import mango.action.ActionForward;
 import mango.anony_board.db.AnonyBoardBean;
 import mango.anony_board.db.AnonyBoardDAO;
 
-
 // [익명사담방 전체 글목록과 전체 글 개수를 불러오는 액션] 
 // - 데이터 전송경로 : O_anony/anony_board.jsp
 public class AnonyBoardListAction implements Action{
@@ -25,7 +24,7 @@ public class AnonyBoardListAction implements Action{
 
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
-		anbList = andao.getANBoardList();
+		anbList = andao.getANBoardList(); 
 		System.out.println(anbList.toString());
 		request.setAttribute("anbList", anbList);
 		

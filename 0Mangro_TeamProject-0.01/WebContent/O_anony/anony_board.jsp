@@ -67,9 +67,9 @@
 												<!-- 익명사담방 랜덤 닉네임 -->
 												<i class="fa fa-user" aria-hidden="true"></i> 
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
-
 												<!-- 익명사담방 글제목 -->
 												<p><span class="span-title">${anbList.ano_board_title}</span></p>
+												<p><span class="span-title">${anbList.ano_board_nick}</span></p>
 												
 											</div>
 										</div>

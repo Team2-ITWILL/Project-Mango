@@ -14,52 +14,12 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
-
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
 <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
   
-  
-<style type="text/css">
-  
-.u-tagsinput .bootstrap-tagsinput::before {
-    content: "|";
-    display: inline-block;
-    width: 1px;
-    line-height: 1;
-    font-size: .625rem;
-    opacity: 0;
-    padding: .75rem 0;
-}
- 
- 
-.bootstrap-tagsinput {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    display: block;
-    padding: 4px 6px;
-    color: #555;
-    vertical-align: middle;
-    border-radius: 4px;
-    max-width: 100%;
-    line-height: 22px;
-    cursor: text;
-}
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0 6px;
-    margin: 0;
-    width: auto;
-    max-width: inherit;
-} 
-  
-</style>  
     
 </head>
 
@@ -120,14 +80,6 @@
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
                                         Profile</a></div>
@@ -338,6 +290,48 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     
+
+
+
+	<!-- Partners -->
+<!-- 임시저장
+	<div class="partners">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="partners_slider_container">
+						<div class="owl-carousel owl-theme partners_slider">
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_1.png" alt=""></div>
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_2.png" alt=""></div>
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_3.png" alt=""></div>
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_4.png" alt=""></div>
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_5.png" alt=""></div>
+
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_6.png" alt=""></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ -->
+
+
+
+
+
     
     
     

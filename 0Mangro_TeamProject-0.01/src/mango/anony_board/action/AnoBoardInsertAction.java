@@ -2,7 +2,6 @@
 
 package mango.anony_board.action;
 
-import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,22 +54,18 @@ public class AnoBoardInsertAction implements Action {
 				anbean.setAno_board_content(multi.getParameter("ano_board_content"));
 				anbean.setAno_board_file(multi.getOriginalFileName(multi.getParameter("ano_board_file")));
 				
-				//float f_size = 0;
+				float f_size = 0;
 				
 				
-				// [만일 파일이 존재한다면 파일의 크기를 얻어오기]
-//				File f = multi.getFile(multi.getParameter("ano_board_file"));
-//					if(multi.getParameter("ano_board_file") != null){
-//						f_size = f.length();
-//					}
-				
-				
-//				[ dao로 처리할 값]
-//				ano_board_num int(11) AI PK 
-//				ano_board_read int(11) 
+//				// [만일 파일이 존재한다면 파일의 크기를 얻어오기]
+//					File f = multi.getFile(multi.getParameter("ano_board_file"));
+//						if(multi.getParameter("ano_board_file") != null){
+//							f_size = f.length();
+//						}
+//				
 				
 				// [Action에서 처리할 값]
-				String ano_board_ip = (String)request.getRemoteAddr();
+				anbean.setAno_board_ip((String)request.getRemoteAddr());
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);
 				
