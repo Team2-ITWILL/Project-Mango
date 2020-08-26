@@ -57,6 +57,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 			
 		}else if(command.equals("/AnoBoardWriteAction.anob")){
 
+
 			action = new AnonyBoardWriteAction();
 
 			
@@ -84,6 +85,16 @@ public class AnonyBoardFrontController extends HttpServlet{
 			}
 			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

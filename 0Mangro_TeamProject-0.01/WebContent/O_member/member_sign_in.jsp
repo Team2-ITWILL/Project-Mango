@@ -13,7 +13,7 @@
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/form_basic_page.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
-
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
 <style type="text/css">
 	input {height: 50px;}
@@ -25,7 +25,6 @@
 
 
 </head>
-<body>
 <script type="text/javascript">
 
 	/* 로그인 아이디, 비밀번호 필수 입력 확인 */
@@ -46,40 +45,33 @@
 				return false;
 			}
 
+		}); // submit() 끝  	
 			
-		/* 이메일 기억하기  */
-		$(function remember(){
+	
+		/* 이메일 기억하기  : 입력한 이메일을 재작성하지 않고 비밀번호만 재입력하여 로그인 할 수 있게 기능 구현*/
+		$("#login").ready(function(){
 			
 			$("#id_email").val(Cookies.get('key'));
 			
-			if($("#id_email").val != "") $().attr("checked", true);
+			if($("#id_email").val != "") $("#rememberCheck").attr(":checked", true);
 				
-			$("#rememberid").change(function(){
-				
-				if($("#rememberid").is(":checked")) 
-					Cookies.set('key', $("#id").val(), 
-					{expires:900});
+			$("#rememberCheck").change(function(){
+				if($("#rememberCheck").is(":checked")) Cookies.set('key', $("#id_email").val(), {expires:900});
 				else Cookies.remove('key');
 				
 			}); // change() 끝
 				
-			$("#rememberid").keyup(function(){
-				
-				if($("#rememberid").is(":checked"))
-					Cookies.set('key', $("#id_email").val(),
-					{expires:900});
+			$("#rememberCheck").keyup(function(){
+				if($("#rememberCheck").is("checked")) Cookies.set('key', $("#id_email").val(), {expires:900});
 					
 			}); // keyup() 끝
 			
-		  }); // remember() 끝
-		
-	   }); // submit() 끝
-		
+		  }); // ready() 끝
+		  
 	}); // loginCheck() 끝
 
 </script>
-
-
+<body>
 
 
 		<div class="container">
@@ -90,7 +82,7 @@
 
 
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-			      <form class="sign_upClass" action="" method="post" id="login" onsubmit="loginCheck()">
+			      <form class="sign_upClass" action="./MemberLogin.me" method="post" id="login" > <!-- onsubmit="loginCheck()" -->
 				      
 				      <div class="mb-5 mt-2">
 				        <p>반갑습니다. 로그인하고 Mango를 시작해보세요.</p>
@@ -113,7 +105,7 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일</label>
-						        <input type="email" class="form-control" name="" id="id_email" placeholder="이메일" 
+						        <input type="text" class="form-control" name="" id="id_email" placeholder="이메일" 
 						               required
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
@@ -143,8 +135,8 @@
 					      <div class="mb-6">
 					        <div class="js-form-message">
 					          <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
-					            <input type="checkbox" class="custom-control-input" id="rememberCheck" name="termsCheckbox">
-					            <label class="font-subhead custom-control-label" for="termsCheckbox" id="">이메일 비밀번호 기억하기
+					            <input type="checkbox" class="custom-control-input" id="rememberCheck" name="rememberCheck">
+					            <label class="font-subhead custom-control-label" for="termsCheckbox" id="">이메일 기억하기
 					            </label>
 					          </div>
 					        </div>
