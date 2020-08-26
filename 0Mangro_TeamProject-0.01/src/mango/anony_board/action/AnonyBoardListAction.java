@@ -17,7 +17,8 @@ import mango.anony_board.db.AnonyBoardDAO;
 public class AnonyBoardListAction implements Action{
 
 	@Override
-	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward excute(HttpServletRequest request, 
+								HttpServletResponse response) throws Exception {
 		System.out.println("AnonyBoardListAction excute()");
 
 		// 글 목록 불러오기
