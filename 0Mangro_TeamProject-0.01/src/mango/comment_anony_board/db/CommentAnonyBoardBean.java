@@ -1,5 +1,7 @@
 package mango.comment_anony_board.db;
 
+import java.sql.Date;
+
 //익명게시판
 public class CommentAnonyBoardBean {
 	
@@ -25,81 +27,97 @@ public class CommentAnonyBoardBean {
   private int anoReSeq;
 
   // 작성일자 
-  private String anoCommentDate;
+  private Date anoCommentDate;
 
   // 아이피 
   private String anoCommentIp;
 
-  public int getanoCommentNum() {
-      return anoCommentNum;
-  }
-
-  public void setanoCommentNum(int anoCommentNum) {
-      this.anoCommentNum = anoCommentNum;
-  }
-
-  public int getanoBoardNum() {
-      return anoBoardNum;
-  }
-
-  public void setanoBoardNum(int anoBoardNum) {
-      this.anoBoardNum = anoBoardNum;
-  }
-
-  public String getanoCommentContent() {
-      return anoCommentContent;
-  }
-
-  public void setanoCommentContent(String anoCommentContent) {
-      this.anoCommentContent = anoCommentContent;
-  }
-
-  public String getMemEmail() {
-      return memEmail;
-  }
-
-  public void setMemEmail(String memEmail) {
-      this.memEmail = memEmail;
-  }
-
-  public int getanoReRef() {
-      return anoReRef;
-  }
-
-  public void setanoReRef(int anoReRef) {
-      this.anoReRef = anoReRef;
-  }
-
-  public int getanoReLev() {
-      return anoReLev;
-  }
-
-  public void setanoReLev(int anoReLev) {
-      this.anoReLev = anoReLev;
-  }
-
-  public int getanoReSeq() {
-      return anoReSeq;
-  }
-
-  public void setanoReSeq(int anoReSeq) {
-      this.anoReSeq = anoReSeq;
-  }
-
-  public String getanoCommentDate() {
-      return anoCommentDate;
-  }
-
-  public void setanoCommentDate(String anoCommentDate) {
-      this.anoCommentDate = anoCommentDate;
-  }
-
-  public String getanoCommentIp() {
-      return anoCommentIp;
-  }
-
-  public void setanoCommentIp(String anoCommentIp) {
-      this.anoCommentIp = anoCommentIp;
-  }
+  
+  // getter/setter
+	public int getAnoCommentNum() {
+		return anoCommentNum;
+	}
+	
+	public void setAnoCommentNum(int anoCommentNum) {
+		this.anoCommentNum = anoCommentNum;
+	}
+	
+	public int getAnoBoardNum() {
+		return anoBoardNum;
+	}
+	
+	public void setAnoBoardNum(int anoBoardNum) {
+		this.anoBoardNum = anoBoardNum;
+	}
+	
+	public String getAnoCommentContent() {
+		return anoCommentContent;
+	}
+	
+	public void setAnoCommentContent(String anoCommentContent) {
+		this.anoCommentContent = anoCommentContent;
+	}
+	
+	public String getMemEmail() {
+		return memEmail;
+	}
+	
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+	}
+	
+	public int getAnoReRef() {
+		return anoReRef;
+	}
+	
+	public void setAnoReRef(int anoReRef) {
+		this.anoReRef = anoReRef;
+	}
+	
+	public int getAnoReLev() {
+		return anoReLev;
+	}
+	
+	public void setAnoReLev(int anoReLev) {
+		this.anoReLev = anoReLev;
+	}
+	
+	public int getAnoReSeq() {
+		return anoReSeq;
+	}
+	
+	public void setAnoReSeq(int anoReSeq) {
+		this.anoReSeq = anoReSeq;
+	}
+	
+	public Date getAnoCommentDate() {
+		return anoCommentDate;
+	}
+	
+	public void setAnoCommentDate(Date anoCommentDate) {
+		this.anoCommentDate = anoCommentDate;
+	}
+	
+	public String getAnoCommentIp() {
+		return anoCommentIp;
+	}
+	
+	public void setAnoCommentIp(String anoCommentIp) {
+		this.anoCommentIp = anoCommentIp;
+	}
+	
+	  
+	  
+	  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
 
 }

@@ -21,6 +21,7 @@ public class AnonyBoardListAction implements Action{
 		System.out.println("AnonyBoardListAction excute()");
 
 		// 글 목록 불러오기
+
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		anbList = andao.getANBoardList();

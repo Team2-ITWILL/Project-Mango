@@ -1,9 +1,10 @@
+
+
 package mango.anony_board.action;
 
 import java.io.File;
 import java.sql.Timestamp;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,7 +64,6 @@ public class AnoBoardInsertAction implements Action {
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);
 				
-				
 				ActionForward forward = new ActionForward();
 				forward.setRedirect(false);
 				forward.setPath("./4index.jsp?center=O_anony/anony_board.jsp");
@@ -74,3 +74,4 @@ public class AnoBoardInsertAction implements Action {
 		
 
 }
+
