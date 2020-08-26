@@ -5,7 +5,7 @@ public class AcademyKeywordBean {
 	 // 학원지정번호 
    private int acaNum;
 
-   // 키워드1(교통이 편리한) 
+   // 키워드(교통이 편리한) 
    private String acakeyword;
 
    
