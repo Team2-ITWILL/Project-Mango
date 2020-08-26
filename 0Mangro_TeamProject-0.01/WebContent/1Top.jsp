@@ -65,7 +65,7 @@
 										
 										<c:when test="${id == null or id == '' }">
 											<div class="top_bar_button sign-up sign-in">
-												<a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a>
+												<a href="./MemberLogin.me">로그인</a>
 											</div>
 										</c:when>
 										

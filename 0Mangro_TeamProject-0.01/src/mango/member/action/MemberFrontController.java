@@ -54,6 +54,7 @@ public class MemberFrontController extends HttpServlet {
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
+				System.out.println("/MemberJoinAction.me : "+ e);
 				e.printStackTrace();
 			}
 			
@@ -61,7 +62,7 @@ public class MemberFrontController extends HttpServlet {
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("./4index.jsp?O_member/member_sign_in.jsp");
+			forward.setPath("./4index.jsp?center=O_member/member_sign_in.jsp");
 			
 		}else if(command.equals("/MemberLoginAction.me")){
 			
@@ -70,11 +71,21 @@ public class MemberFrontController extends HttpServlet {
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
+				System.out.println("/MemberLoginAction.me : "+ e);
 				e.printStackTrace();
 			}
 			
+		}else if(command.equals("/Main.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("./4index.jsp");
 		}
 	
+		
+		
+		
+		
 		
 		
 		
@@ -100,18 +111,8 @@ public class MemberFrontController extends HttpServlet {
 			}
 		
 		}//if 
-		
-	
-	
 	
 	}//doProcess
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
