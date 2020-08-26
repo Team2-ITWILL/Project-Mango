@@ -69,26 +69,33 @@ public class AnonyBoardDAO extends DBconnection {
 		try {
 			getConnection();
 			sql = "INSERT INTO anony_board "
-				 + "(ano_board_num, " 
-				 + " mem_email, " 
+				 + "(mem_email, "
 				 + "ano_board_title, " 
 				 + "ano_board_content, "
 				 + "ano_board_read, "
 				 + "ano_board_date, "
-				 + "ano_board_ip) "
-				 + "VALUES(?,?,?,?,?,?,?)"; 
+				 + "ano_board_ip, "
+				 + "ano_board_nick, "
+				 + "ano_board_file) "
+				 + "VALUES(?,?,?,0,now(),111111,?,?) "; 
+			
+//			ano_board_num int(11) AI PK 
+//			mem_email varchar(20) 
+//			ano_board_title varchar(45) 
+//			ano_board_content varchar(500) 
+//			ano_board_read int(11) 
+//			ano_board_date datetime 
+//			ano_board_ip varchar(100) 
+//			ano_board_nick varchar(100) 
+//			ano_board_file varchar(255)
 			
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, anb.getAno_board_num()); // 익명사담방 글번호
-			pstmt.setString(2, anb.getMem_email());
-			pstmt.setString(3, anb.getAno_board_title());
-			pstmt.setString(4, anb.getAno_board_content());
-			pstmt.setInt(5, 0);  // 조회수
-			pstmt.setTimestamp(6, anb.getAno_board_date());
-			pstmt.setString(7, anb.getAno_board_ip());
-			pstmt.setString(8, anb.getAno_board_nick());
-			pstmt.setString(9, anb.getAno_board_file());
+			pstmt.setString(1, anb.getMem_email());
+			pstmt.setString(2, anb.getAno_board_title());
+			pstmt.setString(3, anb.getAno_board_content());
+			pstmt.setString(4, anb.getAno_board_nick());
+			pstmt.setString(5, anb.getAno_board_file());
 			
 			pstmt.executeUpdate();
 			

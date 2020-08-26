@@ -83,37 +83,56 @@
 <!-------------------------------------------------------- [글쓰기 영역 (form)] ----------------------------------------------------------->
 					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
-					         <!-- 세션에 있는 멤버email계정  -->
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" >
+					         <!-- 1.세션에 있는 멤버email계정  -->
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="user1@naver.com">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
-							        <!-- 닉네임 -->
-								        <label
-								         class="form-label" for="anony_title">닉네임 : 글 다 쓰면 공개</label>
-								        <input type="hidden" class="form-control" name="ano_board_nick" id="anony_title" 
+							        <!-- 2.닉네임 -->
+								        <label class="form-label" for="anony_board_nick">랜덤닉</label>
+								        <input type="text" class="form-control" name="ano_board_nick" id="anony_board_nick" 
 								               value="${nick}" readonly> 
 								    </div>
 								    
 								    <!-- ---------------------------------------------------- -->
 								    
 							        <div class="form-group mb-8">
-							        <!-- 제목 -->
+							        <!-- 3.제목 -->
 								        <label class="form-label" for="anony_title">제목</label>
 								        <input type="text" class="form-control" name="ano_board_title" id="anony_title" 
 								               placeholder="제목을 입력해 주세요."> 
 								    </div>
 								    
+							        <!-- 4.본문 -->
 							        <div class="form-group mb-8">
 							        	<label class="form-label" for="anony_content">본문</label>
 										<textarea name="ano_board_content" class="form-control" placeholder="내용을 입력해주세요." data-msg="내용을 입력해주세요." 
 										rows="10" required id="id_text"></textarea>
 		       						</div>
 				       							 
+							        <!-- 5.파일 -->
 							        	<label class="form-label" for="anony_file">파일업로드</label>
 						              	<div class="form-group files">
 						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf"  multiple="">
 							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
+
+
+<!-- 
+	[현재 뷰페이지에서 넘겨줄 값]
+	mem_email varchar(20) 
+	ano_board_nick varchar(100) 
+	ano_board_title varchar(45) 
+	ano_board_content varchar(500) 
+	ano_board_file varchar(25
+	
+	[Action에서 dao로 처리할 값]
+	ano_board_num int(11) AI PK 
+	ano_board_read int(11) 
+	ano_board_date date 
+	ano_board_ip varchar(100) 
+	
+	 -->
+
 
 						                	
 						              	</div>
