@@ -1,4 +1,5 @@
 
+
 package mango.anony_board.action;
 
 import java.io.File;
@@ -73,3 +74,4 @@ public class AnoBoardInsertAction implements Action {
 		
 
 }
+
