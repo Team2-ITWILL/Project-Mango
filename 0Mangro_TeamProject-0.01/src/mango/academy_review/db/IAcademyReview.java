@@ -19,7 +19,7 @@ public interface IAcademyReview {
 	public int InsertAcademyReview(AcademyReviewBean ab);
 	
 	//학원 후기 삭제
-	public int DeleteAcademyReview(AcademyReviewBean ab);
+	public int DeleteAcademyReview(int reviewNum);
 	
 	//학원 후기 수정
 	public int UpdateAcademyReview(AcademyReviewBean ab);
