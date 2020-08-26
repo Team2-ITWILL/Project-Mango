@@ -12,6 +12,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Unicat project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
@@ -105,10 +107,43 @@
 <%
 	
 	request.setCharacterEncoding("utf-8");
+	request.setAttribute("email", "coke@naver.com");
 %>
+
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			
+		});
+		
+		function getLikeReviewImg(){
+			/* 
+			thumb-notup.png 좋아요X(클릭시 좋아요)
+			thumb-up.png 좋아요반영(클릭시 좋아요취소)
+			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
+			*/
+			var email = "<%=request.getParameter("email")%>";
+			console.log("getLikeReviewImg");
+			$.ajax({
+				type : "post",
+				url : "./getLikeReviewImg.lrev?email="+email,
+				dataType : "JSON",
+				
+				success:function(data){
+					console.log(data);
+				},
+				error : function(){
+					alert("통신에러가 발생했습니다.");
+				}
+			});
+		}
+			
+		
+	</script>		
+	
 </head>
 <body>
-
 
 
 	<!-- Course -->
@@ -434,7 +469,7 @@
 														
 														
 														<!-- 만일 해당 계정으로 도움돼요 했다면 색칠해진 아이콘 -->
-															<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-up.png" width="30"><span>15</span></a></div>
+															<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-up.png" width="30"></a><span>15</span></div>
 														</div>
 													</div>
 												</div>
@@ -619,7 +654,7 @@
 		</div>					
 								
 										
-										
+								
 								
 								
 
@@ -669,7 +704,6 @@
 	
 
 
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>

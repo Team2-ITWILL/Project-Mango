@@ -68,6 +68,7 @@ public class AcademyContentAction implements Action{
 			reList = rdao.getAcademyReviewList(boardNum,startRow,pageSize);
 		}
 		
+		
 		//전체 페이지 수 구하기
 		int pageCount =count/pageSize+(count%pageSize==0?0:1);
 		//한화면에 보여줄 페이지수 설정
