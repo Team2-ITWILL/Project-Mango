@@ -1,3 +1,4 @@
+<%@page import="mango.util.StringToDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -431,8 +432,7 @@
 					</ul>
           
 
-
-
+		
 
 
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->

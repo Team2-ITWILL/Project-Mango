@@ -41,8 +41,7 @@ public class AuditRequestBean {
     	this.auditSubject = auditSubject;
     	this.auditRequestDate = auditRequestDate;
     	this.auditWishDate = auditWishDate;
-    	this.auditConfirmDate = auditConfirmDate;
-    	
+    	this.auditConfirmDate = auditConfirmDate;    	
     }
     
     
@@ -94,7 +93,7 @@ public class AuditRequestBean {
 	public void setAuditConfirmDate(Date auditConfirmDate) {
 		this.auditConfirmDate = auditConfirmDate;
 	}
-
+	
    
  
 }
