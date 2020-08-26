@@ -70,6 +70,7 @@ public class MemberFrontController extends HttpServlet {
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
+				System.out.println("/MemberLoginAction.me : "+ e);
 				e.printStackTrace();
 			}
 			

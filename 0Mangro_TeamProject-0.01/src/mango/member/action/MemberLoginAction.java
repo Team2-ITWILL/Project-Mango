@@ -31,7 +31,7 @@ public class MemberLoginAction implements Action{
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("window.alert('비밀번호가 틀립니다.');");
+			out.print("window.alert('아이디가 존재하지 않습니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			

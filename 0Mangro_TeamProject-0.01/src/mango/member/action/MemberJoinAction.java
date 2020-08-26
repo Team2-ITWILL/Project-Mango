@@ -50,7 +50,7 @@ public class MemberJoinAction implements Action{
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(true);
-		forward.setPath("./4index.jsp");
+		forward.setPath("./MemberLogin.me");
 		
 		return forward;
 	} //  excute() 끝

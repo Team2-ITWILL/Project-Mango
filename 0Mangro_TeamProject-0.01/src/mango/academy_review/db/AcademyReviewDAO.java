@@ -101,30 +101,32 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	@Override
 	public int InsertAcademyReview(AcademyReviewBean ab) {
-
+		
 		try {
 			getConnection();
 		} catch (Exception e) {
-			System.out.println("InsertAcademyReview()에서 예외발생");	
+			System.out.println("InsertAcademyReview()에서 예외발생");
 			e.printStackTrace();
 		} finally {
 			resourceClose();
 		}
 		
+		
 		return 0;
 	} // InsertAcademyReview() 끝
 
 	@Override
-	public int DeleteAcademyReview(AcademyReviewBean ab) {
-
+	public int DeleteAcademyReview(int reviewNum) {
+		
 		try {
 			getConnection();
 		} catch (Exception e) {
-			System.out.println("DeleteAcademyReview()에서 예외발생");	
+			System.out.println("DeleteAcademyReview()에서 예외발생");
 			e.printStackTrace();
 		} finally {
 			resourceClose();
 		}
+		
 		
 		return 0;
 	} // DeleteAcademyReview()끝
@@ -143,7 +145,6 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		
 		return 0;
 	} //UpdateAcademyReview() 끝
-
 
 	
 } // AcademyReviewDAO 클래스 끝
