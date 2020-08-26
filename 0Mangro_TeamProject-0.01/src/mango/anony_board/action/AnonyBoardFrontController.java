@@ -69,14 +69,13 @@ public class AnonyBoardFrontController extends HttpServlet{
 			
 		}else if(command.equals("/AnoBoardInsertAction.anob")){
 
-			action = new AnonyBoardWriteAction();
-
+			action = new AnoBoardInsertAction();
 			
 			try{
 				forward = action.excute(request, response);
 				
 			}catch(Exception e){
-				System.out.println("AnonyBoardFrontController의 /AnoBoardWriteView.anob에서 예외");
+				System.out.println("AnonyBoardFrontController의 /AnoBoardInsertAction.anob에서 예외");
 				e.printStackTrace();
 				
 			}

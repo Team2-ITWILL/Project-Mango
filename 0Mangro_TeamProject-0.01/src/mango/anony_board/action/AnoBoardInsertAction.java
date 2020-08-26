@@ -2,7 +2,6 @@
 
 package mango.anony_board.action;
 
-import java.io.File;
 import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,9 +46,6 @@ public class AnoBoardInsertAction implements Action {
 //				ano_board_title varchar(45) 
 //				ano_board_content varchar(500) 
 //				ano_board_file varchar(25
-//	
-				
-				
 //				[ano_board_write.jsp 뷰페이지에서 form으로 받아온 값 5개 세팅]
 				// 제목 본문 파일 (익명닉네임)
 				// 조회수 0 날짜String ip
@@ -59,14 +55,14 @@ public class AnoBoardInsertAction implements Action {
 				anbean.setAno_board_content(multi.getParameter("ano_board_content"));
 				anbean.setAno_board_file(multi.getOriginalFileName(multi.getParameter("ano_board_file")));
 				
-				float f_size = 0;
+				//float f_size = 0;
 				
 				
 				// [만일 파일이 존재한다면 파일의 크기를 얻어오기]
-				File f = multi.getFile(multi.getParameter("ano_board_file"));
-				if(multi.getParameter("ano_board_file") != null){
-					f_size = f.length();
-				}
+//				File f = multi.getFile(multi.getParameter("ano_board_file"));
+//					if(multi.getParameter("ano_board_file") != null){
+//						f_size = f.length();
+//					}
 				
 				
 //				[ dao로 처리할 값]
@@ -74,11 +70,12 @@ public class AnoBoardInsertAction implements Action {
 //				ano_board_read int(11) 
 				
 				// [Action에서 처리할 값]
-				String ano_board_date = new Timestamp(System.currentTimeMillis()).toString(); 
+				Timestamp ano_board_date = new Timestamp(System.currentTimeMillis());
 				String ano_board_ip = (String)request.getRemoteAddr();
-
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);
+				
+				
 				
 				ActionForward forward = new ActionForward();
 				forward.setRedirect(false);

@@ -84,14 +84,13 @@
 					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
 					         <!-- 1.세션에 있는 멤버email계정  -->
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" >
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="user1@naver.com">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
 							        <!-- 2.닉네임 -->
-								        <label
-								         class="form-label" for="anony_title">랜덤닉</label>
-								        <input type="text" class="form-control" name="ano_board_nick" id="anony_title" 
+								        <label class="form-label" for="anony_board_nick">랜덤닉</label>
+								        <input type="text" class="form-control" name="ano_board_nick" id="anony_board_nick" 
 								               value="${nick}" readonly> 
 								    </div>
 								    
