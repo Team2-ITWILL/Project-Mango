@@ -13,10 +13,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import mango.action.ActionForward;
+import mango.liked_aca_review.db.LikedAcaReviewBean;
 import mango.liked_aca_review.db.LikedAcaReviewDAO;
 
-@WebServlet("/getLikedAcaRev")
-public class GetLikedAcaReviewAction extends HttpServlet{
+@WebServlet("/likeAcaRev")
+public class LikeAcaReviewAction extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +38,7 @@ public class GetLikedAcaReviewAction extends HttpServlet{
 		String data = request.getParameter("data");
 		
 		PrintWriter out = response.getWriter();
-		
+		int result = 0;
 		try {
 			
 			JSONParser parser = new JSONParser();
@@ -48,15 +49,36 @@ public class GetLikedAcaReviewAction extends HttpServlet{
 			
 			System.out.println(revNum);
 			System.out.println(email);
+			
+			
+			
 			LikedAcaReviewDAO dao = new LikedAcaReviewDAO();
 
 			int check = dao.checkLikedReview(email,revNum);
-			int count = dao.getReviewLikeCount(revNum);
-			
 			System.out.println("chk:" + check);
-			System.out.println("cnt:" + count);
 			
-			obj.put("check", check);
+			LikedAcaReviewBean bean = new LikedAcaReviewBean();
+			bean.setReviewNum(revNum);
+			bean.setMemEmail(email);
+			
+			// 안 눌러져있으면
+			if(check == 0){
+				// 좋아요
+				dao.LikeAcaReview(bean);
+				result +=1;
+			// 이미 눌러져있으면	
+			}else if(check == 1){
+				// 좋아요 취소
+				dao.UnLikeAcaReview(bean);
+				
+			}else {
+				// 오류
+				result = 2;
+			}
+			
+			
+			int count = dao.getReviewLikeCount(revNum);
+			obj.put("result", result);
 			obj.put("count",count);
 			
 			out.print(obj);

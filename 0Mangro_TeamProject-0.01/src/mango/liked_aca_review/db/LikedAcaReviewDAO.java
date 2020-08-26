@@ -13,6 +13,15 @@ public class LikedAcaReviewDAO extends DBconnection implements ILikedAcaReview{
 		
 		try {
 			getConnection();
+			sql ="insert into liked_aca_review values (?,?,now())";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bean.getReviewNum());
+			pstmt.setString(2, bean.getMemEmail());
+			
+			pstmt.executeUpdate();
+			
+			
 		} catch (Exception e) {
 			System.out.println("LikeAcaReview()에서 예외 발생");
 			e.printStackTrace();
@@ -22,19 +31,21 @@ public class LikedAcaReviewDAO extends DBconnection implements ILikedAcaReview{
 		
 	} // LikeAcaReview() 끝
 	
-	public int checkLikedReview(String email){
+	public int checkLikedReview(String email, int revNum){
 		
 		int result = 0;
 		
 		try {
 			getConnection();
-			sql = "select * from liked_aca_review where mem_email = ?";
+			sql = "select * from liked_aca_review where mem_email = ? and review_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
+			pstmt.setInt(2, revNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
+				// 좋아요 눌러짐
 				result = 1;
 			}
 		} catch (Exception e) {
@@ -62,7 +73,7 @@ public class LikedAcaReviewDAO extends DBconnection implements ILikedAcaReview{
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				result += 1;
+				result = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			System.out.println("getReviewLike()에서 예외 발생");
@@ -96,6 +107,15 @@ public class LikedAcaReviewDAO extends DBconnection implements ILikedAcaReview{
 
 		try {
 			getConnection();
+			sql ="delete from liked_aca_review where review_num = ? and mem_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bean.getReviewNum());
+			pstmt.setString(2, bean.getMemEmail());
+			
+			pstmt.executeUpdate();
+			
+			
 		} catch (Exception e) {
 			System.out.println("UnLikeAcaReview()에서 예외 발생");
 			e.printStackTrace();
