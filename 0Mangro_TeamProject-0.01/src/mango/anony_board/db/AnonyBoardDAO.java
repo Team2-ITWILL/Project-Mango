@@ -67,12 +67,32 @@ public class AnonyBoardDAO extends DBconnection {
 	// 1-2. [INSERT 게시판 글 저장 메소드] : AnoBoardInsertAction에서 호출
 	public void insertANBoard(AnonyBoardBean anb){
 		
+		
 		int num = 0;
 		
 		try {
 			getConnection();
+			// insert 되는 글의 글번호 증가 작업
+			sql = "SELECT max(num) FROM anony_board";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){ num = rs.getInt(1)+1; } else { num = 1;}
+			
+			
+		}catch(SQLException se){
+			System.out.println("InsertANBoard메소드에서 첫번째 SQL 예외 발생 : "+ se);				
+			
+		}catch(Exception e){
+			System.out.println("InsertANBoard메소드 첫번째 쿼리에서 예외 발생 : "+ e);				
+			
+		}
+		
+		try{
 			sql = "INSERT INTO anony_board "
-				 + "(mem_email, "
+				 + "(ano_board_num, "
+				 + "mem_email, "
 				 + "ano_board_title, " 
 				 + "ano_board_content, "
 				 + "ano_board_read, "
@@ -80,46 +100,36 @@ public class AnonyBoardDAO extends DBconnection {
 				 + "ano_board_ip, "
 				 + "ano_board_nick, "
 				 + "ano_board_file) "
-				 + "VALUES(?,?,?,0,?,111111,?,?) "; 
+				 + "VALUES(?,?,?,?,0,?,?,?,?) "; 
 			
-//			ano_board_num int(11) AI PK 
-//			mem_email varchar(20) 
-//			ano_board_title varchar(45) 
-//			ano_board_content varchar(500) 
-//			ano_board_read int(11) 
-//			ano_board_date datetime 
-//			ano_board_ip varchar(100) 
-//			ano_board_nick varchar(100) 
-//			ano_board_file varchar(255)
-			pstmt = con.prepareStatement(sql);
-			SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-			Date date = fDate.parse(new Timestamp(System.currentTimeMillis()).toString());
-			
-			String datetest= "2020-08-26";
-			Timestamp test123 = Timestamp.valueOf(datetest);
-			
-			pstmt.setString(1, anb.getMem_email());
-			pstmt.setString(2, anb.getAno_board_title());
-			pstmt.setString(3, anb.getAno_board_content());
-			pstmt.setTimestamp(4,  test123);
-			pstmt.setString(5, anb.getAno_board_nick());
-			pstmt.setString(6, anb.getAno_board_file());
-			
-			pstmt.executeUpdate();
+//		ano_board_num int(11) AI PK 
+//		mem_email varchar(20) 
+//		ano_board_title varchar(45) 
+//		ano_board_content varchar(500) 
+//		ano_board_read int(11) 
+//		ano_board_date datetime 
+//		ano_board_ip varchar(100) 
+//		ano_board_nick varchar(100) 
+//		ano_board_file varchar(45)
 			
 			
-			
-		}catch(SQLException se){
-			System.out.println("InsertANBoard메소드에서 SQL 예외 발생 : "+ se);				
-			
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setInt(1, num);
+		pstmt.setString(2, anb.getMem_email());
+		pstmt.setString(3, anb.getAno_board_title());
+		pstmt.setString(4, anb.getAno_board_content());
+		pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+		pstmt.setString(6, anb.getAno_board_ip());
+		pstmt.setString(7, anb.getAno_board_nick());
+		pstmt.setString(8, anb.getAno_board_file());
+		
+		pstmt.executeUpdate();
+		
 		}catch(Exception e){
-			System.out.println("InsertANBoard메소드 쿼리에서 예외 발생 : "+ e);				
-			
-		}finally {
-			resourceClose();
-		}
-		
-		
+			System.out.println("InsertANBoard메소드 두번째 쿼리에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}finally { resourceClose();}
 		
 	};
 
@@ -209,7 +219,6 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getString("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 			}// if
@@ -246,7 +255,6 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getString("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 				anbList.add(anb);

@@ -91,17 +91,10 @@
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/eye.png" width="20">
 												<!-- 조회수  -->
-												<%
-												AnonyBoardBean bean = request.getAttribute("ano_board_date");
-									            SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm"); //같은 형식으로 맞춰줌
-									            Date n = fDate.parse(bean);
-									           
-									            
+
+
 												
-												
-												%>
-												
-												<span><%=anbList.ano_board_read%></span>
+												<span>${anbList.ano_board_read}</span>
 												
 											</div>&nbsp;&nbsp;&nbsp;
 											

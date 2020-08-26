@@ -44,6 +44,5 @@ public class AnonyBoardListAction implements Action{
 		
 		return forward;
 		
-		
 	}
 }

@@ -70,7 +70,6 @@ public class AnoBoardInsertAction implements Action {
 //				ano_board_read int(11) 
 				
 				// [Action에서 처리할 값]
-				Timestamp ano_board_date = new Timestamp(System.currentTimeMillis().);
 				String ano_board_ip = (String)request.getRemoteAddr();
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);

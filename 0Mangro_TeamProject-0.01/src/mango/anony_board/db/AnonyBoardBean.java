@@ -20,7 +20,7 @@ public class AnonyBoardBean{
 	private int ano_board_read;
 	
 	// 작성일자 
-	private String ano_board_date;
+	private Timestamp ano_board_date;
 	
 	// 아이피 
 	private String ano_board_ip;
@@ -35,15 +35,9 @@ public class AnonyBoardBean{
 	
 	
 	
-	
 	// 생성자
 
 	public AnonyBoardBean(){}
-
-
-
-
-
 
 	public AnonyBoardBean(int ano_board_num, String mem_email, String ano_board_title, String ano_board_content,
 			int ano_board_read, String ano_board_date, String ano_board_ip, String ano_board_nick,
@@ -64,12 +58,6 @@ public class AnonyBoardBean{
 
 
 
-
-
-
-
-
-
 	// setter/getter
 
 	public int getAno_board_num() {
@@ -81,7 +69,6 @@ public class AnonyBoardBean{
 	}
 
 
-
 	public String getMem_email() {
 		return mem_email;
 	}
@@ -91,13 +78,9 @@ public class AnonyBoardBean{
 		this.mem_email = mem_email;
 	}
 
-
-
 	public String getAno_board_title() {
 		return ano_board_title;
 	}
-
-
 
 	public void setAno_board_title(String ano_board_title) {
 		this.ano_board_title = ano_board_title;
@@ -107,9 +90,6 @@ public class AnonyBoardBean{
 	public String getAno_board_content() {
 		return ano_board_content;
 	}
-
-
-
 
 	public void setAno_board_content(String ano_board_content) {
 		this.ano_board_content = ano_board_content;
@@ -122,33 +102,22 @@ public class AnonyBoardBean{
 		return ano_board_read;
 	}
 
-
-
-
 	public void setAno_board_read(int ano_board_read) {
 		this.ano_board_read = ano_board_read;
 	}
 
 
-
-
-	public String getAno_board_date() {
+	public Timestamp getAno_board_date() {
 		return ano_board_date;
 	}
 
-
-
-
-	public void setAno_board_date(String ano_board_date) {
+	public void setAno_board_date(Timestamp ano_board_date) {
 		this.ano_board_date = ano_board_date;
 	}
-
-
 
 	public String getAno_board_ip() {
 		return ano_board_ip;
 	}
-
 
 
 	public void setAno_board_ip(String ano_board_ip) {
@@ -156,11 +125,9 @@ public class AnonyBoardBean{
 	}
 
 
-
 	public String getAno_board_nick() {
 		return ano_board_nick;
 	}
-
 
 
 	public void setAno_board_nick(String ano_board_nick) {
@@ -179,10 +146,5 @@ public class AnonyBoardBean{
 		this.ano_board_file = ano_board_file;
 	}
 
-
-
-	
-	
-	
 
 }
