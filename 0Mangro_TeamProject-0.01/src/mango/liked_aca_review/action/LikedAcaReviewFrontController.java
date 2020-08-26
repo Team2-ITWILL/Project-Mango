@@ -41,7 +41,10 @@ public class LikedAcaReviewFrontController extends HttpServlet {
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action=null;
 	
-		
+		if(command.equals("getLikeReviewImg.lrev")){
+			
+			
+		}
 		
 		
 		

@@ -11,13 +11,21 @@ public class AnonyBoardWriteAction implements Action {
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("익명사담방 글작성 하기 AnonyBoardWriteAction excute()");
-		AnonyBoardDAO andao = new AnonyBoardDAO();
-		
-		
-		
-		
-		return null;
-	}
 
+			System.out.println("AnoBoardWriteAction excute()");
+	
+			// 랜덤 닉 보내기
+			AnonyBoardDAO andao = new AnonyBoardDAO();
+			String nick = andao.getRandomNickname();
+			
+			System.out.println(nick);
+			request.setAttribute("nick", nick);
+			
+			ActionForward forward = new ActionForward();
+			
+			forward.setRedirect(false);
+			forward.setPath("./4index.jsp?center=O_anony/anony_board_write.jsp");
+			
+			return forward;
+		}
 }
