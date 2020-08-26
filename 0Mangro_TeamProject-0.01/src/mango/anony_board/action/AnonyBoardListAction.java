@@ -12,45 +12,29 @@ import mango.anony_board.db.AnonyBoardBean;
 import mango.anony_board.db.AnonyBoardDAO;
 
 
-// [익명사담방 전체 글목록 불러오는 액션]
+// [익명사담방 전체 글목록과 전체 글 개수를 불러오는 액션] 
+// - 데이터 전송경로 : O_anony/anony_board.jsp
 public class AnonyBoardListAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("AnonyBoardListAction excute()");
 
-		
-		AnonyBoardDAO andao = new AnonyBoardDAO();
-		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
-		
-		anbList = andao.getANBoardList();
-		
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("4index.jsp?O_ano/anony_board.jsp");
-		
-		
-		
-		
-		
-		return null;
-	}
-
-
-	
-	
-
-		System.out.println("1.익명사담방 전체글목록 불러오기 AnonyBoardListAction excute()");
-		
+		// 글 목록 불러오기
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		anbList = andao.getANBoardList();
 		System.out.println(anbList.toString());
-		
-		int anbCount = andao.getAnonyBoardCount();
-		
-		System.out.println("2.익명사담방 전체글 개수 불러오기 AnonyBoardListAction excute()");
 		request.setAttribute("anbList", anbList);
+		
+		
+		// 글 전체 개수 불러오기
+		int anbCount = andao.getAnonyBoardCount();
 		request.setAttribute("anbCount", anbCount);
+
+		// db에 저장된 글의 닉네임 불러오기
+		// - 아직 db에 컬럼이 없음
+		
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
@@ -60,5 +44,4 @@ public class AnonyBoardListAction implements Action{
 		
 		
 	}
-
 }

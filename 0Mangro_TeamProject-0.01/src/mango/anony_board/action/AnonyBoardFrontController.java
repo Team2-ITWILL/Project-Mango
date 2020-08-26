@@ -18,6 +18,8 @@ public class AnonyBoardFrontController extends HttpServlet{
 												throws ServletException, IOException{
 		
 		
+		
+		
 		//가상요청 주소 가져오기
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
@@ -43,25 +45,51 @@ public class AnonyBoardFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		if(command.equals("/AnoBoard.anob")){
+		if(command.equals("/AnonyBoardListAction.anob")){
 			action = new AnonyBoardListAction();
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
 				System.out.println("AnonyBoardFrontController의 /noBoard.anob에서 예외");
 				e.printStackTrace();
-			}
-		}else if(command.equals("/AnoBoardWriteView.anob")){
-			String member_email = "new_face12";
-			request.setAttribute("member_email", member_email);
-			System.out.println("/AnoBoardWriteView.anob로 "+member_email+" 전송");
+			} 
 			
-			forward = new ActionForward();
-			System.out.println(forward);
-			forward.setRedirect(false);
-			forward.setPath("4index.jsp?center=O_anony/anony_board_write.jsp?member_email="+member_email);
+			
+		}else if(command.equals("/AnoBoardWriteAction.anob")){
+			action = new AnoBoardWriteAction();
+			
+			try {
+				forward = action.excute(request, response);
+				
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoardWriteView.anob에서 예외");
+				e.printStackTrace();
+				
+			}
+			
+		}else if(command.equals("/AnoBoardInsertAction.anob")){
+			action = new AnoBoardInsertAction();
+			
+			try{
+				forward = action.excute(request, response);
+				
+			}catch(Exception e){
+				System.out.println("AnonyBoardFrontController의 /AnoBoardWriteView.anob에서 예외");
+				e.printStackTrace();
+				
+			}
 			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

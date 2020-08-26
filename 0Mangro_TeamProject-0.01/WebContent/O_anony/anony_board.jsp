@@ -29,7 +29,7 @@
 	{.widthAdjust {width: 550px;}}
 	.boardCount{margin-top:10px; display: inline-block;margin-left: 20px;}
 	.comments_title {display: inline-block;}
-	
+	.span-title{ font-size: 1.2em; font-weight: 700;	}
 </style>
 
 
@@ -45,7 +45,7 @@
 
 <!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
 					<div class="comments_container">
-						<div class="comments_write_button" onclick="location.href='./AnoBoardWriteView.anob'">글쓰기</div>
+						<div class="comments_write_button" onclick="location.href='./AnoBoardWriteAction.anob'">글쓰기</div>
 						<div class="comments_title">익명사담방</div>
 						<h6 class="boardCount">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
 						
@@ -53,17 +53,22 @@
 <!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
 						
 						<c:forEach var="anbList" items="${anbList}">
-
 							<li class="widthAdjust">
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start" onclick="#">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
 									
-												<!-- 익명사담방 글제목 -->
 									<div class="comment_content">
 										<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_author">
-												<a href="#">${anbList.ano_board_title}</a>
+
+												<!-- 익명사담방 랜덤 닉네임 -->
+												<i class="fa fa-user" aria-hidden="true"></i> 
+												<span class="icons_margin">${anbList.ano_board_nick}</span>
+
+												<!-- 익명사담방 글제목 -->
+												<p><span class="span-title">${anbList.ano_board_title}</span></p>
+												
 											</div>
 										</div>
 										
@@ -94,9 +99,10 @@
 												<span>${anbList.ano_board_date}</span>
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>
-									</div>
+									</div> 
 								</div>
-							</li> 
+							</li>
+							 
 						</c:forEach>
 <!-------------------------------------------------------- [▲ 코멘트 1줄]  -------------------------------------------------------------------------->
 						</ul> 
