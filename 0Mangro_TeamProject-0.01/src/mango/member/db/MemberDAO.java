@@ -62,7 +62,7 @@ public class MemberDAO extends DBconnection{
 			
 			if(rs.next()){
 				
-				if(rs.getString("id_password1").equals(mb.getMemPwd())){
+				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 					check = 1;
 				}else{
 					check = 0;
@@ -72,7 +72,7 @@ public class MemberDAO extends DBconnection{
 				check = -1;
 			}
 
-			System.out.println("로그인 성공 !!");
+			System.out.println("DB 조회 성공 !!");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

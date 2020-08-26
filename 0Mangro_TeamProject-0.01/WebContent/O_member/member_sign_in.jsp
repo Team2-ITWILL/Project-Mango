@@ -82,7 +82,7 @@
 
 
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-			      <form class="sign_upClass" action="./MemberLogin.me" method="post" id="login" > <!-- onsubmit="loginCheck()" -->
+			      <form class="sign_upClass" action="./MemberLoginAction.me" method="post" id="login" > <!-- onsubmit="loginCheck()" -->
 				      
 				      <div class="mb-5 mt-2">
 				        <p>반갑습니다. 로그인하고 Mango를 시작해보세요.</p>
@@ -105,7 +105,7 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일</label>
-						        <input type="text" class="form-control" name="" id="id_email" placeholder="이메일" 
+						        <input type="text" class="form-control" name="id_email" id="id_email" placeholder="이메일" 
 						               required
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
@@ -122,7 +122,7 @@
 						          </span>
 						        </div> 
 						        
-						        <input type="password" class="form-control" name="" id="id_password1" placeholder="********"
+						        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
 						               aria-label="********" required
 						               data-msg="올바른 비밀번호를 입력해주세요."
 						               data-error-class="form-error"
