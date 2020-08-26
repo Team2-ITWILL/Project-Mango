@@ -18,12 +18,10 @@ public class AnonyBoardListAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		System.out.println("1.익명사담방 전체글목록 불러오기 AnonyBoardListAction excute()");
-		
-
+		System.out.println("AnonyBoardListAction excute()");
 
 		// 글 목록 불러오기
+
 
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();

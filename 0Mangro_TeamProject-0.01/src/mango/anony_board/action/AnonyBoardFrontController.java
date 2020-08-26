@@ -56,7 +56,9 @@ public class AnonyBoardFrontController extends HttpServlet{
 			
 			
 		}else if(command.equals("/AnoBoardWriteAction.anob")){
-			action = new AnoBoardWriteAction();
+
+			action = new AnonyBoardWriteAction();
+
 			
 			try {
 				forward = action.excute(request, response);
@@ -68,7 +70,9 @@ public class AnonyBoardFrontController extends HttpServlet{
 			}
 			
 		}else if(command.equals("/AnoBoardInsertAction.anob")){
-			action = new AnoBoardInsertAction();
+
+			action = new AnonyBoardWriteAction();
+
 			
 			try{
 				forward = action.excute(request, response);
