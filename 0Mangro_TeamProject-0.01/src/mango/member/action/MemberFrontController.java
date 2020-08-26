@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import MemberLogin.MemberLoginAction;
 import mango.action.Action;
 import mango.action.ActionForward;
 
@@ -45,7 +44,7 @@ public class MemberFrontController extends HttpServlet {
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("/4index.jsp?O_member/member_sign_up.jsp");
+			forward.setPath("/4index.jsp?center=O_member/member_sign_up.jsp");
 		
 		// 회원 가입 요청이 들어왔을 때
 		}else if(command.equals("/MemberJoinAction.me")){
