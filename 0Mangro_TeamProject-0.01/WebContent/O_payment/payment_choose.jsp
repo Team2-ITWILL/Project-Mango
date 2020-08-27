@@ -38,9 +38,7 @@
 
 
 <%
-	//String email=(String)session.getAttribute("email");
-
-	String email="2221325";
+	String email=(String)session.getAttribute("email");
 
 	if(email==null){
 	%>	
