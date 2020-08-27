@@ -24,22 +24,22 @@ public class AcademyKeywordDAO extends DBconnection{
 	} // insertAcademyKeyword() 끝
 	
 	// 키워드 반환
-	public List<AcademyKeywordBean> getAcademyKeyword(int acaNum){
+	public List<AcademyKeywordBean> getAcademyKeyword(int acaMainNum){
 		
 		List<AcademyKeywordBean> acaKeywordList = new ArrayList<AcademyKeywordBean>();
 		
 		try {
 			getConnection();
-			sql = "select * from academy_keyward where aca_num = ?";
+			sql = "select * from academy_keyward where aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, acaNum);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
 				
 				AcademyKeywordBean akBean = new AcademyKeywordBean();
-				akBean.setAcaNum(rs.getInt(1));
+				akBean.setAcaMainNum(rs.getInt(1));
 				akBean.setAcakeyword(rs.getString(2));
 				
 				acaKeywordList.add(akBean);

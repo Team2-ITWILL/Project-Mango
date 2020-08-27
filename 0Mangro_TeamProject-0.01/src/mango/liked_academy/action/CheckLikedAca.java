@@ -43,12 +43,12 @@ public class CheckLikedAca extends HttpServlet{
 			JSONObject obj = (JSONObject) parser.parse(info);
 			
 			String email = (String) obj.get("email");
-			int acaNum = Integer.parseInt((String) obj.get("acaNum"));
+			int acaMainNum = Integer.parseInt((String) obj.get("acaMainNum"));
 			String acaName = (String) obj.get("acaName");
 			
 			LikedAcademyBean bean = new LikedAcademyBean();
 			bean.setMemEmail(email);
-			bean.setAcaNum(acaNum);
+			bean.setAcaMainNum(acaMainNum);
 			bean.setAcaName(acaName);
 			
 			LikedAcademyDAO dao = new LikedAcademyDAO();

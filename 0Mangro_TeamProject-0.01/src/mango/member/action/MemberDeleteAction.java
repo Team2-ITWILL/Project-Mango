@@ -22,30 +22,43 @@ public class MemberDeleteAction implements Action{
 		MemberBean mb = new MemberBean();
 
 		String id_email = (String)request.getSession().getAttribute("id_email");
-		String id_password1 = (String)request.getParameter("mem_pwd");
+		String chk_pwd = (String)request.getParameter("mem_pwd");
+
+		System.out.println(id_email + " / " + chk_pwd);
+		
+		mb.setMemEmail(id_email);
+		mb.setMemPwd(chk_pwd);
 		
 		int check = mdao.deleteMember(mb);
 		 
-		if(check != 0){
+		if(check == 1){
 			
 			HttpSession session = request.getSession();
 			session.invalidate();
-		
+
 			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('탈퇴가 완료되었습니다.');");
-			out.println("location.href='/Main.me';");
-			out.println("</script>");
 			
-		}else{
+			PrintWriter out = response.getWriter();
+			out.print("<script>");
+			out.print("alert('탈퇴가 완료되었습니다.');");
+			out.print("location.href='./Main.me';");
+			out.print("</script>");
+			out.close();
+			
+			return null;
+			
+		}else if(check == 0){
 			
 			response.setContentType("text/html; charset=UTF-8");
+			
 			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('오류가 발생하였습니다. \n 담당자에게 문의하세요.');");
-			out.println("history.back();");
-			out.println("</script>");
+			out.print("<script>");
+			out.print("alert('오류가 발생하였습니다. 담당자에게 문의하세요.');");
+			out.print("location.href='./Main.me';");
+			out.print("</script>");
+			out.close();
+			
+			return null;
 		}
 		
 		return null;

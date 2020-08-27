@@ -10,14 +10,14 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	// 학원후기갯수 반환
 	@Override
-	public int getAcademyReviewCount(int acaNum) {
+	public int getAcademyReviewCount(int acaMainNum) {
 		int result = 0;
 		try {
 			getConnection();
-			sql = "select count(*) from academy_review where aca_num = ?";
+			sql = "select count(*) from academy_review where aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, acaNum);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -35,24 +35,22 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	// 학원후기 목록반환
 	@Override
-	public List<AcademyReviewBean> getAcademyReviewList(int acaNum, int startRow,int pageSize) {
+	public List<AcademyReviewBean> getAcademyReviewList(int acaMainNum, int startRow,int pageSize) {
 		List<AcademyReviewBean> reviewList = new ArrayList<AcademyReviewBean>();
 		
 		try {
 			getConnection();
-			sql = "select * from academy_review where aca_num = ? order by review_num desc limit ?,?";
+			sql = "select * from academy_review where aca_main_num = ? order by review_num desc limit ?,?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, acaNum);
+			pstmt.setInt(1, acaMainNum);
 			pstmt.setInt(2, startRow-1);
 			pstmt.setInt(3, pageSize);
 			
 			rs = pstmt.executeQuery();
-			/*aca_num, aca_name, review_title, review_good, review_bad, review_subject, 
-			review_score, mem_email, review_date*/
 			while(rs.next()){
 				AcademyReviewBean arBean = new AcademyReviewBean();
 				arBean.setReviewNum(rs.getInt(1));
-				arBean.setAcaNum(rs.getInt(2));
+				arBean.setAcaMainNum(rs.getInt(2));
 				arBean.setAcaName(rs.getString(3));
 				arBean.setReviewTitle(rs.getString(4));
 				arBean.setReviewGood(rs.getString(5));
@@ -75,15 +73,15 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	
 	
 	// 평균 후기점수 반환
-	public double getAvgReviewScore(int boardNum){
+	public double getAvgReviewScore(int acaMainNum){
 		double result = 0;
 		
 		try {
 			getConnection();
-			sql = "select avg(review_score) from academy_review group by aca_num having aca_num = ?";
+			sql = "select avg(review_score) from academy_review group by aca_main_num having aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, boardNum);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){

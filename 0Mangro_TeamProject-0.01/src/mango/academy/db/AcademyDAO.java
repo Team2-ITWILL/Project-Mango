@@ -22,9 +22,9 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			while(rs.next()){
 				bean = new AcademyBean(
-						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10),
-						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14)
+						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), 
+						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)
 						);	
 				
 				list.add(bean);				
@@ -84,31 +84,32 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	
 	// 학원 정보 출력
 	@Override
-	public AcademyBean getAcademyContent(int boardNum) {
+	public AcademyBean getAcademyContent(int acaMainNum) {
 		
 		AcademyBean bean = null;
 		
 		try {
 			getConnection();
-			sql = "select * from academy where aca_num=?";
+			sql = "select * from academy where aca_main_num=?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, boardNum);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
 				bean = new AcademyBean();
-				bean.setAcaNum(rs.getInt(1));
-				bean.setAcaCode(rs.getString(2));
-				bean.setAcaAttr(rs.getString(6));
-				bean.setAcaName(rs.getString(7));
-				bean.setAcaStartDate(rs.getString(8));
-				bean.setAcaCategory1(rs.getString(9));
-				bean.setAcaCategory2(rs.getString(10));
-				bean.setAcaAddrZip(rs.getString(11));
-				bean.setAcaAddrDoro(rs.getString(12));
-				bean.setAcaAddrDetailed(rs.getString(13));
-				bean.setMem_Email(rs.getString(14));
+				bean.setAcaMainNum(rs.getInt(1));
+				bean.setAcaNum(rs.getString(2));
+				bean.setAcaCode(rs.getString(3));
+				bean.setAcaAttr(rs.getString(7));
+				bean.setAcaName(rs.getString(8));
+				bean.setAcaStartDate(rs.getString(9));
+				bean.setAcaCategory1(rs.getString(10));
+				bean.setAcaCategory2(rs.getString(11));
+				bean.setAcaAddrZip(rs.getString(12));
+				bean.setAcaAddrDoro(rs.getString(13));
+				bean.setAcaAddrDetailed(rs.getString(14));
+				bean.setMem_email(rs.getString(15));
 				
 			}
 		} catch (Exception e) {
