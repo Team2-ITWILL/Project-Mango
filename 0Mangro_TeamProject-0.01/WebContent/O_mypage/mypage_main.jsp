@@ -180,7 +180,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
+                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>
