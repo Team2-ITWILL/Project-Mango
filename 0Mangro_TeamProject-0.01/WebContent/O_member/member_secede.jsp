@@ -31,24 +31,36 @@
 	/* 회원 탈퇴 필수 입력 확인 */
 	$(function del_check(){
 		
-		$("#mem_del").submit(function(){
+		$("#del_chk_btn").on('click', function(){			
 			
-			if($("#mem_pwd").val() == ""){
+			if($("#pw").val() == ""){
 				alert("비밀번호를 입력하세요.");
-				$("#mem_pwd").focus();
+				$("#pw").focus();
 				return false;
 			}
 			
-			if($("#del_ck").is(":checked")){
-				alert("동의해주셔야 탈퇴 가능합니다. ");
+			if(!($("#del_ck").is(":checked")) ){
+				alert("동의해주셔야 탈퇴가 가능합니다. ");
 				$("#del_ck").focus();
 				return false;
 			}
+		
+			/* 회원 탈퇴 페이지 확인 버튼 클릭 시 탈퇴 확인(예/아니오) 안내창 */
+			var del_chk = confirm("회원 탈퇴를 하시겠습니까?");
 			
-		}); // submit() 끝
+			if(del_chk == true){ // 예를 누를 경우
+				location.href="./MemberDeleteAction.me";
+			
+			}else if(del_chk != true){ // 취소를 누를 경우
+				history.back(-1); // 이전 페이지로 가기
+			//	location.href="./Main.me"; // 메인 페이지로 가기
+				
+				alert("회원 탈퇴가 취소되었습니다.");
+			}
+			
+		}); // on() 끝
 	
 	}); // del_check() 끝
-
 </script>
 
 
@@ -61,7 +73,7 @@
 					<div class="section_title_container text-center">
 						<h4 class="section_title">회원탈퇴</h4>
       
-					      <form class="sign_upClass" action="/MemberDeleteAction.me" method="post" id="mem_del" onsubmit="del_check()">
+					      <form class="sign_upClass" action="" method="post" id="mem_del" onsubmit="del_check()">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>회원탈퇴 후에는 작성된 요청서 및 제안서에 영구적으로 접근이 불가능합니다.</p>
@@ -86,7 +98,7 @@
 					
 					      <div class="row align-items-center mb-5">
 					        <div class="col-5 secede" >
-					          <button type="submit" class="btn btn-primary">확인</button>
+					          <button type="button" class="btn btn-primary" id="del_chk_btn">확인</button>
 					        </div>
 					
 					      </div>

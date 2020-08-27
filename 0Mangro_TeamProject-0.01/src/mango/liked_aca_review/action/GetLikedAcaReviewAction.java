@@ -46,15 +46,11 @@ public class GetLikedAcaReviewAction extends HttpServlet{
 			String email = (String) obj.get("email");
 			int revNum = Integer.parseInt((String)obj.get("revNum"));
 			
-			System.out.println(revNum);
-			System.out.println(email);
 			LikedAcaReviewDAO dao = new LikedAcaReviewDAO();
 
 			int check = dao.checkLikedReview(email,revNum);
 			int count = dao.getReviewLikeCount(revNum);
 			
-			System.out.println("chk:" + check);
-			System.out.println("cnt:" + count);
 			
 			obj.put("check", check);
 			obj.put("count",count);
