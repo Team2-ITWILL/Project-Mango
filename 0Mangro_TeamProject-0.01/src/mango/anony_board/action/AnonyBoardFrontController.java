@@ -53,8 +53,6 @@ public class AnonyBoardFrontController extends HttpServlet{
 			
 			
 		}else if(command.equals("/AnoBoardWriteAction.anob")){
-
-
 			action = new AnoBoardWriteAction();
 
 			
@@ -68,7 +66,6 @@ public class AnonyBoardFrontController extends HttpServlet{
 			}
 			
 		}else if(command.equals("/AnoBoardInsertAction.anob")){
-
 			action = new AnoBoardInsertAction();
 			
 			try{
@@ -80,7 +77,36 @@ public class AnonyBoardFrontController extends HttpServlet{
 				
 			}
 			
+		}else if(command.equals("/AnoBoardDeleteAction.anob")){
+			action = new AnoBoardDeleteAction();
+			
+			try{
+				forward = action.excute(request, response);
+				
+			}catch(Exception e){
+				System.out.println("AnonyBoardFrontController의 /AnoBoardDeleteAction.anob에서 예외");
+			}
+			
+		}else if(command.equals("/AnoBoardSingleAction.anob")){
+			action = new AnoBoardSingleAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoardSingleAction.anob에서 예외");
+				e.printStackTrace();
+			}
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		if(forward!=null){ //new ActionForward()객체가 존재시
