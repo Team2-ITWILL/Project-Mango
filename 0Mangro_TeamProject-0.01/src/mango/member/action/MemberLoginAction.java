@@ -19,9 +19,15 @@ public class MemberLoginAction implements Action{
 		request.setCharacterEncoding("UTF-8");
 		
 		String id_email = request.getParameter("id_email");
+		String chk_pwd = request.getParameter("id_password1");
 		
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
+		
+		mb.setMemEmail(id_email);
+		mb.setMemPwd(chk_pwd);
+		
+		System.out.println(id_email + " / " + chk_pwd);
 		
 		int check = mdao.loginCheck(mb);
 		
@@ -35,7 +41,7 @@ public class MemberLoginAction implements Action{
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-//			return null;
+			return null;
 		
 		}else if(check == -1){ // 아이디 불일치
 			
@@ -47,7 +53,7 @@ public class MemberLoginAction implements Action{
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-//			return null;
+			return null;
 		}
 		
 		HttpSession session = request.getSession();

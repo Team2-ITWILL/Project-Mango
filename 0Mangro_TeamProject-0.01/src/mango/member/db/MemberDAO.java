@@ -60,6 +60,8 @@ public class MemberDAO extends DBconnection{
 			
 			rs = pstmt.executeQuery();
 			
+			System.out.println(rs);
+			
 			if(rs.next()){
 				
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
@@ -100,7 +102,16 @@ public class MemberDAO extends DBconnection{
 			
 			pstmt.setString(1, mb.getMemEmail());
 			pstmt.setString(2, mb.getMemPwd());
+			
 			pstmt.executeUpdate();
+			
+			if(mb.getMemPwd().equals("mem_pwd")){
+				check = 1;
+			}else{
+				check = 0;
+			}
+			
+			System.out.println("회원 탈퇴 완료 !!");
 			
 		} catch (Exception e) {
 			System.out.println("deleteMember()에서 SQL 구문 오류 : "+ e);
