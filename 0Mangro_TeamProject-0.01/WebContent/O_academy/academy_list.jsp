@@ -71,8 +71,128 @@ li.thirdKey {
 
 </style>
 
+
+
+<script type="text/javascript">
+
+
+	$(function(){
+		var search1="";
+		var search2="";
+		var search3="";
+		
+		$("#courses_search_select1").change(function(){
+		// 	j_test(this);
+			search1=$("#courses_search_select1 option:selected").val();
+
+		
+			console.log(search1);
+			
+			
+			$("#courses_search_select2").empty();
+			$("#courses_search_select3").empty();
+			$("#courses_search_select4").empty();
+			$("#courses_search_select4").append("<option>카테고리</option>");
+			$("#courses_search_select3").append("<option>읍/면/동</option>");
+			
+			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
+				
+				console.log(data.address);
+				
+				
+				var select2="<option>시/군/구</option>";
+				$.each(data.address , function (index,item) {
+			
+					
+					
+					select2+="<option>"+item.search2+"</option>";
+			
+	
+				});
+				
+				$("#courses_search_select2").append(select2);
+		
+		
+			});//getJSON
+		
+		});//change
+		
+		
+		$("#courses_search_select2").change(function(){
+		// 	j_test(this);
+			search2=$("#courses_search_select2 option:selected").val();
+			
+		
+			console.log(search2);
+			
+			
+			$("#courses_search_select3").empty();
+			$("#courses_search_select4").empty();
+			$("#courses_search_select4").append("<option>카테고리</option>");
+			
+			$.getJSON("getListSearchTwo.aca?search1="+search1+"&search2="+search2 ,  function(data){
+				
+				console.log(data.address);
+				
+				
+				var select3="<option>읍/면/동</option>";
+				$.each(data.address , function (index,item) {
+					
+					select3+="<option>"+item.search3+"</option>";
+			
+				});
+				
+				$("#courses_search_select3").append(select3);
+		
+		
+			});//getJSON
+		
+		});//change
+		
+		$("#courses_search_select3").change(function(){
+		// 	j_test(this);
+			search3=$("#courses_search_select3 option:selected").val();
+			
+		
+			console.log(search3);
+			
+			
+			$("#courses_search_select4").empty();
+			
+			$.getJSON("getListSearchThr.aca?search1="+search1+"&search2="+search2+"&search3="+search3 ,  function(data){
+				
+				console.log(data.address);
+				
+				
+				var select4="<option>카테고리</option>";
+				$.each(data.address , function (index,item) {
+					
+					select4+="<option>"+item.search4+"</option>";
+
+				});
+				
+				$("#courses_search_select4").append(select4);
+		
+		
+			});//getJSON
+		
+		});//change
+		
+		
+		
+		
+		
+	});//$(function)
+	
+</script>
+
+
 </head>
+
 <body>
+
+
+
 
 
 	<!-- Courses -->
@@ -98,27 +218,35 @@ li.thirdKey {
 							<div class="selectOption">
 								<select id="courses_search_select1" class="courses_search_select courses_search_input">
 									<option>시/도</option>
-									<option>부산광역시</option>
-									<option>부산광역시</option>
-									<option>부산광역시</option>
-								</select>
+										<option value="서울특별시">서울특별시</option>
+										<option value="부산광역시">부산광역시</option>
+										<option value="대구광역시">대구광역시</option>
+										<option value="인천광역시">인천광역시</option>
+										<option value="광주광역시">광주광역시</option>
+										<option value="대전광역시">대전광역시</option>
+										<option value="울산광역시">울산광역시</option>
+										<option value="세종특별자치시">세종특별자치시</option>
+										<option value="경기도">경기도</option>
+										<option value="강원도">강원도</option>
+										<option value="충청북도">충청북도</option>
+										<option value="충청남도">충청남도</option>
+										<option value="전라북도">전라북도</option>
+										<option value="전라남도">전라남도</option>
+										<option value="경상북도">경상북도</option>
+										<option value="경상남도">경상남도</option>
+											<option value="제주특별자치도">제주특별자치도</option>		
+								</select>						
 								<select id="courses_search_select2" class="courses_search_select courses_search_input">
 									<option>시/군/구</option>
-									<option>사하구</option>
-									<option>사하구</option>
-									<option>사하구</option>
+								
 								</select>
 								<select id="courses_search_select3" class="courses_search_select courses_search_input">
 									<option>읍/면/동</option>
-									<option>남천동</option>
-									<option>남천동</option>
-									<option>남천동</option>
+									
 								</select>
 								<select id="courses_search_select4" class="courses_search_select courses_search_input">
 									<option>카테고리</option>
-									<option>보컬,미술</option>
-									<option>외국어</option>
-									<option>입시</option>
+									
 								</select>
 								<select id="courses_search_select4" class="courses_search_select courses_search_input">
 									<option>기본순</option>
@@ -175,7 +303,7 @@ li.thirdKey {
 														<img src="images/etc/default_mango.png" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
-														<a href="./AcademyContentAction.aca?acaMainNum=1&pageNum=1">
+														<a href="./AcademyContentAction.aca?num=301569&pageNum=1">
 															부산학원
 														</a>
 													</h3>
