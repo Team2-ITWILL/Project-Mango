@@ -35,7 +35,7 @@ public class MemberLoginAction implements Action{
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-			return null;
+//			return null;
 		
 		}else if(check == -1){ // 아이디 불일치
 			
@@ -47,7 +47,7 @@ public class MemberLoginAction implements Action{
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-			return null;
+//			return null;
 		}
 		
 		HttpSession session = request.getSession();
@@ -57,7 +57,7 @@ public class MemberLoginAction implements Action{
 		ActionForward forward = new ActionForward();
 
 		forward.setRedirect(true);
-		forward.setPath("/Main.me");
+		forward.setPath("./Main.me");
 		
 		return forward;
 	} // // excute() 끝
