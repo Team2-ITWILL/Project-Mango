@@ -57,7 +57,7 @@
 <!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
 						
 						<c:forEach var="anbList" items="${anbList}">
-							<li class="widthAdjust" onclick="location.href='4index.jsp?center=O_anony/anony_board_single.jsp'">
+							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num='+${anbList.ano_board_num}">
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start" onclick="#">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 

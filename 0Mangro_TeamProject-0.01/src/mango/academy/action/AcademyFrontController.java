@@ -12,8 +12,6 @@ import mango.action.Action;
 import mango.action.ActionForward;
 
 
-
-
 public class AcademyFrontController extends HttpServlet {
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
