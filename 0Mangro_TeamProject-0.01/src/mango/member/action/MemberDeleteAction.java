@@ -22,7 +22,10 @@ public class MemberDeleteAction implements Action{
 		MemberBean mb = new MemberBean();
 
 		String id_email = (String)request.getSession().getAttribute("id_email");
-		String id_password1 = (String)request.getParameter("mem_pwd");
+		String chk_pwd = (String)request.getParameter("mem_pwd");
+
+		mb.setMemEmail(id_email);
+		mb.setMemPwd(chk_pwd);
 		
 		int check = mdao.deleteMember(mb);
 		 
