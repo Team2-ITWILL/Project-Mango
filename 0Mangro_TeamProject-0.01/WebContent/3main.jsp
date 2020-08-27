@@ -16,6 +16,28 @@
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+
+<script>
+	$(document).ready(function(){
+		var owl = $('.owl-carousel');
+		owl.owlCarousel({
+		    items:1,
+		    loop:true,
+		    margin:10,
+		    //autoplay:true,
+		    autoplay:false,
+		    autoplayTimeout:1000,
+		    autoplayHoverPause:true
+		});
+		$('.play').on('click',function(){
+		    owl.trigger('play.owl.autoplay',[1000])
+		})
+		$('.stop').on('click',function(){
+		    owl.trigger('stop.owl.autoplay')
+		})
+	})
+</script>
+
 </head>
 
 <body>
@@ -41,10 +63,25 @@
 										<form action="#" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sel1">
 													<option>시/도</option>
-													<option>부산광역시</option>
-													<option>부산광역시</option>
+													<option value="서울특별시">서울특별시</option>
+													<option value="부산광역시">부산광역시</option>
+													<option value="대구광역시">대구광역시</option>
+													<option value="인천광역시">인천광역시</option>
+													<option value="광주광역시">광주광역시</option>
+													<option value="대전광역시">대전광역시</option>
+													<option value="울산광역시">울산광역시</option>
+													<option value="세종특별자치시">세종특별자치시</option>
+													<option value="경기도">경기도</option>
+													<option value="강원도">강원도</option>
+													<option value="충청북도">충청북도</option>
+													<option value="충청남도">충청남도</option>
+													<option value="전라북도">전라북도</option>
+													<option value="전라남도">전라남도</option>
+													<option value="경상북도">경상북도</option>
+													<option value="경상남도">경상남도</option>
+													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
 												<select class="dropdown_item_select home_search_input">
 													<option>시/군/구</option>
@@ -79,10 +116,25 @@
 										<form action="#" id="home_search_form_2" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-												<select class="dropdown_item_select home_search_input">
+													<select class="dropdown_item_select home_search_input">
 													<option>시/도</option>
-													<option>Category</option>
-													<option>Category</option>
+													<option value="서울특별시">서울특별시</option>
+													<option value="부산광역시">부산광역시</option>
+													<option value="대구광역시">대구광역시</option>
+													<option value="인천광역시">인천광역시</option>
+													<option value="광주광역시">광주광역시</option>
+													<option value="대전광역시">대전광역시</option>
+													<option value="울산광역시">울산광역시</option>
+													<option value="세종특별자치시">세종특별자치시</option>
+													<option value="경기도">경기도</option>
+													<option value="강원도">강원도</option>
+													<option value="충청북도">충청북도</option>
+													<option value="충청남도">충청남도</option>
+													<option value="전라북도">전라북도</option>
+													<option value="전라남도">전라남도</option>
+													<option value="경상북도">경상북도</option>
+													<option value="경상남도">경상남도</option>
+													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
 												<select class="dropdown_item_select home_search_input">
 													<option>시/군/구</option>
@@ -119,8 +171,23 @@
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
 												<select class="dropdown_item_select home_search_input">
 													<option>시/도</option>
-													<option>Category</option>
-													<option>Category</option>
+													<option value="서울특별시">서울특별시</option>
+													<option value="부산광역시">부산광역시</option>
+													<option value="대구광역시">대구광역시</option>
+													<option value="인천광역시">인천광역시</option>
+													<option value="광주광역시">광주광역시</option>
+													<option value="대전광역시">대전광역시</option>
+													<option value="울산광역시">울산광역시</option>
+													<option value="세종특별자치시">세종특별자치시</option>
+													<option value="경기도">경기도</option>
+													<option value="강원도">강원도</option>
+													<option value="충청북도">충청북도</option>
+													<option value="충청남도">충청남도</option>
+													<option value="전라북도">전라북도</option>
+													<option value="전라남도">전라남도</option>
+													<option value="경상북도">경상북도</option>
+													<option value="경상남도">경상남도</option>
+													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
 												<select class="dropdown_item_select home_search_input">
 													<option>시/군/구</option>

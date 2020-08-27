@@ -21,9 +21,9 @@
 
 
 <%
-//	String email=(String)session.getAttribute("email");
+	String email=(String)session.getAttribute("email");
 
-	String email="2221325";
+	
 
 	if(email==null){
 	%>	
