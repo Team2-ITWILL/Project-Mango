@@ -82,6 +82,17 @@ public class AnonyBoardDAO extends DBconnection {
 			
 		}
 		
+		/*ano_board_num int(11) AI PK 
+		mem_email varchar(20) 
+		ano_board_title varchar(45) 
+		ano_board_content varchar(500) 
+		ano_board_read int(11) 
+		ano_board_date datetime 
+		ano_board_ip varchar(100) 
+		ano_board_nick varchar(100) 
+		ano_board_file varchar(255)
+		*/
+		
 		try{
 			sql = "INSERT INTO anony_board "
 				 + "(ano_board_num, "

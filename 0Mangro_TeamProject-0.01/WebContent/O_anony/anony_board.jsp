@@ -30,8 +30,10 @@
 	@media only screen and (max-width: 767px)
 	{.widthAdjust {width: 550px;}}
 	.boardCount{margin-top:10px; display: inline-block;margin-left: 20px;}
-	.comments_title {display: inline-block;}
+	.comments_title {display: inline-block; padding-top:100px;}
 	.span-title{ font-size: 1.2em; font-weight: 700;	}
+	
+	
 </style>
 
 
@@ -55,7 +57,7 @@
 <!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
 						
 						<c:forEach var="anbList" items="${anbList}">
-							<li class="widthAdjust">
+							<li class="widthAdjust" onclick="location.href='4index.jsp?center=O_anony/anony_board_single.jsp'">
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start" onclick="#">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
@@ -69,7 +71,6 @@
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
 												<!-- 익명사담방 글제목 -->
 												<p><span class="span-title">${anbList.ano_board_title}</span></p>
-												<p><span class="span-title">${anbList.ano_board_nick}</span></p>
 												
 											</div>
 										</div>

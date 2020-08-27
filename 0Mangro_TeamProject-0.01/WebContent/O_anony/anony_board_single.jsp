@@ -28,18 +28,32 @@
 
 <!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
 					<div class="comments_container">
-						<div class="comments_title">2020년은 인간적으로 1년 더 살고 싶다.</div>
-						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">#9090 또는 행복해하는 사자등 익명랜덤닉네임 </span>
-						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">30</span>
-						<img src="images/etc/date.png" width="20"> <span class="icons_margin">2020-08-20</span>
+						<div class="comments_title">db에 저장된 글의 제목</div>
+						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">db에 저장된 글의 닉네임 </span>
+						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">db에 저장된 글의 조회수(작업x)</span>
+						<img src="images/etc/date.png" width="20"> <span class="icons_margin">db에 저장된 글의 날짜</span>
 						
 						<div class="comment_text">
-							<p>그렇지 않니? 정말 무탈한 한 해였어. </p> <br><br>
+							<p>db에 저장된 글 제목</p> <br><br>
 							<span class="report_comment" onclick="location.href=''">신고하기</span> <br><br>
 						</div>
 						
 						<hr>
-						<div class="comment_total">댓글 <span>1</span></div>
+						
+						
+						<!-- 해당 글쓴이가 아닌 경우 삭제하기 버튼 비활성화 -->
+						<c:choose>
+							<c:when test="${not empty id_email or not id_email='' }">
+								<button class="comments_write_button comm_btn replytxtbtn" 
+										type="button" 
+										onclick="location.href='./AnoBoardDeleteAction.anob'">
+									삭제하기
+								</button>
+							</c:when>
+						</c:choose>
+						
+						
+						<div class="comment_total">댓글 <span>108798</span></div>
 						<form class="" action="" method="post">
 				      		<div class="form-group mb-8">
 							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>
@@ -68,6 +82,7 @@
 										</div>
 									</div>
 								</div>
+								
 <!------------------------------[대댓글, 댓글수정 form 표시영역(각 버튼 클릭하면 숨겨져있던 form태그 나타나도록)]  ------------------------------------------------------------>
 
 								<!-- (대댓글 쓰기 form) -->
