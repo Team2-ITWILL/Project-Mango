@@ -101,29 +101,6 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		}		
 		return result;
 	}
-
-	@Override
-	public int DeleteAudit(AuditRequestBean delete) {
-		int result = 0;
-		try {
-			getConnection();
-			String sql = "update audit_request "
-					+ "set audit_confirm_date = null "
-					+ "where aca_num = ?";
-			
-			pstmt = con.prepareStatement(sql);	
-			pstmt.setInt(1, delete.getAcaNum());
-			
-			result = pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			System.out.println("DeleteAudit()에서 예외 발생");
-			e.printStackTrace();
-		} finally{
-			resourceClose();
-		}		
-		return result;
-	}
 	
 
 	@Override
@@ -140,15 +117,47 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			getConnection();
 			String sql = "update audit_request "
 					+ "set audit_confirm_date = curdate() "
-					+ "where aca_num = ?";
+					+ "where audit_num = ? and aca_num = ?";
 			
 			pstmt = con.prepareStatement(sql);	
-			pstmt.setInt(1, app.getAcaNum());
+			pstmt.setInt(1, app.getAuditNum());
+			pstmt.setInt(2, app.getAcaNum());
 			
 			result = pstmt.executeUpdate();
 			
+			
+			System.out.println("getAuditNum : " + app.getAuditNum());
+			System.out.println("getAcaNum : " + app.getAcaNum());
+			
 		} catch (Exception e) {
 			System.out.println("ApprovalAudit()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return result;
+	}
+	
+	@Override
+	public int DeleteAudit(AuditRequestBean delete) {
+		int result = 0;
+		try {
+			getConnection();
+			String sql = "update audit_request "
+					+ "set audit_confirm_date = null "
+					+ "where audit_num = ? and aca_num = ?";
+			
+			pstmt = con.prepareStatement(sql);	
+			pstmt.setInt(1, delete.getAuditNum());
+			pstmt.setInt(2, delete.getAcaNum());
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("getAuditNum : " + delete.getAuditNum());
+			System.out.println("getAcaNum : " + delete.getAcaNum());
+			
+		} catch (Exception e) {
+			System.out.println("DeleteAudit()에서 예외 발생");
 			e.printStackTrace();
 		} finally{
 			resourceClose();
