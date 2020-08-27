@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -65,11 +66,14 @@
 				      <form class="sign_upClass" action="./request.adrq" method="post">
 				      
 				      	  <!-- 학원지정번호 hidden으로 보내기 -->
-					        <input type="hidden" class="form-control" name="aca_num" readonly> 
+				      	  <!-- academy_single.jsp에서 전달받은 request parameter -->
+					        <input type="hidden" class="form-control" name="aca_num" value="${param.acaNum}" readonly> 
 					        
+					         <!-- academy_single.jsp에서 전달받은 request parameter -->
 						      <div class="js-form-message form-group">
 						        <label class="form-label audit_name">청강희망 학원명
-						        	<input type="text" class="form-control" name="aca_name" value="부산학원" readonly> 
+						        	<!-- <input type="text" class="form-control" name="aca_name" value="부산학원" readonly> --> 
+						        	<input type="text" class="form-control" name="aca_name" value="${param.acaName}" readonly> 
 						        </label>
 						        <label class="form-label audit_email">청강신청계정
 						       		<input type="text" class="form-control" name="mem_email" value="user1@naver.com" placeholder="이메일" readonly>
@@ -92,10 +96,10 @@
 						      	<span class="faded">청강 희망일자는 가능한 날짜 중에서만 선택가능합니다.</span>
 						      <div class="js-form-message form-group">
 						        <label class="form-label audit_wish">청강희망일자
-							        <input type="date" class="form-control" name="audit_request_date" required>
+							        <input type="date" class="form-control" name="audit_wish_date" required>
 						        </label>
-						        <label class="form-label audit_request">청강신청일자
-							        <input type="date" class="form-control" name="audit_request_date" value="2020-08-22" readonly required>
+						        <label class="form-label audit_request">청강신청일자(오늘)
+							        <input type="text" class="form-control" name="audit_request_date" value="<%=LocalDate.now()%>" readonly required>
 						        </label>
 						      </div>
 					      
