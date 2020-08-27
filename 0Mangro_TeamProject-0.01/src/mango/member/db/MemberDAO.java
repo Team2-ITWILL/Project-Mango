@@ -15,7 +15,7 @@ public class MemberDAO extends DBconnection{
 			
 			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, "
 					+ "mem_joindate)"
-					+ " VALUES (?,?,?,now())";
+					+ " VALUES (?,?,?, now())";
 
 			pstmt = con.prepareStatement(sql);
 			
@@ -60,18 +60,33 @@ public class MemberDAO extends DBconnection{
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()){
+			if(rs.next()){ // SELECT 결과에 아이디가 있을 때
 				
-				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
-					check = 1;
-				}else{
+				// 비밀번호가 일치할 때
+				if(mb.getMemPwd().equals(rs.getString("mem_pwd"))){
+						
+					 // 탈퇴일자와 계정정지일자 모두 데이터가 null일 때 로그인 성공
+					if(rs.getString("mem_seceded").equals(null)  
+					   && rs.getString("mem_baned").equals(null) ){ 
+						check = 1;
+						
+					// 탈퇴일자 혹은 계정정지일자 둘 중에 하나라도 데이터가 존재할 때 로그인 불가
+					}else if(!(rs.getString("mem_seceded").equals(null) ) ||
+							(!rs.getString("mem_baned").equals(null) ) ){ 
+						check = -2; 
+					}
+				
+				// 비밀벝호가 일치하지 않을 때 (0)
+				}else if(!(rs.getString("mem_pwd").equals(mb.getMemPwd())) ){
 					check = 0;
 				}
 				
 			}else{
-				check = -1;
+				check = -1; // SELECT 결과에 아이디 없을 때 (-1)
 			}
 
+			System.out.println(check);
+			
 			System.out.println("DB 조회 성공 !!");
 			
 		} catch (Exception e) {
@@ -93,18 +108,34 @@ public class MemberDAO extends DBconnection{
 		try {
 			getConnection();
 			
-			sql = "DELETE FROM member WHERE mem_email = ? "
-					+ "AND mem_pwd = ? ";
+			sql = "SELECT * FROM member WHERE mem_email = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, mb.getMemEmail());
-			pstmt.setString(2, mb.getMemPwd());
+//			pstmt.setString(2, mb.getMemPwd());
 			
-			pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
 			
-			if(mb.getMemPwd().equals("mem_pwd")){
-				check = 1;
+			if(rs.next()){
+				
+				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
+					check = 1;
+					
+					sql = "UPDATE member "
+						+ "SET mem_seceded = now(), mem_baned = now()"
+						+ "WHERE mem_email = ?";
+					 
+					pstmt = con.prepareStatement(sql);
+					
+					pstmt.setString(1, mb.getMemEmail());
+
+					pstmt.executeUpdate();
+					
+				}else{
+					check = 0;
+				}
+				
 			}else{
 				check = 0;
 			}
