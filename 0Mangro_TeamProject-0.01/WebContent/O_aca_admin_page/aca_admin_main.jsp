@@ -187,7 +187,8 @@
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="#"
+                        	<a class="sidebar-link sidebar-link" 
+                        		href="./4index.jsp?center=O_aca_admin_page/aca_audit_manage.jsp"                      	
                                 aria-expanded="false"><i data-feather="edit" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 가능일 등록 </span>
 							</a>
