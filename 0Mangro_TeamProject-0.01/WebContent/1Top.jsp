@@ -19,7 +19,6 @@
 </head>
 <body>
 
-
 <!---------------------------------- [로그인 여부 세션 체크]---------------------------------------->
 
 <!------------- 편의를 위해 admin으로 로그인했다고 가정하고 작성해두었음.--------------------------------------->
@@ -61,20 +60,19 @@
 									  2-1. 관리자라면 [관리자 메뉴] [로그아웃] 표시 	
 									  2-2. 회원이면 [마이페이지] [로그아웃] 표시           -->
 									<c:choose>
-									
 										
-										<c:when test="${id == null or id == '' }">
+										<c:when test="${id_email == null or id_email == '' }">
 											<div class="top_bar_button sign-up sign-in">
 												<a href="./MemberLogin.me">로그인</a>
 											</div>
 										</c:when>
 										
-										<c:when test="${id == 'admin' }">
+										<c:when test="${id_email == 'admin@mango.com' }">
 											<div class="top_bar_button admin_page">
 												<a href="">관리자 메뉴</a>
 											</div>
 											<div class="top_bar_button logout">
-												<a href="">로그아웃</a>
+												<a href="./MemberLogout.me">로그아웃</a>
 											</div>
 										</c:when>
 										
@@ -83,7 +81,7 @@
 												<a href="4index.jsp?center=O_mypage/mypage_main.jsp">마이페이지</a>
 											</div>
 											<div class="top_bar_button logout">
-												<a href="">로그아웃</a>
+												<a href="./MemberLogout.me">로그아웃</a>
 											</div>
 										</c:otherwise>
 										
