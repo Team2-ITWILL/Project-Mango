@@ -128,6 +128,8 @@ public class AnonyBoardDAO extends DBconnection {
 		pstmt.setString(7, anb.getAno_board_nick());
 		pstmt.setString(8, anb.getAno_board_file());
 		
+		System.out.println(anb.getMem_email());
+		
 		pstmt.executeUpdate();
 		
 		}catch(Exception e){

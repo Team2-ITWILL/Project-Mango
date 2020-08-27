@@ -28,21 +28,31 @@
 
 <!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
 					<div class="comments_container">
-						<div class="comments_title">db에 저장된 글의 제목</div>
-						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">db에 저장된 글의 닉네임 </span>
-						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">db에 저장된 글의 조회수(작업x)</span>
-						<img src="images/etc/date.png" width="20"> <span class="icons_margin">db에 저장된 글의 날짜</span>
+						<div class="comments_title" id="board_title">${boardSingle.ano_board_title }</div>
+						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">${boardSingle.ano_board_nick }</span>
+						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_read }</span>
+						<img src="images/etc/date.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_date }</span>
 						
+						<!-- 글의 내용 -->
 						<div class="comment_text">
-							<p>db에 저장된 글 제목</p> <br><br>
+							<p>${boardSingle.ano_board_content }</p> <br><br>
 							<span class="report_comment" onclick="location.href=''">신고하기</span> <br><br>
 						</div>
 						
 						<hr>
 						
+					<script type="text/javascript">
+					window.onload = function(){
+						console.log("${requestScope.boardSingle.ano_board_title}");
+						alert("${requestScope.boardSingle.ano_board_title}");
+						
+					}
+					
+					
+					</script>
 						
 						<!-- 해당 글쓴이가 아닌 경우 삭제하기 버튼 비활성화 -->
-						<c:choose>
+<%-- 						<c:choose>
 							<c:when test="${not empty id_email or not id_email='' }">
 								<button class="comments_write_button comm_btn replytxtbtn" 
 										type="button" 
@@ -50,7 +60,7 @@
 									삭제하기
 								</button>
 							</c:when>
-						</c:choose>
+						</c:choose> --%>
 						
 						
 						<div class="comment_total">댓글 <span>108798</span></div>

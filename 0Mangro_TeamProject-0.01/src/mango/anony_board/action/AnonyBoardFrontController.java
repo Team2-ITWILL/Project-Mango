@@ -76,7 +76,8 @@ public class AnonyBoardFrontController extends HttpServlet{
 				e.printStackTrace();
 				
 			}
-			
+		
+			// -------------------------미구현 ----------------	
 		}else if(command.equals("/AnoBoardDeleteAction.anob")){
 			action = new AnoBoardDeleteAction();
 			
@@ -87,9 +88,10 @@ public class AnonyBoardFrontController extends HttpServlet{
 				System.out.println("AnonyBoardFrontController의 /AnoBoardDeleteAction.anob에서 예외");
 			}
 			
+			// -------------------------구현중 ----------------	
 		}else if(command.equals("/AnoBoardSingleAction.anob")){
 			action = new AnoBoardSingleAction();
-			
+			System.out.println("여기까지 옴");
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
