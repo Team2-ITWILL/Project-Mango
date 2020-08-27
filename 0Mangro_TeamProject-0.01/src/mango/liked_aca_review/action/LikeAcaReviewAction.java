@@ -47,15 +47,12 @@ public class LikeAcaReviewAction extends HttpServlet{
 			String email = (String) obj.get("email");
 			int revNum = Integer.parseInt((String)obj.get("revNum"));
 			
-			System.out.println(revNum);
-			System.out.println(email);
 			
 			
 			
 			LikedAcaReviewDAO dao = new LikedAcaReviewDAO();
 
 			int check = dao.checkLikedReview(email,revNum);
-			System.out.println("chk:" + check);
 			
 			LikedAcaReviewBean bean = new LikedAcaReviewBean();
 			bean.setReviewNum(revNum);
@@ -84,7 +81,7 @@ public class LikeAcaReviewAction extends HttpServlet{
 			out.print(obj);
 			
 		} catch (Exception e) {
-			System.out.println("doProcess()에서 예외 발생!");
+			System.out.println("LikeAcaReviewAction에서 예외 발생!");
 			e.printStackTrace();
 		}
 		
