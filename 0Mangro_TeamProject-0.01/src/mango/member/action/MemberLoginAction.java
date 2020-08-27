@@ -19,9 +19,15 @@ public class MemberLoginAction implements Action{
 		request.setCharacterEncoding("UTF-8");
 		
 		String id_email = request.getParameter("id_email");
+		String chk_pwd = request.getParameter("id_password1");
 		
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
+		
+		mb.setMemEmail(id_email);
+		mb.setMemPwd(chk_pwd);
+		
+		System.out.println(id_email + " / " + chk_pwd);
 		
 		int check = mdao.loginCheck(mb);
 		
@@ -31,7 +37,7 @@ public class MemberLoginAction implements Action{
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("window.alert('아이디가 존재하지 않습니다.');");
+			out.print("window.alert('비밀번호가 틀립니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
@@ -57,7 +63,7 @@ public class MemberLoginAction implements Action{
 		ActionForward forward = new ActionForward();
 
 		forward.setRedirect(true);
-		forward.setPath("/Main.me");
+		forward.setPath("./Main.me");
 		
 		return forward;
 	} // // excute() 끝
