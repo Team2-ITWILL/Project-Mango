@@ -55,7 +55,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 		}else if(command.equals("/AnoBoardWriteAction.anob")){
 
 
-			action = new AnonyBoardWriteAction();
+			action = new AnoBoardWriteAction();
 
 			
 			try {
@@ -83,13 +83,9 @@ public class AnonyBoardFrontController extends HttpServlet{
 		}
 		
 		
-		if(forward!=null){ //new ActionForward()객체가 존재 하고..
+		if(forward!=null){ //new ActionForward()객체가 존재시
 			
 			if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..
-				
-				//리다이렉트 방식으로 페이지 이동!  페이지 주소 경로 노출 함 
-				
-				//join.jsp화면 이동
 				
 				response.sendRedirect(forward.getPath());
 				
@@ -107,13 +103,11 @@ public class AnonyBoardFrontController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doProcess(request, response);
 	}
 

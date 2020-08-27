@@ -1,3 +1,5 @@
+<%@page import="mango.anony_board.db.AnonyBoardBean"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -65,9 +67,9 @@
 												<!-- 익명사담방 랜덤 닉네임 -->
 												<i class="fa fa-user" aria-hidden="true"></i> 
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
-
 												<!-- 익명사담방 글제목 -->
 												<p><span class="span-title">${anbList.ano_board_title}</span></p>
+												<p><span class="span-title">${anbList.ano_board_nick}</span></p>
 												
 											</div>
 										</div>
@@ -89,13 +91,16 @@
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/eye.png" width="20">
 												<!-- 조회수  -->
+
+
+												
 												<span>${anbList.ano_board_read}</span>
 												
 											</div>&nbsp;&nbsp;&nbsp;
 											
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/date.png" width="20">
-												<!-- 날짜  -->
+												<!-- 날짜  --> 
 												<span>${anbList.ano_board_date}</span>
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>
