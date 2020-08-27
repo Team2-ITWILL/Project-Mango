@@ -60,8 +60,6 @@ public class MemberDAO extends DBconnection{
 			
 			rs = pstmt.executeQuery();
 			
-			System.out.println(rs);
-			
 			if(rs.next()){
 				
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
