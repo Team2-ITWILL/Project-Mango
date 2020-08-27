@@ -82,16 +82,6 @@ public class AnonyBoardDAO extends DBconnection {
 			
 		}
 		
-		/*ano_board_num int(11) AI PK 
-		mem_email varchar(20) 
-		ano_board_title varchar(45) 
-		ano_board_content varchar(500) 
-		ano_board_read int(11) 
-		ano_board_date datetime 
-		ano_board_ip varchar(100) 
-		ano_board_nick varchar(100) 
-		ano_board_file varchar(255)
-		*/
 		
 		try{
 			sql = "INSERT INTO anony_board "
@@ -105,16 +95,6 @@ public class AnonyBoardDAO extends DBconnection {
 				 + "ano_board_nick, "
 				 + "ano_board_file) "
 				 + "VALUES(?,?,?,?,0,?,?,?,?) "; 
-			
-//		ano_board_num int(11) AI PK 
-//		mem_email varchar(20) 
-//		ano_board_title varchar(45) 
-//		ano_board_content varchar(500) 
-//		ano_board_read int(11) 
-//		ano_board_date datetime 
-//		ano_board_ip varchar(100) 
-//		ano_board_nick varchar(100) 
-//		ano_board_file varchar(45)
 			
 			
 		pstmt = con.prepareStatement(sql);
@@ -220,7 +200,10 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
+				anb.setAno_board_nick(rs.getString("ano_board_nick"));
+				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
 			}// if
 			
@@ -310,6 +293,38 @@ public class AnonyBoardDAO extends DBconnection {
 	}//getAnonyBoardCount()
 	
 	
+	// [7.글 수정 메소드]
+	public int updateANBoard(AnonyBoardBean anbean){
+		
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "UPDATE anony_board "
+					+ "SET ano_board_title=?, "
+					+ "ano_board_content=?, "
+					+ "ano_board_nick, "
+					+ "ano_board_file)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			check = 1;
+			System.out.println(check);
+		}catch(SQLException se){
+			System.out.println("updateANBoard메소드에서 SQL 예외 발생 : "+ se);				
+			
+		}catch(Exception e){
+			System.out.println("updateANBoard메소드에서 예외 발생 : "+ e);				
+		
+		}finally { resourceClose();}
+		
+		System.out.println(check);
+		return check;
+		
+		
+		
+	}//updateANBoard()
 
 
 		
