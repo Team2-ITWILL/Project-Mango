@@ -115,7 +115,7 @@
 	request.setCharacterEncoding("utf-8");
 	String contextPath = request.getContextPath();
 
-	/* request.setAttribute("email", "coke@naver.com"); */
+	request.setAttribute("email", "coke@naver.com");
 	
 %>
 
@@ -125,12 +125,96 @@
 		$(document).ready(function(){
 			var likeList = document.querySelectorAll(".cnt_Like");
 			
+			checkLikedAca();
+			
 			for(var i=0; i<likeList.length; i++) {
 				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
 				console.log(obj);
 				getLikeReviewImg(obj);
+				
 			}
 		});
+		
+		function likeAcademy(){
+			
+			var email = "${email }";
+			var acaNum = "${academyBean.acaNum }";
+			var acaName = "${academyBean.acaName }";
+			var _info = '{"email":"'+email+'","acaNum":"'+acaNum+'","acaName":"'+acaName+'"}';
+			
+			if(email.length == 0 || email == null){
+				alert("로그인이 필요합니다.");
+				return;
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/likeAcademy",
+				data : {info : _info},
+				success:function(data,status){
+					console.log(data);
+					var json = JSON.parse(data);
+					var result = json.result;
+					
+					if(result == 1){
+						var str = '<img src="images/like/like_full.png" width="25" onclick="likeAcademy()">';
+						
+						document.getElementById("likeAcademy").innerHTML = str;
+					} else if(result == 0){
+						
+						var str = '<img src="images/like/like_empty.png" width="25" onclick="likeAcademy()">';
+						
+						document.getElementById("likeAcademy").innerHTML = str;
+					} else {
+						alert("에러가 발생하였습니다.\n다시 시도해주세요.")
+					}
+				},
+				error:function(){
+					alert("통신오류가 발생했습니다.");
+				}
+			});
+		}
+		
+		function checkLikedAca(){
+			
+			var email = "${email }";
+			var acaNum = "${academyBean.acaNum }";
+			var acaName = "${academyBean.acaName }";
+			var _info = '{"email":"'+email+'","acaNum":"'+acaNum+'","acaName":"'+acaName+'"}';
+			
+			/* 
+			<div class="aca_like_button">
+				<!---------- 학원 좋아요 버튼 -------------->
+					<img src="images/like/like_full.png" width="25">
+					<img src="images/like/like_empty.png" width="30">
+				<!---------- 학원 좋아요 버튼 -------------->
+			</div>
+			*/
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/checkLikedAca",
+				data : {info : _info},
+				success:function(data,status){
+					console.log(data);
+					var json = JSON.parse(data);
+					var result = json.result;
+					
+					if(result == 1){
+						var str = '<img src="images/like/like_full.png" width="25" onclick="likeAcademy()">';
+						
+						document.getElementById("likeAcademy").innerHTML = str;
+					} else{
+						
+						var str = '<img src="images/like/like_empty.png" width="25" onclick="likeAcademy()">';
+						
+						document.getElementById("likeAcademy").innerHTML = str;
+					}
+				},
+				error:function(){
+					alert("통신오류가 발생했습니다.");
+				}
+			});
+		}
 		
 		function getLikeReviewImg(obj){
 			
@@ -138,11 +222,10 @@
 			
 			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
 			
-			console.log("getLikedAcaRev");
 			
 			$.ajax({
 				type : "post",
-				url : "<%=contextPath%>/getLikedAcaRev",
+				url : "${pageContext.request.contextPath}/getLikedAcaRev",
 				data : {data : _data},
 				success:function(data,status){
 					var json = JSON.parse(data);
@@ -164,12 +247,6 @@
 			});
 		}
 			
-		function testFnc(obj) {
-			console.log(obj.id.substr(obj.id.indexOf("_")+1));
-			
-			toggle_like(obj.id.substr(obj.id.indexOf("_")+1));
-			like_ajax(obj.id.substr(obj.id.indexOf("_")+1));
-		}
 		
 		function likeAcaReview(obj) {
 			
@@ -193,7 +270,6 @@
 				url : "<%=contextPath%>/likeAcaRev",
 				data : {data : _data},
 				success:function(data,status){
-					console.log(data);
 					var json = JSON.parse(data);
 					var count = json.count;
 					var result = json.result;
@@ -236,11 +312,7 @@
 							<img src="images/etc/default_mango.png" class="aca_profile_img" width="50">
 						</div>					
 						<div class="course_title">${academyBean.acaName }</div> 
-						<div class="aca_like_button">
-						<!---------- 학원 좋아요 버튼 -------------->
-							<img src="images/like/like_full.png" width="25">
-							<img src="images/like/like_empty.png" width="30">
-						<!---------- 학원 좋아요 버튼 -------------->
+						<div class="aca_like_button" id="likeAcademy">
 						</div>
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
 						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
@@ -249,6 +321,7 @@
 						>
 						청강신청하기
 						</div>
+						<br>
 						<div class="course_info d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 
 						
