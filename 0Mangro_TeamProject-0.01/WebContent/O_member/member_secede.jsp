@@ -46,10 +46,12 @@
 			}
 		
 			/* 회원 탈퇴 페이지 확인 버튼 클릭 시 탈퇴 확인(예/아니오) 안내창 */
+
 			var del_chk = confirm("회원 탈퇴를 하시겠습니까?");
 			
 			if(del_chk == true){ // 예를 누를 경우
-				location.href="./MemberDeleteAction.me";
+				
+				$("#mem_del").submit();
 			
 			}else if(del_chk != true){ // 취소를 누를 경우
 				history.back(-1); // 이전 페이지로 가기
@@ -73,7 +75,7 @@
 					<div class="section_title_container text-center">
 						<h4 class="section_title">회원탈퇴</h4>
       
-					      <form class="sign_upClass" action="" method="post" id="mem_del" onsubmit="del_check()">
+					      <form class="sign_upClass" action="./MemberDeleteAction.me" method="post" id="mem_del" onclick="del_check()">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>회원탈퇴 후에는 작성된 요청서 및 제안서에 영구적으로 접근이 불가능합니다.</p>
