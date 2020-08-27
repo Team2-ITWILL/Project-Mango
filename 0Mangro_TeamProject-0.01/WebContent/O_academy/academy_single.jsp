@@ -102,36 +102,61 @@
     border: 1px solid #e2e2e2;
 } 
 
+.cnt_Like{
+ 	color: #76777a;
+ 	font-size: 0.8em;
+ 	padding-top: 5px;
+ 	margin-left: 3px;
+}
 </style>
 
 <%
 	
 	request.setCharacterEncoding("utf-8");
-	request.setAttribute("email", "coke@naver.com");
+	String contextPath = request.getContextPath();
+
+	/* request.setAttribute("email", "coke@naver.com"); */
+	
 %>
 
 
 	<script type="text/javascript">
 		
 		$(document).ready(function(){
+			var likeList = document.querySelectorAll(".cnt_Like");
 			
+			for(var i=0; i<likeList.length; i++) {
+				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
+				console.log(obj);
+				getLikeReviewImg(obj);
+			}
 		});
 		
-		function getLikeReviewImg(){
-			/* 
-			thumb-notup.png 좋아요X(클릭시 좋아요)
-			thumb-up.png 좋아요반영(클릭시 좋아요취소)
-			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
-			*/
-			var email = "<%=request.getParameter("email")%>";
-			console.log("getLikeReviewImg");
+		function getLikeReviewImg(obj){
+			
+			var email = "${email}";
+			
+			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
+			
+			console.log("getLikedAcaRev");
+			
 			$.ajax({
 				type : "post",
-				url : "./getLikeReviewImg.lrev?email="+email,
-				dataType : "JSON",
-				
-				success:function(data){
-					console.log(data);
+				url : "<%=contextPath%>/getLikedAcaRev",
+				data : {data : _data},
+				success:function(data,status){
+					var json = JSON.parse(data);
+					var count = json.count;
+					var check = json.check;
+					var revNum = json.revNum;
+					var email = json.email;
+					document.getElementById("cntLike_"+revNum).innerText = count;
+					
+					if(check == 1){
+						document.getElementById("cntLikeImg_"+revNum).src="images/thumb-up.png";
+					}else{
+						document.getElementById("cntLikeImg_"+revNum).src="images/thumb-notup.png";
+					}
 				},
 				error : function(){
 					alert("통신에러가 발생했습니다.");
@@ -139,7 +164,57 @@
 			});
 		}
 			
+		function testFnc(obj) {
+			console.log(obj.id.substr(obj.id.indexOf("_")+1));
+			
+			toggle_like(obj.id.substr(obj.id.indexOf("_")+1));
+			like_ajax(obj.id.substr(obj.id.indexOf("_")+1));
+		}
 		
+		function likeAcaReview(obj) {
+			
+			/* 
+			thumb-notup.png 좋아요X(클릭시 좋아요)
+			thumb-up.png 좋아요반영(클릭시 좋아요취소)
+			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
+			*/
+			
+			var email = "${email}";
+			
+			if(email.length == 0){
+				alert("로그인이 필요합니다.");
+				return;
+			}
+			
+			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
+			
+			$.ajax({
+				type : "post",
+				url : "<%=contextPath%>/likeAcaRev",
+				data : {data : _data},
+				success:function(data,status){
+					console.log(data);
+					var json = JSON.parse(data);
+					var count = json.count;
+					var result = json.result;
+					var revNum = json.revNum;
+					var email = json.email;
+					document.getElementById("cntLike_"+revNum).innerText = count;
+					
+					
+					if(result == 1){
+						document.getElementById("cntLikeImg_"+revNum).src="images/thumb-up.png";
+					}else if(result == 0){
+						document.getElementById("cntLikeImg_"+revNum).src="images/thumb-notup.png";
+					}else{
+						alert("오류가 발생했습니다.\n다시 시도해주세요.");
+					}
+				},
+				error : function(){
+					alert("통신에러가 발생했습니다.");
+				}
+			});
+		}
 	</script>		
 	
 </head>
@@ -469,7 +544,11 @@
 														
 														
 														<!-- 만일 해당 계정으로 도움돼요 했다면 색칠해진 아이콘 -->
-															<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-up.png" width="30"></a><span>15</span></div>
+															<div class="comment_extra comment_likes">
+															<img id="cntLikeImg_${reBean.reviewNum }" src="images/thumb-up.png" width="22"
+																onclick="likeAcaReview(${reBean.reviewNum })" style="cursor:pointer;">
+															<span class="cnt_Like" id="cntLike_${reBean.reviewNum }" ></span>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -712,5 +791,8 @@
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="js/course.js"></script>
+<script>
+
+</script>
 </body>
 </html>

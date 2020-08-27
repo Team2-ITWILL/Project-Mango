@@ -1,6 +1,6 @@
 package mango.qna_board.db;
 
-import java.sql.Date;
+import java.util.Date;
 
 //문의게시판 
 public class QnaBoardBean{

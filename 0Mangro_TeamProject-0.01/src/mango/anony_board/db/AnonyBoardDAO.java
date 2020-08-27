@@ -1,10 +1,10 @@
 package mango.anony_board.db;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 
 import mango.connection.db.DBconnection;
 
@@ -17,7 +17,6 @@ import mango.connection.db.DBconnection;
 // 6. 익명게시판 전체 글개수 가져오기
 public class AnonyBoardDAO extends DBconnection {
 	
-
 	// 1-1.[랜덤 닉네임] :  AnoBoardWriteAction에서 호출
 	public String getRandomNickname(){
 		String nick = ""; // 1번 리스트의 단어 
@@ -46,13 +45,10 @@ public class AnonyBoardDAO extends DBconnection {
 				
 			}
 			
-			
 		} catch (Exception e) {
 			System.out.println("AnonyBoardDAO의 getRandomNickname()메소드에서 예외 발생");
 			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}
+		} finally { resourceClose();}
 		
 		return nick;
 		
@@ -64,12 +60,32 @@ public class AnonyBoardDAO extends DBconnection {
 	// 1-2. [INSERT 게시판 글 저장 메소드] : AnoBoardInsertAction에서 호출
 	public void insertANBoard(AnonyBoardBean anb){
 		
+		
 		int num = 0;
 		
 		try {
 			getConnection();
+			// insert 되는 글의 글번호 증가 작업
+			sql = "SELECT max(ano_board_num) FROM anony_board";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){ num = rs.getInt(1)+1; } else { num = 1;}
+			
+			
+		}catch(SQLException se){
+			System.out.println("InsertANBoard메소드에서 첫번째 SQL 예외 발생 : "+ se);				
+			
+		}catch(Exception e){
+			System.out.println("InsertANBoard메소드 첫번째 쿼리에서 예외 발생 : "+ e);				
+			
+		}
+		
+		try{
 			sql = "INSERT INTO anony_board "
-				 + "(mem_email, "
+				 + "(ano_board_num, "
+				 + "mem_email, "
 				 + "ano_board_title, " 
 				 + "ano_board_content, "
 				 + "ano_board_read, "
@@ -77,42 +93,36 @@ public class AnonyBoardDAO extends DBconnection {
 				 + "ano_board_ip, "
 				 + "ano_board_nick, "
 				 + "ano_board_file) "
-				 + "VALUES(?,?,?,0,now(),111111,?,?) "; 
+				 + "VALUES(?,?,?,?,0,?,?,?,?) "; 
 			
-//			ano_board_num int(11) AI PK 
-//			mem_email varchar(20) 
-//			ano_board_title varchar(45) 
-//			ano_board_content varchar(500) 
-//			ano_board_read int(11) 
-//			ano_board_date datetime 
-//			ano_board_ip varchar(100) 
-//			ano_board_nick varchar(100) 
-//			ano_board_file varchar(255)
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, anb.getMem_email());
-			pstmt.setString(2, anb.getAno_board_title());
-			pstmt.setString(3, anb.getAno_board_content());
-			pstmt.setString(4, anb.getAno_board_nick());
-			pstmt.setString(5, anb.getAno_board_file());
-			
-			pstmt.executeUpdate();
+//		ano_board_num int(11) AI PK 
+//		mem_email varchar(20) 
+//		ano_board_title varchar(45) 
+//		ano_board_content varchar(500) 
+//		ano_board_read int(11) 
+//		ano_board_date datetime 
+//		ano_board_ip varchar(100) 
+//		ano_board_nick varchar(100) 
+//		ano_board_file varchar(45)
 			
 			
-			
-		}catch(SQLException se){
-			System.out.println("InsertANBoard메소드에서 SQL 예외 발생 : "+ se);				
-			
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setInt(1, num);
+		pstmt.setString(2, anb.getMem_email());
+		pstmt.setString(3, anb.getAno_board_title());
+		pstmt.setString(4, anb.getAno_board_content());
+		pstmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+		pstmt.setString(6, anb.getAno_board_ip() );
+		pstmt.setString(7, anb.getAno_board_nick());
+		pstmt.setString(8, anb.getAno_board_file());
+		
+		pstmt.executeUpdate();
+		
 		}catch(Exception e){
-			System.out.println("InsertANBoard메소드 쿼리에서 예외 발생 : "+ e);				
-			
-		}finally {
-			resourceClose();
-		}
-		
-		
-		
+			System.out.println("InsertANBoard메소드 두번째 쿼리에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}finally { resourceClose();}
 	};
 
 	
@@ -138,9 +148,7 @@ public class AnonyBoardDAO extends DBconnection {
 		}catch (Exception e) {
 			System.out.println("updateANBoardRead메소드 쿼리에서 예외 발생 : "+ e);				
 			
-		} finally {
-			resourceClose();
-		}
+		} finally { resourceClose(); }
 		
 		
 	}//updateANBoardRead()
@@ -168,9 +176,7 @@ public class AnonyBoardDAO extends DBconnection {
 		}catch (Exception e) {
 			System.out.println("DeleteANBoard메소드 쿼리에서 예외 발생 : "+ e);				
 			
-		} finally {
-			resourceClose();
-		}
+		} finally { resourceClose(); }
 			
 		
 		
@@ -201,7 +207,6 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				
 			}// if
@@ -209,9 +214,7 @@ public class AnonyBoardDAO extends DBconnection {
 		}catch (Exception e) {
 			System.out.println("getANBoard메소드 쿼리에서 예외 발생 : "+ e);				
 			
-		} finally {
-			resourceClose();
-		}
+		} finally { resourceClose(); }
 		
 		return anb;
 		
@@ -238,8 +241,21 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
-				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
+				anb.setAno_board_nick(rs.getString("ano_board_nick"));
+				anb.setAno_board_file(rs.getString("ano_board_file"));
+				
+//				no_board_num int(11) AI PK 
+//				mem_email varchar(20) 
+//				ano_board_title varchar(45) 
+//				ano_board_content varchar(500) 
+//				ano_board_read int(11) 
+//				ano_board_date datetime 
+//				ano_board_ip varchar(100) 
+//				ano_board_nick varchar(100) 
+//				ano_board_file varchar(45)
+				
 				
 				anbList.add(anb);
 				
@@ -249,9 +265,7 @@ public class AnonyBoardDAO extends DBconnection {
 		} catch (Exception e) {
 			System.out.println("getANBoardList()메소드 쿼리에서 예외 발생 : "+ e);				
 			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}
+		} finally { resourceClose(); }
 			
 		return anbList;
 	}
@@ -276,9 +290,7 @@ public class AnonyBoardDAO extends DBconnection {
 		}catch(Exception e){
 			System.out.println("getAnonyBoardCount()메소드 쿼리에서 예외 발생 : "+ e);				
 			
-		}finally {
-			resourceClose();
-		}
+		}finally {resourceClose();}
 		
 		return count;
 		
@@ -286,8 +298,6 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 
-	
-	
 
 		
 }

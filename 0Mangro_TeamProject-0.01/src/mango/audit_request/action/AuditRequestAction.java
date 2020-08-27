@@ -1,6 +1,10 @@
 package mango.audit_request.action;
 
+
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +19,17 @@ public class AuditRequestAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		//System.out.print("AuditRequestAction 실행");		
 		
-		AuditRequestDAO dao = new AuditRequestDAO();			
+		//청강신청일 : 언제 듣고 싶은지
+		String audit_wish_date = request.getParameter("audit_wish_date");
+		
+		//청강신청일 : 신청 당일 날짜
+		String audit_request_date = request.getParameter("audit_request_date");
+		
+		//System.out.println("requestDate : " + audit_wish_date);
+		//System.out.println("wishDate : " + audit_request_date);
 	
-		String auditConfirmDate = request.getParameter("audit_request_date");
+		AuditRequestDAO dao = new AuditRequestDAO();			
 		
 		AuditRequestBean bean 
 		 = new AuditRequestBean(
@@ -34,18 +44,21 @@ public class AuditRequestAction implements Action{
 				 
 				 "1@1.com",
 				 301569,
-				 "(주)그루샘수학보습학원",		
+				 "(주)그루샘수학보습학원",	
+				 
+				 //★★★★audit_management 테이블의 subject를 fk로 등록하였기 때문에 
+				 //과목명이 반드시 일치해야한다!!!
 				 "hihi",
 				
-				
-				 request.getParameter("audit_request_date"),
-				 request.getParameter("audit_wish_date"),
-				 auditConfirmDate			 
+				 LocalDate.parse(request.getParameter("audit_request_date")),
+				 LocalDate.parse(request.getParameter("audit_wish_date")),				 
+				 
+				 null			 
 				 );
 		
 		int result = dao.InsertAudit(bean);	
 		
-		/*if(result == 0){
+		if(result == 0){
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -53,20 +66,31 @@ public class AuditRequestAction implements Action{
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();			
-		}else{
+			
+			return null;
+		
+		}else{				
+			
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register success')");		
+			out.println("alert('register success')");	
+			out.println("location.href='./4index.jsp'");
 			out.println("</script>");				
-			out.close();		
-		}		*/
+			out.close();	
+			
+			return null;
+			
+//			ActionForward forward = new ActionForward();
+//			forward.setRedirect(true);
+//			forward.setPath("./4index.jsp");
+//			
+//			return forward;
+		}				
 		
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);
-		forward.setPath("./4index.jsp");
-		
-		return forward;
 	}
-
 }
+	
+	
+
+

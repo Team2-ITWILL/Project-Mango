@@ -18,27 +18,14 @@ public class MemberLoginAction implements Action{
 	
 		request.setCharacterEncoding("UTF-8");
 		
-		MemberBean mb = new MemberBean();
 		String id_email = request.getParameter("id_email");
-
-		System.out.println(request.getParameter("id_password1"));
-		
-		mb.setMemEmail(id_email);
-		mb.setMemPwd(request.getParameter("id_password1"));
 		
 		MemberDAO mdao = new MemberDAO();
+		MemberBean mb = new MemberBean();
 		
 		int check = mdao.loginCheck(mb);
 		
-		if(check == 1){ // 
-			
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("id_email", id_email);
-			
-			response.sendRedirect("./Main.me");
-			
-		}else if(check == -1){ // 아이디 불일치
+		if(check == 0){ // 비밀번호 불일치
 			
 			response.setContentType("text/html; charset=utf-8");
 			
@@ -48,27 +35,31 @@ public class MemberLoginAction implements Action{
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-//			return null;
-			
-		}else if(check == 0){ // 비밀번호 불일치
+			return null;
+		
+		}else if(check == -1){ // 아이디 불일치
 			
 			response.setContentType("text/html; charset=utf-8");
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("window.alert('비밀번호가 틀립니다.');");
+			out.print("window.alert('아이디가 틀립니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
-//			return null;
+			return null;
 		}
 		
-//		ActionForward forward = new ActionForward();
+		HttpSession session = request.getSession();
 		
-//		forward.setRedirect(true);
-//		forward.setPath("./4index.jsp");
+		session.setAttribute("id_email", id_email);
 		
-		return null;
+		ActionForward forward = new ActionForward();
+
+		forward.setRedirect(true);
+		forward.setPath("/Main.me");
+		
+		return forward;
 	} // // excute() 끝
 	
 }
