@@ -48,7 +48,7 @@ request.setCharacterEncoding("utf-8");
 	 				type:"post",
 	 				async:true,
 	 				url:"InsertPayMent.pay",
-	 				data:{email :'${param.email}', option :'${param.option}',money:'${param.money}'},
+	 				data:{email :'${param.email}', option : '${param.option}' },
 	 				dataType:"text",
 	 				success:function(data,textStatus){
 	 			
@@ -56,9 +56,8 @@ request.setCharacterEncoding("utf-8");
 	 						
 	 						alert("결제 되었습니다");
 	 						
-	 						opener.location.href="4index.jsp?center=3main.jsp";
-	 						window.close();
-	 						
+	 						location.href="4index.jsp?center=3main.jsp";
+	 					
 	 						
 	 					}
 	 					

@@ -1,4 +1,3 @@
-
 package mango.member.action;
 import java.io.PrintWriter;
 
@@ -78,4 +77,3 @@ public class MemberLoginAction implements Action{
 	} // // excute() 끝
 	
 }
-

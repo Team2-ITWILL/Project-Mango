@@ -177,24 +177,12 @@ li.thirdKey {
 			});//getJSON
 		
 		});//change
-				
+		
+		
+		
 		
 		
 	});//$(function)
-	
-	
-	
-	function SubSearch() {
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	
 	
 </script>
 
@@ -220,11 +208,11 @@ li.thirdKey {
 <!------------------------------------------ [  검색form  ] --------------------------------------------------------------->
 						<!-- 타자 검색영역 -->
 						<!-- 키워드선택 검색영역 -->
-						<form id="courses_search_form" class="courses_search_form">
+						<form action="" id="courses_search_form" class="courses_search_form">
 						
 							<div class="searchInput">
 								<input type="search" class="courses_search_input typingSearch" placeholder="검색하기" required="required">
-								<button type="button"class="courses_search_button ml-auto searchBtn" onclick="SubSearch()">검색하기</button>
+								<button action="submit" class="courses_search_button ml-auto searchBtn">검색하기</button>
 							</div>
 							
 							<div class="selectOption">
@@ -315,7 +303,7 @@ li.thirdKey {
 														<img src="images/etc/default_mango.png" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
-														<a href="./AcademyContentAction.aca?acaMainNum=1&pageNum=1">
+														<a href="./AcademyContentAction.aca?num=301569&pageNum=1">
 															부산학원
 														</a>
 													</h3>

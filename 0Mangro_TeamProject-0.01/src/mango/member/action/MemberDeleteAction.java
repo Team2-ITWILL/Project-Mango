@@ -1,4 +1,3 @@
-
 package mango.member.action;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -11,49 +10,48 @@ import mango.member.db.MemberDAO;
 public class MemberDeleteAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		
 		request.setCharacterEncoding("UTF-8");
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
 		String id_email = (String)request.getSession().getAttribute("id_email");
 		String chk_pwd = (String)request.getParameter("mem_pwd");
 		System.out.println(id_email + " / " + chk_pwd);
-
+		
 		mb.setMemEmail(id_email);
 		mb.setMemPwd(chk_pwd);
-
+		
 		int check = mdao.deleteMember(mb);
-
+		 
 		if(check == 1){
-
+			
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.setContentType("text/html; charset=UTF-8");
-
+			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
 			out.print("alert('탈퇴가 완료되었습니다.');");
 			out.print("location.href='./Main.me';");
 			out.print("</script>");
 			out.close();
-
+			
 			return null;
-
+			
 		}else if(check == 0){
-
+			
 			response.setContentType("text/html; charset=UTF-8");
-
+			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
 			out.print("alert('오류가 발생하였습니다. 담당자에게 문의하세요.');");
 			out.print("location.href='./Main.me';");
 			out.print("</script>");
 			out.close();
-
+			
 			return null;
 		}
-
+		
 		return null;
 	} // excute() 끝
-} 
-
+}

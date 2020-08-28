@@ -41,8 +41,8 @@ public class AcademyReviewBean {
 	 public void setReviewNum(int reviewNum) {
 	     this.reviewNum = reviewNum;
 	 }
-	 
-	 public int getAcaMainNum() {
+	
+	public int getAcaMainNum() {
 		return acaMainNum;
 	}
 

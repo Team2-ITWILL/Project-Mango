@@ -570,14 +570,24 @@
 									
 								<!-- 등록된 후기가 없을 경우 -->
 								
-							<c:if test="${count eq null || count eq '0'}">
+							<c:if test="${count eq '0'}">
 								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
 											<p>이 학원의 후기를 작성해 보세요!</p>
 										</div>
 									<div class="tab_panel_registerBtn"
-										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp?acaMainNum=${academyBean.acaMainNum }'">후기 쓰기</div>
+										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
+									
+							</c:if>
+							<c:if test="${count eq null}">
+								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
+									<div class="tab_panel_content">
+										<div class="tab_panel_text">
+											<p>이 학원의 후기를 작성해 보세요!</p>
+										</div>
+									<div class="tab_panel_registerBtn"
+										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
 									
 							</c:if>				
 									<!-- Comments -->
@@ -667,7 +677,7 @@
 											
 										</ul>
 										<div class="add_comment_container">
-											<div class="add_comment_title" onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'">후기쓰기</div>
+											<div class="add_comment_title">후기쓰기</div>
 											<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>
 										</div>
 									</div>

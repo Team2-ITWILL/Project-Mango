@@ -23,7 +23,7 @@ public class AcademyContentAction implements Action{
 		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
 		/*String id = (String)request.getSession().getAttribute("userid");*/
 		
-		System.out.println(acaMainNum);
+		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
 		// 학원조아DAO

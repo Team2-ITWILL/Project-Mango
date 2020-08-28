@@ -1,4 +1,3 @@
-
 package mango.member.action;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -36,10 +35,6 @@ public class MemberFrontController extends HttpServlet {
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action = null;
 		
-		
-		
-/* ---------------------------------- 회원가입	시작 ---------------------------------- */		
-		
 		if(command.equals("/MemberJoin.me")){
 			
 			forward = new ActionForward();
@@ -56,12 +51,6 @@ public class MemberFrontController extends HttpServlet {
 				System.out.println("/MemberJoinAction.me : "+ e);
 				e.printStackTrace();
 			}
-
-/* ---------------------------------- 회원가입	끝 ---------------------------------- */		
-			
-			
-			
-/* ---------------------------------- 로그인 시작  ---------------------------------- */	
 			
 		}else if(command.equals("/MemberLogin.me")){
 			
@@ -80,24 +69,12 @@ public class MemberFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-/* ---------------------------------- 로그인 끝  ---------------------------------- */
-			
-			
-			
-/* ---------------------------------- 메인화면 시작  ---------------------------------- */	
-		
 		}else if(command.equals("/Main.me")){
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("./4index.jsp");
-
-/* ---------------------------------- 메인화면 끝  ---------------------------------- */	
-
-			
-			
-/* ---------------------------------- 로그아웃 시작  ---------------------------------- */	
-			
+		
 		}else if(command.equals("/MemberLogout.me")){
 			
 			action = new MemberLogoutAction();
@@ -108,12 +85,6 @@ public class MemberFrontController extends HttpServlet {
 				System.out.println("/MemberLogout.me : " + e);
 				e.printStackTrace();
 			}
-			
-/* ---------------------------------- 로그아웃 끝  ---------------------------------- */	
-
-			
-			
-/* ---------------------------------- 회원 탈퇴 시작  ---------------------------------- */	
 			
 		}else if(command.equals("/MemberDelete.me")){
 			
@@ -128,47 +99,13 @@ public class MemberFrontController extends HttpServlet {
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
-				System.out.println("/MemberDelete.me : " + e);
+				System.out.println("");
 				e.printStackTrace();
 			}
 			
-/* ---------------------------------- 회원 탈퇴 끝  ---------------------------------- */	
-
-			
-			
-/* ---------------------------------- 내 정보 조회  시작  ---------------------------------- */	
-
-			
-			
-			
-			
-/* ---------------------------------- 내정보 조회 끝  ---------------------------------- */	
-			
-			
-			
-/* ---------------------------------- 회원 정보 수정 시작  ---------------------------------- */	
-			
-		}else if(command.equals("/MemberUpdate.me")){
-			
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("./4index.jsp?center=O_member/member_revise.jsp");
-			
-		}else if(command.equals("/MemberUpdateAction.me")){
-	
-			action = new MemberUpdateAction();
-			
-			try {
-				forward = action.excute(request, response);
-			} catch (Exception e) {
-				System.out.println("/MemberUpdateAction.me : " + e);
-				e.printStackTrace();
-			}
-		
-/* ---------------------------------- 회원 정보 수정 끝  ---------------------------------- */	
-
-		
 		}
+	
+		
 		
 		
 		
@@ -209,4 +146,3 @@ public class MemberFrontController extends HttpServlet {
 		doProcess(request, response);
 	}
 }
-
