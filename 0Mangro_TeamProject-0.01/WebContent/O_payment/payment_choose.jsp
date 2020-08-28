@@ -148,7 +148,7 @@
 	<form id="frm"> 
 	<input type="hidden" name="money" class="money" >
 	<input type="hidden" name="option" class="option">
-	<input type="hidden" name="email" class="email" value="2221325">
+	<input type="hidden" name="email" class="email" value="${email}">
 	
 		<div class="container">
 			<div class="row">
