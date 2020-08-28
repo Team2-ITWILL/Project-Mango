@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.audit_request.action.AuditRequestAction;
 
 public class AcademyRegisterFrontController extends HttpServlet{
 
@@ -43,10 +44,16 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		Action action=null;
 	
 		
+		if(command.equals("/registerUpload.areg")) {			
+			
+			try {
+				action = new AcademyRegisterUploadAction();				
+				forward = action.excute(request, response);			
 		
-		
-		
-		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}	
+		}		
 		
 		
 		

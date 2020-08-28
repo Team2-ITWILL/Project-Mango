@@ -66,13 +66,13 @@ public class MemberDAO extends DBconnection{
 				if(mb.getMemPwd().equals(rs.getString("mem_pwd"))){
 						
 					 // 탈퇴일자와 계정정지일자 모두 데이터가 null일 때 로그인 성공
-					if(rs.getString("mem_seceded").equals(null)  
-					   && rs.getString("mem_baned").equals(null) ){ 
+					if(rs.getString("mem_seceded") == null  
+					   && rs.getString("mem_baned") == null ){ 
 						check = 1;
 						
 					// 탈퇴일자 혹은 계정정지일자 둘 중에 하나라도 데이터가 존재할 때 로그인 불가
-					}else if(!(rs.getString("mem_seceded").equals(null) ) ||
-							(!rs.getString("mem_baned").equals(null) ) ){ 
+					}else if(!(rs.getString("mem_seceded") == null  ) ||
+							 !(rs.getString("mem_baned") == null  ) ){ 
 						check = -2; 
 					}
 				

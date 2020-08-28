@@ -1,4 +1,4 @@
-package mango.academy_register.db; 
+package mango.academy_register.db;
 
 import mango.connection.db.DBconnection;
 
@@ -23,12 +23,12 @@ public class AcademyRegisterDAO extends DBconnection{
 			pstmt.setString(2, bean.getAcaName());
 			pstmt.setString(3, bean.getMemAddrZip());
 			pstmt.setString(4, bean.getMemAddrDoro());
-			pstmt.setString(5, bean.getFNameCompany());
-			pstmt.setString(6, bean.getFSizeCompany());
-			pstmt.setString(7, bean.getFSizeOwner());
-			pstmt.setString(8, bean.getFNameOwner());
-			pstmt.setString(9, bean.getRegisterDate());
-			pstmt.setString(10, bean.getConfirmDate());
+			pstmt.setString(5, bean.getfNameCompany());
+			pstmt.setString(6, bean.getfSizeCompany());
+			pstmt.setString(7, bean.getfSizeOwner());
+			pstmt.setString(8, bean.getfNameOwner());
+			pstmt.setDate(9, java.sql.Date.valueOf(bean.getRegisterDate()));
+			pstmt.setDate(10, java.sql.Date.valueOf(bean.getConfirmDate()));		
 			
 			result = pstmt.executeUpdate();		
 			
