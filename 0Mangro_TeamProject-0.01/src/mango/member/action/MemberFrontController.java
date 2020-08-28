@@ -1,3 +1,4 @@
+
 package mango.member.action;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -208,3 +209,4 @@ public class MemberFrontController extends HttpServlet {
 		doProcess(request, response);
 	}
 }
+
