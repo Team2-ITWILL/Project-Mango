@@ -23,7 +23,8 @@ public class MemberJoinAction implements Action{
 		mb.setMemEmail(request.getParameter("id_email"));
 		mb.setMemName(request.getParameter("id_name"));
 		mb.setMemPwd(request.getParameter("id_password1"));
-		
+		mb.setMemJoindate(new Timestamp(System.currentTimeMillis()));
+
 		boolean result = false;
 
 		MemberDAO mdao = new MemberDAO();

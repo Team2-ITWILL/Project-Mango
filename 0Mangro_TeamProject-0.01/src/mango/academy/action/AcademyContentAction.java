@@ -20,7 +20,7 @@ public class AcademyContentAction implements Action{
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		request.setCharacterEncoding("utf-8");
-		int boardNum = Integer.parseInt(request.getParameter("num"));
+		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
 		/*String id = (String)request.getSession().getAttribute("userid");*/
 		
 		
@@ -36,16 +36,16 @@ public class AcademyContentAction implements Action{
 		AcademyKeywordDAO akdao = new AcademyKeywordDAO();
 		
 		
-		AcademyBean bean = dao.getAcademyContent(boardNum);
-		int count = rdao.getAcademyReviewCount(boardNum);
+		AcademyBean bean = dao.getAcademyContent(acaMainNum);
+		int count = rdao.getAcademyReviewCount(acaMainNum);
 		List<AcademyKeywordBean> keyList = null;
-		keyList = akdao.getAcademyKeyword(boardNum);
+		keyList = akdao.getAcademyKeyword(acaMainNum);
 		for(int i=0;i<keyList.size();i++){
 			
 		}
 		
 		double avgScore = 
-				Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(boardNum)));
+				Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(acaMainNum)));
 
 		System.out.println(avgScore);
 		//  한 페이지에 4개 글 목록 반환
@@ -65,7 +65,7 @@ public class AcademyContentAction implements Action{
 		List<AcademyReviewBean> reList = null;
 		
 		if(count != 0){
-			reList = rdao.getAcademyReviewList(boardNum,startRow,pageSize);
+			reList = rdao.getAcademyReviewList(acaMainNum,startRow,pageSize);
 		}
 		
 		

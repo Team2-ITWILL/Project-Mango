@@ -3,18 +3,31 @@ package mango.academy_keyword.db;
 public class AcademyKeywordBean {
 
 	 // 학원지정번호 
-   private int acaNum;
+   private int acaMainNum;
 
    // 키워드(교통이 편리한) 
    private String acakeyword;
 
-   
-	public int getAcaNum() {
-		return acaNum;
-	}
+   /*
+    
+    traffic - 교통이 편리한
+    stdRoom - 스터디룸이 있는
+    room - 기숙사가 있는
+    audit - 청강신청이 가능한
+    clean - 시설이 개끗한
+    restaurant - 식당가 인근
+    long - 중장기
+    car - 차량운행이 있는
+    level - 레벨테스트가 있는
+    sat - 수능대비강의가 있는
 
-	public void setAcaNum(int acaNum) {
-		this.acaNum = acaNum;
+    */
+	public int getAcaMainNum() {
+	return acaMainNum;
+	}
+	
+	public void setAcaMainNum(int acaMainNum) {
+		this.acaMainNum = acaMainNum;
 	}
 
 	public String getAcakeyword() {
