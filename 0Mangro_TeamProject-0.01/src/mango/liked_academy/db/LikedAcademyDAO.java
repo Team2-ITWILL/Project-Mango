@@ -11,11 +11,11 @@ public class LikedAcademyDAO extends DBconnection{
 		
 		try {
 			getConnection();
-			sql = "select * from liked_academy where mem_email = ? and aca_num = ?";
+			sql = "select * from liked_academy where mem_email = ? and aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMemEmail());
-			pstmt.setInt(2, bean.getAcaNum());
+			pstmt.setInt(2, bean.getAcaMainNum());
 			rs = pstmt.executeQuery();
 			
 			// 좋아요가 눌러져있다면 1 반환
@@ -44,7 +44,7 @@ public class LikedAcademyDAO extends DBconnection{
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMemEmail());
-			pstmt.setInt(2, bean.getAcaNum());
+			pstmt.setInt(2, bean.getAcaMainNum());
 			pstmt.setString(3, bean.getAcaName());
 			
 			pstmt.executeUpdate();
@@ -63,11 +63,11 @@ public class LikedAcademyDAO extends DBconnection{
 		
 		try {
 			getConnection();
-			sql = "delete from liked_academy where mem_email = ? and aca_num = ?";
+			sql = "delete from liked_academy where mem_email = ? and aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMemEmail());
-			pstmt.setInt(2, bean.getAcaNum());
+			pstmt.setInt(2, bean.getAcaMainNum());
 			
 			pstmt.executeUpdate();
 			

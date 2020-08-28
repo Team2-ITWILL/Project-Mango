@@ -108,6 +108,9 @@
  	padding-top: 5px;
  	margin-left: 3px;
 }
+.course_price{
+	font_size
+}
 </style>
 
 <%
@@ -126,21 +129,27 @@
 			var likeList = document.querySelectorAll(".cnt_Like");
 			
 			checkLikedAca();
+			mainKeyword();
 			
 			for(var i=0; i<likeList.length; i++) {
 				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
-				console.log(obj);
 				getLikeReviewImg(obj);
 				
 			}
 		});
 		
+		function mainKeyword(){
+			var keyword = document.querySelector(".feature_title").getElementsByTagName("span")[0].textContent;
+			console.log(keyword);
+			document.querySelector(".course_price").innerText = keyword + " 학원";
+		}
+ 
 		function likeAcademy(){
 			
 			var email = "${email }";
-			var acaNum = "${academyBean.acaNum }";
+			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
-			var _info = '{"email":"'+email+'","acaNum":"'+acaNum+'","acaName":"'+acaName+'"}';
+			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
 			
 			if(email.length == 0 || email == null){
 				alert("로그인이 필요합니다.");
@@ -152,7 +161,6 @@
 				url : "${pageContext.request.contextPath}/likeAcademy",
 				data : {info : _info},
 				success:function(data,status){
-					console.log(data);
 					var json = JSON.parse(data);
 					var result = json.result;
 					
@@ -178,9 +186,9 @@
 		function checkLikedAca(){
 			
 			var email = "${email }";
-			var acaNum = "${academyBean.acaNum }";
+			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
-			var _info = '{"email":"'+email+'","acaNum":"'+acaNum+'","acaName":"'+acaName+'"}';
+			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
 			
 			/* 
 			<div class="aca_like_button">
@@ -195,7 +203,6 @@
 				url : "${pageContext.request.contextPath}/checkLikedAca",
 				data : {info : _info},
 				success:function(data,status){
-					console.log(data);
 					var json = JSON.parse(data);
 					var result = json.result;
 					
@@ -317,7 +324,7 @@
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
 						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
 						<div class="cheongang tab_panel_registerBtn"
-							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaNum=${academyBean.acaNum }&acaName=${academyBean.acaName}'"
+							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'"
 						>
 						청강신청하기
 						</div>
@@ -696,7 +703,7 @@
 						
 							<div class="sidebar_section_title">학원을 대표하는 키워드</div>
 							<div class="sidebar_feature">
-								<div class="course_price">"${keyList[0].acakeyword} 학원"</div>
+								<div class="course_price" style="font-size: 20px;"></div>
 
 								<!-- Features -->
 								<div class="feature_list">
@@ -705,7 +712,7 @@
 						<c:choose>
 						
 							
-							<c:when test="${keywordVO.acakeyword eq '교통이 편리한'}">
+							<c:when test="${keywordVO.acakeyword eq 'traffic'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-subway" aria-hidden="true"></i>
 											<span>교통이 편리한</span>
@@ -713,7 +720,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '중장기(6개월)'}">
+							<c:when test="${keywordVO.acakeyword eq 'long'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-clock-o" aria-hidden="true"></i>
 											<span>중장기(6개월)</span>
@@ -722,7 +729,7 @@
 							</c:when>
 							
 							
-							<c:when test="${keywordVO.acakeyword eq '시설이 깨끗한'}">
+							<c:when test="${keywordVO.acakeyword eq 'clean'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
 											<span>시설이 깨끗한</span>
@@ -730,7 +737,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '청강신청이 가능한'}">
+							<c:when test="${keywordVO.acakeyword eq 'audit'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
 											<span>청강신청이 가능한</span>
@@ -738,7 +745,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '스터디룸이 있는'}">
+							<c:when test="${keywordVO.acakeyword eq 'stdRoom'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
 											<span>스터디룸이 있는</span>
@@ -746,7 +753,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '식당가 인근'}">
+							<c:when test="${keywordVO.acakeyword eq 'restaurant'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
 											<span>식당가 인근</span>
@@ -754,7 +761,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '기숙사 있는'}">
+							<c:when test="${keywordVO.acakeyword eq 'room'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
 											<span>기숙사 있는</span>
@@ -762,7 +769,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '학원 차량 운행이 있는'}">
+							<c:when test="${keywordVO.acakeyword eq 'car'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-bus" aria-hidden="true"></i>
 											<span>학원 차량 운행이 있는</span>
@@ -770,7 +777,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '레벨 테스트가 있는'}">
+							<c:when test="${keywordVO.acakeyword eq 'level'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-file-text-o" aria-hidden="true"></i>
 											<span>레벨 테스트가 있는</span>
@@ -778,7 +785,7 @@
 									</div>
 							</c:when>
 							
-							<c:when test="${keywordVO.acakeyword eq '수능 대비 강의가 있는'}">
+							<c:when test="${keywordVO.acakeyword eq 'sat'}">
 								<div class="feature d-flex flex-row align-items-center justify-content-start">
 										<div class="feature_title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 											<span>수능 대비 강의가 있는</span>

@@ -25,14 +25,14 @@ public class AnonyBoardDAO extends DBconnection {
 		try {
 			
 			List<String> list1 = new ArrayList<String>();
-			list1.add("행복한"); list1.add("좋은"); list1.add("멋진"); list1.add("감회가 새로운"); list1.add("기대되는");
-			list1.add("별난"); list1.add("종속적인"); list1.add("웃긴"); list1.add("뒤틀린"); list1.add("좋아하는");
-			list1.add("행복한"); list1.add("좋은"); list1.add("감기에 걸린"); list1.add("아이스크림이 먹고싶은"); list1.add("질색하는");
-			list1.add("귀여운"); list1.add("예쁜 마음의"); list1.add("잠을 못 잔"); list1.add("지겨운"); list1.add("이상적인");
+			list1.add("행복한"); list1.add("좋은"); list1.add("멋진"); list1.add("감회가 새로운"); list1.add("기대되는"); list1.add("방황하는");
+			list1.add("별난"); list1.add("종속적인"); list1.add("웃긴"); list1.add("뒤틀린"); list1.add("좋아하는"); list1.add("커밋을 깜빡한");
+			list1.add("행복한"); list1.add("좋은"); list1.add("감기에 걸린"); list1.add("아이스크림이 먹고싶은"); list1.add("질색하는"); list1.add("고뇌하는");
+			list1.add("귀여운"); list1.add("예쁜 마음의"); list1.add("잠을 못 잔"); list1.add("지겨운"); list1.add("이상적인"); list1.add("강한");
 			
 			List<String> list2 = new ArrayList<String>();
 			list2.add("사자"); list2.add("노자"); list2.add("노스트라다무스"); list2.add("오라클"); list2.add("돼지"); list2.add("뉴런");
-			list2.add("우산"); list2.add("가우시안"); list2.add("빅터"); list2.add("띵문"); list2.add("개발자"); list2.add("주머니");
+			list2.add("우산"); list2.add("가우시안"); list2.add("빅터"); list2.add("띵문"); list2.add("개발자"); list2.add("주머니"); list2.add("모나미볼펜");
 			list2.add("아메리카노"); list2.add("무말랭이"); list2.add("우주의 먼지"); list2.add("표준편차"); list2.add("닭발"); list2.add("토끼");
 			list2.add("빗자루"); list2.add("부지깽이"); list2.add("카오스를 겪는 선생님"); list2.add("전생"); list2.add("날씨"); list2.add("약쟁이");
 			
@@ -82,16 +82,6 @@ public class AnonyBoardDAO extends DBconnection {
 			
 		}
 		
-		/*ano_board_num int(11) AI PK 
-		mem_email varchar(20) 
-		ano_board_title varchar(45) 
-		ano_board_content varchar(500) 
-		ano_board_read int(11) 
-		ano_board_date datetime 
-		ano_board_ip varchar(100) 
-		ano_board_nick varchar(100) 
-		ano_board_file varchar(255)
-		*/
 		
 		try{
 			sql = "INSERT INTO anony_board "
@@ -106,16 +96,6 @@ public class AnonyBoardDAO extends DBconnection {
 				 + "ano_board_file) "
 				 + "VALUES(?,?,?,?,0,?,?,?,?) "; 
 			
-//		ano_board_num int(11) AI PK 
-//		mem_email varchar(20) 
-//		ano_board_title varchar(45) 
-//		ano_board_content varchar(500) 
-//		ano_board_read int(11) 
-//		ano_board_date datetime 
-//		ano_board_ip varchar(100) 
-//		ano_board_nick varchar(100) 
-//		ano_board_file varchar(45)
-			
 			
 		pstmt = con.prepareStatement(sql);
 		
@@ -127,6 +107,8 @@ public class AnonyBoardDAO extends DBconnection {
 		pstmt.setString(6, anb.getAno_board_ip() );
 		pstmt.setString(7, anb.getAno_board_nick());
 		pstmt.setString(8, anb.getAno_board_file());
+		
+		System.out.println(anb.getMem_email());
 		
 		pstmt.executeUpdate();
 		
@@ -218,7 +200,10 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_title(rs.getString("ano_board_title"));
 				anb.setAno_board_content(rs.getString("ano_board_content"));
 				anb.setAno_board_read(rs.getInt("ano_board_read"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
+				anb.setAno_board_nick(rs.getString("ano_board_nick"));
+				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
 			}// if
 			
@@ -308,6 +293,38 @@ public class AnonyBoardDAO extends DBconnection {
 	}//getAnonyBoardCount()
 	
 	
+	// [7.글 수정 메소드]
+	public int updateANBoard(AnonyBoardBean anbean){
+		
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "UPDATE anony_board "
+					+ "SET ano_board_title=?, "
+					+ "ano_board_content=?, "
+					+ "ano_board_nick, "
+					+ "ano_board_file)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate();
+			check = 1;
+			System.out.println(check);
+		}catch(SQLException se){
+			System.out.println("updateANBoard메소드에서 SQL 예외 발생 : "+ se);				
+			
+		}catch(Exception e){
+			System.out.println("updateANBoard메소드에서 예외 발생 : "+ e);				
+		
+		}finally { resourceClose();}
+		
+		System.out.println(check);
+		return check;
+		
+		
+		
+	}//updateANBoard()
 
 
 		

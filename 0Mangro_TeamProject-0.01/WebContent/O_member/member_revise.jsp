@@ -26,6 +26,7 @@
 </head>
 <body>
 
+
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -50,7 +51,7 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이름</label>
-						        <input type="text" class="form-control" name="" id="" value="최자두"
+						        <input type="text" class="form-control" name="" id="" value=""
 						               data-msg="이름을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success">
@@ -59,7 +60,7 @@
 					      
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이메일</label>
-						        <input type="email" class="form-control" name="" id="" value="user1@naver.com"
+						        <input type="email" class="form-control" name="" id="" value="${sessionScope.id_email}"
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success">

@@ -42,6 +42,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 		Action action=null;
 	
 		
+		// 익명사담방 목록보기 화면
 		if(command.equals("/AnonyBoardListAction.anob")){
 			action = new AnonyBoardListAction();
 			try {
@@ -52,9 +53,9 @@ public class AnonyBoardFrontController extends HttpServlet{
 			} 
 			
 			
+		// 익명사담방 글쓰기 화면(form입력 페이지 호출 + hidden 전송값 받기 )
 		}else if(command.equals("/AnoBoardWriteAction.anob")){
 			action = new AnoBoardWriteAction();
-
 			
 			try {
 				forward = action.excute(request, response);
@@ -65,6 +66,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 				
 			}
 			
+		// 익명사담방 글쓰기 화면(form입력 내용을 DB에 insert액션)
 		}else if(command.equals("/AnoBoardInsertAction.anob")){
 			action = new AnoBoardInsertAction();
 			
@@ -76,7 +78,20 @@ public class AnonyBoardFrontController extends HttpServlet{
 				e.printStackTrace();
 				
 			}
+		
 			
+		// 익명사담방 글 상세보기 화면(글 내용 호출)
+		}else if(command.equals("/AnoBoardSingleAction.anob")){
+			
+			System.out.println("여기까지 옴");
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoardSingleAction.anob에서 예외");
+				e.printStackTrace();
+			}
+
+		// 익명사담방 글 상세보기 화면(글 삭제 액션)
 		}else if(command.equals("/AnoBoardDeleteAction.anob")){
 			action = new AnoBoardDeleteAction();
 			
@@ -85,22 +100,32 @@ public class AnonyBoardFrontController extends HttpServlet{
 				
 			}catch(Exception e){
 				System.out.println("AnonyBoardFrontController의 /AnoBoardDeleteAction.anob에서 예외");
+				e.printStackTrace();
 			}
+		// 익명사담방 글 상세보기 화면(글 수정 액션)
+		
 			
-		}else if(command.equals("/AnoBoardSingleAction.anob")){
-			action = new AnoBoardSingleAction();
+		}else if(command.equals("/AnoBoardToUpdateFormAction.anob")){
+			action = new AnoBoardToUpdateFormAction();
 			
 			try {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
-				System.out.println("AnonyBoardFrontController의 /AnoBoardSingleAction.anob에서 예외");
+				System.out.println("AnonyBoardFrontController의 /AnoBoardToUpdateFormAction.anob에서 예외");
 				e.printStackTrace();
 			}
 			
+		}else if(command.equals("/AnoBoardUpdateAction.anob")){
+			action = new AnoBoardUpdateAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("AnonyBoardFrontController의 /AnoBoardUpdateAction.anob에서 예외");
+				e.printStackTrace();
+			}
+		
 		}
-		
-		
-		
 		
 		
 		
