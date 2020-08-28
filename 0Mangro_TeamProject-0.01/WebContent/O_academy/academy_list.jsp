@@ -303,7 +303,7 @@ li.thirdKey {
 														<img src="images/etc/default_mango.png" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
-														<a href="./AcademyContentAction.aca?num=301569&pageNum=1">
+														<a href="./AcademyContentAction.aca?acaMainNum=1&pageNum=1">
 															부산학원
 														</a>
 													</h3>
