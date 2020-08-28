@@ -74,7 +74,8 @@
 					        
 						      <div class="js-form-message form-group">
 						        <label class="form-label aca_name">학원명
-						        	<input type="text" class="form-control" name="aca_name" value="부산학원" readonly> 
+						        	<input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
+						        	<input type="text" class="form-control" name="aca_name" value="${param.acaName}" readonly> 
 						        </label>
 						        <label class="form-label review_subject">수강과목
 						        	<input type="text" class="form-control" name="aca_name" value="ex) 토익 900점반"> 
