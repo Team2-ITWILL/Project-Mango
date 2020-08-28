@@ -30,11 +30,13 @@ public class AnoBoardInsertAction implements Action {
 				
 				//new MultipartRequest(request, realPath, max,"UTF-8",new DefaultFileRenamePolicy());
 				
-				String realPath = request.getRealPath("/O_aca_regFiles");
+				String realPath = request.getRealPath("O_aca_regFiles");
+				System.out.println(realPath);
+				
 				multi = new MultipartRequest
-						(request, 
-						realPath, sizeLimit, "UTF-8", 
+						(request, realPath, sizeLimit, "UTF-8", 
 						new DefaultFileRenamePolicy());
+				
 				
 				
 				// [글작성 페이지 폼의 요소들을 BoardBean객체에 저장 ]
@@ -52,8 +54,13 @@ public class AnoBoardInsertAction implements Action {
 				anbean.setAno_board_nick(multi.getParameter("ano_board_nick"));
 				anbean.setAno_board_title(multi.getParameter("ano_board_title"));
 				anbean.setAno_board_content(multi.getParameter("ano_board_content"));
-				anbean.setAno_board_file(multi.getOriginalFileName(multi.getParameter("ano_board_file")));
 				
+//				if(multi.getFilesystemName("ano_board_file"));
+				
+				anbean.setAno_board_file(multi.getFilesystemName("ano_board_file"));
+				
+				System.out.println(multi.getParameter("ano_board_file"));
+				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				float f_size = 0;
 				
 				
@@ -73,7 +80,6 @@ public class AnoBoardInsertAction implements Action {
 				
 				ActionForward forward = new ActionForward();
 				forward.setRedirect(false);
-				//forward.setPath("./4index.jsp?center=O_anony/anony_board.jsp");
 				forward.setPath("/AnonyBoardListAction.anob");
 				
 				return forward;

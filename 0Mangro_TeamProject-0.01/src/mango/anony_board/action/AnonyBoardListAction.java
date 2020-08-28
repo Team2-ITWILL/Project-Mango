@@ -33,9 +33,6 @@ public class AnonyBoardListAction implements Action{
 		int anbCount = andao.getAnonyBoardCount();
 		request.setAttribute("anbCount", anbCount);
 
-		// db에 저장된 글의 닉네임 불러오기
-		// - 아직 db에 컬럼이 없음
-		
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
