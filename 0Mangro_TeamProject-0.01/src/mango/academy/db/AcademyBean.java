@@ -2,9 +2,12 @@ package mango.academy.db;
 
 public class AcademyBean {
 	// 학원 테이블 
-		
+	
+	// 학원 메인번호
+	private int acaMainNum;
+	
 	 // 학원지정번호 
-    private int acaNum;
+    private String acaNum;
 
     // 시도교육청코드 
     private String acaCode;
@@ -47,14 +50,15 @@ public class AcademyBean {
 
     public AcademyBean() { }
     public AcademyBean(
-    		int acaNum, String acaCode, 
+    		int acaMainNum, String acaNum, String acaCode, 
         	String acaSearchAddr1, String acaSearchAddr2, String acaSearchAddr3,
         	String acaAttr, String acaName, String acaStartDate,
         	String acaCategory1, String acaCategory2, 
         	String acaAddrZip, String acaAddrDoro, String acaAddrDetailed,
         	String mem_email
     		) 
-    {
+    {	
+    	this.acaMainNum = acaMainNum;
     	this.acaNum = acaNum;
     	this.acaCode = acaCode;
     	this.acaSearchAddr1 = acaSearchAddr1;
@@ -71,23 +75,21 @@ public class AcademyBean {
     	this.mem_email = mem_email;    	
     }
 
-    public String getMem_Email() {
-		return mem_email;
+    // getter, setter
+    public int getAcaMainNum() {
+		return acaMainNum;
+	}
+	public void setAcaMainNum(int acaMainNum) {
+		this.acaMainNum = acaMainNum;
 	}
 
-	public void setMem_Email(String mem_email) {
-		this.mem_email = mem_email;
+    public String getAcaNum() {
+		return acaNum;
 	}
-
-	public int getAcaNum() {
-        return acaNum;
-    }
-
-    public void setAcaNum(int acaNum) {
-        this.acaNum = acaNum;
-    }
-
-    public String getAcaCode() {
+	public void setAcaNum(String acaNum) {
+		this.acaNum = acaNum;
+	}
+	public String getAcaCode() {
         return acaCode;
     }
 
@@ -182,6 +184,13 @@ public class AcademyBean {
     public void setAcaAddrDetailed(String acaAddrDetailed) {
         this.acaAddrDetailed = acaAddrDetailed;
     }
+	
+	public String getMem_email() {
+		return mem_email;
+	}
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
+	}
 
 	
 }

@@ -6,8 +6,8 @@ public class LikedAcademyBean {
 	 // 이메일 
 	 private String memEmail;
 	
-	 // 학원지정번호 
-	 private int acaNum;
+	 // 학원메인번호
+	 private int acaMainNum;
 	
 	 // 학원명 
 	 private String acaName;
@@ -22,16 +22,16 @@ public class LikedAcademyBean {
 	 public void setMemEmail(String memEmail) {
 	     this.memEmail = memEmail;
 	 }
-	
-	 public int getAcaNum() {
-	     return acaNum;
-	 }
-	
-	 public void setAcaNum(int acaNum) {
-	     this.acaNum = acaNum;
-	 }
-	
-	 public String getAcaName() {
+	 
+	 public int getAcaMainNum() {
+		return acaMainNum;
+	}
+
+	public void setAcaMainNum(int acaMainNum) {
+		this.acaMainNum = acaMainNum;
+	}
+
+	public String getAcaName() {
 	     return acaName;
 	 }
 	

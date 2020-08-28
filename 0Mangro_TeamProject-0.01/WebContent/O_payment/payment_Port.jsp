@@ -48,7 +48,7 @@ request.setCharacterEncoding("utf-8");
 	 				type:"post",
 	 				async:true,
 	 				url:"InsertPayMent.pay",
-	 				data:{email : ${param.email}, option : ${param.option} },
+	 				data:{email :'${param.email}', option : '${param.option}' },
 	 				dataType:"text",
 	 				success:function(data,textStatus){
 	 			
