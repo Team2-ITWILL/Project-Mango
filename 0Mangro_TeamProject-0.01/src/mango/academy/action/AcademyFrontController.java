@@ -54,7 +54,7 @@ public class AcademyFrontController extends HttpServlet {
 			
 		}else if(command.equals("/getListSearchOne.aca")){
 			
-			
+			System.out.println("/getListSearchOne.aca 까지 접근");
 			action =new ListSearchOneAciton();
 			
 			

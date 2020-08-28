@@ -665,7 +665,8 @@ section
 }
 .comments_container
 {
-	margin-top: 51px;
+	margin-top: 120px;
+	margin-bottom: 120px;
 	width: 100%;
 }
 .comments_title
@@ -768,6 +769,7 @@ section
 .comment_text p
 {
 	font-size: 1.3em;
+	margin-top: 150px;
 }
 .comment_extras
 {

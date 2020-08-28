@@ -1,3 +1,4 @@
+
 package mango.member.action;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -55,3 +56,4 @@ public class MemberDeleteAction implements Action{
 		return null;
 	} // excute() 끝
 } 
+

@@ -17,6 +17,33 @@
 <link rel="stylesheet" type="text/css" href="styles/anony_board_single_responsive.css">
 <!-- 제이쿼리  -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+	.title-btn{
+		background-color: #000;
+	    color: #fff;
+	    border: 1px solid #000;
+	    text-align: center;
+	    display: inline-block;
+	    width: 140px;
+	    float: right;
+	    padding: 10px;
+	    border-radius: 10px;
+	    font-size: 1.2em;
+	    font-weight: 400;
+	    bottom:10px;
+	}
+	.boardrevise{ background-color: #fff; color: #000; margin-left:8px; margin-right: 8px;}
+	.title-btn:hover{
+	    cursor: pointer;
+   	 	background-color: #6610f2 !important;
+   	 	color: #fff;
+	}
+	.tolistBtn {float:left;}	
+
+}
+	
+</style>
+
 </head>
 
 <body>
@@ -28,6 +55,15 @@
 
 <!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
 					<div class="comments_container">
+						<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
+							<span>목록보기</span></div> 
+						<div class="title-btn boardrevise" onclick="location.href='./AnoBoardToUpdateFormAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+							<span>수정</span></div>
+						<div class="title-btn" onclick="location.href='./AnoBoardDeleteAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+							<span>삭제</span></div> <br>
+						<hr>
+						
+						
 						<div class="comments_title" id="board_title">${boardSingle.ano_board_title }</div>
 						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">${boardSingle.ano_board_nick }</span>
 						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_read }</span>
@@ -36,21 +72,12 @@
 						<!-- 글의 내용 -->
 						<div class="comment_text">
 							<p>${boardSingle.ano_board_content }</p> <br><br>
-							<span class="report_comment" onclick="location.href=''">신고하기</span> <br><br>
+							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
 						</div>
 						
 						<hr>
 						
 						
-					<script type="text/javascript">
-					window.onload = function(){
-						console.log("${requestScope.boardSingle.ano_board_title}");
-						alert("${requestScope.boardSingle.ano_board_title}");
-						
-					}
-					
-					
-					</script>
 						
 						<!-- 해당 글쓴이가 아닌 경우 삭제하기 버튼 비활성화 -->
 <%-- 						<c:choose>
