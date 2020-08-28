@@ -25,6 +25,53 @@
 
 </head>
 <body>
+<script type="text/javascript">
+
+	<!----------------- 회원 정보 수정 필수 입력 -------------------->
+	$(function update_chk(){
+		
+		$("#update_chk").submit(function(){
+			
+			if($("#id_pwd").val() == ""){
+				alert("현재 비밀번호를 입력하세요.");
+				$("#id_pwd").focus;
+				return false;
+			}
+			
+			if($("#newPw1").val() == ""){
+				alert("변경할 비밀번호를 입력하세요.");
+				$("#newPw1").focus;
+				return false;
+			}
+			
+			if($("#newPw2").val() == ""){
+				alert("변경할 비밀번호 입력하세요.");
+				$("#newPw2").focus;
+				return false;
+			}
+			
+			if($("#newPw2").val() != $("#newPw1").val() ){
+				alert("비밀번호가 일치하지 않습니다.");
+				$("#newPw2").focus();
+				return false;
+			}
+			
+			if($("#id_pwd").val() == $("#newPw1").val()){
+				alert("이전 비밀번호와 동일하게 변경할 수 없습니다.");
+				$("#newPw1").focus;
+				return false;
+			}
+			
+		}); // submit() 끝
+	}); // update_chk() 끝
+	
+</script>
+
+
+
+
+
+
 
 
 		<div class="container">
@@ -35,7 +82,7 @@
 
 
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-			      <form class="member_reFr" action="" method="post" enctype="multipart/form-data">
+			      <form class="member_reFr" action="./MemberUpdateAction.me" method="post" enctype="multipart/form-data" id="update_chk" onsubmit="update_chk()">
 				      
       					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->
 						  <img src="images/user_profile/jadu_prifile.jpg" alt="user" class="rounded-circle">
@@ -51,16 +98,18 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이름</label>
-						        <input type="text" class="form-control" name="" id="" value=""
+						        <input type="text" class="form-control" name="memName" id="id_name" value="${param.memName}"
 						               data-msg="이름을 입력해주세요."
 						               data-error-class="form-error"
-						               data-success-class="form-success">
+						               data-success-class="form-success"
+						               readonly="readonly">
 						        
 					      </div>
 					      
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이메일</label>
-						        <input type="email" class="form-control" name="" id="" value="${sessionScope.id_email}"
+						        <input type="email" class="form-control" name="memEmail" id="id_email" value="${sessionScope.id_email}"
+						               readonly="readonly"
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success">
@@ -69,20 +118,47 @@
 					      
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">
-						          <span class="d-flex justify-content-between align-items-center">비밀번호</span>
+						          <span class="d-flex justify-content-between align-items-center">현재 비밀번호</span>
 						        </label>
 						        
 						        
-						        <input type="password" class="form-control" name="" id="" 
+						        <input type="password" class="form-control" name="memPwd" id="id_pwd" 
 						        	   placeholder="********"
 						               aria-label="********" 
 						               data-msg="올바른 비밀번호를 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success">
-						        
-					        
 					      </div>
-					
+					      
+					      <div class="js-form-message form-group">
+						        <label class="form-label" for="">
+						          <span class="d-flex justify-content-between align-items-center">변경할 비밀번호</span>
+						        </label>
+						        
+						        
+						        <input type="password" class="form-control" name="newPw1" id="newPw1" 
+						        	   placeholder="********"
+						               aria-label="********" 
+						               data-msg="올바른 비밀번호를 입력해주세요."
+						               data-error-class="form-error"
+						               data-success-class="form-success">
+					      </div>
+					      
+					      <div class="js-form-message form-group">
+						        <label class="form-label" for="">
+						          <span class="d-flex justify-content-between align-items-center">변경할 비밀번호 확인</span>
+						        </label>
+						        
+						        
+						        <input type="password" class="form-control" name="newPw2" id="newPw2" 
+						        	   placeholder="********"
+						               aria-label="********" 
+						               data-msg="올바른 비밀번호를 입력해주세요."
+						               data-error-class="form-error"
+						               data-success-class="form-success">
+					      </div>
+					      
+					      
 					
 					      <div class="row align-items-center mb-5" style="float:right;">
 					        <div class="col-5 text-right">
