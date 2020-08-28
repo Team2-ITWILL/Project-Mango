@@ -93,6 +93,7 @@
 								        <input type="hidden" class="form-control" name="ano_board_nick" id="anony_board_nick" value="${nick}"> 
 								    </div>
 								    
+								    
 								    <!-- ---------------------------------------------------- -->
 								    
 							        <div class="form-group mb-8">
