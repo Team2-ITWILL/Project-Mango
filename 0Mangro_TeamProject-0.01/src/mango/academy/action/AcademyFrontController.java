@@ -37,7 +37,7 @@ public class AcademyFrontController extends HttpServlet {
 		
 		//주소비교
 		//페이지 이동 방식 여부 값,이동페이지 경로 값 저장 하여 리턴 해주는 객체를 저장할 참조변수 선언 
-		ActionForward forward=null;
+		ActionForward  forward=null;
 		
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action=null;
@@ -51,6 +51,52 @@ public class AcademyFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+		}else if(command.equals("/getListSearchOne.aca")){
+			
+			
+			action =new ListSearchOneAciton();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchOne.aca에서 예외 발생"+e);
+			}
+			
+			
+			
+			
+		}
+		else if(command.equals("/getListSearchTwo.aca")){
+			
+			
+				action =new ListSearchTwoAciton();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchTwo.aca에서 예외 발생"+e);
+			}
+			
+			
+			
+		}else if(command.equals("/getListSearchThr.aca")){
+			
+			
+			action =new ListSearchThrAciton();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchThr.aca에서 예외 발생"+e);
+			}
+			
 			
 			
 		}

@@ -145,6 +145,10 @@ public class AnonyBoardBean{
 		this.ano_board_file = ano_board_file;
 	}
 
+	
+	
+	
+	// toString() 메소드
 
 	@Override
 	public String toString() {

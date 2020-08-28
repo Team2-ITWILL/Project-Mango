@@ -7,63 +7,49 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="info" action="./auditInfoRegister.adma" method="get">
-		<table>
-			<tr>
-				<td>학원지정번호</td>
-				<td><input type="text" name="acaNum" value="301569" readonly></td>
-			</tr>
-			<tr>
-				<td>학원명</td>
-				<td><input type="text" name="acaName" value="(주)그루샘수학보습학원" readonly></td>
-			</tr>
-			<tr>
+	
+	<!----------------------------------[ 테이블]---------------------------------------------------------->
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">청강신청 가능일 등록</h4>
+				<h6 class="card-subtitle"></h6>
+			</div>
+			<div class="table-responsive">
+				<form id="info" action="./auditInfoRegister.adma" method="get">
+					<table class="table">
+						<tr>
+							<td>학원지정번호</td>
+							<td><input type="text" name="acaNum" value="301569" readonly></td>
+						</tr>
+						<tr>
+							<td>학원명</td>
+							<td><input type="text" name="acaName" value="(주)그루샘수학보습학원"
+								readonly></td>
+						</tr>
+						<tr>
 
-				<td>청강가능과목</td>
-				<td><input type="text" name="auditAvailSubj"></td>
-			</tr>
-			<tr>
-				<td>청강가능일시</td>
-				<td><input type="date" name="auditAvailDate"></td>
-			</tr>
-			<tr>
-				<td>해당 수업지속시간</td>
-				<td><input type="text" name="auditLastTime"></td>
-			</tr>
-			<tr>
-				<td>청강 가능 인원</td>
-				<td><input type="text" name="auditAblemem"></td>
-			</tr>
-		</table>
-		<input type="submit" value="전송">
-<!-- 		<input type="button" value="전송" onclick="registerInfo()"> -->
-	</form>
-	
-	<!-- <script>
-	function registerInfo(){			
-		var formData = new FormData(document.getElementById("info"));
-		$.ajax({
-				type:'get',
-				async:true, 			
-				url:'./auditInfoRegister.adma', 
-				data:{sendData:formData},				
-				success:function(data, status){						
-					if(data == 0){
-						alert("failed");
-						document.getElementById("info").submit();
-					}else{
-						alert("success");
-					}
-					
-				},
-				error:function(error, status){
-					alert("에러가 발생했습니다.");
-					console.debug(error);		
-				}			
-		});//ajax()			
-	}
-	
-	</script> -->
+							<td>청강가능과목</td>
+							<td><input type="text" name="auditAvailSubj"></td>
+						</tr>
+						<tr>
+							<td>청강가능일시</td>
+							<td><input type="date" name="auditAvailDate"></td>
+						</tr>
+						<tr>
+							<td>해당 수업지속시간</td>
+							<td><input type="text" name="auditLastTime"></td>
+						</tr>
+						<tr>
+							<td>청강 가능 인원</td>
+							<td><input type="text" name="auditAblemem"></td>
+						</tr>
+					</table>
+					<input type="submit" class="btn btn-primary" value="전송">
+				</form>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

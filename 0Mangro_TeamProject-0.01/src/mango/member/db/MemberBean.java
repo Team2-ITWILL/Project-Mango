@@ -19,7 +19,7 @@ public class MemberBean {
     private String memAdmin;
 
     // 가입일자 
-    private Date memJoindate;
+    private String memJoindate;
 
     // 계정정지일자 
     private String memBaned;
@@ -31,7 +31,7 @@ public class MemberBean {
 	public String getMemName() {return memName;}
 	public String getMemPwd() {	return memPwd;}
 	public String getMemAdmin() {return memAdmin;}
-	public Date getMemJoindate() {return memJoindate;}
+	public String getMemJoindate() {return memJoindate;}
 	public String getMemBaned() {return memBaned;}
 	public String getMemSeceded() {return memSeceded;}
 	
@@ -39,7 +39,7 @@ public class MemberBean {
 	public void setMemName(String memName) {this.memName = memName;}
 	public void setMemPwd(String memPwd) {this.memPwd = memPwd;}
 	public void setMemAdmin(String memAdmin) {this.memAdmin = memAdmin;}
-	public void setMemJoindate(Date memJoindate) {this.memJoindate = memJoindate;}
+	public void setMemJoindate(String memJoindate) {this.memJoindate = memJoindate;}
 	public void setMemBaned(String memBaned) {this.memBaned = memBaned;}
 	public void setMemSeceded(String memSeceded) {this.memSeceded = memSeceded;}
 	

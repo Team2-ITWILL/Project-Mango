@@ -38,9 +38,7 @@
 
 
 <%
-	//String email=(String)session.getAttribute("email");
-
-	String email="2221325";
+	String email=(String)session.getAttribute("id_email");
 
 	if(email==null){
 	%>	
@@ -58,7 +56,7 @@
 
 
 %>
-
+	<c:set var="email" value="<%=email%>"/>
 <script type="text/javascript">
 	
 	
@@ -145,7 +143,7 @@
 
 <body>
 
-	<c:set var="email" value="<%=email%>"/>
+
 
 	<form id="frm"> 
 	<input type="hidden" name="money" class="money" >
