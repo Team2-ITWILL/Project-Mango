@@ -138,6 +138,7 @@
 			}
 		});
 		
+		// 대표키워드
 		function mainKeyword(){
 			var keyword = document.querySelector(".feature_title").getElementsByTagName("span")[0].textContent;
 			console.log(keyword);
