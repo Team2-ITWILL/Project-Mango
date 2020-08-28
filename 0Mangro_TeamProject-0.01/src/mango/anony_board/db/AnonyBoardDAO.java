@@ -305,9 +305,15 @@ public class AnonyBoardDAO extends DBconnection {
 					+ "SET ano_board_title=?, "
 					+ "ano_board_content=?, "
 					+ "ano_board_nick, "
-					+ "ano_board_file)";
+					+ "ano_board_file) "
+					+ "WHERE ano_board_num=?";
 			
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, anbean.getAno_board_title());
+			pstmt.setString(2, anbean.getAno_board_content());
+			pstmt.setString(3, anbean.getAno_board_nick());
+			pstmt.setString(4, anbean.getAno_board_file());
+			pstmt.setInt(5, anbean.getAno_board_num());
 			pstmt.executeUpdate();
 			check = 1;
 			System.out.println(check);
