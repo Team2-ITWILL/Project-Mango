@@ -56,8 +56,9 @@ request.setCharacterEncoding("utf-8");
 	 						
 	 						alert("결제 되었습니다");
 	 						
-	 						openr.location.href="4index.jsp?center=3main.jsp";
-	 					
+	 						opener.location.href="4index.jsp?center=3main.jsp";
+	 						window.close();
+	 						
 	 						
 	 					}
 	 					
