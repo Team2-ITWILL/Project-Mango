@@ -31,10 +31,10 @@ public class AnoBoardUpdateAction implements Action {
 		
 		if(check == 1){
 			
-			System.out.println("수정성공");
+			System.out.println("업데이트 성공");
 			
 		}else{
-			System.out.println("수정실패");
+			System.out.println("업데이트 실패");
 			
 			
 		}
