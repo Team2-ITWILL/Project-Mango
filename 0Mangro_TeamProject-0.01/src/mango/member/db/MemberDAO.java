@@ -44,6 +44,8 @@ public class MemberDAO extends DBconnection{
 	} // 회원 가입 / insertMember() 끝
 	
 	
+	
+	
 	/* 로그인 메서드 */
 	public int loginCheck(MemberBean mb){
 		
@@ -102,6 +104,8 @@ public class MemberDAO extends DBconnection{
 	} // 로그인 / loginCheck() 끝
 	
 	
+	
+	
 	/* 회원 탈퇴 메서드 */
 	public int deleteMember(MemberBean mb){
 		
@@ -145,7 +149,7 @@ public class MemberDAO extends DBconnection{
 			System.out.println("회원 탈퇴 완료 !!");
 			
 		} catch (Exception e) {
-			System.out.println("deleteMember()에서 SQL 구문 오류 : "+ e);
+			System.out.println("--> deleteMember()에서 SQL 구문 오류 : "+ e);
 			e.printStackTrace();
 			
 		} finally {
@@ -154,6 +158,81 @@ public class MemberDAO extends DBconnection{
 		
 		return check;
 	} // 회원 탈퇴 / deleteMember() 끝
+
+	
+	
+	
+//	/* 내 정보 페이지에서 회원 정보가 보이는 기능의 메서드 */
+//	public String selectMember(MemberBean mb) {
+//
+//		String name = "";
+//		
+//		try {
+//			getConnection();
+//			
+//			sql = "SELECT mem_name "
+//				+ "FROM member "
+//				+ "WHERE mem_email = ?";
+//			
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, mb.getMemEmail());
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			rs.next();
+//				
+//			name = rs.getString("mem_name");
+//			
+//			System.out.println(mb.toString());
+//			System.out.println(name);
+//		} catch (Exception e) {
+//			System.out.println("--> selectMember()에서 SQL 구문 오류 : "+ e);
+//			e.printStackTrace();
+//		
+//		} finally {
+//			resourceClose();
+//		}
+//		
+//		return name;
+//	} // 내 정보  / selectMember() 끝
+	
+	
+	
+	
+	/* 회원 정보 수정 메서드 */
+	public void updateMember(MemberBean mb) {
+		
+		try {
+			getConnection();
+			
+			sql = "UPDATE member "
+				+ "SET mem_name = ?, mem_pwd = ? "
+				+ "WHERE mem_email = ?";
+			
+			pstmt.setString(1, mb.getMemName());
+			pstmt.setString(2, mb.getMemPwd());
+			pstmt.setString(3, mb.getMemEmail());
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.executeUpdate();
+
+			System.out.println("회원 정보 수정 완료 !!");
+			
+		} catch (Exception e) {
+			System.out.println("--> updateMember()에서 SQL구문 오류 : " + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+	} // 회원 정보 수정 / updateMember() 끝
+
+
+
+
+
+
 	
 	
 	

@@ -12,11 +12,12 @@ public class MemberDeleteAction implements Action{
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		request.setCharacterEncoding("UTF-8");
+		
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
+		
 		String id_email = (String)request.getSession().getAttribute("id_email");
 		String chk_pwd = (String)request.getParameter("mem_pwd");
-		System.out.println(id_email + " / " + chk_pwd);
 		
 		mb.setMemEmail(id_email);
 		mb.setMemPwd(chk_pwd);
