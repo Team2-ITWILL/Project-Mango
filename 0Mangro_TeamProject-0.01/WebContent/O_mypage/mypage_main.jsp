@@ -66,7 +66,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -180,7 +180,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
+                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>

@@ -13,16 +13,16 @@ import mango.audit_request.db.AuditRequestDAO;
 public class AuditRequestApproval implements Action{
 
 	@Override
-	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-					
+	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {	
+				
 		AuditRequestBean bean = new AuditRequestBean();
-		bean.setAcaNum(Integer.parseInt(request.getParameter("aca_num")));	
+		bean.setAuditNum(Integer.parseInt(request.getParameter("audit_num")));
+		bean.setAcaNum(Integer.parseInt(request.getParameter("aca_num")));		
 		
-		int result;
-		AuditRequestDAO dao = new AuditRequestDAO();	
-		
-		//승인,취소 구분 파라미터
-		String check = request.getParameter("check");
+		String check = request.getParameter("check");			
+
+		int result;	
+		AuditRequestDAO dao = new AuditRequestDAO();		
 		if(check.equals("true")){
 			result = dao.ApprovalAudit(bean);
 		}else{
@@ -33,22 +33,19 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('실패')");
+			//out.println("alert('실패')");
 			out.println("history.back();");
 			out.println("</script>");	
-			out.close();			
-			
-			return null;
-			
+			out.close();				
+			return null;			
 		}else{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('성공')");
+			//out.println("alert('성공')");
 			out.println("location.href='./ListAction.adrq'");
 			out.println("</script>");	
-			out.close();			
-			
+			out.close();				
 			return null;
 		}
 		

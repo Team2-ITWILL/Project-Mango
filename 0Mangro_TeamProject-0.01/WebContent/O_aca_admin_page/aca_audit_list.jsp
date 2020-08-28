@@ -57,48 +57,23 @@
   	.audit_yes {background-color: #378ffd;}
   	.audit_no {background-color: #fff; border: 1px solid; color: #000;}
   
-  </style>  	
+  </style>  	  
   
-  
-  <script>
-  
+  <script> 	
+	function fncApprove(audit_num, aca_num){
+		location.href = "./AuditApproval.adrq?"
+				+ "audit_num=" + audit_num
+				+ "&aca_num=" + aca_num
+				+ "&check=" + "true";
+		}	
 	
-	function fncApprove(){
-		
-		$("input[name='check']").val('true');
-		
-		alert("승인 요청");
-		alert($("input[name='check']").val());
-		
-		var formId = document.getElementById("Form_Approval");		
-		formId.submit();	
-	}
-	function fncReject(){
-		$("input[name='check']").val('false');
-		
-		alert("취소 요청");
-		alert($("input[name='check']").val());
-		
-		var formId = document.getElementById("Form_Approval");			
-		formId.submit();	
-	}	
-	
-  	window.onload = function(){
-  		
-  		
-	  	/* var formId = document.getElementById("Form_Approval");	  	
-	  	
-	  	$("#approval").on("click", function(){
-	  		alert("승인 요청");
-	  		formId.submit();
-	  	}); */
-
-	  	
-  	}
-  
-  </script>
- 
-    
+	function fncReject(audit_num, aca_num){
+		location.href = "./AuditApproval.adrq?"
+			+ "audit_num=" + audit_num
+			+ "&aca_num=" + aca_num
+			+ "&check=" + "false";
+		}	  
+  </script>   
 </head>
 
 <body>
@@ -262,7 +237,8 @@
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="#"
+                        	<a class="sidebar-link sidebar-link"
+                        		href="./4index.jsp?center=O_aca_admin_page/aca_audit_manage.jsp"       
                                 aria-expanded="false"><i data-feather="edit" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 가능일 등록 </span>
 							</a>
@@ -337,80 +313,77 @@
                                 <h4 class="card-title">청강신청 현황</h4>
                                 <h6 class="card-subtitle">학원의 청강신청내역이 최근순으로 표시됩니다.</h6>
                             </div>
-                            <div class="table-responsive">
-                            
-                            <form id="Form_Approval" action="./AuditApproval.adrq" method="get">
-	                                <table class="table">
-	                                    <thead class="thead-light">
-	                                        <tr>
-	                                            <th scope="col">예약번호</th>
-	                                            <th scope="col">신청자(계정)</th>
-	                                            <th scope="col">학원지정번호</th>
-	                                            <th scope="col">학원명</th>
-	                                            <th scope="col">청강신청과목</th>
-	                                            <th scope="col">청강신청일자</th>
-	                                            <th scope="col">청강희망일자</th>
-	                                            <th scope="col">청강승인일자</th>
-	                                            <th scope="col">승인</th>
-	                                            <th scope="col">취소</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                    	<c:forEach var="list" items="${requestScope.AuditList}">                                    
-	                                        <tr>
-	                                            <th scope="row">${list.auditNum}</th>
-	                                            <td>${list.memEmail}</td>
-	                                            <td>${list.acaNum}
-	                                            	<input type="hidden" name="aca_num" value="${list.acaNum}">
-	                                            	<!-- 승인/취소 시 각각 구분 파라미터 전달 -->
-	                                            	<input type="hidden" name="check">
-	                                            </td>
-	                                            <td>${list.acaName}</td>
-	                                            <td>${list.auditSubject}</td>
-	                                            <td>${list.auditRequestDate}</td>
-	                                            <td>${list.auditWishDate}</td>
-	                                            <td>${list.auditConfirmDate}</td>
-	                                            <td>            
-	                                                <label class="audit_yes">승인	                                            		
-		                                            	<input type="radio" name="audit_check" id="approve" onclick="fncApprove()">
-	                                            	</label>                                                 	
-	                                            </td>
-	                                            <td>
-	                                            	<label class="audit_no">취소
-		                                            	<input type="radio" name="audit_check" id="reject" onclick="fncReject()">
-	                                            	</label>
-	                                            </td>                                
-	                                          
-	                                        </tr>                                        
-	                                       </c:forEach> 
-	                                       
-	                                       
-	                                        <!-- <tr>
-	                                            <th scope="row">12345678</th>
-	                                            <td>user1@naver.com</td>
-	                                            <td>456541</td>
-	                                            <td>망고학원</td>
-	                                            <td>망고영어회화</td>
-	                                            <td>2020-08-20</td>
-	                                            <td>2020-08-25</td>
-	                                            <td></td>
-	                                            <td>
-	                                            	<label class="audit_yes">승인
-		                                            	<input type="radio" name="a" >
-	                                            	</label>
-	                                            </td>
-	                                            <td>
-	                                            	<label class="audit_no">취소
-		                                            	<input type="radio" name="a">
-	                                            	</label>
-	                                            </td>
-	                                        </tr>                     
-	                                       
-	                                      -->
-	
-	                                    </tbody>
-	                                </table>
-                                </form>
+                            <div class="table-responsive">         
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">예약번호</th>
+                                            <th scope="col">신청자(계정)</th>
+                                            <th scope="col">학원지정번호</th>
+                                            <th scope="col">학원명</th>
+                                            <th scope="col">청강신청과목</th>
+                                            <th scope="col">청강신청일자</th>
+                                            <th scope="col">청강희망일자</th>
+                                            <th scope="col">청강승인일자</th>
+                                            <th scope="col">승인</th>
+                                            <th scope="col">취소</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<!-- 각 행별로 check값을 구분할 변수 -->
+                                    	<c:set var="idx" value="0" />	                                    	
+                                    	<c:forEach var="list" items="${requestScope.AuditList}">	                                    	                                 
+                                        <tr>	                                          
+                                            <th scope="row">${list.auditNum}</th>
+                                            <td>${list.memEmail}</td>
+                                            <td>${list.acaNum}</td>	
+                                            <td>${list.acaName}</td>
+                                            <td>${list.auditSubject}</td>
+                                            <td>${list.auditRequestDate}</td>
+                                            <td>${list.auditWishDate}</td>
+                                            <td>${list.auditConfirmDate}</td>                     
+                                            <td>            
+                                                <label class="audit_yes">승인                                     		
+	                                            	<input type="radio" name="audit_check" id="approve" 
+	                                            	onclick="fncApprove(${list.auditNum}, ${list.acaNum})">
+                                            	</label>                                                 	
+                                            </td>
+                                            <td>
+                                            	<label class="audit_no">취소
+                                            		<input type="radio" name="audit_check" id="reject" 
+	                                            	onclick="fncReject(${list.auditNum}, ${list.acaNum})">
+                                            	</label>
+                                            </td>  	                                                
+                                        </tr>     
+                                        <c:set var="idx" value="${idx + 1}" />                         
+                                       </c:forEach> 
+                                     
+                                       
+                                        <!-- <tr>
+                                            <th scope="row">12345678</th>
+                                            <td>user1@naver.com</td>
+                                            <td>456541</td>
+                                            <td>망고학원</td>
+                                            <td>망고영어회화</td>
+                                            <td>2020-08-20</td>
+                                            <td>2020-08-25</td>
+                                            <td></td>
+                                            <td>
+                                            	<label class="audit_yes">승인
+	                                            	<input type="radio" name="a" >
+                                            	</label>
+                                            </td>
+                                            <td>
+                                            	<label class="audit_no">취소
+	                                            	<input type="radio" name="a">
+                                            	</label>
+                                            </td>
+                                        </tr>                     
+                                       
+                                      -->
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

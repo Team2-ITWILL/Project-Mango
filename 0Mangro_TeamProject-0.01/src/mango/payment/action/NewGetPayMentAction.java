@@ -4,12 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.jdbc.interceptors.SessionAssociationInterceptor;
-
 import mango.action.Action;
 import mango.action.ActionForward;
 import mango.payment.db.PayMentDAO;
 import mango.payment.db.PaymentBean;
+
 
 public class NewGetPayMentAction implements Action {
 

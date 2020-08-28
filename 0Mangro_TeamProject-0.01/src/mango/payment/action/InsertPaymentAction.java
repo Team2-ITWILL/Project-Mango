@@ -11,6 +11,7 @@ import mango.action.ActionForward;
 import mango.payment.db.PayMentDAO;
 import mango.payment.db.PaymentBean;
 
+
 public class InsertPaymentAction implements Action{
 
 	
