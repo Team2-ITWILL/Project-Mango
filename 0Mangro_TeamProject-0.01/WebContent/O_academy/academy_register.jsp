@@ -167,7 +167,11 @@
 							
 							
 <!------------------------------------- [form 영역] ----------------------------------------------------------->
-					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" action="" method="post" enctype="multipart/form-data">
+					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" 
+					      		action="./register.areg"
+					      		method="post"
+					      >
+					      <!-- enctype="multipart/form-data"> -->
       
 						      <div class="js-form-message form-group">
 						      
@@ -194,7 +198,7 @@
 						      		
 							        <div class="form-group mb-8">
 								        <label class="form-label" for="anony_pwd"><span>학원 이름</span></label>
-								        <input type="password" class="form-control" name="" id="anony_pwd" placeholder="ex) 망고학원"> 
+								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원"> 
 								    </div>
 								    
 <%---------------------[사진첨부 가이드]-----------------------------------------------------------------------------------------------%>
@@ -240,15 +244,28 @@
 							      	</div>
 				       							 
 							        	<label class="form-label" for="anony_file"><span>사업자 등록증</span></label>
-						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
-							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
+						              	<div class="form-group files" id="test1">
+						                	<input type="file" class="form-control color file"  						                		 
+						                		   id="file1"
+						                		   onclick="uploadFile(this, 'fNameCompany')">
+						             
+							          			<!-- <button type="button" 
+							          				class="hideBtn" 
+							          				onchange="changeValue(this)">첨부파일</button> -->
+						          			<button type="button" class="hideBtn">첨부파일</button>
+						          			
+						    				<input type="hidden" name="fNameCompany">	
 						              	</div>
 						              	
 							        	<label class="form-label" for="anony_file"><span>대표자 신분증/재직증명서</span></label>
 						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
-							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
+						                	<input type="file" class="form-control color file"  
+						                		   id="file2">
+						                		   <!-- onclick="uploadFile(this, 'fNameOwner')"> -->
+							          		<button type="button" 
+							          				class="hideBtn">첨부파일</button>
+							          				
+							          		<input type="hidden" name="fNameOwner">			
 						              	</div>
 		       							 
 		       							<span>학원 등록은 신청일로부터 3일 이내로 완료될 예정입니다.</span> 
@@ -280,9 +297,39 @@
 		function changeValue(obj){
 		
 		    alert(obj.value);
+		 
 		
 		} 
-	
+		
+		//-----------------------------------------------------
+		
+		function uploadFile(uploadFile, inputTagName){				
+			
+			var formData = new FormData();
+			
+			formData.append("file", uploadFile.files[0]);
+			//formData.append("file", $("#file1")[0].files[0]);
+			
+			alert(inputTagName);
+			
+			$.ajax({			
+					data : formData,
+					type : "POST",					
+					url : "./registerUpload.areg",
+					contentType : false,
+					processData : false,
+					enctype: 'multipart/form-data',
+					success : function(data){									
+						
+						document.getElementsByName(inputTagName)[0].value = data;
+						
+						console.log(inputTagName + ': ' + document.getElementsByName(inputTagName)[0].value);
+						console.log('data : ' + data);			
+						
+						//$("#test1").before('content', '123123');		
+					}				
+				});		
+			}  	
 	
 	</script>
 
