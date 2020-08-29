@@ -314,9 +314,11 @@ public class AnonyBoardDAO extends DBconnection {
 			pstmt.setString(3, anbean.getAno_board_nick());
 			pstmt.setString(4, anbean.getAno_board_file());
 			pstmt.setInt(5, anbean.getAno_board_num());
+			
 			pstmt.executeUpdate();
 			check = 1;
 			System.out.println(check);
+			
 		}catch(SQLException se){
 			System.out.println("updateANBoard메소드에서 SQL 예외 발생 : "+ se);				
 			
