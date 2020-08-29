@@ -43,7 +43,7 @@ request.setCharacterEncoding("utf-8");
 				msg += '결제 금액 : ' + rsp.paid_amount;
 				msg += '카드 승인번호 : ' + rsp.apply_num;
 				
-				
+				     
 				$.ajax({
 	 				type:"post",
 	 				async:true,
