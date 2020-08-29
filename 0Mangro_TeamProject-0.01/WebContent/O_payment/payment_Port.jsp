@@ -43,12 +43,12 @@ request.setCharacterEncoding("utf-8");
 				msg += '결제 금액 : ' + rsp.paid_amount;
 				msg += '카드 승인번호 : ' + rsp.apply_num;
 				
-				
+				     
 				$.ajax({
 	 				type:"post",
 	 				async:true,
 	 				url:"InsertPayMent.pay",
-	 				data:{email :'${param.email}', option : '${param.option}' },
+	 				data:{email :'${param.email}', option :'${param.option}',money:'${param.money}'},
 	 				dataType:"text",
 	 				success:function(data,textStatus){
 	 			
@@ -56,8 +56,9 @@ request.setCharacterEncoding("utf-8");
 	 						
 	 						alert("결제 되었습니다");
 	 						
-	 						location.href="4index.jsp?center=3main.jsp";
-	 					
+	 						opener.location.href="4index.jsp?center=3main.jsp";
+	 						window.close();
+	 						
 	 						
 	 					}
 	 					

@@ -120,7 +120,8 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_revise.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
+                            href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
                                 <span class="hide-menu">내 정보</span></a>
 						</li>
@@ -301,25 +302,18 @@
 				<div class="col">
 					<div class="partners_slider_container">
 						<div class="owl-carousel owl-theme partners_slider">
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_1.png" alt=""></div>
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_2.png" alt=""></div>
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_3.png" alt=""></div>
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_4.png" alt=""></div>
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_5.png" alt=""></div>
-
 							Partner Item
 							<div class="owl-item partner_item"><img src="images/partner_6.png" alt=""></div>
-
 						</div>
 					</div>
 				</div>

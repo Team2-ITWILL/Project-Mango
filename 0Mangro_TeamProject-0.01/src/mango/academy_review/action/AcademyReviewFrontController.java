@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import mango.action.Action;
 import mango.action.ActionForward;
 
+// *.arev
 public class AcademyReviewFrontController extends HttpServlet{
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
@@ -21,11 +22,9 @@ public class AcademyReviewFrontController extends HttpServlet{
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
 		
-		System.out.println(RequestURI);
 		
 		//MangoProject 얻기
 		String contextPath=request.getContextPath();
-		System.out.println(contextPath);
 		
 		
 		System.out.println(contextPath.length());//path에 길이 얻기
@@ -42,8 +41,17 @@ public class AcademyReviewFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		
-		
+		// 후기쓰기
+		if(command.equals("/acaReviewWriteAction.arev")){
+			action = new AcaReviewWriteAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/acaReviewWriteAction.arev에서 예외 발생");
+				e.printStackTrace();
+			}
+		}
 		
 		
 		
