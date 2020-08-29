@@ -118,7 +118,7 @@
 	request.setCharacterEncoding("utf-8");
 	String contextPath = request.getContextPath();
 
-	request.setAttribute("email", "coke@naver.com");
+	//request.setAttribute("email", "coke@naver.com");
 	
 %>
 
@@ -128,6 +128,7 @@
 		$(document).ready(function(){
 			var likeList = document.querySelectorAll(".cnt_Like");
 			
+			console.log("${id_email}");
 			checkLikedAca();
 			mainKeyword();
 			
@@ -147,7 +148,7 @@
  
 		function likeAcademy(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -186,7 +187,7 @@
 		
 		function checkLikedAca(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -226,7 +227,7 @@
 		
 		function getLikeReviewImg(obj){
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
 			
@@ -264,7 +265,7 @@
 			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
 			*/
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			if(email.length == 0){
 				alert("로그인이 필요합니다.");
