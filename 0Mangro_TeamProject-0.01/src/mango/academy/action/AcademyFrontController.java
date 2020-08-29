@@ -1,4 +1,4 @@
-package mango.academy_register.action;
+package mango.academy.action;
 
 import java.io.IOException;
 
@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
-import mango.audit_request.action.AuditRequestAction;
 
-public class AcademyRegisterFrontController extends HttpServlet{
 
+public class AcademyFrontController extends HttpServlet {
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
 												throws ServletException, IOException{
@@ -38,31 +37,72 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		
 		//주소비교
 		//페이지 이동 방식 여부 값,이동페이지 경로 값 저장 하여 리턴 해주는 객체를 저장할 참조변수 선언 
-		ActionForward forward=null;
+		ActionForward  forward=null;
 		
 		//자식 Action 객체들을 담을 인터페이스 타입의 참조변수 선언
 		Action action=null;
 	
 		
-		if(command.equals("/registerUpload.areg")) {			
+		if(command.equals("/AcademyContentAction.aca")){
+			action = new AcademyContentAction();
 			
 			try {
-				action = new AcademyRegisterUploadAction();				
-				forward = action.excute(request, response);			
-		
-			} catch (Exception e) {				
+				forward= action.excute(request, response);
+			} catch (Exception e) {
 				e.printStackTrace();
-			}	
-		}else if(command.equals("/register.areg")) {			
+			}
+			
+		}else if(command.equals("/getListSearchOne.aca")){
+			
+			
+			action =new ListSearchOneAciton();
+			
 			
 			try {
-				action = new AcademyRegisterAction();				
-				forward = action.excute(request, response);			
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchOne.aca에서 예외 발생"+e);
+			}
+			
+			
+			
+			
+		}
+		else if(command.equals("/getListSearchTwo.aca")){
+			
+			
+				action =new ListSearchTwoAciton();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchTwo.aca에서 예외 발생"+e);
+			}
+			
+			
+			
+		}else if(command.equals("/getListSearchThr.aca")){
+			
+			
+			action =new ListSearchThrAciton();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/getListSearchThr.aca에서 예외 발생"+e);
+			}
+			
+			
+			
+		}
 		
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}	
-		}				
+		
+		
 		
 		
 		
@@ -72,7 +112,6 @@ public class AcademyRegisterFrontController extends HttpServlet{
 				
 				//리다이렉트 방식으로 페이지 이동!  페이지 주소 경로 노출 함 
 				
-				//join.jsp화면 이동
 				
 				response.sendRedirect(forward.getPath());
 				
@@ -108,4 +147,5 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		doProcess(request, response);
 	}
 
+	
 }

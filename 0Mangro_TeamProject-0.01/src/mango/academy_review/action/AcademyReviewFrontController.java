@@ -1,4 +1,4 @@
-package mango.academy_register.action;
+package mango.academy_review.action;
 
 import java.io.IOException;
 
@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
-import mango.audit_request.action.AuditRequestAction;
 
-public class AcademyRegisterFrontController extends HttpServlet{
+// *.arev
+public class AcademyReviewFrontController extends HttpServlet{
 
-	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
 												throws ServletException, IOException{
 		
@@ -23,11 +22,9 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
 		
-		System.out.println(RequestURI);
 		
 		//MangoProject 얻기
 		String contextPath=request.getContextPath();
-		System.out.println(contextPath);
 		
 		
 		System.out.println(contextPath.length());//path에 길이 얻기
@@ -44,25 +41,19 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		if(command.equals("/registerUpload.areg")) {			
+		// 후기쓰기
+		if(command.equals("/acaReviewWriteAction.arev")){
+			action = new AcaReviewWriteAction();
 			
 			try {
-				action = new AcademyRegisterUploadAction();				
-				forward = action.excute(request, response);			
-		
-			} catch (Exception e) {				
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/acaReviewWriteAction.arev에서 예외 발생");
 				e.printStackTrace();
-			}	
-		}else if(command.equals("/register.areg")) {			
-			
-			try {
-				action = new AcademyRegisterAction();				
-				forward = action.excute(request, response);			
+			}
+		}
 		
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}	
-		}				
+		
 		
 		
 		
@@ -108,4 +99,5 @@ public class AcademyRegisterFrontController extends HttpServlet{
 		doProcess(request, response);
 	}
 
+	
 }
