@@ -22,7 +22,7 @@
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="js/blog_single.js"></script>
-
+    
 <!------------------------- [ CSS ] ------------------------------------------------------->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -148,7 +148,7 @@
 	<form id="frm"> 
 	<input type="hidden" name="money" class="money" >
 	<input type="hidden" name="option" class="option">
-	<input type="hidden" name="email" class="email" value="2221325">
+	<input type="hidden" name="email" class="email" value="${email}">
 	
 		<div class="container">
 			<div class="row">

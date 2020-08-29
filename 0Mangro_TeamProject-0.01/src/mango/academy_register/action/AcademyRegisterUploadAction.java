@@ -18,6 +18,8 @@ public class AcademyRegisterUploadAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
+		System.out.println("AcademyRegisterUploadAction 진입");
+		
 		request.setCharacterEncoding("UTF-8");
 
 		//업로드할 실제 서버의 경로 얻기
@@ -46,16 +48,19 @@ public class AcademyRegisterUploadAction implements Action{
 	 		//서버에 실제로 업로드된 파일명을 하나씩 하나씩 얻어  ArrayList에 저장
 	 		saveFiles.add(multi.getFilesystemName(filename));
 	 		//클라이언트가 업로드한 파일의 원본이름을 하나씩 하나씩 얻어 ArrayList에 저장
-	 		originFiles.add(multi.getOriginalFileName(filename));	 	
+	 		originFiles.add(multi.getOriginalFileName(filename));	 	 		
 	 		
 	 		PrintWriter out = response.getWriter();
-	  		out.print(request.getContextPath() + "/resources/upload/" + multi.getFilesystemName(filename));
+	  		out.print(request.getContextPath() + "/images/upload/" + multi.getFilesystemName(filename));
 	 		
-	 		System.out.print("이미지 파일 경로 : " 
-	  					+ request.getContextPath() + "/resources/upload/" 
-	 					+ multi.getFilesystemName(filename) 
-	 					+ "\r\n");	 			 	
+	  		System.out.print("이미지 파일 경로 : " 
+  					+ request.getContextPath() + "/images/upload/" 
+ 					+ multi.getFilesystemName(filename) 
+ 					+ "\r\n");	 
+	 					 	
 		}
+		
+		//프론트컨트롤러가 인식하지 못하게 하기(ajax 연동 때문)
 		return null;
 	}
 
