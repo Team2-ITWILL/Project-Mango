@@ -82,6 +82,16 @@
 						        
 					        
 					      </div>
+					      
+					      
+					       <div class="js-form-message form-group">
+						        <label class="form-label" for="">이메일</label>
+						        <input type="email" class="form-control" name="" id="" value="${sessionScope.id_email}"
+						               data-msg="이메일을 입력해주세요."
+						               data-error-class="form-error"
+						               data-success-class="form-success">
+						        
+					      </div>
 					
 					
 					      <div class="row align-items-center mb-5" style="float:right;">

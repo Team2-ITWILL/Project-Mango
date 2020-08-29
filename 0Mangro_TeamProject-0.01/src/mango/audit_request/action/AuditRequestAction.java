@@ -62,7 +62,7 @@ public class AuditRequestAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register failed')");
+			out.println("alert('register failed');");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();			
@@ -74,7 +74,7 @@ public class AuditRequestAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register success')");	
+			out.println("alert('register success');");	
 			out.println("location.href='./4index.jsp'");
 			out.println("</script>");				
 			out.close();	

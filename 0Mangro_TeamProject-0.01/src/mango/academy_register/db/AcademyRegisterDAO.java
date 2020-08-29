@@ -12,12 +12,18 @@ public class AcademyRegisterDAO extends DBconnection{
 			
 			//EMAIL : FK(member table)
 			// -> member 테이블에 참조하는 값이 있어야만 register테이블에 데이터 삽입 가능
-			String sql = "insert into academy_register("
-					+ "memEmail, acaName, memAddrZip, memAddrDoro, "
-					+ "fNameCompany, fSizeCompany, fSizeOwner, fNameOwner, "
-					+ "registerDate, confirmDate) "
-					+ " values(?, ?,?,?,?,?,?,?,?,?)";
+//			String sql = "insert into academy_register("
+//					+ "mem_email, aca_name, mem_addr_zip, mem_addr_doro, "
+//					+ "f_name_company, f_size_company, f_size_owner, f_name_owner, "
+//					+ "register_date, confirm_date) "
+//					+ " values(?,?,?,?,?,?,?,?,now(),null)";
+			
+			String sql = "insert into academy_register "
+					+ "values(?,?,?,?,?,?,?,?,now(),null)";
 			pstmt = con.prepareStatement(sql);
+			
+			System.out.println(bean.toString());
+			
 			
 			pstmt.setString(1, bean.getMemEmail());
 			pstmt.setString(2, bean.getAcaName());
@@ -27,8 +33,8 @@ public class AcademyRegisterDAO extends DBconnection{
 			pstmt.setString(6, bean.getfSizeCompany());
 			pstmt.setString(7, bean.getfSizeOwner());
 			pstmt.setString(8, bean.getfNameOwner());
-			pstmt.setDate(9, java.sql.Date.valueOf(bean.getRegisterDate()));
-			pstmt.setDate(10, java.sql.Date.valueOf(bean.getConfirmDate()));		
+			//pstmt.setDate(9, java.sql.Date.valueOf(bean.getRegisterDate()));
+			//pstmt.setDate(10, java.sql.Date.valueOf(bean.getConfirmDate()));		
 			
 			result = pstmt.executeUpdate();		
 			

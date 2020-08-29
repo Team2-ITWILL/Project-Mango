@@ -116,4 +116,15 @@ public class AcademyRegisterBean {
 		this.confirmDate = confirmDate;
 	}
 
+	@Override
+	public String toString() {
+		return "AcademyRegisterBean [memEmail=" + memEmail + ", acaName=" + acaName + ", memAddrZip=" + memAddrZip
+				+ ", memAddrDoro=" + memAddrDoro + ", fNameCompany=" + fNameCompany + ", fSizeCompany=" + fSizeCompany
+				+ ", fSizeOwner=" + fSizeOwner + ", fNameOwner=" + fNameOwner + ", registerDate=" + registerDate
+				+ ", confirmDate=" + confirmDate + "]";
+	}
+	
+	
+	
+
 }

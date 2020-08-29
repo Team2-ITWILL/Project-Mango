@@ -167,7 +167,11 @@
 							
 							
 <!------------------------------------- [form 영역] ----------------------------------------------------------->
-					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" action="./registerUpload.areg" method="post" enctype="multipart/form-data">
+					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" 
+					      		action="./register.areg"
+					      		method="post"
+					      >
+					      <!-- enctype="multipart/form-data"> -->
       
 						      <div class="js-form-message form-group">
 						      
@@ -194,7 +198,7 @@
 						      		
 							        <div class="form-group mb-8">
 								        <label class="form-label" for="anony_pwd"><span>학원 이름</span></label>
-								        <input type="password" class="form-control" name="" id="anony_pwd" placeholder="ex) 망고학원"> 
+								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원"> 
 								    </div>
 								    
 <%---------------------[사진첨부 가이드]-----------------------------------------------------------------------------------------------%>
@@ -240,23 +244,28 @@
 							      	</div>
 				       							 
 							        	<label class="form-label" for="anony_file"><span>사업자 등록증</span></label>
-						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
-							          		<button type="button" 
+						              	<div class="form-group files" id="test1">
+						                	<input type="file" class="form-control color file"  						                		 
+						                		   id="file1"
+						                		   onclick="uploadFile(this, 'fNameCompany')">
+						             
+							          			<!-- <button type="button" 
 							          				class="hideBtn" 
-							          				onchange="changeValue(this)"
-							          				onclick="uploadFile()"							          		
-							          		>첨부파일</button>
+							          				onchange="changeValue(this)">첨부파일</button> -->
+						          			<button type="button" class="hideBtn">첨부파일</button>
+						          			
+						    				<input type="hidden" name="fNameCompany">	
 						              	</div>
 						              	
 							        	<label class="form-label" for="anony_file"><span>대표자 신분증/재직증명서</span></label>
 						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
+						                	<input type="file" class="form-control color file"  
+						                		   id="file2">
+						                		   <!-- onclick="uploadFile(this, 'fNameOwner')"> -->
 							          		<button type="button" 
-							          				class="hideBtn" 
-							          				onchange="changeValue(this)"
-							          				onclick="uploadFile(file)"		
-							          				>첨부파일</button>
+							          				class="hideBtn">첨부파일</button>
+							          				
+							          		<input type="hidden" name="fNameOwner">			
 						              	</div>
 		       							 
 		       							<span>학원 등록은 신청일로부터 3일 이내로 완료될 예정입니다.</span> 
@@ -288,42 +297,39 @@
 		function changeValue(obj){
 		
 		    alert(obj.value);
+		 
 		
 		} 
 		
 		//-----------------------------------------------------
 		
-		function uploadFile(file){	
+		function uploadFile(uploadFile, inputTagName){				
 			
-			var form_data = new FormData();		
-			form_data.append("file", $("#upFile")[0].files[0]);	
+			var formData = new FormData();
+			
+			formData.append("file", uploadFile.files[0]);
+			//formData.append("file", $("#file1")[0].files[0]);
+			
+			alert(inputTagName);
 			
 			$.ajax({			
-					data : form_data,  
+					data : formData,
 					type : "POST",					
-					//url : "/AirReservation/board/boardFileUpload.jsp",
-					url : "/AirReservation/BoardUploadFile.do",
+					url : "./registerUpload.areg",
 					contentType : false,
 					processData : false,
 					enctype: 'multipart/form-data',
-					success : function(data){
-						$("#uploadResult").append(data); //파일명 반환	
+					success : function(data){									
 						
-						$("#filePath").val(data); 	  //파일명 반환	
+						document.getElementsByName(inputTagName)[0].value = data;
 						
-						console.log(data);							
-						alert(data);
+						console.log(inputTagName + ': ' + document.getElementsByName(inputTagName)[0].value);
+						console.log('data : ' + data);			
 						
-						//boardFileUpload.jsp로부터 originName(서버에 실제 업로드된 파일명)을 반환받고,
-						// <a>태그를 만들어서 download.jsp에 쿼리스트링으로 originName을 붙여서 링크시키면
-						// download.jsp에서 파일명이 업로드된 서버의 경로로 들어가서, 
-						// 브라우저에서 I/O 스트림으로 파일을 다운로드받을 수 있게 처리해준다. 
-						// 그리고 업로드된 파일 경로를 db에 저장하여 글 조회 시 파일을 다운받을 수 있게 처리하자.
-						// <a href="download.jsp?path=upload&name=originName"> 
+						//$("#test1").before('content', '123123');		
 					}				
 				});		
-			}  
-	
+			}  	
 	
 	</script>
 

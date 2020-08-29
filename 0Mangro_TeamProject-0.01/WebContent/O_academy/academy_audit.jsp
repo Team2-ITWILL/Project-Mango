@@ -67,7 +67,7 @@
 				      
 				      	  <!-- 학원지정번호 hidden으로 보내기 -->
 				      	  <!-- academy_single.jsp에서 전달받은 request parameter -->
-					        <input type="hidden" class="form-control" name="aca_num" value="${param.acaNum}" readonly> 
+					        <input type="hidden" class="form-control" name="aca_num" value="${param.acaMainNum}" readonly> 
 					        
 					         <!-- academy_single.jsp에서 전달받은 request parameter -->
 						      <div class="js-form-message form-group">
