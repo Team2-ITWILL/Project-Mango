@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="styles/academy_list.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_list_responsive.css">
 <link href="styles/table_style.css" rel="stylesheet">
-
+   
 
 <style type="text/css">
 
@@ -184,6 +184,15 @@ li.thirdKey {
 		
 	});//$(function)
 	
+	function SubSearch(){
+		
+		
+		
+		
+		
+		
+	}
+	
 </script>
 
 
@@ -212,7 +221,7 @@ li.thirdKey {
 						
 							<div class="searchInput">
 								<input type="search" class="courses_search_input typingSearch" placeholder="검색하기" required="required">
-								<button action="submit" class="courses_search_button ml-auto searchBtn">검색하기</button>
+								<button type="button"class="courses_search_button ml-auto searchBtn" onclick="SubSearch()">검색하기</button>
 							</div>
 							
 							<div class="selectOption">
