@@ -19,7 +19,8 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	// 1-1.[랜덤 닉네임] :  AnoBoardWriteAction에서 호출
 	public String getRandomNickname(){
-		String nick = ""; // 1번 리스트의 단어 
+		String nick = ""; 
+		
 		
 		
 		try {
@@ -44,6 +45,7 @@ public class AnonyBoardDAO extends DBconnection {
 				nick = list1.get(i) +" "+ list2.get(i);
 				
 			}
+		
 			
 		} catch (Exception e) {
 			System.out.println("AnonyBoardDAO의 getRandomNickname()메소드에서 예외 발생");
