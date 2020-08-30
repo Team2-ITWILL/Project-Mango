@@ -65,20 +65,19 @@
 
 				      	
 				      <!-- form 시작 -->
-				      <form class="sign_upClass" action="" method="post">
+				      <form class="sign_upClass" action="./acaReviewWriteAction.arev" method="post">
 				      
 				      	  <!-- ▼학원지정번호, 작성자계정 hidden으로 보내기 -->
-					        <input type="hidden" class="form-control" name="aca_num" readonly> 
-				       		<input type="hidden" class="form-control" name="mem_email" value="user1@naver.com" placeholder="이메일" readonly>
+					        <input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
+						    <input type="hidden" name="mem_email" value="${id_email}">
 				      	  <!-- ▲학원지정번호, 작성자계정 hidden으로 보내기 -->
 					        
 						      <div class="js-form-message form-group">
 						        <label class="form-label aca_name">학원명
-						        	<input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
 						        	<input type="text" class="form-control" name="aca_name" value="${param.acaName}" readonly> 
 						        </label>
 						        <label class="form-label review_subject">수강과목
-						        	<input type="text" class="form-control" name="aca_name" value="ex) 토익 900점반"> 
+						        	<input type="text" class="form-control" name="review_subject" placeholder="ex) 토익 900점반"> 
 						        </label>
 							  </div>
 							  
@@ -86,7 +85,7 @@
 							  
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_good">장점
-						        	<textarea name="review_good" class="form-control" placeholder="내용을 입력해주세요."> </textarea>
+						        	<textarea name="review_good" class="form-control" placeholder="최대500자"> </textarea>
 						        </label>
 							  </div>
 							  
@@ -144,7 +143,7 @@
 						      
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_title">이 학원에 대한 한 줄 요약
-						        	<input type="text" class="form-control" name="review_title" value="ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" > 
+						        	<input type="text" class="form-control" name="review_title" placeholder="ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" > 
 						        </label>
 							  </div>
 							  

@@ -118,7 +118,7 @@
 	request.setCharacterEncoding("utf-8");
 	String contextPath = request.getContextPath();
 
-	request.setAttribute("email", "coke@naver.com");
+	//request.setAttribute("email", "coke@naver.com");
 	
 %>
 
@@ -128,6 +128,7 @@
 		$(document).ready(function(){
 			var likeList = document.querySelectorAll(".cnt_Like");
 			
+			console.log("${id_email}");
 			checkLikedAca();
 			mainKeyword();
 			
@@ -147,7 +148,7 @@
  
 		function likeAcademy(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -186,7 +187,7 @@
 		
 		function checkLikedAca(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -226,7 +227,7 @@
 		
 		function getLikeReviewImg(obj){
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
 			
@@ -264,7 +265,7 @@
 			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
 			*/
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			if(email.length == 0){
 				alert("로그인이 필요합니다.");
@@ -363,15 +364,15 @@
 						<!-- Course Tabs -->
 						<div class="course_tabs_container">
 							<div class="tabs d-flex flex-row align-items-center justify-content-start">
-								<div class="tab active">학원 상세정보</div>
+								<div class="tab">학원 상세정보</div>
 								<div class="tab">커리큘럼</div>
-								<div class="tab">후기보기</div>
+								<div class="tab active">후기보기</div>
 							</div>
 							
 							<div class="tab_panels">
 
 								<!-- Description -->
-								<div class="tab_panel active">
+								<div class="tab_panel">
 								
 								<!-- 등록되지 않은 학원일 경우 -->
 									<div class="tab_panel_title">이 학원의 관리자이신가요?</div>
@@ -545,7 +546,7 @@
 
 
 								<!-- Reviews -->
-								<div class="tab_panel tab_panel_3">
+								<div class="tab_panel tab_panel_3 active">
 									<div class="tab_panel_title">후기 보기</div>
 
 									<!-- Rating -->
@@ -597,8 +598,8 @@
 														</div>
 														<div class="comment_text">
 															결제안한 회원에게 보이는 형태
-															<div class="blind_review" width="500">
-															<div class="blind_top_div" width="450">
+															<div class="blind_review" width="450">
+															<div class="blind_top_div" width="430">
 															<!-- 유료회원이면 보이는 형태 -->
 															
 																<p><span class="strength">장점</span><br>
