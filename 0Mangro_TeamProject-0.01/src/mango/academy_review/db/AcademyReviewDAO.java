@@ -98,10 +98,39 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getAvgReviewScore() 끝
 	
 	@Override
-	public int InsertAcademyReview(AcademyReviewBean ab) {
+	public void InsertAcademyReview(AcademyReviewBean ab) {
+		// review_num
+		int num = 0;
 		
 		try {
 			getConnection();
+			sql = "select max(review_num) from academy_review";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				// review_num 구하기
+				num =rs.getInt(1) +1;
+			}
+			System.out.println("review_num : "+num);
+			sql = "insert into academy_review (review_num, aca_main_num, aca_name, review_title, "
+					+ "review_good, review_bad, review_subject, "
+					+ "review_score, mem_email, review_date) "
+					+ "values (?,?,?,?,?,?,?,?,?,now())";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, ab.getAcaMainNum());
+			pstmt.setString(3, ab.getAcaName());
+			pstmt.setString(4, ab.getReviewTitle());
+			pstmt.setString(5, ab.getReviewGood());
+			pstmt.setString(6, ab.getReviewBad());
+			pstmt.setString(7, ab.getReviewSubject());
+			pstmt.setInt(8, ab.getReviewScore());
+			pstmt.setString(9, ab.getMemEmail());
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("InsertAcademyReview()에서 예외발생");
 			e.printStackTrace();
@@ -110,11 +139,10 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		}
 		
 		
-		return 0;
 	} // InsertAcademyReview() 끝
 
 	@Override
-	public int DeleteAcademyReview(int reviewNum) {
+	public void DeleteAcademyReview(int reviewNum) {
 		
 		try {
 			getConnection();
@@ -126,11 +154,10 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		}
 		
 		
-		return 0;
 	} // DeleteAcademyReview()끝
 
 	@Override
-	public int UpdateAcademyReview(AcademyReviewBean ab) {
+	public void UpdateAcademyReview(AcademyReviewBean ab) {
 
 		try {
 			getConnection();
@@ -141,7 +168,6 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			resourceClose();
 		}
 		
-		return 0;
 	} //UpdateAcademyReview() 끝
 
 	
