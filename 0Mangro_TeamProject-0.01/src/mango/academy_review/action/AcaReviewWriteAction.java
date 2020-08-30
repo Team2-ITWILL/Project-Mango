@@ -15,12 +15,11 @@ public class AcaReviewWriteAction implements Action{
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
-		
 		System.out.println("mainNum : " + acaMainNum);
 		
 		AcademyReviewBean bean = new AcademyReviewBean();
 		
-		bean.setMemEmail("coke@naver.com");
+		bean.setMemEmail(request.getParameter("mem_email"));
 		bean.setAcaMainNum(acaMainNum);
 		bean.setAcaName(request.getParameter("aca_name"));
 		bean.setReviewSubject(request.getParameter("review_subject"));

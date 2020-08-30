@@ -68,13 +68,12 @@
 				      <form class="sign_upClass" action="./acaReviewWriteAction.arev" method="post">
 				      
 				      	  <!-- ▼학원지정번호, 작성자계정 hidden으로 보내기 -->
-					        <input type="hidden" class="form-control" name="aca_num" readonly> 
-				       		<input type="hidden" class="form-control" name="mem_email" value="user1@naver.com" placeholder="이메일" readonly>
+					        <input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
+						    <input type="hidden" name="mem_email" value="${id_email}">
 				      	  <!-- ▲학원지정번호, 작성자계정 hidden으로 보내기 -->
 					        
 						      <div class="js-form-message form-group">
 						        <label class="form-label aca_name">학원명
-						        	<input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
 						        	<input type="text" class="form-control" name="aca_name" value="${param.acaName}" readonly> 
 						        </label>
 						        <label class="form-label review_subject">수강과목
