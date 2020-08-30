@@ -1831,5 +1831,105 @@ section
 }
 
 
+/*--------------------------------------------
+
+ 익명사담방 관련 : anony_board.jsp
+  - 글이 하나도 없을 때 css 조정 
+
+--------------------------------------------*/
+.noboard{
+	margin-top: -100px;
+}
+.noboard_text{
+	font-family: 'Noto Sans KR', sans-serif;
+	display: block;
+/*     margin: 0;  */
+    width: 1200px;
+    border: 1px solid #e2dede;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    margin-left: 350px;
+    margin-top: 30px;
+    
+}
+.noboard_btn{
+	float: none;
+    margin-left: 490px;
+    margin-top: 50px;
+}
+
+.noboard_img {
+	margin-top: 50px;
+    margin-left: 565px;
+}
 
 
+@media only screen and (max-width: 767px)
+	{
+	.noboard_img {margin-left: 220px;}
+	.noboard_text{width: 500px;}
+	.noboard_btn{
+		width: 100px;
+	    margin-left: 220px;
+	    margin-top: 20px;
+	    }
+
+	
+	}
+
+
+/*--------------------------------------------
+
+ 익명사담방 관련 : anony_board.jsp
+  - 글이 있을 때 css 조정 
+
+--------------------------------------------*/
+
+	
+
+
+/*--------------------------------------------
+
+ 익명사담방 관련 : anony_board.jsp
+  - 검색관련
+
+--------------------------------------------*/
+
+
+.search-btn {
+	width: 80px !important;
+	
+}
+
+.form-control:focus {
+	color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #6610f2 !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem #6610f22b !important;
+	
+}
+
+
+#query {
+	height: 60px !important;
+	color: #000 !important;
+}
+
+
+
+.btn-outline-primary {
+	color: #6610f2 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #6610f2 !important;
+	
+}
+
+.btn-outline-primary:hover {
+	color: #fff !important;
+    background-color: #6610f2 !important;
+	
+	
+}
