@@ -13,14 +13,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Unicat project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!---------------------------------- 제이쿼리  ---------------------------------------------------->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!---------------------------------- CSS  ---------------------------------------------------->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board.css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board_single_responsive.css">
-<!---------------------------------- 제이쿼리  ---------------------------------------------------->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
 <style>
@@ -31,30 +31,70 @@
 	{.widthAdjust {width: 550px;}}
 	.boardCount{margin-top:10px; display: inline-block;margin-left: 20px;}
 	.comments_title {display: inline-block; padding-top:100px;}
+	.exstboard_title {padding-top:0;}
 	.span-title{ font-size: 1.2em; font-weight: 700;	}
-	
 	
 </style>
 
 
 
 <body>
+<script type="text/javascript">
 
+	var id_email = "<c:out value='${id_email}'/>";
+	var wrBtn = document.getElementById("wrbtn");
+	
+	window.onload = function set() {
+			wrBtn.onclick= function() {
+					alert("로그인이 필요한 서비스입니다.");
+				/* location.href='./AnoBoardWriteAction.anob'; */
+			}
+	}
+
+</script>
 
 
 
 	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
 		<div class="container">
 			<div class="row">
-
-<!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
+			   <c:choose>
+<%---------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------%>
+				  <c:when test="${anbCount == 0 or anbCount == '0'}">
+				   <%-- 글이 하나도 없을 때 --%>
 					<div class="comments_container">
-						<div class="comments_write_button" onclick="location.href='./AnoBoardWriteAction.anob'">글쓰기</div>
-						<div class="comments_title">익명사담방</div>
-						<h6 class="boardCount">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
+						<div class="comments_title noboard">익명사담방</div> <br>
+						<img class="noboard_img" src="images/etc/noboard.png" width="100">
+						<h5 class="boardCount noboard_text">등록된 글이 하나도 없네요!&nbsp;&nbsp; 첫 글을 등록 해 보세요!</h5>
+						<div class="comments_write_button noboard_btn" id="wrbtn" 
+						     onclick="set();">
+							글쓰기
+						</div>
+					</div>
+				  </c:when>	
+				  
+				   <%-- 글이 있을 때 --%>
+				  <c:otherwise>
+					<div class="comments_container">
+						
+						
+						
+						<div class="comments_write_button exstboard_btn" onclick="location.href='./AnoBoardWriteAction.anob'">글쓰기</div>
+						<div class="comments_title exstboard_title" >익명사담방</div>
+						<h6 class="boardCount exstboard_text">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
+						
+						<%-- 검색영역 --%>
+						<hr>
+						<div class="input-group col-12 p-0 mb-3">
+							<input type="search" id="query" name="query" class="form-control"
+								   placeholder="검색">
+							<button type="submit" class="btn font-subhead btn-outline-primary text-nowrap width-100 search-btn">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
+						</div>
 						
 						<ul class="comments_list"> 
-<!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
+<%---------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						
 						<c:forEach var="anbList" items="${anbList}">
 							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'">
@@ -67,7 +107,7 @@
 											<div class="comment_author">
 
 												<!-- 익명사담방 랜덤 닉네임 -->
-												<i class="fa fa-user" aria-hidden="true"></i> 
+												<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
 												<!-- 익명사담방 글제목 -->
 												<p><span class="span-title">${anbList.ano_board_title}</span></p>
@@ -110,18 +150,22 @@
 							</li>
 							 
 						</c:forEach>
-<!-------------------------------------------------------- [▲ 코멘트 1줄]  -------------------------------------------------------------------------->
+<%---------------------------------------------------------- [▲ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						</ul> 
 						
 					</div>  <!-- comments_container -->
-				</div> <!-- row -->
-			</div> <!-- container -->
+				</c:otherwise>	
+				
+			  </c:choose>
+			</div> <!-- row -->
+		</div> <!-- container -->
 
 
 
 
 
-<!-------------------------------------------------------- [스크립트 링크영역]  -------------------------------------------------------------------------->
+
+<%---------------------------------------------------------- [스크립트 링크영역]  --------------------------------------------------------------------------%>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>

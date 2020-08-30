@@ -97,9 +97,34 @@ public class AcademyFrontController extends HttpServlet {
 				System.out.println("/getListSearchThr.aca에서 예외 발생"+e);
 			}
 			
+		}else if(command.equals("/AcademyList.aca")){
 			
+			
+			action =new AcademyListAction();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/AcademyList.aca에서 예외 발생"+e);
+			}
+			
+		}else if(command.equals("/AcademySearchList.aca")){
+			
+			
+			action =new AcademySearchListAction();
+			
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				System.out.println("/AcademyList.aca에서 예외 발생"+e);
+			}
 			
 		}
+		
 		
 		
 		

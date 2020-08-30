@@ -2,6 +2,8 @@ package mango.academy.db;
 
 import java.util.List;
 
+import org.json.simple.JSONArray;
+
 public interface IAcademy {
 	
 	
@@ -31,6 +33,19 @@ public interface IAcademy {
 	*/
 	//학원 삭제
 	public void DeleteAcademy(AcademyBean ab);
+	
+	//학원수 체크
+	public int getAcademyCount();
+	
+	//지역구
+	public JSONArray getListSearchOne(String address);
+
+	//읍면동
+	public JSONArray getListSearchTwo(String address,String address2);
+	
+	//카테고리
+	public JSONArray getListSearchThr(String parameter, String parameter2, String parameter3);
+	
 	
 	
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -76,10 +77,30 @@ li.thirdKey {
 <script type="text/javascript">
 
 
+
+
+	var search1=null;
+	var search2=null;
+	var search3=null;
+	var search4=null;
+	var mainsearch=null;
+
 	$(function(){
-		var search1="";
-		var search2="";
-		var search3="";
+		
+		
+		if(${pageNum < 0}|| ${pageNum>pageCount }){
+			
+			alert("없는학원페이지 목록입니다");	
+			history.back(-1);
+			
+			return false;
+		}
+			
+		
+		
+		
+		
+
 		
 		$("#courses_search_select1").change(function(){
 		// 	j_test(this);
@@ -92,25 +113,35 @@ li.thirdKey {
 			$("#courses_search_select2").empty();
 			$("#courses_search_select3").empty();
 			$("#courses_search_select4").empty();
-			$("#courses_search_select4").append("<option>카테고리</option>");
-			$("#courses_search_select3").append("<option>읍/면/동</option>");
+			
+			$("#courses_search_select3").append("<option value=''>읍/면/동</option>");
 			
 			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select2="<option>시/군/구</option>";
+				var select2="<option option value=''>시/군/구</option>";
+				var select4="<option option value=''>카테고리</option>"
 				$.each(data.address , function (index,item) {
 			
 					
 					
-					select2+="<option>"+item.search2+"</option>";
+					select2+="<option value='"+item.search2+"'>"+item.search2+"</option>";
+					
+	
+				});
+				$.each(data.category , function (index,item) {
 			
+					
+					
+					select4+="<option value='"+item.search4+"'>"+item.search4+"</option>";
+					
 	
 				});
 				
 				$("#courses_search_select2").append(select2);
+				$("#courses_search_select4").append(select4);
 		
 		
 			});//getJSON
@@ -128,21 +159,32 @@ li.thirdKey {
 			
 			$("#courses_search_select3").empty();
 			$("#courses_search_select4").empty();
-			$("#courses_search_select4").append("<option>카테고리</option>");
+			$("#courses_search_select4").append("<option value=''>카테고리</option>");
 			
 			$.getJSON("getListSearchTwo.aca?search1="+search1+"&search2="+search2 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select3="<option>읍/면/동</option>";
+				var select3="<option value=''>읍/면/동</option>";
+				
+				var select4="";
 				$.each(data.address , function (index,item) {
 					
-					select3+="<option>"+item.search3+"</option>";
+					select3+="<option value='"+item.search3+"'>"+item.search3+"</option>";
 			
 				});
+				$.each(data.category , function (index,item) {
+			
+							
+				select4+="<option value='"+item.search4+"'>"+item.search4+"</option>";
+					
+	
+				});
+				
 				
 				$("#courses_search_select3").append(select3);
+				$("#courses_search_select4").append(select4);
 		
 		
 			});//getJSON
@@ -164,10 +206,10 @@ li.thirdKey {
 				console.log(data.address);
 				
 				
-				var select4="<option>카테고리</option>";
+				var select4="<option value=''>카테고리</option>";
 				$.each(data.address , function (index,item) {
 					
-					select4+="<option>"+item.search4+"</option>";
+					select4+="<option value='"+item.search4+"'>"+item.search4+"</option>";
 
 				});
 				
@@ -180,18 +222,41 @@ li.thirdKey {
 		
 		
 		
-		
-		
-	});//$(function)
 	
+	});	//$(function)
+
 	function SubSearch(){
 		
 		
+ 		search1=$("#courses_search_select1 option:selected").val();
+ 		search2=$("#courses_search_select2 option:selected").val();
+ 		search3=$("#courses_search_select3 option:selected").val();
+ 		search4=$("#courses_search_select4 option:selected").val();
+ 		mainsearch=$("#mainsearch").val();
+		
+		mainsearch=$("#SubSearch").val();
+		
+ 
+ 		console.log(search2);
+		console.log(search3);
+ 		console.log(search4);
+		console.log(mainsearch);
+	
+		
+		if(search1=="null"){
+			
+			console.log("세요");
+		}
+		
+		
+	
+
+	
+ 	}
 		
 		
 		
 		
-	}
 	
 </script>
 
@@ -217,16 +282,16 @@ li.thirdKey {
 <!------------------------------------------ [  검색form  ] --------------------------------------------------------------->
 						<!-- 타자 검색영역 -->
 						<!-- 키워드선택 검색영역 -->
-						<form action="" id="courses_search_form" class="courses_search_form">
+						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" >
 						
 							<div class="searchInput">
-								<input type="search" class="courses_search_input typingSearch" placeholder="검색하기" required="required">
-								<button type="button"class="courses_search_button ml-auto searchBtn" onclick="SubSearch()">검색하기</button>
+								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기" name="mainsearch" id="mainsearch">
+								<button type="submit"class="courses_search_button ml-auto searchBtn" >검색하기</button>
 							</div>
 							
 							<div class="selectOption">
-								<select id="courses_search_select1" class="courses_search_select courses_search_input">
-									<option>시/도</option>
+								<select id="courses_search_select1" class="courses_search_select courses_search_input" name="select1">
+									<option value="null">시/도</option>
 										<option value="서울특별시">서울특별시</option>
 										<option value="부산광역시">부산광역시</option>
 										<option value="대구광역시">대구광역시</option>
@@ -245,19 +310,19 @@ li.thirdKey {
 										<option value="경상남도">경상남도</option>
 											<option value="제주특별자치도">제주특별자치도</option>		
 								</select>						
-								<select id="courses_search_select2" class="courses_search_select courses_search_input">
-									<option>시/군/구</option>
+								<select id="courses_search_select2" class="courses_search_select courses_search_input" name="select2">
+									<option value="null">시/군/구</option>
 								
 								</select>
-								<select id="courses_search_select3" class="courses_search_select courses_search_input">
-									<option>읍/면/동</option>
+								<select id="courses_search_select3" class="courses_search_select courses_search_input" name="select3">
+									<option value="null">읍/면/동</option>
 									
 								</select>
-								<select id="courses_search_select4" class="courses_search_select courses_search_input">
-									<option>카테고리</option>
+								<select id="courses_search_select4" class="courses_search_select courses_search_input" name="select4">
+									<option value="null">카테고리</option>
 									
 								</select>
-								<select id="courses_search_select4" class="courses_search_select courses_search_input">
+								<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
 									<option>기본순</option>
 									<option>좋아요 많은 순</option>
 									<option>리뷰많은 순</option>
@@ -299,7 +364,59 @@ li.thirdKey {
 
 <!---------------------------------------- [ 학원 1곳 목록 표시 영역 시작] ------------------------------------------------------------------------------------------->
 				
+				
+				
+						<c:if test="${count != 0}">		<!-- 학원리스트가 있을때 -->		
 							<!-- Course -->
+							
+							<c:forEach var="i" items="${requestScope.academyList}">
+							<div class="courses_container">
+								<div class="courses_row">
+									<div class="col-md-8 course_col">
+										<div class="course">
+										
+												<!-- course_body -->
+												<div class="course_body">
+													<!-- 학원 사진 -->
+													<div class="aca_profile_div" style="display: inline-block;">
+														<img src="images/etc/default_mango.png" class="aca_profile_img">
+													</div>
+													<h3 class="course_title">
+														<a href="./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}">
+															${i.acaName}
+														</a>
+													</h3>
+													<div class="course_teacher" style="top: 2px !important;">${i.acaCategory1}</div>
+													<div class="course_text">
+														<div class="course_info_title">
+															<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${i.acaAddrDoro}
+														</div>
+													</div>
+												</div> <!-- course_body -->
+												
+												<!-- course_footer -->
+												<div class="course_footer">
+													<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
+														<div class="course_info">
+															<i class="fa fa-graduation-cap" aria-hidden="true"></i>
+															누적 청강수<span>79회</span>
+														</div>
+														<div class="course_info">
+															<i class="fa fa-star" aria-hidden="true"></i>
+															평균 별점 <span>5</span>
+														</div>
+														<div class="course_price ml-auto"></div>
+													</div>
+												</div> <!-- course_footer -->
+										</div> <!-- course -->
+									</div> <!-- col-md-8 course_col(페이지이동 링크걸린영역) -->
+																			
+							 </div> <!-- courses_row -->
+						</div>  <!-- courses_container -->
+						</c:forEach>
+					</c:if>
+					<c:if test="${count == 0}"><!-- 학원리스트가 없을때 -->
+						<!-- Course -->
 							<div class="courses_container">
 								<div class="courses_row">
 									<div class="col-md-8 course_col">
@@ -313,29 +430,17 @@ li.thirdKey {
 													</div>
 													<h3 class="course_title">
 														<a href="./AcademyContentAction.aca?acaMainNum=1&pageNum=1">
-															부산학원
+															등록된 학원의 정보가 없습니다
 														</a>
 													</h3>
-													<div class="course_teacher" style="top: 2px !important;">외국어</div>
-													<div class="course_text">
-														<div class="course_info_title">
-															<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; 부산광역시 부산진구 부전동 동천로 109
-														</div>
-													</div>
+													
+												
 												</div> <!-- course_body -->
 												
 												<!-- course_footer -->
 												<div class="course_footer">
 													<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
-														<div class="course_info">
-															<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-															누적 청강수<span>79회</span>
-														</div>
-														<div class="course_info">
-															<i class="fa fa-star" aria-hidden="true"></i>
-															평균 별점 <span>5</span>
-														</div>
-														<div class="course_price ml-auto"></div>
+														
 													</div>
 												</div> <!-- course_footer -->
 										</div> <!-- course -->
@@ -343,135 +448,71 @@ li.thirdKey {
 																			
 							 </div> <!-- courses_row -->
 						</div>  <!-- courses_container -->
-						
-<!------------------------------------------ [  학원 1곳 목록 표시 영역 끝  ] --------------------------------------------------------------->
-<!---------------------------------------- [ 학원 1곳 목록 표시 영역 시작] ------------------------------------------------------------------------------------------->
-				
-							<!-- Course -->
-							<div class="courses_container">
-								<div class="courses_row">
-									<div class="col-md-8 course_col" onclick="location.href='4index.jsp?center=O_academy/academy_single.jsp'">
-										<div class="course">
-										
-												<!-- course_body -->
-												<div class="course_body">
-													<!-- 학원 사진 -->
-													<div class="aca_profile_div" style="display: inline-block;">
-														<img src="images/etc/default_mango.png" class="aca_profile_img">
-													</div>
-													<h3 class="course_title">
-														<a href="4index.jsp?center=O_academy/academy_single.jsp">
-															부산학원
-														</a>
-													</h3>
-													<div class="course_teacher" style="top: 2px !important;">외국어</div>
-													<div class="course_text">
-														<div class="course_info_title">
-															<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; 부산광역시 부산진구 부전동 동천로 109
-														</div>
-													</div>
-												</div> <!-- course_body -->
-												
-												<!-- course_footer -->
-												<div class="course_footer">
-													<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
-														<div class="course_info">
-															<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-															누적 청강수<span>79회</span>
-														</div>
-														<div class="course_info">
-															<i class="fa fa-star" aria-hidden="true"></i>
-															평균 별점 <span>5</span>
-														</div>
-														<div class="course_price ml-auto"></div>
-													</div>
-												</div> <!-- course_footer -->
-										</div> <!-- course -->
-									</div> <!-- col-md-8 course_col(페이지이동 링크걸린영역) -->
-																			
-							 </div> <!-- courses_row -->
-						</div>  <!-- courses_container -->
-						
-<!------------------------------------------ [  학원 1곳 목록 표시 영역 끝  ] --------------------------------------------------------------->
-<!---------------------------------------- [ 학원 1곳 목록 표시 영역 시작] ------------------------------------------------------------------------------------------->
-				
-							<!-- Course -->
-							<div class="courses_container">
-								<div class="courses_row">
-									<div class="col-md-8 course_col" onclick="location.href='4index.jsp?center=O_academy/academy_single.jsp'">
-										<div class="course">
-										
-												<!-- course_body -->
-												<div class="course_body">
-													<!-- 학원 사진 -->
-													<div class="aca_profile_div" style="display: inline-block;">
-														<img src="images/etc/default_mango.png" class="aca_profile_img">
-													</div>
-													<h3 class="course_title">
-														<a href="4index.jsp?center=O_academy/academy_single.jsp">
-															부산학원
-														</a>
-													</h3>
-													<div class="course_teacher" style="top: 2px !important;">외국어</div>
-													<div class="course_text">
-														<div class="course_info_title">
-															<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; 부산광역시 부산진구 부전동 동천로 109
-														</div>
-													</div>
-												</div> <!-- course_body -->
-												
-												<!-- course_footer -->
-												<div class="course_footer">
-													<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
-														<div class="course_info">
-															<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-															누적 청강수<span>79회</span>
-														</div>
-														<div class="course_info">
-															<i class="fa fa-star" aria-hidden="true"></i>
-															평균 별점 <span>5</span>
-														</div>
-														<div class="course_price ml-auto"></div>
-													</div>
-												</div> <!-- course_footer -->
-										</div> <!-- course -->
-									</div> <!-- col-md-8 course_col(페이지이동 링크걸린영역) -->
-																			
-							 </div> <!-- courses_row -->
+					
+					</c:if>
+
 							 
 							 
 							 <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
+					  	<a class="page-link prev" href="AcademyList.aca?pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
 					  
-                    <!-- < (이전페이지 가기)-->
+					<c:if test="${count!=0}"> 
+                    <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
+					  	<c:if test="${startPage-pageBlock<0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  	<a class="page-link prev" href="AcademyList.aca?pageNum=${pN}">
+					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+					  	</a>	
+					  
+					  
+					  </li>
+					
+					
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="AcademyList.aca?pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="AcademyList.aca?pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+                    
+                    
+                    
+                    
+                    
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  	<a class="page-link next" href="AcademyList.aca?pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+					</c:if>		 
 					</ul>  
-							 
+				 
 							 
 						</div>  <!-- courses_container -->
 						
