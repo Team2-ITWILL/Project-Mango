@@ -108,6 +108,7 @@ public class AcademyFrontController extends HttpServlet {
 			} catch (Exception e) {
 				
 				System.out.println("/AcademyList.aca에서 예외 발생"+e);
+				e.printStackTrace();
 			}
 			
 		}else if(command.equals("/AcademySearchList.aca")){
@@ -120,7 +121,8 @@ public class AcademyFrontController extends HttpServlet {
 				forward = action.excute(request, response);
 			} catch (Exception e) {
 				
-				System.out.println("/AcademyList.aca에서 예외 발생"+e);
+				e.printStackTrace();
+				System.out.println("/AcademySearchList.aca에서 예외 발생");
 			}
 			
 		}
