@@ -146,6 +146,12 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		
 		try {
 			getConnection();
+			sql = "delete from academy_review where review_num = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, reviewNum);
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("DeleteAcademyReview()에서 예외발생");
 			e.printStackTrace();
@@ -161,6 +167,21 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 
 		try {
 			getConnection();
+			sql = "update academy_review set review_title = ?, review_good = ?, "
+					+ "review_bad = ?, review_subject = ?, review_score = ?, "
+					+ "review_date = now() where review_num = ? and aca_main_num = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ab.getReviewTitle());
+			pstmt.setString(2, ab.getReviewGood());
+			pstmt.setString(3, ab.getReviewBad());
+			pstmt.setString(4, ab.getReviewSubject());
+			pstmt.setInt(5, ab.getReviewScore());
+			pstmt.setInt(6, ab.getReviewNum());
+			pstmt.setInt(7, ab.getAcaMainNum());
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("UpdateAcademyReview()에서 예외발생");	
 			e.printStackTrace();

@@ -51,6 +51,17 @@ public class AcademyReviewFrontController extends HttpServlet{
 				System.out.println("/acaReviewWriteAction.arev에서 예외 발생");
 				e.printStackTrace();
 			}
+		} 
+		// 후기수정
+		else if(command.equals("/acaReviewUpdateAction.arev")){
+			action = new AcaReviewUpdateAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/acaReviewUpdateAction.arev에서 예외 발생");
+				e.printStackTrace();
+			}
 		}
 		
 		
