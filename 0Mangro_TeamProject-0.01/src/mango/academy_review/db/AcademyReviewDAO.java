@@ -142,7 +142,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // InsertAcademyReview() 끝
 
 	@Override
-	public void DeleteAcademyReview(int reviewNum) {
+	public int DeleteAcademyReview(int reviewNum) {
 		
 		try {
 			getConnection();
@@ -150,7 +150,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, reviewNum);
-			pstmt.executeUpdate();
+			return pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			System.out.println("DeleteAcademyReview()에서 예외발생");
@@ -159,6 +159,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			resourceClose();
 		}
 		
+		return 0;
 		
 	} // DeleteAcademyReview()끝
 

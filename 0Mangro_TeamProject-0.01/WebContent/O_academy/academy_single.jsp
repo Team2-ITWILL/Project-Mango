@@ -190,6 +190,63 @@
 				document.querySelector(".course_price").innerText = keyword + " 학원";
 			}
 		}
+		
+		// 후기삭제(ajax)
+		function reviewDelete(reviewNum){
+			
+			var result = confirm("후기를 삭제하시겠습니까?");
+			var email = "${id_email}";
+			var _data = '{"email":"'+email+'","revNum":"'+reviewNum+'"}';
+			console.log(reviewNum);
+			if(result){
+				
+				$.ajax({
+					
+					type : "post",
+					url : "${pageContext.request.contextPath}/acaReviewDelete",
+					data : {data : _data},
+					success : function(data,status){
+						var json = JSON.parse(data);
+						var check = json.check;
+						
+						/* 삭제성공 */
+						if(check == 1){
+							var str = "<div class='alert'>후기가 삭제되었습니다.</div>";						
+							$("#reviewNum_" + reviewNum).html(str).fadeOut(3000, function(){
+								$(this).remove();
+								if(document.querySelector(".comments_list").childElementCount == 0){
+									
+									var emptyList = '';
+									
+									emptyList += '<div class="tab_panel_title">아직 등록된 후기가 없습니다.</div>';
+									emptyList += '<div class="tab_panel_content">';
+									emptyList += '<div class="tab_panel_text">';
+									emptyList += '<p>이 학원의 후기를 작성해 보세요!</p>';
+									emptyList += '</div>';
+									emptyList += '<c:if test="${id_email eq null || id_eamil eq ''}">';
+									emptyList += '<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>';
+									emptyList += '</c:if>';
+									
+									
+									
+									$(".comments_list").append(emptyList);
+								}
+							});
+						}
+						/* 삭제실패 */
+						else {
+							alert("삭제를 실패하였습니다.\n 다시 시도해주세요.")
+						}
+					},
+					error : function(){
+						alert("통신오류가 발생했습니다.");
+					}
+					
+						
+				});
+			}
+		
+		}
  
 		function likeAcademy(){
 			
@@ -617,7 +674,7 @@
 								<!-- 등록된 후기가 없을 경우 -->
 								
 							<c:if test="${count eq null || count eq '0'}">
-								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
+								<div class="tab_panel_title">아직 등록된 후기가 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
 											<p>이 학원의 후기를 작성해 보세요!</p>
@@ -634,7 +691,7 @@
 										
 										<!--------------------------------  ▼ 후기 1개 영역-------------------------------------->
 										<c:forEach var="reBean" items="${reList}">
-											<li>
+											<li id="reviewNum_${reBean.reviewNum }">
 												<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 													<div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div>
 													<div class="comment_content">
@@ -682,7 +739,8 @@
 														<c:if test="${id_email ne null}">
 															<c:if test="${id_email eq reBean.memEmail}">
 																<div>
-																<button class = "review_btn">삭제</button>
+																<button class = "review_btn"
+																onclick="reviewDelete(${reBean.reviewNum})">삭제</button>
 																<button class = "review_btn" 
 																onclick="location.href='4index.jsp?center=O_academy/academy_review_update.jsp?acaMainNum=${academyBean.acaMainNum }&reviewNum=${reBean.reviewNum }&acaName=${academyBean.acaName}'">수정</button>
 																</div>
