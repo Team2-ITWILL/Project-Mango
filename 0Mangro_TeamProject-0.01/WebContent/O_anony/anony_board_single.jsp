@@ -1,48 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>      
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
 <title>익명사담방</title>
 <!-- 메타데이터  -->
-<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Unicat project">
+<meta name="description" content="mango">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 제이쿼리 & js  -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <!-- 링크목록  -->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board_single.css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board_single_responsive.css">
-<!-- 제이쿼리  -->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style type="text/css">
 	.title-btn{
-		background-color: #000;
-	    color: #fff;
-	    border: 1px solid #000;
+	    color: #000;
 	    text-align: center;
 	    display: inline-block;
-	    width: 140px;
+	    width: 85px;
 	    float: right;
 	    padding: 10px;
-	    border-radius: 10px;
-	    font-size: 1.2em;
+	    font-size: 1em;
 	    font-weight: 400;
-	    bottom:10px;
-	}
-	.boardrevise{ background-color: #fff; color: #000; margin-left:8px; margin-right: 8px;}
-	.title-btn:hover{
+	   	margin-top: 30px;
 	    cursor: pointer;
-   	 	background-color: #6610f2 !important;
-   	 	color: #fff;
+	    position: relative;
+	    z-index: 11;
 	}
-	.tolistBtn {float:left;}	
-
+	.title-btn:hover{cursor: pointer; color: #000;}
+	.boardremove:hover, .boardrevise:hover { color: #e95765; cursor:pointer;}
+	.boardrevise{ color: #000; margin-left:8px;}
+	.cmCount{color:#3094ff;}
+	.ifnotwriter{  margin-top: 20px; }	
+	
 }
 	
 </style>
+
+
+<script type="text/javascript">
+
+	// [파일 다운로드 처리 함수 : 첨부파일 클릭시 AnoBoardFileDownAction.anob로 이동 ]
+	function fileDown(ano_board_num) {
+		var ifrm = document.getElementById("ifrm_filedown");
+		ifrm.src ="AnoBoardFileDownAction.anob?ano_board_num="+ano_board_num;
+		
+	}
+
+
+</script>
+
 
 </head>
 
@@ -53,45 +67,59 @@
 		<div class="container">
 			<div class="row">
 
-<!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
+<%-------------------------------------------------- [익명게시글 목록]  --------------------------------------------------------------------------%>
 					<div class="comments_container">
-						<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
-							<span>목록보기</span></div> 
-						<div class="title-btn boardrevise" onclick="location.href='./AnoBoardToUpdateFormAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
-							<span>수정</span></div>
-						<div class="title-btn" onclick="location.href='./AnoBoardDeleteAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
-							<span>삭제</span></div> <br>
-						<hr>
 						
-						
+					  <c:choose>
+					  
+							<c:when test="${id_email eq boardSingle.mem_email}">
+							
+								<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
+									<span>목록보기</span></div> 
+								<div class="title-btn boardrevise" onclick="location.href='./AnoBoardToUpdateFormAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+									<span>수정</span></div>
+								<div class="title-btn boardremove" onclick="location.href='./AnoBoardDeleteAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+									<span>삭제</span></div> <br>
+							</c:when>	
+							
+							<c:otherwise>
+								<div class="title-btn tolistBtn boardrevise ifnotwriter" onclick="location.href='./AnonyBoardListAction.anob'">
+									<span>목록보기</span></div> 
+							</c:otherwise>
+							
+					  </c:choose>		
+					  
+					  
 						<div class="comments_title" id="board_title">${boardSingle.ano_board_title }</div>
+							<hr>
+						
+						<%-- 제목, 닉네임, 조회수, 날짜 --%>
 						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">${boardSingle.ano_board_nick }</span>
 						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_read }</span>
 						<img src="images/etc/date.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_date }</span>
 						
-						<!-- 글의 내용 -->
+						<%-- 내용 --%>
 						<div class="comment_text">
 							<p>${boardSingle.ano_board_content }</p> <br><br>
 							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
+						</div>
+						
+						<%-- 첨부파일 --%>
+						<%-- 아이프레임을 이용한 다운로드 --%>
+						<iframe id="ifrm_filedown" style="position:absolute; z-index: 1; visibility: hidden;">
+						</iframe>
+						
+						<%-- 첨부파일 다운을 위해 클릭하는 영역 --%>
+						<div onclick="fileDown('${boardSingle.ano_board_num }')">
+							<i class="fa fa-download" aria-hidden="true"></i>
+							<a style="cursor: pointer;"><span class="fileSpan">${boardSingle.ano_board_file }</span> </a>
 						</div>
 						
 						<hr>
 						
 						
 						
-						<!-- 해당 글쓴이가 아닌 경우 삭제하기 버튼 비활성화 -->
-<%-- 						<c:choose>
-							<c:when test="${not empty id_email or not id_email='' }">
-								<button class="comments_write_button comm_btn replytxtbtn" 
-										type="button" 
-										onclick="location.href='./AnoBoardDeleteAction.anob'">
-									삭제하기
-								</button>
-							</c:when>
-						</c:choose> --%>
-						
-						
-						<div class="comment_total">댓글 <span>108798</span></div>
+						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
 						<form class="" action="" method="post">
 				      		<div class="form-group mb-8">
 							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>

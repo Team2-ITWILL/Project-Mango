@@ -1,3 +1,4 @@
+
 package mango.academy.action;
 
 import java.util.HashMap;
@@ -150,3 +151,4 @@ public class AcademySearchListAction implements Action {
 	}
 
 }
+
