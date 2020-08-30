@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>      
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
 <title>익명사담방</title>
 <!-- 메타데이터  -->
-<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Unicat project">
+<meta name="description" content="mango">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 링크목록  -->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
@@ -19,30 +20,33 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style type="text/css">
 	.title-btn{
-		background-color: #000;
-	    color: #fff;
+		/* background-color: #000; */
+	    color: #000;
 	    border: 1px solid #000;
 	    text-align: center;
 	    display: inline-block;
-	    width: 140px;
+	    width: 85px;
 	    float: right;
 	    padding: 10px;
 	    border-radius: 10px;
-	    font-size: 1.2em;
+	    font-size: 1em;
 	    font-weight: 400;
 	    bottom:10px;
 	}
-	.boardrevise{ background-color: #fff; color: #000; margin-left:8px; margin-right: 8px;}
+	.boardrevise{ background-color: #fff; color: #e95765; margin-left:8px;}
 	.title-btn:hover{
 	    cursor: pointer;
-   	 	background-color: #6610f2 !important;
+   	 	background-color: #e95765 !important;
    	 	color: #fff;
 	}
-	.tolistBtn {float:left;}	
-
+	.cmCount{color:#3094ff;}
+	.ifnotwriter{bottom: 40px;}	
 }
 	
 </style>
+
+
+
 
 </head>
 
@@ -53,15 +57,28 @@
 		<div class="container">
 			<div class="row">
 
-<!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
+<%-------------------------------------------------- [익명게시글 목록]  --------------------------------------------------------------------------%>
 					<div class="comments_container">
-						<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
-							<span>목록보기</span></div> 
-						<div class="title-btn boardrevise" onclick="location.href='./AnoBoardToUpdateFormAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
-							<span>수정</span></div>
-						<div class="title-btn" onclick="location.href='./AnoBoardDeleteAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
-							<span>삭제</span></div> <br>
-						<hr>
+						
+					  <c:choose>
+					  
+							<c:when test="${id_email eq boardSingle.mem_email}">
+							
+							<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
+								<span>목록보기</span></div> 
+								<div class="title-btn boardrevise" onclick="location.href='./AnoBoardToUpdateFormAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+									<span>수정</span></div>
+								<div class="title-btn" onclick="location.href='./AnoBoardDeleteAction.anob?ano_board_num='+${boardSingle.ano_board_num}">
+									<span>삭제</span></div> <br>
+							</c:when>	
+							
+							<c:otherwise>
+								<div class="title-btn tolistBtn boardrevise ifnotwriter" onclick="location.href='./AnonyBoardListAction.anob'">
+									<span>목록보기</span></div> 
+							</c:otherwise>
+							
+					  </c:choose>		
+							<hr>
 						
 						
 						<div class="comments_title" id="board_title">${boardSingle.ano_board_title }</div>
@@ -79,19 +96,7 @@
 						
 						
 						
-						<!-- 해당 글쓴이가 아닌 경우 삭제하기 버튼 비활성화 -->
-<%-- 						<c:choose>
-							<c:when test="${not empty id_email or not id_email='' }">
-								<button class="comments_write_button comm_btn replytxtbtn" 
-										type="button" 
-										onclick="location.href='./AnoBoardDeleteAction.anob'">
-									삭제하기
-								</button>
-							</c:when>
-						</c:choose> --%>
-						
-						
-						<div class="comment_total">댓글 <span>108798</span></div>
+						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
 						<form class="" action="" method="post">
 				      		<div class="form-group mb-8">
 							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>
