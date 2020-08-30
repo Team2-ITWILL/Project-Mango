@@ -1,9 +1,12 @@
 package mango.academy.action;
 
+import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
@@ -16,12 +19,76 @@ public class AcademyListAction implements Action{
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		request.setCharacterEncoding("UTF-8");
-		AcademyDAO dao = new AcademyDAO();
+		response.setContentType("text/html; charset=UTF-8");
 		
-		int count=dao.getAcademyCount();
+		HttpSession session=request.getSession();
+		
+	/*	HashMap<String,Object> Formsearch  = new HashMap<String,Object>(); 
+		
+		
+		String mainsearch=request.getParameter("mainsearch");
+		String select1=request.getParameter("select1");
+		String select2=request.getParameter("select2");
+		String select3=request.getParameter("select3");
+		String select4=request.getParameter("select4");
+//		System.out.println(request.getParameter("select5"));
+		
+		
+		
+		if(select1.equals("") && select1.length()==0){//광역시도
+			
+			System.out.println("이값은 널입니다");
+		
+		}else{
+			
+			Formsearch.put("s1",select1);
+		}
+		
+		if(select2.equals("") && select2.length()==0){//지역구
+			
+			System.out.println("이값은 널입니다");
+		}else{
+			Formsearch.put("s2",select2);
+		}
+		
+		if(select3.equals("") && select3.length()==0){//읍면동
+			
+			System.out.println("이값은 널입니다");
+		}else{
+			Formsearch.put("s3",select3);
+		}
+		
+		if(select4.equals("") && select4.length()==0){//카테고리
+			
+			System.out.println("이값은 널입니다");
+		}else{
+			Formsearch.put("s4",select4);
+		}
+		
+		if(mainsearch.equals("") && mainsearch.length()==0){//main검색어
+			
+			System.out.println("이값은 널입니다");
+		
+		}else{
+			Formsearch.put("main",mainsearch);
+		}
+		*/
+		
+		AcademyDAO adao =new AcademyDAO();
+		
+		
+		//int count=adao.getAcademyCount(Formsearch);
+		int count=adao.getAcademyCount();
+		
+		
+		
+		
 		
 		String pageNum=request.getParameter("pageNum");
 
+		
+		
+		
 		
 		int pageSize=15;
 		
@@ -44,7 +111,8 @@ public class AcademyListAction implements Action{
 		
 		if(count != 0){
 			
-			Academylist = dao.AllAcademyList(startRow,pageSize);
+			//Academylist = adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			Academylist = adao.AllAcademyList(startRow, pageSize);
 	
 		}
 		//전체페이지수 구하기
@@ -76,6 +144,7 @@ public class AcademyListAction implements Action{
 		request.setAttribute("pageBlock", pageBlock);//보여줄 페이지 수
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
+		request.setAttribute("Page","AcademyList.aca");
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
 		
