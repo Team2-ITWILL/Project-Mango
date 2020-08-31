@@ -48,8 +48,6 @@ public class AcademyBean {
     //학원 관리자
     private String mem_email;
 
-    private double reviewScore;
-
     public AcademyBean() { }
     public AcademyBean(
     		int acaMainNum, String acaNum, String acaCode, 
@@ -57,7 +55,7 @@ public class AcademyBean {
         	String acaAttr, String acaName, String acaStartDate,
         	String acaCategory1, String acaCategory2, 
         	String acaAddrZip, String acaAddrDoro, String acaAddrDetailed,
-        	String mem_email,double reviewScore
+        	String mem_email
     		) 
     {	
     	this.acaMainNum = acaMainNum;
@@ -74,8 +72,7 @@ public class AcademyBean {
     	this.acaAddrZip = acaAddrZip;
     	this.acaAddrDoro = acaAddrDoro;
     	this.acaAddrDetailed = acaAddrDetailed;
-    	this.mem_email = mem_email; 
-    	this.reviewScore=reviewScore;
+    	this.mem_email = mem_email;    	
     }
 
     // getter, setter
@@ -84,12 +81,6 @@ public class AcademyBean {
 	}
 	public void setAcaMainNum(int acaMainNum) {
 		this.acaMainNum = acaMainNum;
-	}
-	public double getReviewScore() {
-		return reviewScore;
-	}
-	public void setReviewScore(double reviewScore) {
-		this.reviewScore = reviewScore;
 	}
 
     public String getAcaNum() {
