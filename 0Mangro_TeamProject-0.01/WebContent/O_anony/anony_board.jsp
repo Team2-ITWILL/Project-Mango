@@ -141,7 +141,6 @@
 												<img src="images/etc/eye.png" width="20">
 												<!-- 조회수  -->
 
-
 												
 												<span>${anbList.ano_board_read}</span>
 												
@@ -164,17 +163,35 @@
 										<c:set value="${nowDays - regDays }" var="dayDiff" />
 										
 										<c:choose>
+										
+										
+										
 										<%------ 두 날짜의 차가 0일때(오늘 쓴 글일 때) New 표시----%>
 											<c:when test="${dayDiff == 0}">
-												<span>${anbList.ano_board_date}</span>
-												<span><img src="images/etc/new.png" width="35"></span>
+											<fmt:formatDate value="${anbList.ano_board_date}" pattern ="yyyy.MM.dd KK:mm:ss" type="both"/>
+												<span><img src="images/etc/new.png" width="30"></span>
 											</c:when>
 											
 										<%------ 오늘 쓴 글이 아닐 때 날짜만 표시----%>
 											<c:otherwise>
-												<span>${anbList.ano_board_date}</span>
+											<fmt:formatDate value="${anbList.ano_board_date}" pattern ="yyyy.MM.dd KK:mm:ss" type="both"/>
 											</c:otherwise>
 										</c:choose>
+										
+										
+										<%------ 첨부파일이 있을 때 표시----%>
+										<c:choose>
+											<c:when test="${anbList.ano_board_file ne null }">
+												<span><img src="images/etc/file.png" width="15"></span>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										
+										</c:choose>
+										
+										
+										
+										
 																				
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>

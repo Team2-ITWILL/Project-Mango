@@ -16,6 +16,8 @@ public class AnoBoardSingleAction implements Action {
 								HttpServletResponse response) throws Exception {
 		System.out.println("AnoBoardSingleAction excute()");
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		// 익명글 상세 정보를 담아갈 AnonyBoardBean 객체 생성
 		AnonyBoardBean boardSingle = new AnonyBoardBean();
 		

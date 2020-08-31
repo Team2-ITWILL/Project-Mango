@@ -35,7 +35,7 @@ public class AnoBoardFileDownAction implements Action {
 		
 		// [파일이 저장된 경로와 파일 이름을 붙이기]
 		String uploadFileName 
-			= request.getRealPath("O_aca_regFiles") + 
+			= request.getRealPath("/O_aca_regFiles") + 
 			  "/" + filename;
 		
 		// [해당 파일 객체 생성하기]

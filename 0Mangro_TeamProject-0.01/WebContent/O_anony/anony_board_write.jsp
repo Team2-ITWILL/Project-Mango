@@ -84,32 +84,33 @@
 <!-------------------------------------------------------- [글쓰기 영역 (form)] ----------------------------------------------------------->
 					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
-					         <!-- 1.세션에 있는 멤버email계정  -->
+					         <%-- 1.세션에 있는 멤버email계정  ---%>
 					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="${id_email}">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
-							        <!-- 2.닉네임 -->
+							        
+					         <%-- 2.닉네임 ---%>
 								        <input type="hidden" class="form-control" name="ano_board_nick" id="anony_board_nick" value="${nick}"> 
 								    </div>
 								    
 								    
-								    <!-- ---------------------------------------------------- -->
+								    <%-- ----------------------------------------------------%>
 								    
 							        <div class="form-group mb-8">
-							        <!-- 3.제목 -->
+					         <%-- 3.제목 ---%>
 								        <label class="form-label" for="anony_title">제목</label>
 								        <input type="text" class="form-control" name="ano_board_title" id="anony_title" placeholder="제목을 입력해 주세요."> 
 								    </div>
 								    
-							        <!-- 4.본문 -->
+					         <%-- 4.본문 ---%>
 							        <div class="form-group mb-8">
 							        	<label class="form-label" for="anony_content">본문</label>
 										<textarea name="ano_board_content" class="form-control" placeholder="내용을 입력해주세요." data-msg="내용을 입력해주세요." 
 										rows="10" required id="id_text"></textarea>
 		       						</div>
 				       							 
-							        <!-- 5.파일 -->
+					         <%-- 5.파일 ---%>
 							        	<label class="form-label" for="anony_file">파일업로드</label>
 						              	<div class="form-group files">
 						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf"  id="anony_file" multiple="">

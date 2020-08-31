@@ -18,11 +18,14 @@ public class AnoBoardUpdateAction implements Action {
 								HttpServletResponse response) throws Exception {
 		System.out.println("AnoBoardUpdateAction excute()");
 		
+		request.setCharacterEncoding("UTF-8");
+
+		
 		// [파일 업로드 처리]
 		MultipartRequest multi = null;
 		
 		int sizeLimit = 1000*1024*1024;
-		String realPath = request.getRealPath("O_aca_regFiles");
+		String realPath = request.getRealPath("/O_aca_regFiles");
 		System.out.println(realPath);
 		
 		multi = new MultipartRequest(
@@ -41,12 +44,15 @@ public class AnoBoardUpdateAction implements Action {
 		anbean.setAno_board_num(ano_board_num);
 		anbean.setAno_board_title(multi.getParameter("ano_board_title"));
 		anbean.setAno_board_content(multi.getParameter("ano_board_content"));
-		anbean.setAno_board_file(multi.getParameter("ano_board_file"));
+		anbean.setAno_board_file(multi.getFilesystemName("ano_board_file"));
+		
+		// [수정할 정보 중 ip]
+		anbean.setAno_board_ip((String)request.getRemoteAddr());
 		//anbean.setAno_board_nick(request.getParameter("nick"));
 		// 보내는 정보 : mem_email, ano_board_num, ano_board_nick,
 		// ano_board_title, ano_board_content, ano_board_file
 		
-		System.out.println(anbean);
+		System.out.println("AnoBoardUpdateAction에서 anbean값 확인 : "+anbean);
 		
 		// [글 수정 쿼리실행을 위해 DAO 생성]
 		AnonyBoardDAO andao = new AnonyBoardDAO();
