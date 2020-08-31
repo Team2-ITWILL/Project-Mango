@@ -230,42 +230,6 @@ li.thirdKey {
 	
 	
 	
-	function SubSearch(){
-		
-		
-		search1=$("#courses_search_select1 option:selected").val();
-		search2=$("#courses_search_select2 option:selected").val();
-		search3=$("#courses_search_select3 option:selected").val();
-		search4=$("#courses_search_select4 option:selected").val();
-		mainsearch=$("#mainsearch").val();
-		
-		
-			$.ajax({
- 				type:"get",
- 				async:true,
- 				url:"AcademySearchList.aca?select1="+search1+ "&select2="+search2+ "&select3="+search3+ "&select4="+search4+"&mainsearch="+ mainsearch,
-// 				data:{select1 :search1, select2 : search2 , select3 : search3,select4:search4,select5:search5 , mainsearch:mainsearch },
- 				dataType:"text",
- 				error:function(){
- 				
- 					alert("에러가 발생했습니다");
-					
-	 	
- 				
- 				}	
-			
-	
-			
-			
-			
-			});
-		
-
-	}
-	
-	
-	
-	
 	
 	
 		
