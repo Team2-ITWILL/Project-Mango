@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -150,6 +150,19 @@
     font-size: 14px;
     margin-bottom: 5px;
 }
+
+.content{
+    outline: 2px dashed #92b0b3 ;
+    outline-offset:-10px;  
+    text-align: center;
+    transition: all .15s ease-in-out;
+    width: 300px;
+    height: 300px;
+    background-color: gray;
+}
+
+
+
 </style>
 
 </head>
@@ -180,8 +193,8 @@
 						        	<div class="form-group mb-8" style="display: grid; ">
 						        		<label class="form-label" for="academy_address" style="margin-bottom:10px;"><span>학원 주소</span></label> 
 
-											<input type="text" name="addr_zip" class="input-field form-control" id="sample4_postcode" placeholder="우편번호"> 
-											<input type="text" name="addr_doro" class="input-field form-control" id="sample4_roadAddress" placeholder="도로명주소"> 
+											<input type="text" name="addr_zip" class="input-field form-control" id="sample4_postcode" placeholder="우편번호" required> 
+											<input type="text" name="addr_doro" class="input-field form-control" id="sample4_roadAddress" placeholder="도로명주소" required> 
 											<span id="guide" style="color:#999;display:none"></span>
 											<!-- ▼ [아래 3개 컬럼]db에 컬럼이 없어 hidden처리함(삭제시 api 작동불능을 방지하기 위해 남겨둠) -->
 											<input type="hidden" name="addr_jibun" class="input-field form-control" id="sample4_jibunAddress" placeholder="지번주소(선택)"> <br>
@@ -198,7 +211,7 @@
 						      		
 							        <div class="form-group mb-8">
 								        <label class="form-label" for="anony_pwd"><span>학원 이름</span></label>
-								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원"> 
+								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원" required> 
 								    </div>
 								    
 <%---------------------[사진첨부 가이드]-----------------------------------------------------------------------------------------------%>
@@ -244,34 +257,53 @@
 							      	</div>
 				       							 
 							        	<label class="form-label" for="anony_file"><span>사업자 등록증</span></label>
+						              	<!-- <div class="form-group files" id="test1"> -->
 						              	<div class="form-group files" id="test1">
-						                	<input type="file" class="form-control color file"  						                		 
+						              		
+						                	<input type="file" class="form-control color file" 
+						                		   name="file1"					                		 
 						                		   id="file1"
-						                		   onclick="uploadFile(this, 'fNameCompany')">
+						                		   onchange="uploadFile(this, 'fNameCompany', 'f_size_company')"
+						                		   required>
 						             
-							          			<!-- <button type="button" 
-							          				class="hideBtn" 
-							          				onchange="changeValue(this)">첨부파일</button> -->
-						          			<button type="button" class="hideBtn">첨부파일</button>
+						          			<button type="button" 
+						          					class="hideBtn"
+						          					onclick="hideFileBtn(this, 'file1')">첨부파일</button>
 						          			
 						    				<input type="hidden" name="fNameCompany">	
+						    				<input type="hidden" name="f_size_company">	
+						    				
 						              	</div>
 						              	
 							        	<label class="form-label" for="anony_file"><span>대표자 신분증/재직증명서</span></label>
 						              	<div class="form-group files">
 						                	<input type="file" class="form-control color file"  
-						                		   id="file2">
-						                		   <!-- onclick="uploadFile(this, 'fNameOwner')"> -->
+						                	       name="file2"		
+						                		   id="file2"
+						                		   onchange="uploadFile(this, 'fNameOwner', 'f_size_owner')"
+						                		   required>                	
+						                		
 							          		<button type="button" 
-							          				class="hideBtn">첨부파일</button>
+							          				class="hideBtn"
+							          				onclick="hideFileBtn(this, 'file2')"
+							          				>첨부파일</button>
 							          				
-							          		<input type="hidden" name="fNameOwner">			
+							          		<input type="hidden" name="fNameOwner">		
+							          		<input type="hidden" name="f_size_owner">		
 						              	</div>
 		       							 
 		       							<span>학원 등록은 신청일로부터 3일 이내로 완료될 예정입니다.</span> 
 							        <div class="textwriteBtn">
 							          <button type="submit" class="btn btn-write" style="margin-top: 50px;">등록요청</button>
 							        </div>
+							        
+							        <!-- 드래그 테스트용 태그 -->
+							        <!-- <p>drag and drop your image!</p>
+									<div class="content">
+										<h1>test</h1>
+										<p>adsfaaf</p>
+									</div> -->
+																       
 						      </div>
 					      </form>
 				    </div>
@@ -284,56 +316,200 @@
 
 <!------------------------------------------------------- [스크립트 영역] -------------------------------------------->
 
-	<script type="text/javascript">
-	
-		// [input type='file' 버튼 숨기기]
-		$(function () {
-			$('.hideBtn').click(function (e) {
-				$('.file').click();
-			});
-		});
-		
-		
-		function changeValue(obj){
-		
-		    alert(obj.value);
+	<script type="text/javascript">	
 		 
+		// [input type='file' 버튼 숨기기] -> hideBtn 뒤에 가려짐
+		function hideFileBtn(hideBtn, fileTagID){				 
+			 document.getElementById(fileTagID).click();	
+		}			
 		
-		} 
+		// 파일선택 시 배경이미지 변경 함수
+		function changeImg(files, target) {
+			//var files = uploadFile.files;
+
+			if (files != null) {
+
+				if (files.length > 1) {
+					alert('파일을 하나만 올려주세요.');
+					return;
+				} else if (files.length < 1) {
+					alert('폴더 업로드 불가');
+					return;
+				}
+
+				//이미지 파일이면 input태그에 값 넣기 & 배경이미지 등록
+				if (files[0].type.match(/image.*/)) {
+					//배경 이미지 등록(css)
+					$(target).css(
+							{
+								"background-image" : "url("
+										+ window.URL.createObjectURL(files[0])
+										+ ")",
+								"outline" : "none",
+								"background-size" : "100% 100%"
+							});
+				} else {
+					alert('이미지가 아닙니다.');
+					return;
+				}
+
+			}
+		}
+
+		//file태그에 파일이 선택된 후에 변화된 값을 인지하는 onchange이벤트가 발생할 때 uploadFile 함수 실행
+		// -> onclick이벤트에 업로드함수를 실행하면 파일선택보다 먼저 수행되어 첨부파일버튼을 다시 클릭해야 업로드가 실행되는 문제 발생
 		
-		//-----------------------------------------------------
-		
-		function uploadFile(uploadFile, inputTagName){				
-			
+		function uploadFile(uploadFile, name, size) {
+
+			//파일선택 후 배경이미지 변경 함수
+			var files = uploadFile.files;
+			changeImg(files, uploadFile);
+
 			var formData = new FormData();
-			
 			formData.append("file", uploadFile.files[0]);
-			//formData.append("file", $("#file1")[0].files[0]);
-			
-			alert(inputTagName);
-			
-			$.ajax({			
+			//formData.append("file", $("#file1")[0].files[0]);		
+			//var uploadPath = './O_aca_regFiles/upload/images/';
+			console.log('uploadFile.files[0] : ' + uploadFile.files[0]);
+			console.log('uploadFile : ' + uploadFile);
+
+			$.ajax({
+						data : formData,
+						type : "POST",
+						url : "./registerUpload.areg",
+						contentType : false,
+						processData : false,
+						enctype : 'multipart/form-data',
+						success : function(data) {
+	
+							console.log('data : ' + data);
+	
+							//파일 경로 및 이름
+							document.getElementsByName(name)[0].value = data;
+							//파일 크기
+							document.getElementsByName(size)[0].value = uploadFile.files[0].size;
+	
+							//확인용 출력문
+							console.log(name
+											+ ': '
+											+ document.getElementsByName(name)[0].value);
+							console.log(size
+											+ ': '
+											+ document.getElementsByName(size)[0].value);
+							console.log('size : '
+									+ document.getElementsByName(size)[0].value
+									/ 1024 + "kb");
+							console.log('data : ' + data);
+	
+						}
+					});
+		}
+
+		//드래그앤드롭 이벤트
+		//$('.content')
+		$('.files')
+			.on('dragover', dragOver)
+			.on('dragleave', dragOver)
+			.on('drop', uploadFiles);
+
+		// dragover/dragleave event
+		// e.target : 이벤트가 발생한 div태그
+		function dragOver(e) {
+			e.stopPropagation(); //현재 이벤트가 상위로 전파되지 않도록 중단함
+			e.preventDefault(); //현재 이벤트의 기본동작을 중단함			
+
+			if (e.type == 'dragover') {
+				//e.target : 이벤트가 발생한 div태그
+				$(e.target).css({
+					'background-color' : 'gray',
+					'outline-offset' : '-20px'
+				});
+			} else {
+				$(e.target).css({
+					'background-color' : 'white',
+					'outline-offset' : '-10px'
+				});
+			}
+		}
+
+		//drop event
+		function uploadFiles(e) {
+			e.stopPropagation();
+			e.preventDefault();
+
+			//드래그오버 이벤트(css) 
+			dragOver(e);
+
+			var files = e.originalEvent.dataTransfer.files;
+			changeImg(files, e.target);
+
+			if (files != null) {
+
+				if (files.length > 1) {
+					alert('파일을 하나만 올려주세요.');
+					return;
+				} else if (files.length < 1) {
+					alert('폴더 업로드 불가');
+					return;
+				}
+
+				//이미지 파일이면 input태그에 값 넣기 & 배경이미지 등록
+				if (files[0].type.match(/image.*/)) {
+					//배경 이미지 등록(css)
+					$(e.target).css(
+							{
+								"background-image" : "url("
+										+ window.URL.createObjectURL(files[0])
+										+ ")",
+								"outline" : "none",
+								"background-size" : "100% 100%"
+							});
+				} else {
+					alert('이미지가 아닙니다.');
+					return;
+				}
+
+				//이벤트가 발생한 input file태그 value값에 추가
+				e.target.val = files[0];
+				//input file태그 required 속성 없애기
+				$(e.target).attr('required', false);
+
+				//형제 태그 중 파일이름, 파일크기를 저장할 input태그를 선택하여 upload함수의 매개변수에 넣어줌 	
+				var fileTag = document.getElementsByName(e.target.name)[0];
+				var fileName = $(e.target).siblings()[1];
+				var fileSize = $(e.target).siblings()[2];
+
+				//console.log('fileTag : ' + fileTag);
+				//console.log('fileName : ' + fileName);
+				//console.log('fileSize : ' + fileSize);
+
+				/////////////////////////////////////////
+				//이미지파일 서버에 업로드(ajax)
+				var formData = new FormData();
+				formData.append("file", e.target.val);
+				$.ajax({
 					data : formData,
-					type : "POST",					
+					type : "POST",
 					url : "./registerUpload.areg",
 					contentType : false,
 					processData : false,
-					enctype: 'multipart/form-data',
-					success : function(data){									
-						
-						document.getElementsByName(inputTagName)[0].value = data;
-						
-						console.log(inputTagName + ': ' + document.getElementsByName(inputTagName)[0].value);
-						console.log('data : ' + data);			
-						
-						//$("#test1").before('content', '123123');		
-					}				
-				});		
-			}  	
-	
+					enctype : 'multipart/form-data',
+					success : function(data) {
+						//파일 경로 및 이름
+						fileName.value = data;
+						//파일 크기
+						fileSize.value = e.target.size;
+
+						//확인용 출력문
+						//console.log('name : ' + fileName.value);
+						//console.log('size : ' + fileSize.value);
+						//console.log('data : ' + data);
+					}
+				});
+
+			} else {
+				alert("error");
+			}
+		}
 	</script>
-
-
-
 </body>
 </html>

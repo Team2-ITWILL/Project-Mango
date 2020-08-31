@@ -22,6 +22,11 @@ public class AuditRequestListAction implements Action{
 		
 		AuditRequestDAO dao = new AuditRequestDAO();
 		
+		int count = dao.getAuditCount();
+		int count_app = dao.getAuditCountApproval();
+		System.out.println("누적 청강수 : " + count);
+		System.out.println("승인된 청강수 : " + count_app);
+		
 		AuditRequestBean bean = new AuditRequestBean();
 		
 		//학원지정번호 바인딩

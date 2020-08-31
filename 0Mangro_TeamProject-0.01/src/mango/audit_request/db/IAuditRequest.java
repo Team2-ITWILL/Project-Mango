@@ -21,7 +21,13 @@ public interface IAuditRequest {
 	public int CheckAuditList(AuditRequestBean check);
 
 	//청강 신청 승인(학원관리자)
-	public int ApprovalAudit(AuditRequestBean app);
+	public int ApprovalAudit(AuditRequestBean app, String check);
+	
+	//누적 청강수 불러오기
+	public int getAuditCount();
+	
+	//승인된 청강 개수
+	public int getAuditCountApproval();
 	
 	
 	
