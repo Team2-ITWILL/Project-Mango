@@ -14,11 +14,18 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	@Override
 	public List<AcademyBean> AllAcademyList(int StartRow, int pageSize) {
 		List<AcademyBean> list = new ArrayList<AcademyBean>();
+
+		
 		try {
 			getConnection();
 			AcademyBean bean;
-			String sql = "select * from academy limit ?, ?";
-			
+			String sql =" select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+								 					+" from academy_review) r"
+						 +" on a.aca_main_num=r.aca_main_num"  
+ 						 +" limit ?,?";
+ 
+			 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, StartRow);
 			pstmt.setInt(2, pageSize);			
@@ -29,10 +36,17 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
 						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), 
 						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)
+						,rs.getDouble(17)
 						);	
+			
 				
-				list.add(bean);				
+				list.add(bean);	
+				
+				
+			
 			}			
+			
+			
 			
 		} catch (Exception e) {
 			System.out.println("AllAcademyList()에서 예외 발생");
@@ -624,18 +638,20 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			try {
 				getConnection();
-			
+		
 				
 				//검색창에만 입력했을시에
 			if(formsearch.get("main")!=null&&formsearch.get("s1")==null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null ){
 				
-				sql="select * "
-				+" from academy "                           
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+								 					+" from academy_review) r"
+						 +" on a.aca_main_num=r.aca_main_num"                      
 				+" where aca_name like ? " 
-				+" or aca_search_addr1 like ? " 
-				+" or aca_search_addr2 like ? " 
-				+" or aca_search_addr3 like ? "
-				+" or aca_category1 like ? "
+				+" or a.aca_search_addr1 like ? " 
+				+" or a.aca_search_addr2 like ? " 
+				+" or a.aca_search_addr3 like ? "
+				+" or a.aca_category1 like ? "
 				+ " limit ? , ?";
 				
 				
@@ -659,10 +675,12 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 			
 				
-				sql="select * "
-						+" from academy "                           
-						+" where aca_name like ? " 
-						+" and aca_search_addr1 = ? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                    
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 = ? "
 						+ " limit ? , ?";
 						pstmt=con.prepareStatement(sql);
 						
@@ -679,11 +697,13 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
 				
-				sql="select * "
-						+" from academy "                           
-						+" where aca_name like ? " 
-						+" and aca_search_addr1 = ? "
-						+" and aca_category1 = ? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                              
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 = ? "
+						+" and a.aca_category1 = ? "
 						+ " limit ? , ?";
 				
 				pstmt=con.prepareStatement(sql);
@@ -701,10 +721,12 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
 				
-				sql="select *"
-						+" from academy "                            
-						+" where aca_search_addr1 = ? "
-						+" and aca_category1 = ? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                          
+						+" where a.aca_search_addr1 = ? "
+						+" and a.aca_category1 = ? "
 						+" limit ? , ?";
 						
 				pstmt=con.prepareStatement(sql);
@@ -720,10 +742,12 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 X
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 				
-				sql="select * "
-					+" from academy "                           
-					+" where aca_search_addr1 = ? "
-				    +" limit ? , ?";
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+					+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+								 					+" from academy_review) r" 
+				    +" on a.aca_main_num=r.aca_main_num "  
+					+" where a.aca_search_addr1 = ? "
+				    +" limit ? , ? ";
 				
 				pstmt=con.prepareStatement(sql);
 				
@@ -737,12 +761,14 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 O , 광역시도 선택 O,지역구 O , 카테고리 선택 O
 			else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
-				sql="select * "
-						+" from academy "                           
-						+" where aca_name like ? " 
-						+" and aca_search_addr1 =? " 
-						+" and aca_search_addr2 =? " 
-						+" and aca_category1 =? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                     
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
 						+" limit ? , ?";
 				
 				pstmt=con.prepareStatement(sql);
@@ -760,11 +786,13 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 O	
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
-				sql="select * "
-						+" from academy "                           
-						+" where aca_search_addr1 =? " 
-						+" and aca_search_addr2 =? " 
-						+" and aca_category1 =? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                              
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
 						+" limit ? , ?";
 				pstmt=con.prepareStatement(sql);
 				
@@ -780,10 +808,12 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 X	
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 				
-				sql="select * "
-						+" from academy "                           
-						+" where aca_search_addr1 =? " 
-						+" and aca_search_addr2 =? "
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                               
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? "
 						+" limit ? , ?";
 				pstmt=con.prepareStatement(sql);
 				
@@ -798,13 +828,15 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//전체 검색 창 입력 O , 광역시도 선택 O,지역구 O ,읍면동 O , 카테고리 선택 O	
 		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
 			
-			sql="select * "
-					+" from academy "                           
-					+" where aca_name like ? " 
-					+" and aca_search_addr1 = ? " 
-					+" and aca_search_addr2 = ? " 
-					+" and aca_search_addr3 = ? " 
-					+" and aca_category1 = ? "
+			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                             
+					+" where a.aca_name like ? " 
+					+" and a.aca_search_addr1 = ? " 
+					+" and a.aca_search_addr2 = ? " 
+					+" and a.aca_search_addr3 = ? " 
+					+" and a.aca_category1 = ? "
 					+" limit ? , ?";
 			pstmt=con.prepareStatement(sql);
 			
@@ -823,12 +855,14 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	     // 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 O			
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
 			
-			sql="select * "
-					+" from academy "                           
-					+" where aca_search_addr1 =? " 
-					+" and aca_search_addr2 =? " 
-					+" and aca_search_addr3 =? " 
-					+" and aca_category1 =? "
+			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                   
+					+" where a.aca_search_addr1 =? " 
+					+" and a.aca_search_addr2 =? " 
+					+" and a.aca_search_addr3 =? " 
+					+" and a.aca_category1 =? "
 					+" limit ? , ?";
 			pstmt=con.prepareStatement(sql);
 			
@@ -845,11 +879,13 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
 			
-			sql="select * "
-					+" from academy "                           
-					+" where aca_search_addr1 =? " 
-					+" and aca_search_addr2 =? " 
-					+" and aca_search_addr3 =? "
+			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                       
+					+" where a.aca_search_addr1 =? " 
+					+" and a.aca_search_addr2 =? " 
+					+" and a.aca_search_addr3 =? "
 					+" limit ? , ?";
 			pstmt=con.prepareStatement(sql);
 			
@@ -864,8 +900,10 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}		
 		else{//그냥 검색하기 만 눌렀을 경우
 			
-			sql="select * "
-					+" from academy "
+			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "    
 					+" limit ? , ?";
 					 
 			pstmt=con.prepareStatement(sql);
@@ -889,8 +927,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				AcademyBean bean = new AcademyBean(
 						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
 						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), 
-						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)
-						);	
+						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15),
+						rs.getDouble(17));	
 				
 				list.add(bean);				
 			}			

@@ -144,9 +144,10 @@ public class AcademyListAction implements Action{
 		request.setAttribute("pageBlock", pageBlock);//보여줄 페이지 수
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
-		request.setAttribute("Page","AcademyList.aca");
+		request.setAttribute("Page","AcademyList.aca?");
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
+		
 		
 		return forward;
 	}
