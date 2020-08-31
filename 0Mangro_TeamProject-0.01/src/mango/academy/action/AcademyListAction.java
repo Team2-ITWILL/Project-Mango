@@ -130,7 +130,7 @@ public class AcademyListAction implements Action{
 		if(endPage>pageCount){
 			
 			endPage=pageCount;
-			
+			   
 		}
 		
 		

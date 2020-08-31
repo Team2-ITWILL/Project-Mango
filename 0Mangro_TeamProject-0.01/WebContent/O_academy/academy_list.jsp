@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="styles/academy_list_responsive.css">
 <link href="styles/table_style.css" rel="stylesheet">
    
-
+       
 <style type="text/css">
 
 li.firstKey {
