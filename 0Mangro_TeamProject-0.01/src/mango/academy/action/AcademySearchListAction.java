@@ -27,7 +27,7 @@ public class AcademySearchListAction implements Action {
 		String select1=request.getParameter("select1");
 		String select2=request.getParameter("select2");
 		String select3=request.getParameter("select3");
-		String select4=request.getParameter("select4");
+		String select4=request.getParameter("select4");  
 		System.out.println(request.getParameter("select5"));
 		
 		

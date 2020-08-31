@@ -861,7 +861,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						 +" on a.aca_main_num=r.aca_main_num "                   
 					+" where a.aca_search_addr1 =? " 
 					+" and a.aca_search_addr2 =? " 
-					+" and a.aca_search_addr3 =? " 
+					+" and a.aca_search_addr3 =? "   
 					+" and a.aca_category1 =? "
 					+" limit ? , ?";
 			pstmt=con.prepareStatement(sql);
