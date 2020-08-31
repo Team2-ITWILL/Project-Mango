@@ -110,24 +110,37 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 	}
 
 	@Override
-	public int ApprovalAudit(AuditRequestBean app) {
+	public int ApprovalAudit(AuditRequestBean app, String check) {
 		
 		int result = 0;
 		try {
 			getConnection();
-			String sql = "update audit_request "
-					+ "set audit_confirm_date = curdate() "
-					+ "where audit_num = ? and aca_num = ?";
+			
+			System.out.println("check : " + check);
+			System.out.println("getAuditNum : " + app.getAuditNum());
+			System.out.println("getAcaNum : " + app.getAcaNum());
+			
+			String sql = null;
+			if(check.equals("approve")){
+				sql = "update audit_request "
+						+ "set audit_confirm_date = curdate() "
+						+ "where audit_num = ? and aca_num = ?";
+				
+			}else if(check.equals("reject")){
+				sql = "update audit_request "
+						+ "set audit_confirm_date = null "
+						+ "where audit_num = ? and aca_num = ?";
+				
+			}else if(check.equals("delete")){
+				sql = "delete from audit_request "					
+						+ "where audit_num = ? and aca_num = ?";
+			}			
 			
 			pstmt = con.prepareStatement(sql);	
 			pstmt.setInt(1, app.getAuditNum());
 			pstmt.setInt(2, app.getAcaNum());
 			
-			result = pstmt.executeUpdate();
-			
-			
-			System.out.println("getAuditNum : " + app.getAuditNum());
-			System.out.println("getAcaNum : " + app.getAcaNum());
+			result = pstmt.executeUpdate();				
 			
 		} catch (Exception e) {
 			System.out.println("ApprovalAudit()에서 예외 발생");
@@ -143,8 +156,7 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		int result = 0;
 		try {
 			getConnection();
-			String sql = "update audit_request "
-					+ "set audit_confirm_date = null "
+			String sql = "delete from audit_request "					
 					+ "where audit_num = ? and aca_num = ?";
 			
 			pstmt = con.prepareStatement(sql);	

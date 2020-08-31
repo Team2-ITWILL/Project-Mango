@@ -22,18 +22,15 @@ public class AuditRequestApproval implements Action{
 		String check = request.getParameter("check");			
 
 		int result;	
-		AuditRequestDAO dao = new AuditRequestDAO();		
-		if(check.equals("true")){
-			result = dao.ApprovalAudit(bean);
-		}else{
-			result = dao.DeleteAudit(bean);
-		}
+		AuditRequestDAO dao = new AuditRequestDAO();
+		
+		result = dao.ApprovalAudit(bean, check);	
 		
 		if(result == 0){
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			//out.println("alert('실패')");
+			out.println("alert('실패')");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();				
@@ -42,7 +39,7 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			//out.println("alert('성공')");
+			out.println("alert('성공')");
 			out.println("location.href='./ListAction.adrq'");
 			out.println("</script>");	
 			out.close();				
