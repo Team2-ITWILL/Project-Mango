@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -96,24 +97,41 @@
 						<%-- 제목, 닉네임, 조회수, 날짜 --%>
 						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">${boardSingle.ano_board_nick }</span>
 						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_read }</span>
-						<img src="images/etc/date.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_date }</span>
-						
-						<%-- 내용 --%>
-						<div class="comment_text">
-							<p>${boardSingle.ano_board_content }</p> <br><br>
-							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
-						</div>
+						<img src="images/etc/date.png" width="20"> 
+							<span class="icons_margin">
+							<fmt:formatDate value="${boardSingle.ano_board_date}" pattern ="yyyy.MM.dd KK:mm:ss" type="both"/>
+							<%-- ${boardSingle.ano_board_date } --%>
+							</span>
 						
 						<%-- 첨부파일 --%>
 						<%-- 아이프레임을 이용한 다운로드 --%>
 						<iframe id="ifrm_filedown" style="position:absolute; z-index: 1; visibility: hidden;">
 						</iframe>
 						
-						<%-- 첨부파일 다운을 위해 클릭하는 영역 --%>
-						<div onclick="fileDown('${boardSingle.ano_board_num }')">
-							<i class="fa fa-download" aria-hidden="true"></i>
-							<a style="cursor: pointer;"><span class="fileSpan">${boardSingle.ano_board_file }</span> </a>
+						<%-- 내용 --%>
+						<div class="comment_text">
+							<p>${boardSingle.ano_board_content }</p> <br><br>
+							
+							
+							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 --%>
+							<c:choose>
+								<c:when test="${boardSingle.ano_board_file ne null}">
+									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="100"></p>
+								</c:when>
+							</c:choose>
+							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
 						</div>
+						
+						
+						<%-- 첨부파일 다운을 위해 클릭하는 영역 --%>
+							<c:choose>
+								<c:when test="${boardSingle.ano_board_file ne null}">
+									<div onclick="fileDown('${boardSingle.ano_board_num }')">
+										<i class="fa fa-download" aria-hidden="true"></i>
+										<a style="cursor: pointer;"><span class="fileSpan">${boardSingle.ano_board_file }</span> </a>
+									</div>
+								</c:when>
+							</c:choose>
 						
 						<hr>
 						
@@ -152,7 +170,7 @@
 <!------------------------------[대댓글, 댓글수정 form 표시영역(각 버튼 클릭하면 숨겨져있던 form태그 나타나도록)]  ------------------------------------------------------------>
 
 								<!-- (대댓글 쓰기 form) -->
-								<form class="" action="" method="post" style="display: none;">
+								<form class="" action="" method="post">
 						      		<div class="form-group mb-8">
 						      		
 										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
