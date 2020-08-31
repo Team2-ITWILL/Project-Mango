@@ -1,4 +1,5 @@
 
+
 package mango.anony_board.action;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ public class AnoBoardWriteAction implements Action {
 
 			System.out.println("AnoBoardWriteAction excute()");
 	
+			request.setCharacterEncoding("UTF-8");
+			
 			// 랜덤 닉 보내기
 			AnonyBoardDAO andao = new AnonyBoardDAO();
 			String nick = andao.getRandomNickname();
@@ -36,4 +39,3 @@ public class AnoBoardWriteAction implements Action {
 	
 
 }
-
