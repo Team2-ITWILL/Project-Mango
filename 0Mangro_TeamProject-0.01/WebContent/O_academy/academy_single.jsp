@@ -22,6 +22,8 @@
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
+<link href="styles/table_style.css" rel="stylesheet">
+
 
 <style type="text/css">
 
@@ -56,6 +58,7 @@
 	clear : both;
 	background-image: url('images/academy/blind1.PNG');
 	background-repeat: no-repeat;
+	background-size: contain;
 }
 
  
@@ -111,7 +114,7 @@
 }
 
 .blind_top_div{
-	height: 450px;
+	height: 350px;
 }
 
 .no_membership{
@@ -125,8 +128,13 @@
     padding : 10px;
     
     text-align: center;
-    top: 180px;
+    top: 100px;
     border-radius: 5px;
+}
+.review_subject{
+	font-weight: 700;
+    color: #384158;
+	margin-bottom: 20px;
 }
 
 .review_login{
@@ -135,21 +143,33 @@
 	width : 180px;
 	height : 40px;
 	text-align: center;
-	padding : 5px;
+	padding : 6px;
 	background-color: #6610f2;
 	margin : 10px auto;
 	cursor: pointer;
+	transition:all .9s;
 }
 .review_btn{
 	color: #fff !important;
 	border-radius: 5px;
 	border : none;
 	width : 50px;
-	padding : 5px;
+	padding : 6px;
 	float : right;
 	background-color: #6610f2;
 	cursor: pointer;
 	margin : 0 4px;
+	transition:all .9s;
+}
+
+.review_btn:hover, .review_login:hover {
+	box-shadow: 0 80px 0 0 rgba(0,0,0,0.20) inset, 
+				0 -80px 0 0 rgba(0,0,0,0.20) inset;
+}
+
+.pagination{
+	margin-top: 20px;
+	margin-left: 210px;
 }
 </style>
 
@@ -426,7 +446,6 @@
 						<div class="aca_like_button" id="likeAcademy">
 						</div>
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
-						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
 						<div class="cheongang tab_panel_registerBtn"
 							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'"
 						>
@@ -718,6 +737,7 @@
 															</c:if>
 															<!-- 유료회원이면 보이는 형태 -->
 															<c:if test="${id_email ne null}">
+																<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
 																<p><span class="strength">장점</span><br>
 																	${reBean.reviewGood}
 																</p>
@@ -748,6 +768,7 @@
 														</c:if>
 													</div>
 												</div>
+												</div>
 											</li>
 											
 											
@@ -770,6 +791,75 @@
 									</div>
 								</div>
 							</div>
+							
+							 <!-- 끝 페이지 앞으로가기 설정 -->
+					   
+                    
+                    
+                    
+                    
+                    
+					<!-- </ul> -->  
+					
+					<ul class="pagination">
+					 <!-- << (첫페이지로 가기) -->
+					  <li class="page-item"> 
+					  	<a class="page-link prev" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=1">
+					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
+					  	</a>
+					  </li>
+					  
+					<c:if test="${count!=0}"> 
+                    <!-- < (이전페이지 가기) 설정-->
+					  <li class="page-item active">
+					  	<c:if test="${startPage-pageBlock<=0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pN}">
+					  		<i class="fa fa-angle-left" aria-hidden="true"></i>
+					  	</a>	
+					  
+					  
+					  </li>
+					
+					
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<=pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pP}">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+						</a>
+					  </li>
+                    
+                    
+                    
+                    
+                    
+                    <!-- >> (마지막페이지 가기)-->
+					  <li class="page-item">
+					  	<a class="page-link next" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pageCount}">
+						  	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+						</a>
+					  </li>
+					</c:if>		 
+					</ul>  	 
 						</div> <!-- 전체 탭 마지막 태그-->
 					</div>
 				</div>
