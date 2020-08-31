@@ -109,7 +109,7 @@ public class AcademyListAction implements Action{
 		
 		List<AcademyBean> Academylist =null;
 		
-		System.out.println("시작페이지" +startRow);
+		System.out.println("시작페이지" +startRow);  
 		
 		
 		if(count != 0){

@@ -21,7 +21,7 @@
 <link href="styles/table_style.css" rel="stylesheet">
    
        
-<style type="text/css">
+<style type="text/css">   
 
 li.firstKey {
     background-color: #66b5dd !important;

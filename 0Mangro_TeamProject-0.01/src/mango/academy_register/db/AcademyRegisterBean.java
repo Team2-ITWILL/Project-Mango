@@ -64,7 +64,7 @@ public class AcademyRegisterBean {
 		return memAddrDoro;
 	}
 
-	public void setMemAddrDoro(String memAddrDoro) {
+	public void setMemAddrDoro(String memAddrDoro) { 
 		this.memAddrDoro = memAddrDoro;
 	}
 

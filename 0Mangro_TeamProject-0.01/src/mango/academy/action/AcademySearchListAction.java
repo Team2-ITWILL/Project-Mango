@@ -19,7 +19,7 @@ public class AcademySearchListAction implements Action {
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		HashMap<String,Object> Formsearch  = new HashMap<String,Object>(); 
-		
+		   
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session=request.getSession();
 		

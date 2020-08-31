@@ -18,7 +18,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		try {
 			getConnection();
-			AcademyBean bean;
+			AcademyBean bean;  
 			String sql =" select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
 								 					+" from academy_review) r"

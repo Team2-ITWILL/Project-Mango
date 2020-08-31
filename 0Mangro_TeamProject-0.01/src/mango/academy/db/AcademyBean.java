@@ -45,7 +45,7 @@ public class AcademyBean {
     // 상세주소 
     private String acaAddrDetailed;
     
-    //학원 관리자
+    //학원 관리자   
     private String mem_email;
 
     private double reviewScore;
