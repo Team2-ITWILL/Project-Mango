@@ -165,4 +165,54 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		return result;
 	}
 
+	@Override
+	public int getAuditCount() {
+		int count = 0;
+		try {
+			getConnection();
+			String sql = "select count(*) from audit_request";			
+			pstmt = con.prepareStatement(sql);	
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			//누적청강수
+			count = rs.getInt(1);			
+			
+		} catch (Exception e) {
+			System.out.println("getAuditCount()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return count;
+	}
+
+	@Override
+	public int getAuditCountApproval() {
+		int count = 0;
+		try {
+			getConnection();
+			String sql = "select count(*) from audit_request "
+					+ "where audit_confirm_date is not null";			
+			pstmt = con.prepareStatement(sql);	
+			rs = pstmt.executeQuery();
+			
+			rs.next();			
+			
+			count = rs.getInt(1);			
+			
+		} catch (Exception e) {
+			System.out.println("getAuditCountApproval()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return count;
+	}
+	
+	
+	
+	
+
 }
