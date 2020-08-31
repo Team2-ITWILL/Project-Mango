@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="styles/academy_list_responsive.css">
 <link href="styles/table_style.css" rel="stylesheet">
    
-
+       
 <style type="text/css">
 
 li.firstKey {
@@ -88,13 +88,13 @@ li.thirdKey {
 	$(function(){
 		
 		
-		if(${pageNum < 0}|| ${pageNum>pageCount }){
+// 		if(${pageNum < 0}|| ${pageNum>pageCount }){
 			
-			alert("없는학원페이지 목록입니다");	
-			history.back(-1);
+// 			alert("없는학원페이지 목록입니다");	
+// 			history.back(-1);
 			
-			return false;
-		}
+// 			return false;
+// 		}
 			
 		
 		
@@ -296,7 +296,6 @@ li.thirdKey {
 						<!-- 키워드선택 검색영역 -->     
 						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="post">
 				
-
 							<div class="searchInput">
 								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기" name="mainsearch" id="mainsearch">
 								<button type="submit"class="courses_search_button ml-auto searchBtn">검색하기</button>
@@ -416,7 +415,7 @@ li.thirdKey {
 														</div>
 														<div class="course_info">
 															<i class="fa fa-star" aria-hidden="true"></i>
-															평균 별점 <span>5</span>
+															평균 별점 <span>${i.reviewScore}</span>
 														</div>
 														<div class="course_price ml-auto"></div>
 													</div>
@@ -485,7 +484,7 @@ li.thirdKey {
 					  		<c:set var="pN" value="${startPage-pageBlock}"/>
 					  	</c:if>
 					  
-					  	<a class="page-link prev" href="${Page}?pageNum=${pN}">
+					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>	
 					  

@@ -123,6 +123,7 @@ public class AcademyRegisterBean {
 				+ ", fSizeOwner=" + fSizeOwner + ", fNameOwner=" + fNameOwner + ", registerDate=" + registerDate
 				+ ", confirmDate=" + confirmDate + "]";
 	}
+
 	
 	
 	
