@@ -47,7 +47,24 @@
 		    $(this).addClass('active');
 		});
 	});
-
+function checkz(){
+	
+	 
+	 var chk = document.reviewUpdate;
+	 var checked_items = 0;
+	 for (i=0;i<chk.elements.length;i++) 
+	 {
+	 if ((chk.elements[i].name == "review_score") &&
+	 (chk.elements[i].checked))
+	 checked_items++;
+	 }
+	 if (checked_items == 0)
+	 {
+	 alert("평점을 선택해주세요.")
+	 return false;
+	 }
+	 return true;
+ }
 </script>
 
 <c:if test="${id_email == null || id_email eq ''}">
@@ -73,7 +90,8 @@
 
 				      	
 				      <!-- form 시작 -->
-				      <form class="sign_upClass" action="./acaReviewUpdateAction.arev" method="post">
+				      <form class="sign_upClass" name="reviewUpdate" 
+				      onsubmit="return checkz();" action="./acaReviewUpdateAction.arev" method="post">
 				      
 				      	  <!-- ▼학원지정번호, 작성자계정 hidden으로 보내기 -->
 					        <input type="hidden" name="reviewNum" value="${param.reviewNum }">
