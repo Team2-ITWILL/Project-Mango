@@ -17,7 +17,6 @@
 
 <!----------------------------[스타일 시트]-------------------------------------------------------->
 <style type="text/css">
-
 	.btn-primary {
 	    color:#fff !important;
 	    background-color: #000 !important;
@@ -32,8 +31,6 @@
 	}
 	
 	.btn-primary:hover { background-color: #6610f2 !important;}
-
-
 	
 </style> 
 
@@ -47,7 +44,6 @@
 		    $(this).addClass('active');
 		});
 	});
-
  function checkz(){
 	
 	 
@@ -167,7 +163,6 @@
 						   </div>   
 						      
 						      
-						      
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_title">이 학원에 대한 한 줄 요약
 						        	<input type="text" class="form-control" name="review_title" 
@@ -176,10 +171,6 @@
 						        </label>
 							  </div>
 							  
-
-					      
-					      
-					      
 					      
 							    <div class="mb-5 mt-2">
 							      	<ul class="audit_notice">
@@ -191,15 +182,11 @@
 							    </div>
 					      
 					      
-					      
-					      
 								<div class="col-5 auditBtn" style="padding-left: 0">
 						          <button type="submit" class="btn btn-primary">등록하기</button>
 						        </div>
 					      </form>
 					    </div>
-
-
 
 
 				</div> <!-- class="col" -->
