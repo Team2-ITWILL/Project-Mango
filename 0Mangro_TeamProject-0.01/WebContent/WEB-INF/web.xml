@@ -174,7 +174,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>QnaBoardFrontController</servlet-name>
-    <url-pattern>*.qnab</url-pattern>
+    <url-pattern>*.qna</url-pattern>
   </servlet-mapping>  
   
   

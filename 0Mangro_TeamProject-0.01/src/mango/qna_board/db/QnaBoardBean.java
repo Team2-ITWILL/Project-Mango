@@ -1,115 +1,108 @@
 package mango.qna_board.db;
 
-import java.util.Date;
+import java.sql.Date;
 
-//문의게시판 
-public class QnaBoardBean{
+public class QnaBoardBean
+{
+  private int qna_board_num;
+  private String mem_email;
+  private String qna_board_pwd;
+  private String qna_board_title;
+  private String qna_board_content;
+  private int qna_board_read;
+  private Date qna_board_date;
+  private String qna_board_ip;
+  private int qna_re_lev;
+  private int qna_re_ref;
+  private int qna_re_seq;
 
-	 // 글번호 
-  private int qnaBoardNum;
+  public int getQna_board_num()
+  {
+    return this.qna_board_num;
+  }
 
-  // 이메일 
-  private String memEmail;
+  public void setQna_board_num(int qna_board_num) {
+    this.qna_board_num = qna_board_num;
+  }
 
-  // 비밀번호 
-  private String qnaBoardPwd;
+  public String getMem_email() {
+    return this.mem_email;
+  }
 
-  // 제목 
-  private String qnaBoardTitle;
+  public void setMem_email(String mem_email) {
+    this.mem_email = mem_email;
+  }
 
-  // 내용 
-  private String qnaBoardContent;
+  public String getQna_board_pwd() {
+    return this.qna_board_pwd;
+  }
 
-  // 조회수 
-  private int qnaBoardRead;
+  public void setQna_board_pwd(String qna_board_pwd) {
+    this.qna_board_pwd = qna_board_pwd;
+  }
 
-  // 작성일자 
-  private Date qnaBoardDate;
+  public String getQna_board_title() {
+    return this.qna_board_title;
+  }
 
-  // 아이피 
-  private String qnaBoardIp;
-  
-  
-  	public QnaBoardBean(){}
-	public QnaBoardBean(int qnaBoardNum, String memEmail, String qnaBoardPwd, String qnaBoardTitle, String qnaBoardContent,
-		int qnaBoardRead, Date qnaBoardDate, String qnaBoardIp) {
-	super();
-	this.qnaBoardNum = qnaBoardNum;
-	this.memEmail = memEmail;
-	this.qnaBoardPwd = qnaBoardPwd;
-	this.qnaBoardTitle = qnaBoardTitle;
-	this.qnaBoardContent = qnaBoardContent;
-	this.qnaBoardRead = qnaBoardRead;
-	this.qnaBoardDate = qnaBoardDate;
-	this.qnaBoardIp = qnaBoardIp;
-}
+  public void setQna_board_title(String qna_board_title) {
+    this.qna_board_title = qna_board_title;
+  }
 
-	public int getQnaBoardNum() {
-		return qnaBoardNum;
-	}
-	
-	public void setQnaBoardNum(int qnaBoardNum) {
-		this.qnaBoardNum = qnaBoardNum;
-	}
-	
-	public String getMemEmail() {
-		return memEmail;
-	}
-	
-	public void setMemEmail(String memEmail) {
-		this.memEmail = memEmail;
-	}
-	
-	public String getQnaBoardPwd() {
-		return qnaBoardPwd;
-	}
-	
-	public void setQnaBoardPwd(String qnaBoardPwd) {
-		this.qnaBoardPwd = qnaBoardPwd;
-	}
-	
-	public String getQnaBoardTitle() {
-		return qnaBoardTitle;
-	}
-	
-	public void setQnaBoardTitle(String qnaBoardTitle) {
-		this.qnaBoardTitle = qnaBoardTitle;
-	}
-	
-	public String getQnaBoardContent() {
-		return qnaBoardContent;
-	}
-	
-	public void setQnaBoardContent(String qnaBoardContent) {
-		this.qnaBoardContent = qnaBoardContent;
-	}
-	
-	public int getQnaBoardRead() {
-		return qnaBoardRead;
-	}
-	
-	public void setQnaBoardRead(int qnaBoardRead) {
-		this.qnaBoardRead = qnaBoardRead;
-	}
-	
-	public Date getQnaBoardDate() {
-		return qnaBoardDate;
-	}
-	
-	public void setQnaBoardDate(Date qnaBoardDate) {
-		this.qnaBoardDate = qnaBoardDate;
-	}
-	
-	public String getQnaBoardIp() {
-		return qnaBoardIp;
-	}
-	
-	public void setQnaBoardIp(String qnaBoardIp) {
-		this.qnaBoardIp = qnaBoardIp;
-	}
+  public String getQna_board_content() {
+    return this.qna_board_content;
+  }
 
+  public void setQna_board_content(String qna_board_content) {
+    this.qna_board_content = qna_board_content;
+  }
 
-  
+  public int getQna_board_read()
+  {
+    return this.qna_board_read;
+  }
 
+  public void setQna_board_read(int qna_board_read) {
+    this.qna_board_read = qna_board_read;
+  }
 
+  public Date getQna_board_date() {
+    return this.qna_board_date;
+  }
+
+  public void setQna_board_date(Date qna_board_date) {
+    this.qna_board_date = qna_board_date;
+  }
+
+  public String getQna_board_ip() {
+    return this.qna_board_ip;
+  }
+
+  public void setQna_board_ip(String qna_board_ip) {
+    this.qna_board_ip = qna_board_ip;
+  }
+
+  public int getQna_re_lev() {
+    return this.qna_re_lev;
+  }
+
+  public void setQna_re_lev(int qna_re_lev) {
+    this.qna_re_lev = qna_re_lev;
+  }
+
+  public int getQna_re_ref() {
+    return this.qna_re_ref;
+  }
+
+  public void setQna_re_ref(int qna_re_ref) {
+    this.qna_re_ref = qna_re_ref;
+  }
+
+  public int getQna_re_seq() {
+    return this.qna_re_seq;
+  }
+
+  public void setQna_re_seq(int qna_re_seq) {
+    this.qna_re_seq = qna_re_seq;
+  }
 }
