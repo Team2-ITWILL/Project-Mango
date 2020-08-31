@@ -100,7 +100,7 @@ public class AcademyListAction implements Action{
 		
 		
 		System.out.println(count);
-		
+
 		//시작행 번호 구하기
 		int currentPage=Integer.parseInt(pageNum);
 		

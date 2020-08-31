@@ -66,7 +66,7 @@ public class AcademySearchListAction implements Action {
 			
 			System.out.println("이값은 널입니다");
 		
-		}else{
+		}else{  
 			Formsearch.put("main",mainsearch);
 		}
 		

@@ -823,13 +823,17 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	     // 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 O			
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
 			
-			sql="select * "
-					+" from academy "                           
-					+" where aca_search_addr1 =? " 
-					+" and aca_search_addr2 =? " 
-					+" and aca_search_addr3 =? " 
-					+" and aca_category1 =? "
+			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                   
+					+" where a.aca_search_addr1 =? " 
+					+" and a.aca_search_addr2 =? " 
+					+" and a.aca_search_addr3 =? "     
+					+" and a.aca_category1 =? "
+
 					+" limit ? , ?";
+      
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1,(String)formsearch.get("s1"));

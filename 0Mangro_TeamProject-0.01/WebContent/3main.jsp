@@ -91,6 +91,125 @@
 		})
 	})
 	
+
+	
+	$(function(){
+		var search1;		
+		var search2;
+		var search3;
+		var i=6;
+		var j=7;
+
+		
+		$("#add1").change(function(){
+		// 	j_test(this);
+			search1=$("#add1 option:selected").val();
+
+		
+			console.log(search1);
+			
+			
+			$(".sel2").empty();
+			$(".sel3").empty();
+			
+			$(".sel3").append("<option value=''>읍/면/동</option>");
+			
+			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
+				
+				console.log(data.address);
+				
+				
+				var select2="<option option value=''>시/군/구</option>";
+				$.each(data.address , function (index,item) {
+			
+					
+					
+					select2+="<option value='"+item.search2+"'>"+item.search2+"</option>";
+					
+				});
+		
+				$(".sel2").append(select2);
+			
+		
+		
+			});//getJSON
+		
+		});//change
+		
+		
+		$(".sel2").change(function(){
+		// 	j_test(this);
+			search2=$(".sel2 option:selected").val();
+			
+		
+			console.log(search2);
+			
+			
+			$(".sel3").empty();
+		
+			
+			$.getJSON("getListSearchTwo.aca?search1="+search1+"&search2="+search2 ,  function(data){
+				
+				console.log(data.address);
+				
+				
+				var select3="<option value=''>읍/면/동</option>";
+				
+				$.each(data.address , function (index,item) {
+					
+					select3+="<option value='"+item.search3+"'>"+item.search3+"</option>";
+			
+				});
+				
+				
+				
+				$(".sel3").append(select3);
+		
+		
+			});//getJSON
+		
+		});//change
+		
+		
+		
+		
+		
+		$('.right').on('click',function(){
+		
+			
+			
+			
+			$(".home_slider_background").css("background-image","url(images/mainslider"+i+".jpg)")
+			i++;
+		
+			if(i>7){
+				i=5;
+			}
+			
+			
+			
+			
+			
+			
+		})
+		$('.left').on('click',function(){
+		
+			i--;
+			if(i<5){
+				i=7;
+			}
+			$(".home_slider_background").css("background-image","url(images/mainslider"+i+".jpg)")
+			
+		})
+	
+		
+		      
+	})
+	
+	
+	
+	
+
 	 jQuery(document).ready(function() {
                 $('#myModal').show();
         });
@@ -98,6 +217,7 @@
         function close_pop(flag) {
              $('#myModal').hide();
       };
+
 </script>
 
 </head>
