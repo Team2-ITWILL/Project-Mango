@@ -23,7 +23,7 @@ public class AcademyRegisterUploadAction implements Action{
 		request.setCharacterEncoding("UTF-8");
 
 		//업로드할 실제 서버의 경로 얻기
-		String realFolder = request.getServletContext().getRealPath("/images/upload");
+		String realFolder = request.getServletContext().getRealPath("/O_aca_regFiles/upload/images/");
 		int max = 10 * 1024 * 1024; //업로드용량, 10MB
 		
 		MultipartRequest multi =
@@ -51,10 +51,13 @@ public class AcademyRegisterUploadAction implements Action{
 	 		originFiles.add(multi.getOriginalFileName(filename));	 	 		
 	 		
 	 		PrintWriter out = response.getWriter();
-	  		out.print(request.getContextPath() + "/images/upload/" + multi.getFilesystemName(filename));
+	 		//프로젝트경로 포함
+	  		//out.print(request.getContextPath() + "/O_aca_regFiles/upload/images/" + multi.getFilesystemName(filename));
+	  		//프로젝트경로 미포함
+	  		out.print("/O_aca_regFiles/upload/images/" + multi.getFilesystemName(filename));
 	 		
 	  		System.out.print("이미지 파일 경로 : " 
-  					+ request.getContextPath() + "/images/upload/" 
+  					+ request.getContextPath() + "/O_aca_regFiles/upload/images/" 
  					+ multi.getFilesystemName(filename) 
  					+ "\r\n");	 
 	 					 	

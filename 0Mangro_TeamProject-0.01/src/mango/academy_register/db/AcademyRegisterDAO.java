@@ -47,5 +47,59 @@ public class AcademyRegisterDAO extends DBconnection{
 		return result;
 	}
 	
+	public int CheckDataExists(String id){
+		
+		int result = 0;
+		try {
+			getConnection();
+			
+			String sql = "select * from academy_register where mem_email=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);				
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				result = 1; //데이터 존재
+			else
+				result = 0; //데이터 없음
+			
+			System.out.println("CheckDataExists() 수행");
+			
+		} catch (Exception e) {
+			System.out.println("CheckDataExists()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return result;
+	}
 	
+	public int CheckAdminUser(String id){
+		
+		int result = 0;
+		try {
+			getConnection();
+			
+			String sql = "select * from member "
+					+ "where mem_email=? and "
+					+ "mem_admin is not null";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);				
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				result = 1; //데이터 존재
+			else
+				result = 0; //데이터 없음
+			
+			System.out.println("CheckDataExists() 수행");
+			
+		} catch (Exception e) {
+			System.out.println("CheckDataExists()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return result;
+	}
 }

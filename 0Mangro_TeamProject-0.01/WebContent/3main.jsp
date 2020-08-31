@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <title>Unicat</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Mango project">
@@ -17,12 +18,65 @@
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 
+<style type="text/css">
+
+	/* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 2% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+    }
+    
+    .modal_close{
+    	cursor:pointer;
+    	background-color:#DDDDDD;
+    	text-align: center;
+    	padding-bottom: 10px;
+    	padding-top: 10px;
+    	margin-top: 20px;
+    }
+	
+	.modal-content h6{
+		margin: 10px auto;
+		font-weight: bold;
+		color: #e95765;
+	}
+	
+	.modal-content h4{
+		margin: 10px auto;
+		font-weight: bolder;
+		color: #6610f2;
+	}
+	
+	#notice_content{
+		color: #76777a;
+	}
+	
+
+</style>
+
 <script>
 	$(document).ready(function(){
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
 		    items:1,
-		    loop:false,
+		    loop:true,
 		    margin:10,
 		    //autoplay:true,
 		    autoplay:false,
@@ -35,17 +89,9 @@
 		$('.stop').on('click',function(){
 		    owl.trigger('stop.owl.autoplay')
 		})
-	
-		
-		
-	
-	
-	
-	
-	
-	
 	})
 	
+
 	
 	$(function(){
 		var search1;		
@@ -163,6 +209,15 @@
 	
 	
 	
+
+	 jQuery(document).ready(function() {
+                $('#myModal').show();
+        });
+        //팝업 Close 기능
+        function close_pop(flag) {
+             $('#myModal').hide();
+      };
+
 </script>
 
 </head>
@@ -174,12 +229,33 @@
 	<div class="home">
 		<div class="home_slider_container">
 			
+			<div id="myModal" class="modal">
+
+			      <!-- Modal content -->
+			      <div class="modal-content">
+			      <img alt="covid19_notice" src="images/mainModal.png" width="100%">
+			                <h6>신종 코로나 바이러스 대비</h6>
+			                <h4>청강시 예방 수칙</h4>
+			                <p id="notice_content">
+			                1. 감염 예방을 위해서 마스크를 반드시 착용해주세요.<br>
+			                2. 방문시 직원으로부터 발열 체크를 해주세요.<br>
+			                3. 손을 자주 30초 이상 깨끗이 씻도록 해주세요.<br>
+			                </p>
+			            <div class="modal_close" onClick="close_pop();">
+			                <span class="pop_bt">
+			                     		닫기
+			                </span>
+			            </div>
+			      </div>
+			 
+			    </div>
+			        <!--End Modal-->
 			<!-- Home Slider -->
 			<div class="owl-carousel owl-theme home_slider">
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/mainslider5.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(images/mainslider6.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="container">
 							<div class="row">
@@ -187,13 +263,11 @@
 									<div class="home_slider_title">우리동네 학원을 찾아보세요.</div>
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
-										<form action="AcademySearchList.aca" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden"  name="select4">
-												<input type="hidden"  name="select5">
+										<form action="#" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
-												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
-												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
-													<option value="">시/도</option>
+												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
+												<select class="dropdown_item_select home_search_input sel1">
+													<option>시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
 													<option value="대구광역시">대구광역시</option>
@@ -212,13 +286,15 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input sel2"  name="select2">
-													<option value="">시/군/구</option>
-													
+												<select class="dropdown_item_select home_search_input">
+													<option>시/군/구</option>
+													<option>남구</option>
+													<option>남구</option>
 												</select>
-												<select class="dropdown_item_select home_search_input sel3"  name="select3">
-													<option value="">읍/면/동</option>
-												
+												<select class="dropdown_item_select home_search_input">
+													<option>읍/면/동</option>
+													<option>대연동</option>
+													<option>대연동</option>
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -230,7 +306,7 @@
 					</div>
 				</div>
 
-				<!-- Home Slider Item
+				<!-- Home Slider Item -->
 				<div class="owl-item">
 					<div class="home_slider_background" style="background-image:url(images/mainslider7.jpg)"></div>
 					<div class="home_slider_content">
@@ -243,7 +319,7 @@
 										<form action="#" id="home_search_form_2" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-													<select class="dropdown_item_select home_search_input sel1">
+													<select class="dropdown_item_select home_search_input">
 													<option>시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
@@ -263,11 +339,15 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input sel2">
+												<select class="dropdown_item_select home_search_input">
 													<option>시/군/구</option>
+													<option>Category</option>
+													<option>Category</option>
 												</select>
-												<select class="dropdown_item_select home_search_input sel3">
+												<select class="dropdown_item_select home_search_input">
 													<option>읍/면/동</option>
+													<option>Price Type</option>
+													<option>Price Type</option>
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -279,7 +359,7 @@
 					</div>
 				</div>
 
-				Home Slider Item
+				<!-- Home Slider Item -->
 				<div class="owl-item">
 					<div class="home_slider_background" style="background-image:url(images/mainslider5.jpg)"></div>
 					<div class="home_slider_content">
@@ -292,7 +372,7 @@
 										<form action="#" id="home_search_form_3" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-												<select class="dropdown_item_select home_search_input sea1">
+												<select class="dropdown_item_select home_search_input">
 													<option>시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
@@ -312,12 +392,15 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input sel2">
+												<select class="dropdown_item_select home_search_input">
 													<option>시/군/구</option>
+													<option>Category</option>
+													<option>Category</option>
 												</select>
-												<select class="dropdown_item_select home_search_input sel3">
+												<select class="dropdown_item_select home_search_input">
 													<option>읍/면/동</option>
-												
+													<option>Price Type</option>
+													<option>Price Type</option>
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -329,16 +412,13 @@
 					</div>
 				</div>
 
-			</div> -->
 			</div>
 		</div>
 
 		<!-- Home Slider Nav -->
 
-	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
-	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
-		
-		
+		<div class="home_slider_nav home_slider_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+		<div class="home_slider_nav home_slider_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
 	</div>
 
 

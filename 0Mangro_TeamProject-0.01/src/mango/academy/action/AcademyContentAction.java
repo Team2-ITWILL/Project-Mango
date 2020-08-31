@@ -23,7 +23,6 @@ public class AcademyContentAction implements Action{
 		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
 		/*String id = (String)request.getSession().getAttribute("userid");*/
 		
-		System.out.println(acaMainNum);
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
 		// 학원조아DAO
@@ -47,7 +46,6 @@ public class AcademyContentAction implements Action{
 		double avgScore = 
 				Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(acaMainNum)));
 
-		System.out.println(avgScore);
 		//  한 페이지에 4개 글 목록 반환
 		int pageSize = 4;
 		
@@ -81,7 +79,9 @@ public class AcademyContentAction implements Action{
 			endPage = pageCount;
 		}
 		int iAvgScore = (int)avgScore;
-		System.out.println(iAvgScore);
+		System.out.println(pageCount);
+		System.out.println(startPage);
+		System.out.println(pageBlock);
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
