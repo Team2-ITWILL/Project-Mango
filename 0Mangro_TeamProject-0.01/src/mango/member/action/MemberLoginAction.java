@@ -52,13 +52,13 @@ public class MemberLoginAction implements Action{
 			
 			return null;
 			
-		}else if(check == -2){ // 탈퇴하거나 계정정지일 경우
+		}else if(check == -2){ // 탈퇴한 아이디일 경우
 			
 			response.setContentType("text/html; charset=UTF-8"); 
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("window.alert('탈퇴하거나 정지된 계정입니다. 담당자에게 문의하세요.');");
+			out.print("window.alert('탈퇴한 계정입니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
