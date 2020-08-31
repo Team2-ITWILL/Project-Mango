@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -13,14 +14,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Unicat project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!---------------------------------- 제이쿼리  ---------------------------------------------------->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!---------------------------------- CSS  ---------------------------------------------------->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board.css">
 <link rel="stylesheet" type="text/css" href="styles/anony_board_single_responsive.css">
-<!---------------------------------- 제이쿼리  ---------------------------------------------------->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
 <style>
@@ -31,8 +32,8 @@
 	{.widthAdjust {width: 550px;}}
 	.boardCount{margin-top:10px; display: inline-block;margin-left: 20px;}
 	.comments_title {display: inline-block; padding-top:100px;}
+	.exstboard_title {padding-top:0;}
 	.span-title{ font-size: 1.2em; font-weight: 700;	}
-	
 	
 </style>
 
@@ -42,23 +43,67 @@
 
 
 
+<script type="text/javascript">
+
+	// [익명사담방 글쓰기 버튼 클릭시 로그인 여부 검사 ] 
+	var id_email = "<c:out value='${id_email}'/>";
+	
+		function writeBtnClicked() {
+			// 값을 받아오는지 확인
+			// alert("<c:out value='${id_email}'/>");
+			
+			if(id_email == null || id_email == ""){
+				
+				alert("로그인이 필요한 서비스입니다.");
+				location.href='./MemberLogin.me';
+				
+			}else{ location.href='./AnoBoardWriteAction.anob'; } //if
+			
+		}
+
+</script>
+
+
 
 	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
 		<div class="container">
 			<div class="row">
-
-<!-------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------->
+			   <c:choose>
+<%---------------------------------------------------- [익명게시글 목록]  -------------------------------------------------------------------------%>
+				  <c:when test="${anbCount == 0 or anbCount == '0'}">
+				   <%-- 글이 하나도 없을 때 --%>
 					<div class="comments_container">
-						<div class="comments_write_button" onclick="location.href='./AnoBoardWriteAction.anob'">글쓰기</div>
-						<div class="comments_title">익명사담방</div>
-						<h6 class="boardCount">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
+						<div class="comments_title noboard">익명사담방</div> <br>
+						<img class="noboard_img" src="images/etc/noboard.png" width="100">
+						<h5 class="boardCount noboard_text">등록된 글이 하나도 없네요!&nbsp;&nbsp; 첫 글을 등록 해 보세요!</h5>
+						<div class="comments_write_button noboard_btn" onclick="writeBtnClicked()">글쓰기</div>
+					</div>
+				  </c:when>	
+				  
+				   <%-- 글이 있을 때 --%>
+				  <c:otherwise>
+					<div class="comments_container">
+						
+						<div class="comments_write_button exstboard_btn" onclick="writeBtnClicked()">글쓰기</div>
+						<div class="comments_title exstboard_title" >익명사담방</div>
+						<h6 class="boardCount exstboard_text">총 <span>${anbCount}</span>개의 글이 있습니다.</h6>
+						
+						<%-- 검색영역 --%>
+						<hr>
+						<div class="input-group col-12 p-0 mb-3">
+							<input type="search" id="query" name="query" class="form-control"
+								   placeholder="검색">
+							<button type="submit" class="btn font-subhead btn-outline-primary text-nowrap width-100 search-btn">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
+						</div>
 						
 						<ul class="comments_list"> 
-<!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
+<%---------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						
 						<c:forEach var="anbList" items="${anbList}">
-							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num='+${anbList.ano_board_num}">
-								<div class="comment_item d-flex flex-row align-items-start jutify-content-start" onclick="#">
+							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'">
+								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
 									
@@ -66,17 +111,20 @@
 										<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_author">
 
-												<!-- 익명사담방 랜덤 닉네임 -->
-												<i class="fa fa-user" aria-hidden="true"></i> 
+										<%------ 랜덤닉네임 ----%>
+												<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
-												<!-- 익명사담방 글제목 -->
-												<p><span class="span-title">${anbList.ano_board_title}</span></p>
+												
+										<%------ 글제목 ----%>
+												<p style="padding-top: 10px; color:#000 !important;">
+													<span class="span-title">${anbList.ano_board_title}</span>
+												</p>
 												
 											</div>
 										</div>
 										
 										
-											<!-- 익명사담방 글내용 -->
+										<%------ 글내용 ----%>
 										<div class="comment_text">
 											<p>${anbList.ano_board_content}</p>
 										</div>
@@ -85,7 +133,7 @@
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/comment.png" width="20">
-												<!-- 댓글수  -->
+										<%------ 댓글수 ----%>
 												<span>미구현</span>
 											</div> &nbsp;&nbsp;&nbsp;
 											
@@ -101,8 +149,33 @@
 											
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/date.png" width="20">
-												<!-- 날짜  --> 
+												
+										<%------ 날짜 ----%>
+										<%------ 오늘 날짜 객체 생성 ----%>
+										<jsp:useBean id="today" class="java.util.Date"></jsp:useBean>
+										<fmt:parseNumber value="${today.time / (1000 * 60 * 60 * 24)}" 
+										                 var="nowDays" integerOnly="true" /> 
+										
+										<%------ DB에 저장된 글의 날짜 객체 생성 ----%>
+										<fmt:parseNumber value="${anbList.ano_board_date.time / (1000 * 60 * 60 * 24)}" 
+										                 var="regDays" integerOnly="true" />
+										                 
+										<%------ 두 날짜의 차를 변수 dayDiff에 저장----%>
+										<c:set value="${nowDays - regDays }" var="dayDiff" />
+										
+										<c:choose>
+										<%------ 두 날짜의 차가 0일때(오늘 쓴 글일 때) New 표시----%>
+											<c:when test="${dayDiff == 0}">
 												<span>${anbList.ano_board_date}</span>
+												<span><img src="images/etc/new.png" width="35"></span>
+											</c:when>
+											
+										<%------ 오늘 쓴 글이 아닐 때 날짜만 표시----%>
+											<c:otherwise>
+												<span>${anbList.ano_board_date}</span>
+											</c:otherwise>
+										</c:choose>
+																				
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>
 									</div> 
@@ -110,18 +183,22 @@
 							</li>
 							 
 						</c:forEach>
-<!-------------------------------------------------------- [▲ 코멘트 1줄]  -------------------------------------------------------------------------->
+<%---------------------------------------------------------- [▲ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						</ul> 
 						
 					</div>  <!-- comments_container -->
-				</div> <!-- row -->
-			</div> <!-- container -->
+				</c:otherwise>	
+				
+			  </c:choose>
+			</div> <!-- row -->
+		</div> <!-- container -->
 
 
 
 
 
-<!-------------------------------------------------------- [스크립트 링크영역]  -------------------------------------------------------------------------->
+
+<%---------------------------------------------------------- [스크립트 링크영역]  --------------------------------------------------------------------------%>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>

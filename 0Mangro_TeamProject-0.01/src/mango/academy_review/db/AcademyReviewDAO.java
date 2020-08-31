@@ -98,10 +98,39 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getAvgReviewScore() 끝
 	
 	@Override
-	public int InsertAcademyReview(AcademyReviewBean ab) {
+	public void InsertAcademyReview(AcademyReviewBean ab) {
+		// review_num
+		int num = 0;
 		
 		try {
 			getConnection();
+			sql = "select max(review_num) from academy_review";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				// review_num 구하기
+				num =rs.getInt(1) +1;
+			}
+			System.out.println("review_num : "+num);
+			sql = "insert into academy_review (review_num, aca_main_num, aca_name, review_title, "
+					+ "review_good, review_bad, review_subject, "
+					+ "review_score, mem_email, review_date) "
+					+ "values (?,?,?,?,?,?,?,?,?,now())";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, ab.getAcaMainNum());
+			pstmt.setString(3, ab.getAcaName());
+			pstmt.setString(4, ab.getReviewTitle());
+			pstmt.setString(5, ab.getReviewGood());
+			pstmt.setString(6, ab.getReviewBad());
+			pstmt.setString(7, ab.getReviewSubject());
+			pstmt.setInt(8, ab.getReviewScore());
+			pstmt.setString(9, ab.getMemEmail());
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("InsertAcademyReview()에서 예외발생");
 			e.printStackTrace();
@@ -110,7 +139,6 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		}
 		
 		
-		return 0;
 	} // InsertAcademyReview() 끝
 
 	@Override
@@ -118,6 +146,12 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		
 		try {
 			getConnection();
+			sql = "delete from academy_review where review_num = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, reviewNum);
+			return pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("DeleteAcademyReview()에서 예외발생");
 			e.printStackTrace();
@@ -125,15 +159,30 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			resourceClose();
 		}
 		
-		
 		return 0;
+		
 	} // DeleteAcademyReview()끝
 
 	@Override
-	public int UpdateAcademyReview(AcademyReviewBean ab) {
+	public void UpdateAcademyReview(AcademyReviewBean ab) {
 
 		try {
 			getConnection();
+			sql = "update academy_review set review_title = ?, review_good = ?, "
+					+ "review_bad = ?, review_subject = ?, review_score = ?, "
+					+ "review_date = now() where review_num = ? and aca_main_num = ? ";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ab.getReviewTitle());
+			pstmt.setString(2, ab.getReviewGood());
+			pstmt.setString(3, ab.getReviewBad());
+			pstmt.setString(4, ab.getReviewSubject());
+			pstmt.setInt(5, ab.getReviewScore());
+			pstmt.setInt(6, ab.getReviewNum());
+			pstmt.setInt(7, ab.getAcaMainNum());
+			
+			pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println("UpdateAcademyReview()에서 예외발생");	
 			e.printStackTrace();
@@ -141,7 +190,6 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			resourceClose();
 		}
 		
-		return 0;
 	} //UpdateAcademyReview() 끝
 
 	

@@ -108,7 +108,7 @@
 							<nav class="main_nav_contaner ml-auto">
 								<ul class="main_nav">
 									<li><a href="4index.jsp?center=about.jsp">소개</a></li>
-									<li><a href="4index.jsp?center=O_academy/academy_list.jsp">학원찾기</a></li>
+									<li><a href="./AcademyList.aca">학원찾기</a></li>
 									<li><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
 									<li><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">학원관리자</a></li>
 									<li><a href="4index.jsp?center=O_qna/qna_board.jsp">고객센터</a></li>
@@ -116,8 +116,6 @@
 								
 								
 								
-<!-- 								<div class="search_button"><i class="fa fa-search" aria-hidden="true"></i></div>
- -->
 								<!-- 장바구니 아이콘(이용내역페이지 연결) -->
 
 								<div class="shopping_cart" onclick="location.href='4index.jsp?center=O_payment/payment_list.jsp'"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
@@ -168,7 +166,7 @@
 			<ul class="menu_mm">
 			
 				<li class="menu_mm"><a href="4index.jsp?center=about.jsp">소개</a></li>
-				<li class="menu_mm"><a href="4index.jsp?center=O_academy/academy_list.jsp">학원찾기</a></li>
+				<li class="menu_mm"><a href="./AcademyList.aca">학원찾기</a></li>
 				<li class="menu_mm"><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">학원관리자</a></li>
 				<li class="menu_mm"><a href="4index.jsp?center=O_qna/qna_board.jsp">고객센터</a></li>

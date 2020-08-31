@@ -85,7 +85,7 @@
 					      <form action="./AnoBoardUpdateAction.anob?ano_board_num=${anbean.ano_board_num }"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
 					         <!-- 1.세션에 있는 멤버email계정  -->
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="mem1@naver.com">
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="${id_email}">
 					        <input type="hidden" class="form-control" name="ano_board_num" id="ano_num" value="${anbean.ano_board_num }">
       
 						      <div class="js-form-message form-group">

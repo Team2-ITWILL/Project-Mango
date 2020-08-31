@@ -85,7 +85,7 @@
 					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
 					         <!-- 1.세션에 있는 멤버email계정  -->
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="mem1@naver.com">
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="${id_email}">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
@@ -116,25 +116,6 @@
 							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
 							         
 
-
-<!-- 
-	[현재 뷰페이지에서 넘겨줄 값]
-	mem_email varchar(20) 
-	ano_board_nick varchar(100) 
-	ano_board_title varchar(45) 
-	ano_board_content varchar(500) 
-	ano_board_file varchar(25
-	
-	[Action에서 dao로 처리할 값]
-	ano_board_num int(11) AI PK 
-	ano_board_read int(11) 
-	ano_board_date date 
-	ano_board_ip varchar(100) 
-	
-	 -->
-
-
-						                	
 						              	</div>
 		       							 
 							        <div class="textwriteBtn">

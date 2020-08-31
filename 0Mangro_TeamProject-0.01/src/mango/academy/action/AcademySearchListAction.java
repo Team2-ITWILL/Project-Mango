@@ -1,9 +1,9 @@
+
 package mango.academy.action;
 
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,25 +13,22 @@ import mango.academy.db.AcademyDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
 
-public class AcademyListAction implements Action{
+public class AcademySearchListAction implements Action {
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		HashMap<String,Object> Formsearch  = new HashMap<String,Object>(); 
+		
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
 		HttpSession session=request.getSession();
-		
-	/*	HashMap<String,Object> Formsearch  = new HashMap<String,Object>(); 
-		
 		
 		String mainsearch=request.getParameter("mainsearch");
 		String select1=request.getParameter("select1");
 		String select2=request.getParameter("select2");
 		String select3=request.getParameter("select3");
 		String select4=request.getParameter("select4");
-//		System.out.println(request.getParameter("select5"));
+		System.out.println(request.getParameter("select5"));
 		
 		
 		
@@ -72,33 +69,32 @@ public class AcademyListAction implements Action{
 		}else{
 			Formsearch.put("main",mainsearch);
 		}
-		*/
+		
 		
 		AcademyDAO adao =new AcademyDAO();
 		
 		
-		//int count=adao.getAcademyCount(Formsearch);
-		int count=adao.getAcademyCount();
+		int count=adao.getAcademyCount( Formsearch);
+	
+		System.out.println("Count 수 : "+count);
 		
 		
-		
+		List<AcademyBean> searchList =null;
 		
 		
 		String pageNum=request.getParameter("pageNum");
 
 		
-		
-		
-		
 		int pageSize=15;
 		
-		if(pageNum == null){
+		
+		if(pageNum==null){
 			
 			pageNum="1";
 		
 		}
 		
-		
+
 		System.out.println(count);
 		
 		//시작행 번호 구하기
@@ -106,51 +102,53 @@ public class AcademyListAction implements Action{
 		
 		int startRow =(currentPage-1)*pageSize+1;
 		
-		
-		List<AcademyBean> Academylist =null;
-		
 		if(count != 0){
 			
-			//Academylist = adao.getSearchListAcademy(Formsearch, startRow, pageSize);
-			Academylist = adao.AllAcademyList(startRow, pageSize);
+			searchList =adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			
 	
 		}
+	
+		
 		//전체페이지수 구하기
-		int pageCount = count/pageSize+(count%pageSize==0?0:1);
+				int pageCount = count/pageSize+(count%pageSize==0?0:1);
+				
+				// 페이지수 설정
+				int pageBlock=5;
+				
+				//한화면에 보여줄 시작페이지 구하기 1~10 =>1/11~20=>11
+				int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
+				
+				//한 화면에 보여줄끝페이지 구하기
+				int endPage =startPage+pageBlock-1;
+				
+				if(endPage>pageCount){
+					
+					endPage=pageCount;
+					
+				}
+				
+				System.out.println(searchList);
+				ActionForward forward = new ActionForward();
+				
+				request.setAttribute("academyList", searchList);
+				request.setAttribute("count", count);
+				request.setAttribute("pageNum", pageNum); //String -> Object 저장
+				request.setAttribute("pageCount", pageCount);//전체페이지수
+				request.setAttribute("pageBlock", pageBlock);//보여줄 페이지 수
+				request.setAttribute("startPage", startPage);//스타트페이지수
+				request.setAttribute("endPage", endPage);//마지막 페이지수
+				request.setAttribute("Page","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch);//페이지명
+				
+				forward.setRedirect(false);
+				forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
+				
+				return forward;
 		
-		// 페이지수 설정
-		int pageBlock=5;
-		
-		//한화면에 보여줄 시작페이지 구하기 1~10 =>1/11~20=>11
-		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
-		
-		//한 화면에 보여줄끝페이지 구하기
-		int endPage =startPage+pageBlock-1;
-		
-		if(endPage>pageCount){
-			
-			endPage=pageCount;
-			
-		}
 		
 		
-		System.out.println(Academylist);
-		ActionForward forward = new ActionForward();
-		
-		request.setAttribute("academyList", Academylist);
-		request.setAttribute("count", count);
-		request.setAttribute("pageNum", pageNum); //String -> Object 저장
-		request.setAttribute("pageCount", pageCount);//전체페이지수
-		request.setAttribute("pageBlock", pageBlock);//보여줄 페이지 수
-		request.setAttribute("startPage", startPage);//스타트페이지수
-		request.setAttribute("endPage", endPage);//마지막 페이지수
-		request.setAttribute("Page","AcademyList.aca");
-		forward.setRedirect(false);
-		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
-		
-		return forward;
+	
 	}
-	
-	
 
 }
+

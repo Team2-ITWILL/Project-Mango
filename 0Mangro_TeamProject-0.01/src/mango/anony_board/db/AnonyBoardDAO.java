@@ -9,18 +9,12 @@ import java.util.List;
 import mango.connection.db.DBconnection;
 
 
-// 1. 게시판 insert
-// 2. 게시판 delete
-// 3. 게시글 조회수 증가
-// 4. 해당 글 넘버의 글정보 가져오기(글 1개)
-// 5. 익명게시판 전체 글 가져오기(글 목록)
-// 6. 익명게시판 전체 글개수 가져오기
+
 public class AnonyBoardDAO extends DBconnection {
 	
 	// 1-1.[랜덤 닉네임] :  AnoBoardWriteAction에서 호출
 	public String getRandomNickname(){
-		String nick = ""; // 1번 리스트의 단어 
-		
+		String nick = ""; 
 		
 		try {
 			
@@ -44,6 +38,7 @@ public class AnonyBoardDAO extends DBconnection {
 				nick = list1.get(i) +" "+ list2.get(i);
 				
 			}
+		
 			
 		} catch (Exception e) {
 			System.out.println("AnonyBoardDAO의 getRandomNickname()메소드에서 예외 발생");
@@ -121,7 +116,7 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	
-	// [2.조회수 증가메소드]
+	// [2.조회수 증가메소드] : AnoBoardSingleAction에서 호출
 	public void updateANBoardRead(int ano_board_num){
 		try {
 			getConnection();
@@ -148,7 +143,7 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	
-	// [3.게시판 글 삭제] : 비밀번호 없이 글번호만 매개변수로 전달받음.
+	// [3.게시판 글 삭제] : AnoBoardDeleteAction에서 호출
 	public void deleteANBoard(int ano_board_num){
 		
 		try {
@@ -177,7 +172,7 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	//------------------------게시글 불러오기---------------------------
 	
-	// [4.익명사담방 게시판 글 1개 불러오기]
+	// [4.익명사담방 게시판 글 1개 불러오기] : AnoBoardSingleAction에서 호출
 	public AnonyBoardBean getANBoard(int ano_board_num){
 		
 		AnonyBoardBean anb = null;
@@ -218,7 +213,7 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	
-	// [5.익명사담방 전체 글목록 불러오기 ]
+	// [5.익명사담방 전체 글목록 불러오기 ] : AnonyBoardListAction에서 호출
 	public List<AnonyBoardBean> getANBoardList(){
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		
@@ -242,17 +237,6 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
-//				no_board_num int(11) AI PK 
-//				mem_email varchar(20) 
-//				ano_board_title varchar(45) 
-//				ano_board_content varchar(500) 
-//				ano_board_read int(11) 
-//				ano_board_date datetime 
-//				ano_board_ip varchar(100) 
-//				ano_board_nick varchar(100) 
-//				ano_board_file varchar(45)
-				
-				
 				anbList.add(anb);
 				
 			}//while 끝
@@ -266,7 +250,7 @@ public class AnonyBoardDAO extends DBconnection {
 		return anbList;
 	}
 	
-	// [6.전체 글 개수 반환 메소드]
+	// [6.전체 글 개수 반환 메소드] : AnonyBoardListAction에서 호출
 	public int getAnonyBoardCount(){
 		int count = 0;
 		
@@ -293,7 +277,7 @@ public class AnonyBoardDAO extends DBconnection {
 	}//getAnonyBoardCount()
 	
 	
-	// [7.글 수정 메소드]
+	// [7.글 수정 메소드] : AnoBoardUpdateAction에서 호출
 	public int updateANBoard(AnonyBoardBean anbean){
 		
 		int check = 0;
@@ -302,15 +286,24 @@ public class AnonyBoardDAO extends DBconnection {
 			getConnection();
 			
 			sql = "UPDATE anony_board "
-					+ "SET ano_board_title=?, "
+					+ "SET "
+					+ "ano_board_title=?, "
 					+ "ano_board_content=?, "
-					+ "ano_board_nick, "
-					+ "ano_board_file)";
+					+ "ano_board_file=? "
+					+ "WHERE ano_board_num=?";
 			
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, anbean.getAno_board_title());
+			pstmt.setString(2, anbean.getAno_board_content());
+			pstmt.setString(3, anbean.getAno_board_file());
+			pstmt.setInt(4, anbean.getAno_board_num());
+			
 			pstmt.executeUpdate();
+			
 			check = 1;
+			
 			System.out.println(check);
+			
 		}catch(SQLException se){
 			System.out.println("updateANBoard메소드에서 SQL 예외 발생 : "+ se);				
 			

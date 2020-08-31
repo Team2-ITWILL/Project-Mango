@@ -82,6 +82,7 @@ public class AnonyBoardFrontController extends HttpServlet{
 			
 		// 익명사담방 글 상세보기 화면(글 내용 호출)
 		}else if(command.equals("/AnoBoardSingleAction.anob")){
+			action = new AnoBoardSingleAction();
 			
 			System.out.println("여기까지 옴");
 			try {
@@ -125,13 +126,16 @@ public class AnonyBoardFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		
+		}else if(command.equals("/AnoBoardFileDownAction.anob")){
+			action = new AnoBoardFileDownAction();
+			try {
+				forward = action.excute(request, response);
+				System.out.println("여기까지옴?");
+			} catch (Exception e){
+				System.out.println("AnonyBoardFrontController의 /AnoBoardFileDownAction.anob에서 예외");
+				e.printStackTrace();
+			}
 		}
-		
-		
-		
-		
-		
-		
 		
 		
 		if(forward!=null){ //new ActionForward()객체가 존재시

@@ -34,7 +34,7 @@ public class AuditInfoRegisterAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register failed')");
+			out.println("alert('register failed');");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();
@@ -46,7 +46,7 @@ public class AuditInfoRegisterAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register success')");		
+			out.println("alert('register success');");		
 			out.println("location.href='./4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp'");
 			out.println("</script>");				
 			out.close();

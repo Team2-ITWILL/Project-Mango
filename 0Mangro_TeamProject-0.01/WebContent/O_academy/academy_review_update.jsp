@@ -73,9 +73,10 @@
 
 				      	
 				      <!-- form 시작 -->
-				      <form class="sign_upClass" action="./acaReviewWriteAction.arev" method="post">
+				      <form class="sign_upClass" action="./acaReviewUpdateAction.arev" method="post">
 				      
 				      	  <!-- ▼학원지정번호, 작성자계정 hidden으로 보내기 -->
+					        <input type="hidden" name="reviewNum" value="${param.reviewNum }">
 					        <input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
 						    <input type="hidden" name="mem_email" value="${id_email}">
 				      	  <!-- ▲학원지정번호, 작성자계정 hidden으로 보내기 -->

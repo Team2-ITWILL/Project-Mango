@@ -53,6 +53,7 @@
 
 
 .blind_review {
+	clear : both;
 	background-image: url('images/academy/blind1.PNG');
 	background-repeat: no-repeat;
 }
@@ -108,8 +109,47 @@
  	padding-top: 5px;
  	margin-left: 3px;
 }
-.course_price{
-	font_size
+
+.blind_top_div{
+	height: 450px;
+}
+
+.no_membership{
+	border: 1px solid #6610f2;
+    color: #000000 !important;
+    background-color : #ffffff;
+    font-size: 0.9em;
+	width: 360px;
+    display: block;
+    margin: auto;
+    padding : 10px;
+    
+    text-align: center;
+    top: 180px;
+    border-radius: 5px;
+}
+
+.review_login{
+	color: #fff !important;
+	border-radius: 5px;
+	width : 180px;
+	height : 40px;
+	text-align: center;
+	padding : 5px;
+	background-color: #6610f2;
+	margin : 10px auto;
+	cursor: pointer;
+}
+.review_btn{
+	color: #fff !important;
+	border-radius: 5px;
+	border : none;
+	width : 50px;
+	padding : 5px;
+	float : right;
+	background-color: #6610f2;
+	cursor: pointer;
+	margin : 0 4px;
 }
 </style>
 
@@ -118,7 +158,7 @@
 	request.setCharacterEncoding("utf-8");
 	String contextPath = request.getContextPath();
 
-	request.setAttribute("email", "coke@naver.com");
+	//request.setAttribute("email", "coke@naver.com");
 	
 %>
 
@@ -128,26 +168,89 @@
 		$(document).ready(function(){
 			var likeList = document.querySelectorAll(".cnt_Like");
 			
+			console.log("${id_email}");
 			checkLikedAca();
-			mainKeyword();
 			
-			for(var i=0; i<likeList.length; i++) {
-				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
-				getLikeReviewImg(obj);
-				
+			if(likeList != null){
+				for(var i=0; i<likeList.length; i++) {
+					var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
+					getLikeReviewImg(obj);
+					
+				}
 			}
+			
+			mainKeyword();
 		});
 		
 		// 대표키워드
 		function mainKeyword(){
 			var keyword = document.querySelector(".feature_title").getElementsByTagName("span")[0].textContent;
 			console.log(keyword);
-			document.querySelector(".course_price").innerText = keyword + " 학원";
+			if(keyword != null){
+				document.querySelector(".course_price").innerText = keyword + " 학원";
+			}
+		}
+		
+		// 후기삭제(ajax)
+		function reviewDelete(reviewNum){
+			
+			var result = confirm("후기를 삭제하시겠습니까?");
+			var email = "${id_email}";
+			var _data = '{"email":"'+email+'","revNum":"'+reviewNum+'"}';
+			console.log(reviewNum);
+			if(result){
+				
+				$.ajax({
+					
+					type : "post",
+					url : "${pageContext.request.contextPath}/acaReviewDelete",
+					data : {data : _data},
+					success : function(data,status){
+						var json = JSON.parse(data);
+						var check = json.check;
+						
+						/* 삭제성공 */
+						if(check == 1){
+							var str = "<div class='alert'>후기가 삭제되었습니다.</div>";						
+							$("#reviewNum_" + reviewNum).html(str).fadeOut(3000, function(){
+								$(this).remove();
+								if(document.querySelector(".comments_list").childElementCount == 0){
+									
+									var emptyList = '';
+									
+									emptyList += '<div class="tab_panel_title">아직 등록된 후기가 없습니다.</div>';
+									emptyList += '<div class="tab_panel_content">';
+									emptyList += '<div class="tab_panel_text">';
+									emptyList += '<p>이 학원의 후기를 작성해 보세요!</p>';
+									emptyList += '</div>';
+									emptyList += '<c:if test="${id_email eq null || id_eamil eq ''}">';
+									emptyList += '<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>';
+									emptyList += '</c:if>';
+									
+									
+									
+									$(".comments_list").append(emptyList);
+								}
+							});
+						}
+						/* 삭제실패 */
+						else {
+							alert("삭제를 실패하였습니다.\n 다시 시도해주세요.")
+						}
+					},
+					error : function(){
+						alert("통신오류가 발생했습니다.");
+					}
+					
+						
+				});
+			}
+		
 		}
  
 		function likeAcademy(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -186,7 +289,7 @@
 		
 		function checkLikedAca(){
 			
-			var email = "${email }";
+			var email = "${id_email}";
 			var acaMainNum = "${academyBean.acaMainNum }";
 			var acaName = "${academyBean.acaName }";
 			var _info = '{"email":"'+email+'","acaMainNum":"'+acaMainNum+'","acaName":"'+acaName+'"}';
@@ -226,7 +329,7 @@
 		
 		function getLikeReviewImg(obj){
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			var _data = '{"email":"'+email+'","revNum":"'+obj+'"}';
 			
@@ -264,7 +367,7 @@
 			<div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
 			*/
 			
-			var email = "${email}";
+			var email = "${id_email}";
 			
 			if(email.length == 0){
 				alert("로그인이 필요합니다.");
@@ -363,15 +466,15 @@
 						<!-- Course Tabs -->
 						<div class="course_tabs_container">
 							<div class="tabs d-flex flex-row align-items-center justify-content-start">
-								<div class="tab active">학원 상세정보</div>
+								<div class="tab">학원 상세정보</div>
 								<div class="tab">커리큘럼</div>
-								<div class="tab">후기보기</div>
+								<div class="tab active">후기보기</div>
 							</div>
 							
 							<div class="tab_panels">
 
 								<!-- Description -->
-								<div class="tab_panel active">
+								<div class="tab_panel">
 								
 								<!-- 등록되지 않은 학원일 경우 -->
 									<div class="tab_panel_title">이 학원의 관리자이신가요?</div>
@@ -545,7 +648,7 @@
 
 
 								<!-- Reviews -->
-								<div class="tab_panel tab_panel_3">
+								<div class="tab_panel tab_panel_3 active">
 									<div class="tab_panel_title">후기 보기</div>
 
 									<!-- Rating -->
@@ -570,25 +673,17 @@
 									
 								<!-- 등록된 후기가 없을 경우 -->
 								
-							<c:if test="${count eq '0'}">
-								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
+							<c:if test="${count eq null || count eq '0'}">
+								<div class="tab_panel_title">아직 등록된 후기가 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
 											<p>이 학원의 후기를 작성해 보세요!</p>
 										</div>
 									<div class="tab_panel_registerBtn"
-										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
-									
-							</c:if>
-							<c:if test="${count eq null}">
-								<div class="tab_panel_title">(등록된후기 없으면)아직 등록된 후기가 없습니다.</div>
-									<div class="tab_panel_content">
-										<div class="tab_panel_text">
-											<p>이 학원의 후기를 작성해 보세요!</p>
-										</div>
-									<div class="tab_panel_registerBtn"
-										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp'">후기 쓰기</div>
-									
+										 onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'">후기 쓰기</div>
+										 <c:if test="${id_email eq null || id_eamil eq ''}">
+									<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>
+									</c:if>
 							</c:if>				
 									<!-- Comments -->
 									<div class="comments_container">
@@ -596,7 +691,7 @@
 										
 										<!--------------------------------  ▼ 후기 1개 영역-------------------------------------->
 										<c:forEach var="reBean" items="${reList}">
-											<li>
+											<li id="reviewNum_${reBean.reviewNum }">
 												<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 													<div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div>
 													<div class="comment_content">
@@ -606,21 +701,30 @@
 															<div class="comment_time ml-auto">${reBean.reviewDate}</div>
 														</div>
 														<div class="comment_text">
-															결제안한 회원에게 보이는 형태
-															<div class="blind_review" width="500">
-															<div class="blind_top_div" width="450">
-															<!-- 유료회원이면 보이는 형태 -->
 															
+															<c:if test="${id_email == null || id_email eq ''}">
+															결제안한 회원에게 보이는 형태
+															<div class="blind_review">
+																<div class="blind_top_div">
+																	<div class="no_membership">
+																		<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
+																		회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
+																		<div class= "review_login" onclick="location.href='./MemberLogin.me'">
+																			<h5>로그인</h5>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															</c:if>
+															<!-- 유료회원이면 보이는 형태 -->
+															<c:if test="${id_email ne null}">
 																<p><span class="strength">장점</span><br>
 																	${reBean.reviewGood}
 																</p>
 																<p><span class="weakness">단점</span><br>
 																	${reBean.reviewBad}
 																</p>
-															
-															</div>
-														
-														</div>
+															</c:if>
 														<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 														
 														
@@ -629,64 +733,43 @@
 															<img id="cntLikeImg_${reBean.reviewNum }" src="images/thumb-up.png" width="22"
 																onclick="likeAcaReview(${reBean.reviewNum })" style="cursor:pointer;">
 															<span class="cnt_Like" id="cntLike_${reBean.reviewNum }" ></span>
+															
 															</div>
 														</div>
+														<c:if test="${id_email ne null}">
+															<c:if test="${id_email eq reBean.memEmail}">
+																<div>
+																<button class = "review_btn"
+																onclick="reviewDelete(${reBean.reviewNum})">삭제</button>
+																<button class = "review_btn" 
+																onclick="location.href='4index.jsp?center=O_academy/academy_review_update.jsp?acaMainNum=${academyBean.acaMainNum }&reviewNum=${reBean.reviewNum }&acaName=${academyBean.acaName}'">수정</button>
+																</div>
+															</c:if>
+														</c:if>
 													</div>
 												</div>
 											</li>
+											
+											
 										</c:forEach>
-										<!--------------------------------  ▲ 후기 1개 영역-------------------------------------->
-											
-										<!--------------------------------  ▼ 후기 1개 영역-------------------------------------->
-											<li>
-												<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
-													<div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div>
-													<div class="comment_content">
-														<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
-															<div class="comment_author"><a href="#">주차장이 있어서 편리해요.</a></div>
-															<div class="comment_rating"><div class="rating_r rating_r_4"><i></i><i></i><i></i><i></i><i></i></div></div>
-															<div class="comment_time ml-auto">2020-09-15</div>
-														</div>
-														<div class="comment_text">
-															결제안한 회원에게 보이는 형태
-															<p><img src="images/academy/blind1.PNG" width="500"></p>
-															유료회원이면 보이는 형태
-															<p><span class="strength">장점</span><br>
-																There are many variations of passages of Lorem Ipsum available, 
-															</p>
-															<p><span class="weakness">단점</span><br>
-																There are many variations of passages of Lorem Ipsum a 
-																but the majority have alteratio
-																There are many variations of passages of Lorem Ipsum a
-																but the majority have alteration in some form, by injected hum
-															</p>
-														
-														</div>
-														<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
-														
-														
-														<!-- 만일 해당 계정으로 도움돼요 한 적 없다면 색칠 안 된 아이콘 -->
-													    <div class="comment_extra comment_likes"><a href="#"><img src="images/thumb-notup.png" width="30" ><span></i><span>15</span></a></div>
-														</div>
-													</div>
-												</div>
-											</li>
-										<!--------------------------------  ▲ 후기 1개 영역-------------------------------------->
-											
-											
-											
 										</ul>
-										<div class="add_comment_container">
-											<div class="add_comment_title">후기쓰기</div>
-											<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>
-										</div>
-									</div>
-								</div>
-							</div> <!-- 3번째 탭 후기 마지막 태그-->
-							
+										<c:if test="${count ne '0'}">
+											<div class="add_comment_container">
+												<div class="add_comment_title" 
+												onclick="location.href='4index.jsp?center=O_academy/academy_review_write.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'">
+												후기쓰기
+												</div>
+											</div>
+										</c:if>
+									
+										<!--------------------------------  ▲ 후기 1개 영역-------------------------------------->
+											
+											
 							
 
-							
+									</div>
+								</div>
+							</div>
 						</div> <!-- 전체 탭 마지막 태그-->
 					</div>
 				</div>
