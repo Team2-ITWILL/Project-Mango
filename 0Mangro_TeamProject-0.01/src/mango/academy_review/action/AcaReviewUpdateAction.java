@@ -9,19 +9,21 @@ import mango.action.Action;
 import mango.action.ActionForward;
 
 // 후기 작성
-public class AcaReviewWriteAction implements Action{
+public class AcaReviewUpdateAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
+		int reviewNum = Integer.parseInt(request.getParameter("reviewNum"));
 		System.out.println("mainNum : " + acaMainNum);
+		System.out.println("reviewNum : " + reviewNum);
 		
 		AcademyReviewBean bean = new AcademyReviewBean();
 		
 		bean.setMemEmail(request.getParameter("mem_email"));
 		bean.setAcaMainNum(acaMainNum);
-		bean.setAcaName(request.getParameter("aca_name"));
+		bean.setReviewNum(reviewNum);
 		bean.setReviewSubject(request.getParameter("review_subject"));
 		bean.setReviewTitle(request.getParameter("review_title"));
 		bean.setReviewGood(request.getParameter("review_good"));
@@ -31,7 +33,7 @@ public class AcaReviewWriteAction implements Action{
 		AcademyReviewDAO rdao = new AcademyReviewDAO();
 		
 		// 학원후기 작성
-		rdao.InsertAcademyReview(bean);
+		rdao.UpdateAcademyReview(bean);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

@@ -23,9 +23,13 @@ public class AnoBoardSingleAction implements Action {
 		// 익명글 목록 화면에서 보내온 글번호 정보 받기
 		int ano_board_num = Integer.parseInt(request.getParameter("ano_board_num"));
 		
-		// DAO로 값 전달 후 익명글 1개의 정보를 가져오는 메소드 실행
+		// DAO로 값 전달 후 조회수 증가와 익명글 1개의 정보를 가져오는 메소드 실행
 		AnonyBoardDAO andao = new AnonyBoardDAO();
+		
+		// 조회수 증가 메소드
 		andao.updateANBoardRead(ano_board_num);
+		
+		// 글 1개의 정보를 boardSingle객체로 가져오는 메소드
 		boardSingle = andao.getANBoard(ano_board_num);
 		
 		System.out.println(boardSingle);

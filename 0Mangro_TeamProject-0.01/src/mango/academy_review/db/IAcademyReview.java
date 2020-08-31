@@ -16,13 +16,13 @@ public interface IAcademyReview {
 	public List<AcademyReviewBean> getAcademyReviewList(int acaNum,int startRow,int pageSize);
  
 	//학원 후기 등록
-	public int InsertAcademyReview(AcademyReviewBean ab);
+	public void InsertAcademyReview(AcademyReviewBean ab);
 	
 	//학원 후기 삭제
 	public int DeleteAcademyReview(int reviewNum);
 	
 	//학원 후기 수정
-	public int UpdateAcademyReview(AcademyReviewBean ab);
+	public void UpdateAcademyReview(AcademyReviewBean ab);
 
 	
 	
