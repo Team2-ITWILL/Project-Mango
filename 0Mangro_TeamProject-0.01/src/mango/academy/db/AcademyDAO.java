@@ -779,7 +779,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				pstmt.setString(4,(String)formsearch.get("s4"));
 				pstmt.setInt(5,StartRow);
 				pstmt.setInt(6,pageSize);
-				
+				    
 				rs=pstmt.executeQuery();	
 				
 			}//

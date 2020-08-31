@@ -295,7 +295,7 @@ li.thirdKey {
 						<!-- 타자 검색영역 -->
 						<!-- 키워드선택 검색영역 -->
 						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="post">
-						
+				
 							<div class="searchInput">
 								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기" name="mainsearch" id="mainsearch">
 								<button type="submit"class="courses_search_button ml-auto searchBtn">검색하기</button>

@@ -104,10 +104,13 @@ public class AcademyListAction implements Action{
 		//시작행 번호 구하기
 		int currentPage=Integer.parseInt(pageNum);
 		
-		int startRow =(currentPage-1)*pageSize+1;
+		int startRow =(currentPage-1)*pageSize;
 		
 		
 		List<AcademyBean> Academylist =null;
+		
+		System.out.println("시작페이지" +startRow);
+		
 		
 		if(count != 0){
 			
