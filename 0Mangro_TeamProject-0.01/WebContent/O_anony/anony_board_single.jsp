@@ -110,15 +110,16 @@
 						
 						<%-- 내용 --%>
 						<div class="comment_text">
-							<p>${boardSingle.ano_board_content }</p> <br><br>
-							
-							
 							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 --%>
 							<c:choose>
 								<c:when test="${boardSingle.ano_board_file ne null}">
-									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="100"></p>
+									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
 								</c:when>
 							</c:choose>
+							
+							<p>${boardSingle.ano_board_content }</p> <br><br>
+							
+							
 							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
 						</div>
 						
