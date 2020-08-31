@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <!-- <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css"> -->
@@ -104,36 +105,8 @@
 					      <div class="mb-5 mt-2">
 					        <p>아래 3개 필수 데이터를 모두 입력해주세요.</p>
 					      </div>
-
-
-
-      <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  --------------------------------------------------------> 
-					  <div id="naverIdLogin">네이버로 가입하기</div> <br>
-	  <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  -------------------------------------------------------->
+					     <div class="social_signup" id="naverIdLogin">네이버로 가입하기</div> <br>
 					
-					
-  
-	  <!-------------------------------------------- 네이버 아이디로 로그인 초기화 Script  -------------------------------------------->
-	  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-	  
-	  <script type="text/javascript">
-		var naverLogin = new naver.LoginWithNaverId(
-			{
-				clientId: "rU2ooEzY2CNR72wYidQf",
-				callbackUrl: "http://localhost:8080/0Mangro_TeamProject-0.01/O_member/member_sign_up.jsp",
-				isPopup: true, /* 팝업을 통한 연동처리 여부 */
-				loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
-			}
-		);
-		
-		/* 설정 정보를 초기화하고 연동을 준비 */
-		naverLogin.init();
-		
-	  </script>
-	  <!-------------------------------------------- 네이버 아이디로 로그인 초기화 Script  -------------------------------------------->
-      
-      
-      
       
       <!-------------------------------------------- [이름, 이메일, 비밀번호 입력창] -------------------------------------------->
       <!-- class가 form-control일 때 클래스 속성을 하나 더 주어서 입력오류 알림(자바스크립트로 조건에 따라 동적으로 제어하면 됨)

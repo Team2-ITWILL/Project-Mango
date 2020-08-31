@@ -67,12 +67,16 @@ public class MemberDAO extends DBconnection{
 				// 비밀번호가 일치할 때
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 						
-					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_baned") == null) ){ 
+					// 탈퇴일자 혹은 계정정지일자 둘 중에 하나라도 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null) ||
+					  !(rs.getString("mem_baned") == null) ){ 
 						check = -2;
 						
-					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_baned") == null) ){
+					// 탈퇴일자와 계정정지일자 모두 데이터가 null일 때 로그인 성공
+					}else if(
+							(rs.getString("mem_seceded") == null)
+						     &&
+							(rs.getString("mem_baned") == null) ){
 						check = 1;
 					}
 				
@@ -125,7 +129,7 @@ public class MemberDAO extends DBconnection{
 					check = 1;
 					
 					sql = "UPDATE member "
-						+ "SET mem_baned = now() "
+						+ "SET mem_seceded = now(), mem_baned = now()"
 						+ "WHERE mem_email = ?";
 					 
 					pstmt = con.prepareStatement(sql);
@@ -158,72 +162,62 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
-	/* 내 정보 페이지에서 회원 정보가 보이는 기능의 메서드 */
-	public String selectMember(String email) {
-
-		String name = "";
-		
-		try {
-			getConnection();
-			
-			sql = "SELECT mem_name "
-				+ "FROM member "
-				+ "WHERE mem_email = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, email);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
-				name = rs.getString("mem_name");
-				System.out.println(name);
-			}
-
-			System.out.println(name);
-			
-			System.out.println("회원 이름 조회 완료 !!");
-			
-		} catch (Exception e) {
-			System.out.println("--> selectMember()에서 SQL 구문 오류 : "+ e);
-			e.printStackTrace();
-		
-		} finally {
-			resourceClose();
-		}
-		
-		return name;
-	} // 내 정보  / selectMember() 끝
+//	/* 내 정보 페이지에서 회원 정보가 보이는 기능의 메서드 */
+//	public String selectMember(MemberBean mb) {
+//
+//		String name = "";
+//		
+//		try {
+//			getConnection();
+//			
+//			sql = "SELECT mem_name "
+//				+ "FROM member "
+//				+ "WHERE mem_email = ?";
+//			
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, mb.getMemEmail());
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			rs.next();
+//				
+//			name = rs.getString("mem_name");
+//			
+//			System.out.println(mb.toString());
+//			System.out.println(name);
+//		} catch (Exception e) {
+//			System.out.println("--> selectMember()에서 SQL 구문 오류 : "+ e);
+//			e.printStackTrace();
+//		
+//		} finally {
+//			resourceClose();
+//		}
+//		
+//		return name;
+//	} // 내 정보  / selectMember() 끝
 	
 	
 	
 	
 	/* 회원 정보 수정 메서드 */
-	public boolean updateMember(MemberBean mb, String newPw) {
-		
-		boolean result = false; 
+	public void updateMember(MemberBean mb) {
 		
 		try {
 			getConnection();
-			System.out.println("DB 연결 성공 !!");
 			
-			sql = "SELECT * FROM member WHERE mem_email = ?";
+			sql = "UPDATE member "
+				+ "SET mem_name = ?, mem_pwd = ? "
+				+ "WHERE mem_email = ?";
+			
+			pstmt.setString(1, mb.getMemName());
+			pstmt.setString(2, mb.getMemPwd());
+			pstmt.setString(3, mb.getMemEmail());
+			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, mb.getMemEmail());
-			rs = pstmt.executeQuery();
 			
-			if(rs.next()){
-				sql = "UPDATE member SET mem_pwd = ? WHERE mem_email = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, newPw);
-				pstmt.setString(2, mb.getMemEmail());
-				pstmt.executeUpdate();
-				
-				result = true;
-				System.out.println("회원 정보 수정 완료 !!");
-			}else{
-				result = false;
-			}
+			pstmt.executeUpdate();
+
+			System.out.println("회원 정보 수정 완료 !!");
 			
 		} catch (Exception e) {
 			System.out.println("--> updateMember()에서 SQL구문 오류 : " + e);
@@ -232,7 +226,6 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		}
 		
-		return result;
 	} // 회원 정보 수정 / updateMember() 끝
 
 
