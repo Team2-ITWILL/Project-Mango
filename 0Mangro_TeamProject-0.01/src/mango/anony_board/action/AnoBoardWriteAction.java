@@ -1,4 +1,5 @@
 
+
 package mango.anony_board.action;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,4 +39,3 @@ public class AnoBoardWriteAction implements Action {
 	
 
 }
-
