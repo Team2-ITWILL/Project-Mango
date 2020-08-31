@@ -189,7 +189,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="./MemberDelete.me" aria-expanded="false">
+                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>

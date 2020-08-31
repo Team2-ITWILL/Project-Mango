@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="mango.member.db.*"%>       
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,19 +24,6 @@
 
 
 </head>
-
-<%
-//<------------------ 로그인 세션 값 여부 ---------------------->
-	String id=(String)session.getAttribute("id");
-
-	//세션값이 없으면  로그인 페이지로 이동 ./MemberLogin.me
-	if(id == null){
-	   response.sendRedirect("./MemberLogin.me");
-	}
-%>
-
-
-
 <body>
 <script type="text/javascript">
 	<!----------------- 회원 정보 수정 필수 입력 -------------------->
@@ -80,12 +66,9 @@
 	
 </script>
 
-<% 	
-//<------------------ 회원정보 가져오기 ----------------------->	
-	String email = (String)session.getAttribute("id_email");
-	MemberDAO mdao = new MemberDAO();
-	String name = mdao.selectMember(email);
-%>
+
+
+
 
 
 
@@ -106,7 +89,7 @@
 					      <div class="js-form-message form-group">
 							        	<label class="form-label" for="anony_file"><span>프로필사진</span></label>
 						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="fileName">
+						                	<input type="file" class="form-control color file"  multiple="">
 							          		<button type="button" class="hideBtn" onchange="changeValue(this)">사진변경하기</button>
 						              	</div>								
 					      </div>
@@ -114,7 +97,7 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이름</label>
-						        <input type="text" class="form-control" name="memName" id="id_name" value="<%=name%>"
+						        <input type="text" class="form-control" name="memName" id="id_name" value="${param.memName}"
 						               data-msg="이름을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"
