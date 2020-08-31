@@ -8,12 +8,10 @@ import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardBean;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardContentAction
-  implements Action
-{
+// QnaBoard 내용 확인 액션
+public class QnaBoardContentAction implements Action{
   public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-    throws Exception
-  {
+    throws Exception{
     System.out.println("QnaBoardContentAction() 실행!");
 
     int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
