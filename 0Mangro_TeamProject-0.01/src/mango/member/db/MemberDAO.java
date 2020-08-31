@@ -85,8 +85,6 @@ public class MemberDAO extends DBconnection{
 				check = -1; // SELECT 결과에 아이디 없을 때 (-1)
 			}
 
-			System.out.println(check);
-			
 			System.out.println("DB 조회 성공 !!");
 			
 		} catch (Exception e) {
@@ -111,12 +109,8 @@ public class MemberDAO extends DBconnection{
 			getConnection();
 			
 			sql = "SELECT * FROM member WHERE mem_email = ?";
-			
 			pstmt = con.prepareStatement(sql);
-			
 			pstmt.setString(1, mb.getMemEmail());
-//			pstmt.setString(2, mb.getMemPwd());
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -129,9 +123,7 @@ public class MemberDAO extends DBconnection{
 						+ "WHERE mem_email = ?";
 					 
 					pstmt = con.prepareStatement(sql);
-					
 					pstmt.setString(1, mb.getMemEmail());
-
 					pstmt.executeUpdate();
 					
 				}else{
@@ -172,7 +164,6 @@ public class MemberDAO extends DBconnection{
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -180,8 +171,6 @@ public class MemberDAO extends DBconnection{
 				System.out.println(name);
 			}
 
-			System.out.println(name);
-			
 			System.out.println("회원 이름 조회 완료 !!");
 			
 		} catch (Exception e) {

@@ -29,7 +29,6 @@ public class MemberLoginAction implements Action{
 		System.out.println(check);
 		
 		if(check == 0){ // 비밀번호 불일치
-			
 			response.setContentType("text/html; charset=utf-8");
 			
 			PrintWriter out = response.getWriter();
@@ -41,7 +40,6 @@ public class MemberLoginAction implements Action{
 			return null;
 		
 		}else if(check == -1){ // 아이디 불일치
-			
 			response.setContentType("text/html; charset=utf-8");
 			
 			PrintWriter out = response.getWriter();
@@ -53,7 +51,6 @@ public class MemberLoginAction implements Action{
 			return null;
 			
 		}else if(check == -2){ // 탈퇴한 아이디일 경우
-			
 			response.setContentType("text/html; charset=UTF-8"); 
 			
 			PrintWriter out = response.getWriter();
@@ -66,7 +63,6 @@ public class MemberLoginAction implements Action{
 		}
 		
 		HttpSession session = request.getSession();
-		
 		session.setAttribute("id_email", id_email);
 		
 		ActionForward forward = new ActionForward();

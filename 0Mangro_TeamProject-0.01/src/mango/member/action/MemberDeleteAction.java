@@ -25,7 +25,6 @@ public class MemberDeleteAction implements Action{
 		int check = mdao.deleteMember(mb);
 		 
 		if(check == 1){
-			
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.setContentType("text/html; charset=UTF-8");
@@ -40,7 +39,6 @@ public class MemberDeleteAction implements Action{
 			return null;
 			
 		}else if(check == 0){
-			
 			response.setContentType("text/html; charset=UTF-8");
 			
 			PrintWriter out = response.getWriter();

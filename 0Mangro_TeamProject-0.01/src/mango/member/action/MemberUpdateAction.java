@@ -35,7 +35,7 @@ public class MemberUpdateAction implements Action{
 //		String filename = multi.getFilesystemName("fileName"); // 서버에 실제로 업로드된 파일명
 //		String originFilename = multi.getOriginalFileName("fileName"); // 업로드한 파일의 원본명
 		
-		System.out.println(memEmail + " / " + memPwd + " / " + newPw + " / " /* + filename + " / " + originFilename */ );
+//		System.out.println(memEmail + " / " + memPwd + " / " + newPw + " / " /* + filename + " / " + originFilename */ );
 
  /* --------------------------------------------------------------------------------------------------------- */	
 		
