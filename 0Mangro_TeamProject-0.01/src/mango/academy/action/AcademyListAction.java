@@ -100,14 +100,17 @@ public class AcademyListAction implements Action{
 		
 		
 		System.out.println(count);
-
+		     
 		//시작행 번호 구하기
 		int currentPage=Integer.parseInt(pageNum);
 		
-		int startRow =(currentPage-1)*pageSize+1;
+		int startRow =(currentPage-1)*pageSize;
 		
 		
 		List<AcademyBean> Academylist =null;
+		
+		System.out.println("시작페이지" +startRow);  
+		
 		
 		if(count != 0){
 			
@@ -130,7 +133,7 @@ public class AcademyListAction implements Action{
 		if(endPage>pageCount){
 			
 			endPage=pageCount;
-			
+			   
 		}
 		
 		
@@ -144,9 +147,10 @@ public class AcademyListAction implements Action{
 		request.setAttribute("pageBlock", pageBlock);//보여줄 페이지 수
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
-		request.setAttribute("Page","AcademyList.aca");
+		request.setAttribute("Page","AcademyList.aca?");
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
+		
 		
 		return forward;
 	}

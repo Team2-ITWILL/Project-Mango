@@ -76,7 +76,7 @@
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
 		    items:1,
-		    loop:true,
+		    loop:false,
 		    margin:10,
 		    //autoplay:true,
 		    autoplay:false,
@@ -255,7 +255,7 @@
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/mainslider6.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(images/mainslider5.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="container">
 							<div class="row">
@@ -263,11 +263,13 @@
 									<div class="home_slider_title">우리동네 학원을 찾아보세요.</div>
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
-										<form action="#" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
+										<form action="AcademySearchList.aca" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
+												<input type="hidden"  name="select4">
+												<input type="hidden"  name="select5">
 											<div class="d-flex flex-row align-items-center justify-content-start">
-												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-												<select class="dropdown_item_select home_search_input sel1">
-													<option>시/도</option>
+												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
+												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
+													<option value="">시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
 													<option value="대구광역시">대구광역시</option>
@@ -286,15 +288,13 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input">
-													<option>시/군/구</option>
-													<option>남구</option>
-													<option>남구</option>
+												<select class="dropdown_item_select home_search_input sel2"  name="select2">
+													<option value="">시/군/구</option>
+													
 												</select>
-												<select class="dropdown_item_select home_search_input">
-													<option>읍/면/동</option>
-													<option>대연동</option>
-													<option>대연동</option>
+												<select class="dropdown_item_select home_search_input sel3"  name="select3">
+													<option value="">읍/면/동</option>
+												
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -306,7 +306,7 @@
 					</div>
 				</div>
 
-				<!-- Home Slider Item -->
+				<!-- Home Slider Item
 				<div class="owl-item">
 					<div class="home_slider_background" style="background-image:url(images/mainslider7.jpg)"></div>
 					<div class="home_slider_content">
@@ -319,7 +319,7 @@
 										<form action="#" id="home_search_form_2" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-													<select class="dropdown_item_select home_search_input">
+													<select class="dropdown_item_select home_search_input sel1">
 													<option>시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
@@ -339,15 +339,11 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sel2">
 													<option>시/군/구</option>
-													<option>Category</option>
-													<option>Category</option>
 												</select>
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sel3">
 													<option>읍/면/동</option>
-													<option>Price Type</option>
-													<option>Price Type</option>
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -359,7 +355,7 @@
 					</div>
 				</div>
 
-				<!-- Home Slider Item -->
+				Home Slider Item
 				<div class="owl-item">
 					<div class="home_slider_background" style="background-image:url(images/mainslider5.jpg)"></div>
 					<div class="home_slider_content">
@@ -372,7 +368,7 @@
 										<form action="#" id="home_search_form_3" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="search" class="home_search_input" placeholder="검색하기" required="required">
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sea1">
 													<option>시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
@@ -392,15 +388,12 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sel2">
 													<option>시/군/구</option>
-													<option>Category</option>
-													<option>Category</option>
 												</select>
-												<select class="dropdown_item_select home_search_input">
+												<select class="dropdown_item_select home_search_input sel3">
 													<option>읍/면/동</option>
-													<option>Price Type</option>
-													<option>Price Type</option>
+												
 												</select>
 											</div>
 											<button type="submit" class="home_search_button">search</button>
@@ -412,13 +405,16 @@
 					</div>
 				</div>
 
+			</div> -->
 			</div>
 		</div>
 
 		<!-- Home Slider Nav -->
 
-		<div class="home_slider_nav home_slider_prev"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-		<div class="home_slider_nav home_slider_next"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+	
+	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
+	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+		
 	</div>
 
 
