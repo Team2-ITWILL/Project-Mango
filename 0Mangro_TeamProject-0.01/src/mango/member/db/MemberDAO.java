@@ -53,13 +53,10 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
-			System.out.println("DB 연결 성공 !!");
 			
 			sql = "SELECT * FROM member WHERE mem_email = ?";
-			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){ // SELECT 결과에 아이디가 있을 때
@@ -84,8 +81,6 @@ public class MemberDAO extends DBconnection{
 			}else{
 				check = -1; // SELECT 결과에 아이디 없을 때 (-1)
 			}
-
-			System.out.println(check);
 			
 			System.out.println("DB 조회 성공 !!");
 			
@@ -111,29 +106,23 @@ public class MemberDAO extends DBconnection{
 			getConnection();
 			
 			sql = "SELECT * FROM member WHERE mem_email = ?";
-			
 			pstmt = con.prepareStatement(sql);
-			
 			pstmt.setString(1, mb.getMemEmail());
-//			pstmt.setString(2, mb.getMemPwd());
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
 				
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
-					check = 1;
 					
 					sql = "UPDATE member "
 						+ "SET mem_baned = now() "
 						+ "WHERE mem_email = ?";
-					 
-					pstmt = con.prepareStatement(sql);
 					
+					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, mb.getMemEmail());
-
 					pstmt.executeUpdate();
 					
+					check = 1;
 				}else{
 					check = 0;
 				}
@@ -147,7 +136,6 @@ public class MemberDAO extends DBconnection{
 		} catch (Exception e) {
 			System.out.println("--> deleteMember()에서 SQL 구문 오류 : "+ e);
 			e.printStackTrace();
-			
 		} finally {
 			resourceClose();
 		}
@@ -172,22 +160,17 @@ public class MemberDAO extends DBconnection{
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
 				name = rs.getString("mem_name");
-				System.out.println(name);
 			}
-
-			System.out.println(name);
 			
 			System.out.println("회원 이름 조회 완료 !!");
 			
 		} catch (Exception e) {
 			System.out.println("--> selectMember()에서 SQL 구문 오류 : "+ e);
 			e.printStackTrace();
-		
 		} finally {
 			resourceClose();
 		}
@@ -205,14 +188,15 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
-			System.out.println("DB 연결 성공 !!");
 			
-			sql = "SELECT * FROM member WHERE mem_email = ?";
+			sql = "SELECT * FROM member WHERE mem_email = ? AND mem_pwd = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
+			pstmt.setString(2, mb.getMemPwd());
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
+				
 				sql = "UPDATE member SET mem_pwd = ? WHERE mem_email = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, newPw);
@@ -220,7 +204,9 @@ public class MemberDAO extends DBconnection{
 				pstmt.executeUpdate();
 				
 				result = true;
+				
 				System.out.println("회원 정보 수정 완료 !!");
+				
 			}else{
 				result = false;
 			}
