@@ -263,9 +263,9 @@
 									<div class="home_slider_title">우리동네 학원을 찾아보세요.</div>
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
-										<form action="AcademySearchList.aca" id="home_search_form_1" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden"  name="select4">
-												<input type="hidden"  name="select5">
+										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
+												<input type="hidden" name="select4">
+												<input type="hidden" name="select5">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
 												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
