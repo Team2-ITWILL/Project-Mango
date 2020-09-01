@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 
+import mango.member.db.MemberBean;
+
 public interface IAcademy {
 	
 	
@@ -47,6 +49,11 @@ public interface IAcademy {
 	public JSONArray getListSearchThr(String parameter, String parameter2, String parameter3);
 	
 	
+	//학원관리자 회원정보 변경
+	public int reviseAcademyInfo(MemberBean bean);
+	
+	//학원관리자 회원정보 가져오기(오버로딩)
+	public AcademyBean getAcademyContent(String email);
 	
 
 }

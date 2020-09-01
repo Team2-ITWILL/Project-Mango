@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface IAuditManagement {
 	
-	
-	
 	//청강 수업 내용 갖고오기
 	public AuditManagementBean getAuditMangement(AuditManagementBean abc);
 

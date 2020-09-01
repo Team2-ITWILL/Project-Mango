@@ -55,6 +55,15 @@ public class AuditMangementFrontController  extends HttpServlet{
 				e.printStackTrace();
 			}
 			
+		}else if(command.equals("/auditGetInfo.adma")){			
+			try {
+				action = new AcademyGetInfoAction();
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			
 		}
 		
 		
