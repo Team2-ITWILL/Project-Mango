@@ -8,12 +8,12 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardListAction
-  implements Action
-{
-  public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-    throws Exception
-  {
+public class QnaBoardListAction implements Action {
+	
+	
+  public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	  
+	  
     System.out.println("QnaBoardListAction excute() 실행");
 
     QnaBoardDAO qbao = new QnaBoardDAO();
@@ -59,4 +59,8 @@ public class QnaBoardListAction
 
     return forward;
   }
+  
+  
+  
+  
 }

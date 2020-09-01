@@ -129,7 +129,7 @@ div
 	font-style: italic;
 }
 .likeTbl .td_datetime {
-	width:60px;
+	width:71px;
 	text-align:center;
 	font-style: italic;
 	color:#999;
@@ -405,4 +405,7 @@ a.btn_write:hover{
 	background: url("../images/qna_img/btn_end.png")  no-repeat 50% 50% #fff;
 	padding: 0;
 	border: 1px solid #bbb;
+}
+span.sv_member{
+	font-size: 12px;
 }

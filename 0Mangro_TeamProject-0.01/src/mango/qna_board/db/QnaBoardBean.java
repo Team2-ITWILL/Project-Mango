@@ -1,6 +1,7 @@
 package mango.qna_board.db;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class QnaBoardBean
 {
@@ -10,7 +11,7 @@ public class QnaBoardBean
   private String qna_board_title;
   private String qna_board_content;
   private int qna_board_read;
-  private Date qna_board_date;
+  private Timestamp qna_board_date;
   private String qna_board_ip;
   private int qna_re_lev;
   private int qna_re_ref;
@@ -66,15 +67,16 @@ public class QnaBoardBean
     this.qna_board_read = qna_board_read;
   }
 
-  public Date getQna_board_date() {
-    return this.qna_board_date;
-  }
 
-  public void setQna_board_date(Date qna_board_date) {
-    this.qna_board_date = qna_board_date;
-  }
+  public Timestamp getQna_board_date() {
+	return qna_board_date;
+	}
+	
+	public void setQna_board_date(Timestamp qna_board_date) {
+		this.qna_board_date = qna_board_date;
+	}
 
-  public String getQna_board_ip() {
+public String getQna_board_ip() {
     return this.qna_board_ip;
   }
 

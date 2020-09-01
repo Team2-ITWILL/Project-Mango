@@ -8,17 +8,14 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardDeleteAction implements Action{
-	
+public class QnaBoardSecretAction implements Action{
 	
 	
   public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
     
 	  
 	  
-	  
-	  
-    System.out.println("QnaBoardDeleteAction 실행");
+    System.out.println("QnaBoardSecretAction 실행");
 
     String pageNum = request.getParameter("pageNum");
     int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
@@ -26,7 +23,7 @@ public class QnaBoardDeleteAction implements Action{
 
     QnaBoardDAO qdao = new QnaBoardDAO();
 
-    int check = qdao.DeleteQnaBoard(qna_board_num, qna_board_pwd);
+    int check = qdao.SecretQnaBoard(qna_board_num, qna_board_pwd);
 
     if (check == 0){
     	
@@ -57,8 +54,7 @@ public class QnaBoardDeleteAction implements Action{
     response.setContentType("text/html; charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<script>");
-    out.println("alert('글 삭제에 성공하였습니다.');");
-    out.println("location.href = './QnaBoard.qna?num=" + pageNum + "'");
+    out.println("location.href = './QnaBoardContent.qna?qna_board_num="+ qna_board_num + "&pageNum=" + pageNum + "'");
     out.println("</script>");
     out.close();
 

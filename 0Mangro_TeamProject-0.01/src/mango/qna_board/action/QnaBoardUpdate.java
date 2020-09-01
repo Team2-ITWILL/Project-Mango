@@ -8,12 +8,11 @@ import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardBean;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardUpdate
-  implements Action
-{
-  public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-    throws Exception
-  {
+public class QnaBoardUpdate implements Action {
+	
+  public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	  
+	  
     System.out.println("QnaBoardUpdate 실행");
 
     int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
@@ -30,5 +29,7 @@ public class QnaBoardUpdate
     forward.setPath("./4index.jsp?center=O_qna/qna_update.jsp");
 
     return forward;
+    
   }
+  
 }
