@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -43,8 +44,10 @@
 		<section id="bo_v_info">
 			<h2>페이지 정보</h2>
 			<span class="sound_only">작성자</span> <strong><span class="sv_guest">${qbean.mem_email}</span></strong>
-			<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i>${qbean.qna_board_read}</strong>
-			<strong class="if_date"><span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i>${qbean.qna_board_date}</strong>
+			<span class="sound_only">조회</span><strong><i class="fa fa-eye" aria-hidden="true"></i> ${qbean.qna_board_read}</strong>
+			<strong class="if_date"><span class="sound_only">작성일</span><i class="fa fa-clock-o" aria-hidden="true"></i> 			
+				<fmt:formatDate value="${qbean.qna_board_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+			</strong>
 		</section>
 			
 		<section id="bo_v_atc">
@@ -62,18 +65,26 @@
 			<!-- 수정 및 삭제 버튼 -->
 			<ul class="bo_v_left">
 				<li>
-					<a href="./QnaBoardUpdate.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn">
-						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-						수정
-					</a>
-				</li>
-				
-			    <li>
-			    	<a href="./QnaBoardDelete.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn" onclick="del(this.href); return false;">
-			    		<i class="fa fa-trash-o" aria-hidden="true"></i>
-			    		삭제
-			    	</a>
-			    </li>
+					
+					<c:if test="${id_email == 'admin' || id_email == 'admin@mango.com' ||
+								  id_email == qbean.mem_email}">
+						
+						<a href="./QnaBoardUpdate.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							수정
+						</a>
+						
+					
+					</li>
+					
+				    <li>
+				    	<a href="./QnaBoardDelete.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn" onclick="del(this.href); return false;">
+				    		<i class="fa fa-trash-o" aria-hidden="true"></i>
+				    		삭제
+				    	</a>
+				    </li>
+			    	
+			    	</c:if>
 			</ul>
 			
 			<ul class="bo_v_com">
@@ -84,10 +95,13 @@
 				</li>
 			    
 			    <!-- 답변 등록 -->
-			    <li>
-			    	<a href="./QnaBoardReWrite.qna?qna_board_num=${qbean.qna_board_num}&qna_re_ref=${qbean.qna_re_ref}&qna_re_lev=${qbean.qna_re_lev}&qna_re_seq=${qbean.qna_re_seq}" class="btn_b02 btn">
-			    	<i class="fa fa-pencil" aria-hidden="true"></i>답변등록</a>
-			    </li>
+				<c:if test="${id_email == 'admin' || id_email == 'admin@mango.com'}">
+				    <li>
+				    	<a href="./QnaBoardReWrite.qna?qna_board_num=${qbean.qna_board_num}&qna_re_ref=${qbean.qna_re_ref}&qna_re_lev=${qbean.qna_re_lev}&qna_re_seq=${qbean.qna_re_seq}" class="btn_b02 btn">
+				    	<i class="fa fa-pencil" aria-hidden="true"></i> 답변등록</a>	
+				    	
+				    </li>
+			    </c:if>
 			</ul>
 			
 		</div>
@@ -103,10 +117,53 @@
 			<i class="fa fa-chevron-down" aria-hidden="true"></i>
 		</button>
 		
+		
+		
+		
+		
 		<!-- reply(s)-->
 		<section id="bo_vc">
+		
 			<h2>답변목록</h2>
-			<p id="bo_vc_empty">등록된 답변이 없습니다. 또는 답변 목록 출력</p>
+			
+			
+			<article id = "c_33">
+				
+				<%--답변이 있을 경우 --%>
+				<c:if test="${not empty re_list}">
+					
+					<c:forEach var = "re_bean" items="${re_list}">
+						
+						<header style = "z-index:2">
+							<h2>${re_bean.mem_email}의 답변</h2>
+							<span class = "member">${re_bean.mem_email}</span>
+							<span class = "bo_vc_hdinfo">
+								<i class = "fa fa-clock-o" aria-hidden="true"></i>
+								<fmt:formatDate value="${re_bean.qna_board_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
+							</span>
+						</header>
+						
+						<div class = "cmt_contents">
+							<a href ="./QnaBoardContent.qna?qna_board_num=${re_bean.qna_board_num}&pageNum=${pageNum}">
+								<p>${re_bean.qna_board_title}</p>
+							</a>
+						</div>
+						
+					</c:forEach>
+					
+				</c:if>
+
+
+
+
+				<c:if test="${empty re_list}">
+					<%--답변이 없을 경우 --%>
+					<p id="bo_vc_empty">등록된 답변이 없습니다.</p>
+				</c:if>
+				
+			</article>
+			
+			
 		</section>
 		<!-- reply(e)-->
 	
