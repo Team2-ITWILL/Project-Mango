@@ -70,7 +70,6 @@
 	if(request.getSession().getAttribute("searchKeyword") != null ){
 		searchKeyword = (String)request.getSession().getAttribute("searchKeyword");
 	}	
-		
 
 %>
 

@@ -23,11 +23,11 @@ public class AnonyBoardListAction implements Action{
 		request.setCharacterEncoding("UTF-8");
 		
 		// 글 목록 불러오기
-		
-		String searchKeyword = "";
+		String searchKeyword = request.getParameter("searchKeyword");
 		if(searchKeyword != null) {
-			searchKeyword = request.getParameter("searchKeyword");
 			request.getSession().setAttribute("searchKeyword", searchKeyword);
+		}else{
+			searchKeyword = "";
 			
 		}
 		

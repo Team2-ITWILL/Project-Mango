@@ -222,7 +222,7 @@ public class AnonyBoardDAO extends DBconnection {
 			getConnection();
 			sql = "SELECT * FROM anony_board ";
 			
-			if(searchKeyword != null) {
+			if(searchKeyword != "") {
 				// 제목과, 내용, 닉네임 중 일치하는 검색키워드를 필터링 
 				sql += "WHERE ano_board_title LIKE ? ";
 				sql += "OR ano_board_content LIKE ? ";
