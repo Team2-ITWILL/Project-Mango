@@ -69,7 +69,7 @@
 										
 										<c:when test="${id_email == 'admin@mango.com' }">
 											<div class="top_bar_button admin_page">
-												<a href="">관리자 메뉴</a>
+												<a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>
