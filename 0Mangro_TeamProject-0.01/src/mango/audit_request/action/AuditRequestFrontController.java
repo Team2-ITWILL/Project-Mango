@@ -73,6 +73,15 @@ public class AuditRequestFrontController extends HttpServlet {
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}		
+		}else if(command.equals("/AuditGetSubj.adrq")){
+			try {
+				action = new AuditRequestGetAvailSubjectAction();				
+				
+				forward = action.excute(request, response);			
+		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}		
 		}
 		
 		

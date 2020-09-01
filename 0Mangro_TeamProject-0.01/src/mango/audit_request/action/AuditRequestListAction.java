@@ -17,6 +17,9 @@ public class AuditRequestListAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		//필수!!
+		request.setCharacterEncoding("utf-8");
+		String email = (String)request.getSession().getAttribute("id_email");
 		
 		System.out.println("AuditRequestListAction.java 실행");
 		
@@ -27,11 +30,8 @@ public class AuditRequestListAction implements Action{
 		System.out.println("누적 청강수 : " + count);
 		System.out.println("승인된 청강수 : " + count_app);
 		
-		AuditRequestBean bean = new AuditRequestBean();
-		
-		//학원지정번호 바인딩
-		//bean.setAcaNum(Integer.parseInt(request.getParameter("aca_num")));
-		bean.setAcaNum(301569); //임시번호
+		AuditRequestBean bean = new AuditRequestBean();	
+		bean.setMemEmail(email);
 		
 		List<AuditRequestBean> list = dao.getAuditList(bean);
 		request.setAttribute("AuditList", list);

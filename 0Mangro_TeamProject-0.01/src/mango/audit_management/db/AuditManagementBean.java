@@ -3,21 +3,25 @@ package mango.audit_management.db;
 import java.time.LocalDate;
 import java.util.Date;
 
+
+// 과목 하나를 관리하는 객체
+
 public class AuditManagementBean {
 	
-	// 학원지정번호 
+	// 학원지정번호 (실제 컬럼 : aca_main_num)
     private int acaNum;
 
     // 학원명 
     private String acaName;
 
-    // 청강가능과목1 
+    // 청강가능과목
     private String auditAvailSubj;
 
     // 청강가능일시 
     private LocalDate auditAvailDate;
 
     // 해당 수업지속시간 
+    // 목적?????
     private int auditLastTime;
     
     //청강 가능 인원
