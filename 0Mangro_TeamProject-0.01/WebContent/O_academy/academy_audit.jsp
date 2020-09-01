@@ -1,7 +1,9 @@
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,6 +16,7 @@
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="styles/academy_audit.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
+
 
 
 <style type="text/css">
@@ -43,9 +46,53 @@
 </style> 
 
 
+<!-- jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
+
+<!-- jQuery 기본 js파일 -->
+<!-- jquery js와 UI버전이 같아야 datepicker가 정상적으로 작동한다!! -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+
+<!-- jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<!-- DatePicker Library -->
+<script>
+  var newJquery = $.noConflict(true);
+  //기존 라이브러리 : $
+  //새로운 라이브러리 : newJquery
+
+  newJquery(function(){	
+	  var audit_wish = document.getElementById("audit_wish");
+	  newJquery(audit_wish).datepicker({		  	
+		  changeMonth : true,
+		  changeYear : true,
+		  nextText : '다음 달',
+		  prevText : '이전 달',
+		  showButtonPanel : true,
+		  currentText : '오늘 날짜',
+		  closeText : '닫기',
+		  dateFormat : "yy-mm-dd",		
+          dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+          dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+          monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+          monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	  	  minDate : "+1", // 오늘날짜 이후부터 선택
+	  	  maxDate: "+5M +1D" //최대 가능한 날짜
+	  });
+  });	  
+</script>
 
 </head>
 <body>
+
+<!-- AuditRequestGetAvailSubjectAction.java로부터 데이터를 받아온다 -->
+<c:set var="email" value="${requestScope.email}" />
+<c:set var="list" value="${requestScope.auditManageList}" />
+
+<script>
+	console.log("${email}");
+	console.log("${list}");
+</script>
 
 		<div class="container">
 			<div class="row">
@@ -67,36 +114,40 @@
 				      
 				      	  <!-- 학원지정번호 hidden으로 보내기 -->
 				      	  <!-- academy_single.jsp에서 전달받은 request parameter -->
-					        <input type="hidden" class="form-control" name="aca_num" value="${param.acaMainNum}" readonly> 
+					        <input type="hidden" class="form-control" name="aca_num" value="${list[0].acaNum}" readonly> 
 					        
 					         <!-- academy_single.jsp에서 전달받은 request parameter -->
 						      <div class="js-form-message form-group">
 						        <label class="form-label audit_name">청강희망 학원명
 						        	<!-- <input type="text" class="form-control" name="aca_name" value="부산학원" readonly> --> 
-						        	<input type="text" class="form-control" name="aca_name" value="${param.acaName}" readonly> 
+						        	<input type="text" class="form-control" name="aca_name" value="${list[0].acaName}" readonly> 
 						        </label>
 						        <label class="form-label audit_email">청강신청계정
-						       		<input type="text" class="form-control" name="mem_email" value="user1@naver.com" placeholder="이메일" readonly>
+						       		<input type="text" class="form-control" name="mem_email" value="${email}" placeholder="이메일" readonly>
 						        </label>
 							  </div>
 						      
 						      <div class="js-form-message form-group">
 						        <label class="form-label audit_subject">청강신청과목
-						       		<select  name="audit_subject" class="form-control">
-						       			<option>과목 선택
-						       			<!-- 학원에서 지정한  청강가능과목만 표시 영역-->
-						       			<option>망고 영어 회화
-						       			<option>망고 중국어 회화
-						       			<option>망고 스페인어 회화
-<!-- 						       		<input type="text" class="form-control" name="audit_subject" readonly placeholder="ex)망고 영어회화" > -->
-									</select>			
+						       		<select  name="audit_subject" class="form-control">	
+						       			<!-- 학원에서 지정한  청강가능과목만 표시 영역-->					       			
+							       		<option>과목 선택
+							       		
+							       		<!-- 등록된 청강과목리스트로의 과목들을 select option으로 등록 -->
+							       		<c:forEach var="vo" items="${list}">	
+							       			<option>${vo.auditAvailSubj}							       			
+										</c:forEach>
+										
+									</select>	
+										
+									
 						        </label>
 							  </div>
 							  <div></div>
 						      	<span class="faded">청강 희망일자는 가능한 날짜 중에서만 선택가능합니다.</span>
 						      <div class="js-form-message form-group">
 						        <label class="form-label audit_wish">청강희망일자
-							        <input type="date" class="form-control" name="audit_wish_date" required>
+							        <input type="text" class="form-control" name="audit_wish_date" id="audit_wish" required>
 						        </label>
 						        <label class="form-label audit_request">청강신청일자(오늘)
 							        <input type="text" class="form-control" name="audit_request_date" value="<%=LocalDate.now()%>" readonly required>

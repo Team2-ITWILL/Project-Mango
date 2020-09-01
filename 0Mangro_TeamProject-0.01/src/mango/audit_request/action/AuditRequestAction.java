@@ -19,12 +19,14 @@ public class AuditRequestAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		//필수!!
+		request.setCharacterEncoding("utf-8");
 		
 		//청강신청일 : 언제 듣고 싶은지
-		String audit_wish_date = request.getParameter("audit_wish_date");
+		//String audit_wish_date = request.getParameter("audit_wish_date");
 		
 		//청강신청일 : 신청 당일 날짜
-		String audit_request_date = request.getParameter("audit_request_date");
+		//String audit_request_date = request.getParameter("audit_request_date");
 		
 		//System.out.println("requestDate : " + audit_wish_date);
 		//System.out.println("wishDate : " + audit_request_date);
@@ -33,26 +35,16 @@ public class AuditRequestAction implements Action{
 		
 		AuditRequestBean bean 
 		 = new AuditRequestBean(
-				 0, //auditNum : Auto Increment
-				 
-				 //(String)request.getSession().getAttribute("mem_email"),
-				 //request.getParameter("mem_email"),
-				 
-				 //Integer.parseInt(request.getParameter("aca_num")),
-				 //request.getParameter("aca_name"),	
-				 //request.getParameter("audit_subject"),
-				 
-				 "1@1.com",
-				 301569,
-				 "(주)그루샘수학보습학원",	
+				 0, //auditNum : Auto Increment				 
+				 request.getParameter("mem_email"),				 
+				 Integer.parseInt(request.getParameter("aca_num")),
+				 request.getParameter("aca_name"),	
 				 
 				 //★★★★audit_management 테이블의 subject를 fk로 등록하였기 때문에 
-				 //과목명이 반드시 일치해야한다!!!
-				 "hihi",
-				
-				 LocalDate.parse(request.getParameter("audit_request_date")),
-				 LocalDate.parse(request.getParameter("audit_wish_date")),				 
-				 
+				 //과목명이 반드시 일치해야한다!!!	
+				 request.getParameter("audit_subject"),	
+				 LocalDate.parse(request.getParameter("audit_wish_date")),	
+				 LocalDate.parse(request.getParameter("audit_request_date")),			 
 				 null			 
 				 );
 		

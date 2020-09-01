@@ -20,7 +20,7 @@ public class AcademyRegisterAction implements Action{
 		String email = (String)request.getSession().getAttribute("id_email");
 		
 		//---------------로그인이 되어있는지 확인-------------------------//
-		if(email == null){
+		if(email == null || email.equals("")){
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");

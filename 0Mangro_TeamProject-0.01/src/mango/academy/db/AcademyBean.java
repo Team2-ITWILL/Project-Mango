@@ -200,6 +200,16 @@ public class AcademyBean {
 	public void setMem_email(String mem_email) {
 		this.mem_email = mem_email;
 	}
+	
+	@Override
+	public String toString() {
+		return "AcademyBean [acaMainNum=" + acaMainNum + ", acaNum=" + acaNum + ", acaCode=" + acaCode
+				+ ", acaSearchAddr1=" + acaSearchAddr1 + ", acaSearchAddr2=" + acaSearchAddr2 + ", acaSearchAddr3="
+				+ acaSearchAddr3 + ", acaAttr=" + acaAttr + ", acaName=" + acaName + ", acaStartDate=" + acaStartDate
+				+ ", acaCategory1=" + acaCategory1 + ", acaCategory2=" + acaCategory2 + ", acaAddrZip=" + acaAddrZip
+				+ ", acaAddrDoro=" + acaAddrDoro + ", acaAddrDetailed=" + acaAddrDetailed + ", mem_email=" + mem_email
+				+ ", reviewScore=" + reviewScore + "]";
+	}
 
 	
 }
