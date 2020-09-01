@@ -29,9 +29,9 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "{rU2ooEzY2CNR72wYidQf}", // "내 애플리케이션의 Client ID"
-				callbackUrl: "{http://localhost:8080/0Mangro_TeamProject-0.01/O_member/naverCollBack.jsp}",
+				callbackUrl: "{http://192.168.6.19:8080/0Mangro_TeamProject-0.01/O_member/naverLoginCallBack.jsp}",
 				// "2번에서 지정한 Callback URL",
-				isPopup: true, // 팝업을 통한 연동처리 여부, true면 팝업
+				isPopup: false, // 팝업을 통한 연동처리 여부, true면 팝업
 				callbackHandle: true 
 				/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
 			}
@@ -46,14 +46,21 @@
 				if (status) {
 					/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
 					var email = naverLogin.user.getEmail();
+					var name = naverLogin.user.getName();
+					
 					if( email == undefined || email == null) {
 						alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
 						/* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */
 						naverLogin.reprompt();
 						return;
+						
+					}else if( name == undefined || name == null){
+						alert("이름은 필수정보입니다. 정보제공을 동의해주세요.");
+						naverLogin.reprompt();
+						return;
 					}
-
-					window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/0Mangro_TeamProject-0.01/4index.jsp");
+					
+					window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/0Mangro_TeamProject-0.01/MemberNaverLoginAction.me?id_email="+email+"&id_name="+name);
 				} else {
 					console.log("callback 처리에 실패하였습니다.");
 				}
