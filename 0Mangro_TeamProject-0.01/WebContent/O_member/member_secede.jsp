@@ -50,13 +50,9 @@
 			var del_chk = confirm("회원 탈퇴를 하시겠습니까?");
 			
 			if(del_chk == true){ // 예를 누를 경우
-				
 				$("#mem_del").submit();
-			
 			}else if(del_chk != true){ // 취소를 누를 경우
 				history.back(-1); // 이전 페이지로 가기
-			//	location.href="./Main.me"; // 메인 페이지로 가기
-				
 				alert("회원 탈퇴가 취소되었습니다.");
 			}
 			

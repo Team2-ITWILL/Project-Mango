@@ -27,7 +27,7 @@
 </head>
 <script type="text/javascript">
 
-	/* 로그인 아이디, 비밀번호 필수 입력 확인 */
+/* ----------------------------------- 로그인 아이디, 비밀번호 필수 입력 확인 ------------------------------- */
 	$(function loginCheck() {
 		
 		$("#login").submit(function(){
@@ -44,11 +44,12 @@
 				$("#id_password1").focus();
 				return false;
 			}
-
-		}); // submit() 끝  	
-			
 	
-		/* 이메일 기억하기  : 입력한 이메일을 재작성하지 않고 비밀번호만 재입력하여 로그인 할 수 있게 기능 구현*/
+		}); // submit() 끝  	
+/* ----------------------------------- 로그인 아이디, 비밀번호 필수 입력 확인 ------------------------------- */
+
+	
+/* ------------ 이메일 기억하기  : 입력한 이메일을 재작성하지 않고 비밀번호만 재입력하여 로그인 할 수 있게 기능 구현 ------------ */
 		$("#login").ready(function(){
 			
 			$("#id_email").val(Cookies.get('key'));
@@ -66,10 +67,10 @@
 					
 			}); // keyup() 끝
 			
-		  }); // ready() 끝
+		 }); // ready() 끝
 		  
 	}); // loginCheck() 끝
-
+/* --------------------------------------- 이메일 기억하기  --------------------------------------- */
 </script>
 <body>
 
@@ -87,9 +88,36 @@
 				      <div class="mb-5 mt-2">
 				        <p>반갑습니다. 로그인하고 Mango를 시작해보세요.</p>
 				      </div>
-				      <div class="social_signup">네이버로 로그인하기</div> <br>
-
-      
+				      
+				      
+      <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  --------------------------------------------------------> 
+				      <div id="naverIdLogin">네이버로 로그인하기</div> <br>
+	  <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  -------------------------------------------------------->
+  
+  
+  
+	  <!-------------------------------------------- 네이버 아이디로 로그인 초기화 Script  -------------------------------------------->
+			  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+			  
+			  <script type="text/javascript">
+				var naverLogin = new naver.LoginWithNaverId(
+					{
+						clientId: "rU2ooEzY2CNR72wYidQf",
+						callbackUrl: "http://localhost:8080/0Mangro_TeamProject-0.01/O_member/member_sign_in.jsp",
+						isPopup: true, /* 팝업을 통한 연동처리 여부 */
+						loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
+					}
+				);
+				
+				/* 설정 정보를 초기화하고 연동을 준비 */
+				naverLogin.init();
+				
+			  </script>
+	  <!-------------------------------------------- 네이버 아이디로 로그인 초기화 Script  -------------------------------------------->
+    
+  
+  
+  
       
       <!-------------------------------------------- [이름, 이메일, 비밀번호 입력창] -------------------------------------------->
       <!-- class가 form-control일 때 클래스 속성을 하나 더 주어서 입력오류 알림(자바스크립트로 조건에 따라 동적으로 제어하면 됨)
@@ -146,7 +174,7 @@
 					      <div class="row align-items-center mb-5">
 					        <div class="col-7">
 					          <span class="font-subhead text-muted mb-2">계정이 없으시다면</span>
-					          	<a href="4index.jsp?center=O_member/member_sign_up.jsp">회원가입</a>
+					          	<a href="./MemberJoin.me">회원가입</a>
 					        </div> 
 					        <div class="col-5 text-right">
 					          <button type="submit" class="btn btn-primary">로그인</button>
