@@ -1,5 +1,8 @@
 package mango.liked_academy.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mango.connection.db.DBconnection;
 
 public class LikedAcademyDAO extends DBconnection{
@@ -81,6 +84,33 @@ public class LikedAcademyDAO extends DBconnection{
 		
 	} // unlikeAca() 끝
 	
+	// 내가 좋아요한 학원 번호리스트
+	public List<Integer> likedAcaNumList(String mem_email){
+		
+		List<Integer> amNumList = new ArrayList<Integer>();
+		
+		try {
+			getConnection();
+			sql ="select aca_main_num from liked_academy where mem_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_email);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				amNumList.add(rs.getInt(1));
+			}
+			
+		} catch (Exception e) {
+			System.out.println("likedAcaNumList()에서 예외 발생 ㅋ.ㅋ");
+			e.printStackTrace();
+		}
+		
+		return amNumList;
+		
+	} // likedAcaNumList() 끝
 	
 	
 } // LikedAcademyDAO class 끝

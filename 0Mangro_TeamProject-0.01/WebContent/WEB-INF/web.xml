@@ -135,7 +135,7 @@
     <url-pattern>*.lrev</url-pattern>
   </servlet-mapping>  
   
-<!-- 11. 도움이 된 학원 후기 -->	
+<!-- 11. 좋아요 누른 학원 -->	
   <servlet>
     <servlet-name>LikedAcademyFrontController</servlet-name>
     <servlet-class>mango.liked_academy.action.LikedAcademyFrontController</servlet-class>
