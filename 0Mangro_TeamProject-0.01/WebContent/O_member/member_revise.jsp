@@ -24,6 +24,19 @@
 
 
 </head>
+
+<%
+   // <------------------ 로그인 세션 값 여부 ---------------------->
+		String id=(String)session.getAttribute("id");
+	
+		//세션값이 없으면  로그인 페이지로 이동 ./MemberLogin.me
+		if(id == null){
+		   response.sendRedirect("./MemberLogin.me");
+		}
+   // <------------------ 로그인 세션 값 여부 ---------------------->
+%>
+
+
 <body>
 <script type="text/javascript">
 	<!----------------- 회원 정보 수정 필수 입력 -------------------->
@@ -66,7 +79,13 @@
 	
 </script>
 
-
+<% 	
+// <------------------ 회원정보 가져오기 ----------------------->	
+	String email = (String)session.getAttribute("id_email");
+	MemberDAO mdao = new MemberDAO();
+	String name = mdao.selectMember(email);
+// <------------------ 회원정보 가져오기 ----------------------->	
+%>
 
 
 
