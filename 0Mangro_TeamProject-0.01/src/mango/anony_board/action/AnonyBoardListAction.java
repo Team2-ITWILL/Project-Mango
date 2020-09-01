@@ -24,12 +24,22 @@ public class AnonyBoardListAction implements Action{
 		
 		// 글 목록 불러오기
 		String searchKeyword = request.getParameter("searchKeyword");
+		if(searchKeyword != null) {
+			request.getSession().setAttribute("searchKeyword", searchKeyword);
+		}else{
+			searchKeyword = "";
+			
+		}
+		
+		
 		
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		anbList = andao.getANBoardList(searchKeyword); 
+		
 		System.out.println(anbList.toString());
 		request.setAttribute("anbList", anbList);
+		System.out.println("익명사담방 검색글 가져오기 여기까지 옴  "+anbList);
 		
 		
 		// 글 전체 개수 불러오기

@@ -64,6 +64,15 @@
 </script>
 
 
+<%
+// 검색관련
+	String searchKeyword = "";
+	if(request.getSession().getAttribute("searchKeyword") != null ){
+		searchKeyword = (String)request.getSession().getAttribute("searchKeyword");
+	}	
+
+%>
+
 
 	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
 		<div class="container">
