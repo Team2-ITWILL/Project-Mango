@@ -18,7 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
 
-
     
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
     <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
@@ -65,7 +64,47 @@
 } 
   
   </style>  
-    
+   
+   <script type="text/javascript">
+
+	$(document).ready(function(){
+		
+		var likeList = document.querySelectorAll(".avgScore");
+		
+		/* var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1)); */
+		if(likeList != null){
+			for(var i=0; i<likeList.length;i++){
+				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
+				getAvgScore(obj);
+			}
+		}
+		
+	});
+	
+	function getAvgScore(obj) {
+		
+		
+		var _data = '{"acaMainNum":"'+obj+'"}';
+		
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/getAvgScore",
+			data : {data : _data},
+			success:function(data,status){
+				var json = JSON.parse(data);
+				console.log(data);
+				var score = json.score;
+				var acaMainNum = json.acaMainNum;
+				document.getElementById("score_"+acaMainNum).innerText = score;
+				
+			},
+			error : function(){
+				alert("통신에러가 발생했습니다.");
+			}
+		});
+	}
+   </script>
+   
 </head>
 
 <body>
@@ -208,7 +247,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -310,30 +349,25 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">학원명</th>
-                                            <th scope="col">우편번호</th>
+                                            <th scope="col">카테고리</th>
                                             <th scope="col">학원주소(도로명)</th>
-                                            <th scope="col">좋아요 한 날짜</th>
+                                            <th scope="col">평균 별점</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">부산학원</th>
-                                            <td>45652</td>
-                                            <td>부산광역시 부산진구 부산진구길 12로</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">부산학원</th>
-                                            <td>45652</td>
-                                            <td>부산광역시 부산진구 부산진구길 12로</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">부산학원</th>
-                                            <td>45652</td>
-                                            <td>부산광역시 부산진구 부산진구길 12로</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
+                                    	<c:forEach var="acaBean" items="${likeAcaList}">
+                                    		<tr>
+	                                            <td scope="row">${acaBean.acaName}</td>
+	                                            <td>${acaBean.acaCategory1}</td>
+	                                            <td>${acaBean.acaAddrDoro}</td>
+	                                            <td>
+	                                            <span class="avgScore" id="score_${acaBean.acaMainNum}" onclick="getAvgScore(${acaBean.acaMainNum})">
+	                                            
+	                                            </span>
+	                                            </td>
+	                                        </tr>
+                                    	</c:forEach>
+                                    	
 
                                     </tbody>
                                 </table>

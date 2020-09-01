@@ -43,7 +43,17 @@ public class LikedAcademyFrontController extends HttpServlet{
 		Action action=null;
 	
 		
-		
+		if(command.equals("/LikedAcaListAction.laca")){
+			
+			action = new LikedAcaListAction();
+			
+			try {
+				forward= action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("LikedAcaListAction.laca()에서 예외 발생");
+				e.printStackTrace();
+			}
+		}
 		
 		
 		
