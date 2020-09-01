@@ -8,12 +8,16 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardDeleteAction
-  implements Action
-{
-  public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-    throws Exception
-  {
+public class QnaBoardDeleteAction implements Action{
+	
+	
+	
+  public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    
+	  
+	  
+	  
+	  
     System.out.println("QnaBoardDeleteAction 실행");
 
     String pageNum = request.getParameter("pageNum");
@@ -24,8 +28,8 @@ public class QnaBoardDeleteAction
 
     int check = qdao.DeleteQnaBoard(qna_board_num, qna_board_pwd);
 
-    if (check == 0)
-    {
+    if (check == 0){
+    	
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
       out.println("<script>");
@@ -37,8 +41,8 @@ public class QnaBoardDeleteAction
       return null;
     }
 
-    if (check == -1)
-    {
+    if (check == -1){
+    	
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
       out.println("<script>");
@@ -60,4 +64,5 @@ public class QnaBoardDeleteAction
 
     return null;
   }
+  
 }

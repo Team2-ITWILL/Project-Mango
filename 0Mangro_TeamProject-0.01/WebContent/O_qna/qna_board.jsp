@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -37,18 +38,29 @@ int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 
 
+String id_email = (String)session.getAttribute("id_email");
+
+
 
 %>
+
+
+
+<c:set var="id" />
+
 
 
 <body>
 
 
 	<!-- qna_container (s) -->
+	
+	
 	<div class = "qna_container container">
 	
 		<div class = "qna_title">
-			고객센터 	-> 테스트용 지울 것 [전체 글 개수 ${count}]
+			고객센터 	-> 테스트용 지울 것 [전체 글 개수 ${count}] 	
+			
 		</div>
 	
 	
@@ -88,7 +100,7 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 				    <div class="td_subject" style="padding-left:0px">
 						<div class="bo_tit">
 					    	<a href="#none">
-								공지사항 - 제목                       
+								공지사항 - 제목        
 								<em> <span class="hot_icon">H<span class="sound_only">인기글</span></span> </em>
 								<span class="sound_only">댓글</span><span class="cnt_cmt">+ 1</span><span class="sound_only">개</span>
 							</a>
@@ -111,37 +123,63 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 						
 						QnaBoardBean qbean = qnaboardList.get(i);
 						
+						// 들여쓰기 값 초기화
 						int wid = 0;
-						
 						
 				%>
  
 				       
-				<!-- 일반글 --> 
+				       
+				<!-- 일반글 출력 -->
+
 				<li class=" likeTblTr likeTblTd">
-				
+					
 					<div class="mvInlineN td_num2"><%=qbean.getQna_board_num() %></div>
 					
 					<div class="td_subject" style="padding-left:0px">
 						<div class="bo_tit">
-						<a href="./QnaBoardContent.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+						
 				<%
+						// 글 작성자와 세션 아이디가 같다면	=> 글 작성자가 자신의 글을 누르면
+						// SecretAction없이 바로 글로 이동 
+						if(qbean.getMem_email().equals(id_email)){
+				%>
+							<a href="./QnaBoardContent.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+				<%
+						} 
+						// 글 작성자와 세션 아이디가 다르거나 세션 아이디가 없다면
+						// SecretAction으로 글 비밀번호 검증 후 글 확인이 가능
+						else{
+				%>
+							<a href="./QnaBoardSecret.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+				<%
+						}
+					
+						
+						// qna_re_lev가 존재한다면(= 답글이라면) 들여쓰기 값을 지정
 						if(qbean.getQna_re_lev() > 0){
 							
 							wid = qbean.getQna_re_lev() * 10;
 				%>
-					
-					<!-- ---------------- 경로 수정하기 -------------------- -->
 					<img src = "images/qna_img/level.gif" width = "<%=wid%>">
 					<img src = "http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/img/icon_reply.gif" class="icon_reply" alt="답변글">
 						
 				<%		
 						}
+				%>
+					
+					<%= qbean.getQna_board_title() %>
 				
+				<%		
+						// 조회수가 10이 넘는다면 H를 사용하여 인기글 아이콘을 제목 옆에 위치함
+						if(qbean.getQna_board_read() >= 10){
 				%>  
-							<%= qbean.getQna_board_title() %>
-    
-								<em><i class="fa fa-link" aria-hidden="true"></i><span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
+    					
+								<span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
+								
+				<%
+							}
+				%>
 							</a>
 					     </div>
 					</div>
@@ -149,7 +187,9 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 						<span class="onlyMvV" style="padding-left:0px"></span>
 					    <div class="mvInlinev td_name sv_use"><span class="sv_member"><%= qbean.getMem_email() %></span></div>
 					    <div class="mvInlinev td_num"><i class="fa fa-eye"></i><%= qbean.getQna_board_read() %></div>
-						<div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i><%= qbean.getQna_board_date() %></div>
+						<div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>
+							<%= new SimpleDateFormat("yyyy.MM.dd").format(qbean.getQna_board_date()) %>
+						</div>
 				</li>
 					
 				<%
@@ -160,7 +200,8 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 				%>
 				
 					
-				<!-- 일반글2 -->
+					
+				<!-- 예제 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 				<li class=" likeTblTr likeTblTd">
 					
 					<div class="mvInlineN td_num2">글번호</div>
@@ -240,35 +281,40 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 				        <div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
 				        <div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>날짜</div>
 				</li>
+				<!-- 예제---------------------------------------------------------------------------------- -->
+				
+				
+				
 			</ul>
 
-		</div><!-- board list (e) -->
+		</div> <!-- board list (e) -->
 		
 		
-		<!-- write button -->
+		
+		
+		
+		<!-- write button (s) -->
 		<div class = "bo_fx">
 			
 			<ul class = "write_btn_user">
+				
 				<li>
-			<%
-				
-				String mem_email = (String)session.getAttribute("mem_email");
-				
-				if(mem_email != null){
 			
-			%>
-					<a href = "#" class = "btn_write">
-						<i class = "fa fa fa-pencil" aria-hidden = "true"></i>
-						글쓰기
-					</a>
-			<%
-				}
-			%>
+						<c:if test="${id_email ne null}">
+
+							<a href = "./QnaBoardWrite.qna" class = "btn_write">
+								<i class = "fa fa fa-pencil" aria-hidden = "true"></i>
+								글쓰기
+							</a>
+							
+						</c:if>
+					
 				</li>
+				
 			</ul>
 		
 		</div>
-		
+		<!-- write button (e) -->
 		
 		
 		
@@ -281,13 +327,11 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 	
 	
 	
-	<!-- search button -->
+	<!-- search button (s) -->
 	<fieldset id = "bo_sch">
+	
 		<form name = "fsearch" method = "get" action = "./QnaBoardSearch.qna">
 		
-			<input type = "hidden" name = "">
-			<input type = "hidden" name = "">
-			<input type = "hidden" name = "">
 			
 			<label for = "sf1" class = "sound_only">검색대상</label>
 			
@@ -310,7 +354,9 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 			</button>
 			
 		</form>
-	</fieldset>	<!-- search button (e) -->
+		
+	</fieldset>
+	<!-- search button (e) -->
 	
 	
 	
@@ -321,32 +367,41 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 
 
 
-<!-- -------------------- 페이징도 다시 수정---------------------------------------- -->
-			
-			<a href = "#" class = "pg_page pg_start">처음</a>
-			
+
+
+
+
+
+
+
+<!-- -------------------- 페이징 블록 수정 CSS 수정 ---------------------------------------- -->
+
+
 <%
+		
+			
 		if(count != 0){
 			
 			if(startPage > pageBlock){
 %>
 			
-			<a href = "./QnaBoard.qna?pageNum=<%=startPage-pageBlock%>" class = "pg_page">1<span class = "sound_only">페이지</span>
+			<a href = "./QnaBoard.qna?pageNum=<%=startPage-pageBlock%>" class = "pg_page">
+<!-- 			<img src="images/qna_img/btn_next.png" class = "btnimg"> -->
+			Prev
 			</a>
 <%			
 		}
 			for(int i = startPage; i <= endPage; i++){
 				
 %>
-			<a href = "./QnaBoard.qna?pageNum=<%=i%>" class = "pg_page"><%=i%><span class = "sound_only">페이지</span>
-			</a>
+			<a href = "./QnaBoard.qna?pageNum=<%=i%>" class = "pg_page"><%=i%></a>
 <%
 		}
 			
 			if(endPage < pageCount){
 %>
 			
-			<a href="./QnaBoard.qna?pageNum=<%=startPage+pageBlock%>">Next</a>
+			<a href="./QnaBoard.qna?pageNum=<%=startPage+pageBlock%>"  class = "pg_page">Next</a>
 	
 <%
 		}
@@ -354,12 +409,14 @@ int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 %>		
 
 			
-			<a href = "#" class = "pg_page">2<span class = "sound_only">페이지</span>
-			</a>
+<!-- 			<a href = "#" class = "pg_page">2<span class = "sound_only">페이지</span> -->
+<!-- 			</a> -->
 			
-			<a href = "#" class = "pg_page pg_end">끝</a>
+<!-- 			<a href = "#" class = "pg_page pg_end">끝</a> -->
 		</span>
 	</nav>
+	<!-- paging button -->
+	
 	
 	
 </div>	<!-- qna_container (e) -->

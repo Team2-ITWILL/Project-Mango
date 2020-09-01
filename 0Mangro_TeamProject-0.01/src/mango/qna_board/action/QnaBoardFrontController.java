@@ -11,142 +11,189 @@ import mango.action.Action;
 import mango.action.ActionForward;
 
 public class QnaBoardFrontController extends HttpServlet{
-  protected void doProcess(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException{
+  
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 	  
+		
     request.setCharacterEncoding("UTF-8");
 
+    
     String RequestURI = request.getRequestURI();
     System.out.println(RequestURI);
+    
 
     String contextPath = request.getContextPath();
     System.out.println(contextPath);
 
+    
     System.out.println(contextPath.length());
 
+    
     String command = RequestURI.substring(contextPath.length());
     System.out.println(command);
 
+    
     ActionForward forward = null;
 
+    
     Action action = null;
 
-    if (command.equals("/QnaBoard.qna"))
-    {
+    if (command.equals("/QnaBoard.qna")){
+    	
       action = new QnaBoardListAction();
-      try
-      {
-        forward = action.excute(request, response);
+      
+      try {
+    	  
+    	  forward = action.excute(request, response);
+    	  
       } catch (Exception e) {
-        e.printStackTrace();
+        
+    	  e.printStackTrace();
       }
+      
 
     }
-    else if (command.equals("/QnaBoardSearch.qna"))
-    {
+    else if (command.equals("/QnaBoardSearch.qna")) {
+    	
       action = new QnaBoardListSearchAction();
-      try
-      {
+      
+      try{
+    	  
         forward = action.excute(request, response);
+      
       } catch (Exception e) {
-        e.printStackTrace();
+      
+    	  e.printStackTrace();
+      
       }
+    
     }
-    else if (command.equals("/QnaBoardWrite.qna"))
-    {
+    else if (command.equals("/QnaBoardWrite.qna")){
+    	
       forward = new ActionForward();
       forward.setRedirect(false);
       forward.setPath("./4index.jsp?center=O_qna/qna_write.jsp");
-    }
-    else if (command.equals("/QnaBoardWriteAction.qna"))
-    {
+      
+    } 
+    else if (command.equals("/QnaBoardWriteAction.qna")) {
+    	
       action = new QnaBoardWriteAction();
-      try
-      {
+      
+      try{
+    	  
         forward = action.excute(request, response);
+      
       } catch (Exception e) {
-        e.printStackTrace();
+       
+    	  e.printStackTrace();
+      
       }
+      
     }
-    else if (command.equals("/QnaBoardContent.qna"))
-    {
+    else if (command.equals("/QnaBoardContent.qna")){
+    	
       action = new QnaBoardContentAction();
-      try
-      {
+      
+      try{
         forward = action.excute(request, response);
       } catch (Exception e) {
         e.printStackTrace();
       }
 
     }
-    else if (command.equals("/QnaBoardUpdate.qna"))
-    {
+    else if (command.equals("/QnaBoardUpdate.qna")){
+    	
       action = new QnaBoardUpdate();
-      try
-      {
+      
+      try {
         forward = action.excute(request, response);
       } catch (Exception e) {
         e.printStackTrace();
       }
 
     }
-    else if (command.equals("/QnaBoardUpdateAction.qna"))
-    {
+    else if (command.equals("/QnaBoardUpdateAction.qna")){
+    	
       action = new QnaBoardUpdateAction();
-      try
-      {
+      
+      try{
         forward = action.excute(request, response);
       } catch (Exception e) {
         e.printStackTrace();
       }
+      
     }
-    else if (command.equals("/QnaBoardDelete.qna"))
-    {
+    else if (command.equals("/QnaBoardDelete.qna")){
+    	
       forward = new ActionForward();
       forward.setRedirect(false);
       forward.setPath("./4index.jsp?center=O_qna/qna_delete.jsp");
+      
     }
-    else if (command.equals("/QnaBoardDeleteAction.qna"))
-    {
+    else if (command.equals("/QnaBoardDeleteAction.qna")){
+    	
       action = new QnaBoardDeleteAction();
-      try
-      {
+      
+      try{
         forward = action.excute(request, response);
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
-    else if (command.equals("/QnaBoardReWrite.qna"))
-    {
+    else if (command.equals("/QnaBoardReWrite.qna")){
+    	
       forward = new ActionForward();
       forward.setRedirect(false);
       forward.setPath("./4index.jsp?center=O_qna/qna_rewrite.jsp");
+      
     }
-    else if (command.equals("/QnaBoardReWriteAction.qna"))
-    {
+    else if (command.equals("/QnaBoardReWriteAction.qna")){
+    	
       action = new QnaBoardReWriteAction();
-      try
-      {
+      
+      try{
         forward = action.excute(request, response);
       } catch (Exception e) {
         e.printStackTrace();
       }
-
+ 
+    } 
+    else if (command.equals("/QnaBoardSecret.qna")){
+    	
+      forward = new ActionForward();
+      forward.setRedirect(false);
+      forward.setPath("./4index.jsp?center=O_qna/qna_secret.jsp");
+      
+    }
+    else if (command.equals("/QnaBoardSecretAction.qna")){
+    	
+      action = new QnaBoardSecretAction();
+      
+      try{
+        forward = action.excute(request, response);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
 
-    if (forward != null)
-    {
-      if (forward.isRedirect())
-      {
+
+    if (forward != null){
+    	
+      if (forward.isRedirect()){
         response.sendRedirect(forward.getPath());
       }
-      else
-      {
+      else{
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getPath());
         dispatcher.forward(request, response);
       }
+      
     }
+    
+    
+    
   }
+	
+	
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
@@ -159,4 +206,5 @@ public class QnaBoardFrontController extends HttpServlet{
   {
     doProcess(request, response);
   }
+
 }

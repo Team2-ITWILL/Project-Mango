@@ -214,17 +214,33 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	// [5.익명사담방 전체 글목록 불러오기 ] : AnonyBoardListAction에서 호출
-	public List<AnonyBoardBean> getANBoardList(){
+	public List<AnonyBoardBean> getANBoardList(String searchKeyword){
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		
 		try {
 			getConnection();
-			sql = "SELECT * FROM anony_board "
-					+ "ORDER BY ano_board_num desc";
-			pstmt = con.prepareStatement(sql);
+			sql = "SELECT * FROM anony_board ";
+			
+			if(searchKeyword != "") {
+				// 제목과, 내용, 닉네임 중 일치하는 검색키워드를 필터링 
+				sql += "WHERE ano_board_title LIKE ? ";
+				sql += "OR ano_board_content LIKE ? ";
+				sql += "OR ano_board_nick LIKE ? ";
+				sql += "ORDER BY ano_board_num DESC";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchKeyword+"%");
+				pstmt.setString(2, "%"+searchKeyword+"%");
+				pstmt.setString(3, "%"+searchKeyword+"%");
+				
+			}else {
+				sql += "ORDER BY ano_board_num DESC";
+				pstmt = con.prepareStatement(sql);
+			}
 			
 			rs = pstmt.executeQuery();
 			
+			// (검색키워드에 해당하는)글이 있다면
 			while(rs.next()){
 				AnonyBoardBean anb = new AnonyBoardBean();
 				anb.setAno_board_num(rs.getInt("ano_board_num"));
@@ -251,17 +267,23 @@ public class AnonyBoardDAO extends DBconnection {
 	}
 	
 	// [6.전체 글 개수 반환 메소드] : AnonyBoardListAction에서 호출
-	public int getAnonyBoardCount(){
+	public int getAnonyBoardCount(String searchKeyword){
 		int count = 0;
 		
 		try {
 			getConnection();
 			sql = "SELECT count(*) FROM anony_board ";
 			
-			pstmt = con.prepareStatement(sql);
+			if(searchKeyword != ""){// 키워드가 있을 경우
+				sql += "WHERE ano_board_title LIKE ? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchKeyword+"%");
+				
+			}else{ pstmt = con.prepareStatement(sql); }
 			
 			rs = pstmt.executeQuery();
 			
+			// 게시판에 글이 0개 이상이라면 
 			if(rs.next()) {
 				count = rs.getInt(1);
 			}//if

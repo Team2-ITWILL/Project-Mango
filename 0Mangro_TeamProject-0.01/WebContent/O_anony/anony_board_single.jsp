@@ -110,15 +110,16 @@
 						
 						<%-- 내용 --%>
 						<div class="comment_text">
+							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 ----%>
+							<c:choose>
+								<c:when test="${boardSingle.ano_board_file ne null}">
+									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
+								</c:when>
+							</c:choose>
+							
 							<p>${boardSingle.ano_board_content }</p> <br><br>
 							
 							
-							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 --%>
-							<c:choose>
-								<c:when test="${boardSingle.ano_board_file ne null}">
-									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="100"></p>
-								</c:when>
-							</c:choose>
 							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
 						</div>
 						
@@ -137,7 +138,7 @@
 						
 						
 						
-						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
+						<div class="comment_total">댓글 <span class="cmCount">10</span></div>
 						<form class="" action="" method="post">
 				      		<div class="form-group mb-8">
 							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>

@@ -136,8 +136,8 @@ a.btn_b02,.btn_b02:hover{color:#fff}
 }
 
 /* 게시자 프로필 및 타이틀 */
-#bo_v_title .bo_v_tit{display:block;font-size:24px;margin:5px 0 0 }
-#bo_v_info {padding: 10px 0 15px;margin:0 0 20px;border-bottom:1px solid #ddd;color:#666}
+#bo_v_title .bo_v_tit{display:block;font-size:24px;margin:15px 0 0 }
+#bo_v_info {padding: 0px 0 15px;margin:0 0 20px;border-bottom:1px solid #ddd;color:#666}
 #bo_v_info:after {display:block;visibility:hidden;clear:both;content:""} 
 #bo_v_info h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 0;font-weight:normal}
@@ -304,4 +304,44 @@ a.btn_b02,.btn_b02:hover{color:#fff}
     padding: 80px 0 !important;
     color: #777;
     text-align: center;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section{
+	display: block;
+}
+
+#bo_vc article{
+	margin: 20px 0;
+	position: relative;
+	border-top: 1px;
+}
+
+#bo_vc .member, #bo_vc .guest, #bo_vc .sv_member, #bo_vc .sv_guest{
+	font-weight: bold;
+}
+.bo_vc_hdinfo{
+	float: right;
+	font-style: italic;
+	color: #777;
+}
+
+.fa{
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+}
+#bo_vc .cmt_contents{
+	padding: 15px;
+	margin: 10px 0 30px;
+	background: #f8fafb;
+	border-radius: 5px;
+	border: 1px solid #e8e8e8;
+	line-height: 1.8em;
+}
+p{
+	margin: 0;
+	padding: 0;
+	word-break: break-all;
 }

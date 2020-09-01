@@ -56,9 +56,9 @@
 										<a href="./MemberJoin.me">회원가입</a>
 									</div>
 									
-								<!--  1.아이디가 null값이면 [로그인] 로그인된 상태면 
+								<%--  1.아이디가 null값이면 [로그인] 로그인된 상태면 
 									  2-1. 관리자라면 [관리자 메뉴] [로그아웃] 표시 	
-									  2-2. 회원이면 [마이페이지] [로그아웃] 표시           -->
+									  2-2. 회원이면 [마이페이지] [로그아웃] 표시            --%>
 									<c:choose>
 										
 										<c:when test="${id_email == null or id_email == '' }">
@@ -69,7 +69,7 @@
 										
 										<c:when test="${id_email == 'admin@mango.com' }">
 											<div class="top_bar_button admin_page">
-												<a href="">관리자 메뉴</a>
+												<a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>
@@ -111,7 +111,7 @@
 									<li><a href="./AcademyList.aca">학원찾기</a></li>
 									<li><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
 									<li><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">학원관리자</a></li>
-									<li><a href="4index.jsp?center=O_qna/qna_board.jsp">고객센터</a></li>
+									<li><a href="./QnaBoard.qna">고객센터</a></li>
 								</ul>
 								
 								
@@ -164,7 +164,9 @@
 		</div>
 		<nav class="menu_nav">
 			<ul class="menu_mm">
-			
+				<c:if test="${id_email eq 'admin@mango.com'}">
+					<li class="menu_mm"><a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a></li>
+				</c:if>
 				<li class="menu_mm"><a href="4index.jsp?center=about.jsp">소개</a></li>
 				<li class="menu_mm"><a href="./AcademyList.aca">학원찾기</a></li>
 				<li class="menu_mm"><a href="./AnonyBoardListAction.anob">익명사담방</a></li>
