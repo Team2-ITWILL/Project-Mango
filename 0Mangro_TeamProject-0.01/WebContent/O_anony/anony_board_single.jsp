@@ -110,7 +110,7 @@
 						
 						<%-- 내용 --%>
 						<div class="comment_text">
-							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 --%>
+							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 ----%>
 							<c:choose>
 								<c:when test="${boardSingle.ano_board_file ne null}">
 									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
