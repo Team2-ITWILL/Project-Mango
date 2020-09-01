@@ -60,7 +60,4 @@ public class QnaBoardListAction implements Action {
     return forward;
   }
   
-  
-  
-  
 }

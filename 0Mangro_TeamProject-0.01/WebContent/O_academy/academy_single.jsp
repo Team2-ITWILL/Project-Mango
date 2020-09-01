@@ -22,9 +22,10 @@
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
+<link href="styles/table_style.css" rel="stylesheet">
+
 
 <style type="text/css">
-
 	.cheongang {
 	
 		margin-top: 20px;
@@ -37,32 +38,26 @@
 		margin-bottom:10px;
 		
 	}
-
 .strength{
 	font-size: 18px !important;
     color:#ff6b79 !important;
     font-weight: 500 !important;
 } 
-
-
 .weakness {
 	font-size: 18px !important;
     color: #6610f2 !important;
     font-weight: 500 !important;
 }
-
-
 .blind_review {
 	clear : both;
 	background-image: url('images/academy/blind1.PNG');
 	background-repeat: no-repeat;
+	background-size: contain;
 }
-
  
  .aca_profile_img{
 	width: 100px !important;
 }
-
 .aca_profile_div
 {
 	float: left !important;
@@ -70,31 +65,25 @@
     margin-bottom: 20px !important;
     
 } 
-
 .course_title{
     margin-top: 20px !important;
     margin-right: 10px !important;
 }
-
 .course_teacher {
     font-size: 15px !important;
     font-weight: 400 !important;
     color: #384158 !important;
     margin-top: 20px !important;
 } 
-
 .course {
     border-radius: 6px !important;
     box-shadow: 0px 1px 10px rgba(29,34,47,0.1) !important;
 } 
-
 .course_container{
 	border: 1px solid #d0cdcd;
     border-radius: 20px;
     padding: 30px;
-
 }
-
 .sidebar {
     width: 100%;
     padding-left: 40px;
@@ -102,18 +91,15 @@
     border-radius: 10px;
     border: 1px solid #e2e2e2;
 } 
-
 .cnt_Like{
  	color: #76777a;
  	font-size: 0.8em;
  	padding-top: 5px;
  	margin-left: 3px;
 }
-
 .blind_top_div{
-	height: 450px;
+	height: 350px;
 }
-
 .no_membership{
 	border: 1px solid #6610f2;
     color: #000000 !important;
@@ -125,31 +111,50 @@
     padding : 10px;
     
     text-align: center;
-    top: 180px;
+    top: 100px;
     border-radius: 5px;
 }
-
+.review_subject{
+	font-weight: 700;
+    color: #384158;
+	margin-bottom: 20px;
+}
 .review_login{
 	color: #fff !important;
 	border-radius: 5px;
 	width : 180px;
 	height : 40px;
 	text-align: center;
-	padding : 5px;
+	padding : 6px;
 	background-color: #6610f2;
 	margin : 10px auto;
 	cursor: pointer;
+	transition:all .9s;
 }
 .review_btn{
 	color: #fff !important;
 	border-radius: 5px;
 	border : none;
 	width : 50px;
-	padding : 5px;
+	padding : 6px;
 	float : right;
 	background-color: #6610f2;
 	cursor: pointer;
 	margin : 0 4px;
+	transition:all .9s;
+}
+.review_btn:hover, .review_login:hover {
+	box-shadow: 0 80px 0 0 rgba(0,0,0,0.20) inset, 
+				0 -80px 0 0 rgba(0,0,0,0.20) inset;
+}
+
+.pagination{
+	margin-top: 20px;
+	margin-left: 210px;
+}
+
+#mapReport{
+	margin-top: 60px;
 }
 </style>
 
@@ -157,7 +162,6 @@
 	
 	request.setCharacterEncoding("utf-8");
 	String contextPath = request.getContextPath();
-
 	//request.setAttribute("email", "coke@naver.com");
 	
 %>
@@ -344,7 +348,7 @@
 					var check = json.check;
 					var revNum = json.revNum;
 					var email = json.email;
-					document.getElementById("cntLike_"+revNum).innerText = count;
+					document.getElementById("cntLike_"+revNum).innerText = count+"명에게 도움이 되었습니다.";
 					
 					if(check == 1){
 						document.getElementById("cntLikeImg_"+revNum).src="images/thumb-up.png";
@@ -386,7 +390,7 @@
 					var result = json.result;
 					var revNum = json.revNum;
 					var email = json.email;
-					document.getElementById("cntLike_"+revNum).innerText = count;
+					document.getElementById("cntLike_"+revNum).innerText = count+"명에게 도움이 되었습니다.";
 					
 					
 					if(result == 1){
@@ -426,7 +430,6 @@
 						<div class="aca_like_button" id="likeAcademy">
 						</div>
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
-						<%-- <div class="course_info_title"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div> --%>
 						<div class="cheongang tab_panel_registerBtn"
 							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'"
 						>
@@ -458,9 +461,16 @@
 
 						<!-- Course Image -->
 						<div class="course_image">
-						<img src="images/etc/default_mango.png" width="200">
-							<p>등록된 이미지가 없네요. <br>학원 이미지를 올려보세요!</p>
-						
+							<div id ="map" style="width: 100%; height: 420px;"></div>
+								<div id="mapReport">
+								<p style="margin-top:-12px">
+								    <em class="link">
+								        <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+								            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
+								        </a>
+								    </em>
+								</p>
+							</div>
 						</div>
 
 						<!-- Course Tabs -->
@@ -550,8 +560,6 @@
 								<!-- Curriculum -->
 								
 
-								
-								
 								
 								<div class="tab_panel tab_panel_2">
 									<!-- 등록된 커리큘럼이 없을 경우 -->
@@ -718,6 +726,7 @@
 															</c:if>
 															<!-- 유료회원이면 보이는 형태 -->
 															<c:if test="${id_email ne null}">
+																<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
 																<p><span class="strength">장점</span><br>
 																	${reBean.reviewGood}
 																</p>
@@ -748,6 +757,7 @@
 														</c:if>
 													</div>
 												</div>
+												</div>
 											</li>
 											
 											
@@ -764,12 +774,71 @@
 									
 										<!--------------------------------  ▲ 후기 1개 영역-------------------------------------->
 											
-											
-							
 
 									</div>
 								</div>
 							</div>
+							
+							 <!-- 끝 페이지 앞으로가기 설정 -->
+					   
+                    
+					<!-- </ul> -->  
+					
+					<ul class="pagination">
+					 <!-- << (첫페이지로 가기) -->
+					  <li class="page-item"> 
+					  	<a class="page-link prev" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=1">
+					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
+					  	</a>
+					  </li>
+					  
+					<c:if test="${count!=0}"> 
+                    <!-- < (이전페이지 가기) 설정-->
+					  <li class="page-item">
+					  	<c:if test="${startPage-pageBlock<=0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pN}">
+					  		<i class="fa fa-angle-left" aria-hidden="true"></i>
+					  	</a>	
+					  
+					  </li>
+					
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<=pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pP}">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+						</a>
+					  </li>
+                    
+                    
+                    
+                    <!-- >> (마지막페이지 가기)-->
+					  <li class="page-item">
+					  	<a class="page-link next" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=${pageCount}">
+						  	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+						</a>
+					  </li>
+					</c:if>		 
+					</ul>  	 
 						</div> <!-- 전체 탭 마지막 태그-->
 					</div>
 				</div>
@@ -888,7 +957,6 @@
 					</div>
 				</div>
 			
-			
 	</c:if>
 	
 					</div>
@@ -897,54 +965,42 @@
 		</div>					
 								
 										
-								
-								
-								
-
-
-
-									
-
-
-
-						<!-- Latest Course -->
-<!-- 						<div class="sidebar_section">
-							<div class="sidebar_section_title">Latest Courses</div>
-							<div class="sidebar_latest">
-
-								Latest Course
-								<div class="latest d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_image"><div><img src="images/latest_1.jpg" alt=""></div></div>
-									<div class="latest_content">
-										<div class="latest_title"><a href="course.html">How to Design a Logo a Beginners Course</a></div>
-										<div class="latest_price">Free</div>
-									</div>
-								</div>
-
-								Latest Course
-								<div class="latest d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_image"><div><img src="images/latest_2.jpg" alt=""></div></div>
-									<div class="latest_content">
-										<div class="latest_title"><a href="course.html">Photography for Beginners Masterclass</a></div>
-										<div class="latest_price">$170</div>
-									</div>
-								</div>
-
-								Latest Course
-								<div class="latest d-flex flex-row align-items-start justify-content-start">
-									<div class="latest_image"><div><img src="images/latest_3.jpg" alt=""></div></div>
-									<div class="latest_content">
-										<div class="latest_title"><a href="course.html">The Secrets of Body Language</a></div>
-										<div class="latest_price">$220</div>
-									</div>
-								</div>
-
-							</div>
-						</div> --> <!-- 지울것 --> 
-
-					
-		
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=56b68041fba795d6cb8db4e217e7d909&libraries=services"></script>
+	<script>
 	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	var myAddress = "${academyBean.acaAddrDoro}";
+	var acaName = "${academyBean.acaName }";
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(myAddress, function(result, status) {
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+acaName+'</div>'
+	        });
+	        infowindow.open(map, marker);
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+	</script>	
 
 
 <script src="js/jquery-3.2.1.min.js"></script>
@@ -956,7 +1012,6 @@
 <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
 <script src="js/course.js"></script>
 <script>
-
 </script>
 </body>
 </html>

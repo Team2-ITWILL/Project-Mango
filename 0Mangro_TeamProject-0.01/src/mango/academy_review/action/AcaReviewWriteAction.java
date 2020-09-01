@@ -33,6 +33,7 @@ public class AcaReviewWriteAction implements Action{
 		// 학원후기 작성
 		rdao.InsertAcademyReview(bean);
 		
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("AcademyContentAction.aca?acaMainNum="+acaMainNum+"&pageNum=1");

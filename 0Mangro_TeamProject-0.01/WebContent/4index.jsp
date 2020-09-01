@@ -50,6 +50,8 @@
 	}
 	/* 카카오톡 상담버튼 (top버튼) */
 	@media (max-width:767px) {
+	
+	
 	    #top_btn {
 	    position:fixed;
 	    z-index: 999;

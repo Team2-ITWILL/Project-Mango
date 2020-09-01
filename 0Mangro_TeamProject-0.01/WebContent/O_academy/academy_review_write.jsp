@@ -17,7 +17,6 @@
 
 <!----------------------------[스타일 시트]-------------------------------------------------------->
 <style type="text/css">
-
 	.btn-primary {
 	    color:#fff !important;
 	    background-color: #000 !important;
@@ -32,8 +31,6 @@
 	}
 	
 	.btn-primary:hover { background-color: #6610f2 !important;}
-
-
 	
 </style> 
 
@@ -47,7 +44,24 @@
 		    $(this).addClass('active');
 		});
 	});
-
+ function checkz(){
+	
+	 
+	 var chk = document.reviewWrite;
+	 var checked_items = 0;
+	 for (i=0;i<chk.elements.length;i++) 
+	 {
+	 if ((chk.elements[i].name == "review_score") &&
+	 (chk.elements[i].checked))
+	 checked_items++;
+	 }
+	 if (checked_items == 0)
+	 {
+	 alert("평점을 선택해주세요.")
+	 return false;
+	 }
+	 return true;
+ }
 </script>
 
 <c:if test="${id_email == null || id_email eq ''}">
@@ -73,7 +87,8 @@
 
 				      	
 				      <!-- form 시작 -->
-				      <form class="sign_upClass" action="./acaReviewWriteAction.arev" method="post">
+				      <form class="sign_upClass" name="reviewWrite" 
+				      onsubmit="return checkz();" action="./acaReviewWriteAction.arev" method="post">
 				      
 				      	  <!-- ▼학원지정번호, 작성자계정 hidden으로 보내기 -->
 					        <input type="hidden" name="acaMainNum" value="${param.acaMainNum }">
@@ -137,7 +152,7 @@
 				                      </label>
 				                      <label for="id_score_total_5"
 				                             class="btn btn-outline-primary btn-soft-secondary btn-sm sc_one" >
-				                        <input type="radio" name="review_score" value="5" id="id_score_total_5" >
+				                        <input type="radio" name="review_score" value="5" id="id_score_total_5">
 				                       		 <i class="fa fa-star" aria-hidden="true"></i>
 				                       		 <i class="fa fa-star" aria-hidden="true"></i>
 				                       		 <i class="fa fa-star" aria-hidden="true"></i>
@@ -148,17 +163,14 @@
 						   </div>   
 						      
 						      
-						      
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_title">이 학원에 대한 한 줄 요약
-						        	<input type="text" class="form-control" name="review_title" placeholder="ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" > 
+						        	<input type="text" class="form-control" name="review_title" 
+						        	placeholder="(최대 20자) ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" 
+						        	maxlength="20" required> 
 						        </label>
 							  </div>
 							  
-
-					      
-					      
-					      
 					      
 							    <div class="mb-5 mt-2">
 							      	<ul class="audit_notice">
@@ -170,15 +182,11 @@
 							    </div>
 					      
 					      
-					      
-					      
 								<div class="col-5 auditBtn" style="padding-left: 0">
 						          <button type="submit" class="btn btn-primary">등록하기</button>
 						        </div>
 					      </form>
 					    </div>
-
-
 
 
 				</div> <!-- class="col" -->

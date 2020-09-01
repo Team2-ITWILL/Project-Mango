@@ -22,6 +22,7 @@ public class AnoBoardInsertAction implements Action {
 								HttpServletResponse response) throws Exception {
 				System.out.println("AnoBoardInsertAction excute()");
 		
+				request.setCharacterEncoding("UTF-8");
 			
 				// [파일 업로드 처리]
 				MultipartRequest multi = null;
@@ -30,7 +31,7 @@ public class AnoBoardInsertAction implements Action {
 				
 				//new MultipartRequest(request, realPath, max,"UTF-8",new DefaultFileRenamePolicy());
 				
-				String realPath = request.getRealPath("O_aca_regFiles");
+				String realPath = request.getRealPath("/O_aca_regFiles");
 				System.out.println(realPath);
 				
 				multi = new MultipartRequest
@@ -55,11 +56,9 @@ public class AnoBoardInsertAction implements Action {
 				anbean.setAno_board_title(multi.getParameter("ano_board_title"));
 				anbean.setAno_board_content(multi.getParameter("ano_board_content"));
 				
-//				if(multi.getFilesystemName("ano_board_file"));
-				
 				anbean.setAno_board_file(multi.getFilesystemName("ano_board_file"));
 				
-				System.out.println(multi.getParameter("ano_board_file"));
+				System.out.println(multi.getFilesystemName("ano_board_file"));
 				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				float f_size = 0;
 				

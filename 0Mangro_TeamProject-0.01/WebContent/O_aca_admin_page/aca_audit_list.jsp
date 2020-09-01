@@ -64,15 +64,22 @@
 		location.href = "./AuditApproval.adrq?"
 				+ "audit_num=" + audit_num
 				+ "&aca_num=" + aca_num
-				+ "&check=" + "true";
+				+ "&check=" + "approve";
 		}	
 	
 	function fncReject(audit_num, aca_num){
 		location.href = "./AuditApproval.adrq?"
 			+ "audit_num=" + audit_num
 			+ "&aca_num=" + aca_num
-			+ "&check=" + "false";
-		}	  
+			+ "&check=" + "reject";
+		}	 
+	
+	function fncDelete(audit_num, aca_num){
+		location.href = "./AuditApproval.adrq?"
+			+ "audit_num=" + audit_num
+			+ "&aca_num=" + aca_num
+			+ "&check=" + "delete";
+		}	
   </script>   
 </head>
 
@@ -327,6 +334,7 @@
                                             <th scope="col">청강승인일자</th>
                                             <th scope="col">승인</th>
                                             <th scope="col">취소</th>
+                                            <th scope="col">삭제</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -345,15 +353,21 @@
                                             <td>            
                                                 <label class="audit_yes">승인                                     		
 	                                            	<input type="radio" name="audit_check" id="approve" 
-	                                            	onclick="fncApprove(${list.auditNum}, ${list.acaNum})">
+	                                          			onclick="fncApprove(${list.auditNum}, ${list.acaNum})">
                                             	</label>                                                 	
                                             </td>
                                             <td>
                                             	<label class="audit_no">취소
                                             		<input type="radio" name="audit_check" id="reject" 
-	                                            	onclick="fncReject(${list.auditNum}, ${list.acaNum})">
+	                                            		onclick="fncReject(${list.auditNum}, ${list.acaNum})">
                                             	</label>
-                                            </td>  	                                                
+                                            </td>  	 
+                                            <td>
+                                            	<label class="audit_no">삭제
+                                            		<input type="radio" name="audit_check" id="delete" 
+	                                            		onclick="fncDelete(${list.auditNum}, ${list.acaNum})">
+                                            	</label>
+                                            </td>  	                                               
                                         </tr>     
                                         <c:set var="idx" value="${idx + 1}" />                         
                                        </c:forEach> 

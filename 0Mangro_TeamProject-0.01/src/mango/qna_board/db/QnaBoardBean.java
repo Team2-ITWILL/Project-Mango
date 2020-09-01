@@ -107,4 +107,5 @@ public String getQna_board_ip() {
   public void setQna_re_seq(int qna_re_seq) {
     this.qna_re_seq = qna_re_seq;
   }
+
 }

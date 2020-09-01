@@ -20,17 +20,20 @@ public class AnonyBoardListAction implements Action{
 								HttpServletResponse response) throws Exception {
 		System.out.println("AnonyBoardListAction excute()");
 
+		request.setCharacterEncoding("UTF-8");
+		
 		// 글 목록 불러오기
-
+		String searchKeyword = request.getParameter("searchKeyword");
+		
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
-		anbList = andao.getANBoardList(); 
+		anbList = andao.getANBoardList(searchKeyword); 
 		System.out.println(anbList.toString());
 		request.setAttribute("anbList", anbList);
 		
 		
 		// 글 전체 개수 불러오기
-		int anbCount = andao.getAnonyBoardCount();
+		int anbCount = andao.getAnonyBoardCount(searchKeyword);
 		request.setAttribute("anbCount", anbCount);
 
 		
