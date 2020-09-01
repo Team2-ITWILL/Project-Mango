@@ -83,6 +83,23 @@ public class MemberFrontController extends HttpServlet {
 			
 			
 			
+/* ---------------------------------- 네이버 로그인 시작  --------------------------------- */
+		
+		}else if(command.equals("/MemberNaverLoginAction.me")){
+					
+			action = new MemberNaverLoginAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/MemberNaverLoginAction.me : "+ e);
+				e.printStackTrace();
+			}
+			
+/* ---------------------------------- 네이버 로그인 끝  ---------------------------------- */
+			
+			
+			
 /* ---------------------------------- 메인화면 시작  ---------------------------------- */	
 		
 		}else if(command.equals("/Main.me")){

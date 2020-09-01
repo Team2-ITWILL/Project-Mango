@@ -103,11 +103,22 @@
 				var naverLogin = new naver.LoginWithNaverId(
 					{
 						clientId: "rU2ooEzY2CNR72wYidQf",
-						callbackUrl: "http://localhost:8080/0Mangro_TeamProject-0.01/O_member/member_sign_in.jsp",
-						isPopup: true, /* 팝업을 통한 연동처리 여부 */
+						callbackUrl: "http://192.168.6.19:8080/0Mangro_TeamProject-0.01/O_member/naverLoginCallBack.jsp",
+						isPopup: false, /* 팝업을 통한 연동처리 여부 */
 						loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
 					}
 				);
+				
+				/*  서비스 URL과 콜백URL을 필수로 기입해야 한다. 서비스 URL은 네아로 버튼이 노출될 페이지의 주소를 적으면 된다.
+					네아로 버튼이라고 했지만 사실상 회원가입이나 로그인버튼이다. 
+					네이버로 로그인 버튼이 띄워질 페이지의 URL을 적으면 되겠다.
+					소셜로그인 API이용시 token이라는 것을 접하게 된다. 
+					토큰엔 접근토큰(access_token), 갱신토큰(refrech_token)이 있다. 
+					로그인 API에서의 토큰이란 세션과 비슷한 역할을 한다고 보면 된다. 
+					이 접근 토큰이 있어야만 네아로로 로그인을 할 수 있다. 
+					따라서 접근 토큰을 가져와야 하는데 이 토큰을 받을 페이지를 콜백페이지로 생각하면 된다.
+					즉 접근토큰을 받을 페이지의 url을 callback url에 기입하면 된다. */
+				
 				
 				/* 설정 정보를 초기화하고 연동을 준비 */
 				naverLogin.init();
