@@ -116,7 +116,7 @@
 
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="">이름</label>
-						        <input type="text" class="form-control" name="memName" id="id_name" value="${param.memName}"
+						        <input type="text" class="form-control" name="memName" id="id_name" value="<%=name%>"
 						               data-msg="이름을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"
