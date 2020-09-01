@@ -71,7 +71,6 @@
 		
 		var likeList = document.querySelectorAll(".avgScore");
 		
-		/* var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1)); */
 		if(likeList != null){
 			for(var i=0; i<likeList.length;i++){
 				var obj = (likeList[i].id.substr(likeList[i].id.indexOf("_")+1));
