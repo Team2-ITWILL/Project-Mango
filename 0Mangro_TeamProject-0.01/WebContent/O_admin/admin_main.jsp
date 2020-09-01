@@ -104,7 +104,7 @@
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_password.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
                                 aria-expanded="false"><i class="fa fa-key" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -115,15 +115,15 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >고객 관리</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy.jsp"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/member_management.jsp"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">회원관리</span>
                             </a>
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="#" aria-expanded="false"
-                        	   href="">
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	   aria-expanded="false" >
                         	
                         	<i data-feather="edit" class="feather-icon"></i><span
                                     class="hide-menu">문의답변관리</span>
@@ -137,7 +137,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/blacklist_management.jsp"
                                 aria-expanded="false"><i class="fa fa-thumb-tack" aria-hidden="true"></i>
                                 <span class="hide-menu">회원 신고</span>
                             </a>

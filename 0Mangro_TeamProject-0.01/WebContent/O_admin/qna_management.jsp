@@ -175,52 +175,59 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">등록 요청 학원 관리</h4>
+                                <h4 class="card-title">문의답변관리</h4>
                                 <h6 class="card-subtitle">등록 요청 학원 리스트가 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col">신청계정</th>
-                                            <th scope="col">학원명</th>
-                                            <th scope="col">우편번호</th>
-                                            <th scope="col">도로명주소</th>
-                                            <th scope="col">사업자등록증 파일</th>
-                                            <th scope="col">대표자신분증 파일</th>
-                                            <th scope="col">신청일</th>
-                                            <th scope="col">승인일</th>
+                                            <th scope="col">글번호</th>
+                                            <th scope="col">작성자</th>
+                                            <th scope="col">제목</th>
+                                            <th scope="col">비밀번호</th>
+                                            <th scope="col">비밀글 여부</th>
+                                            <th scope="col">내용</th>
+                                            <th scope="col">조회수</th>
+                                            <th scope="col">아이피</th>
+                                            <th scope="col">작성일</th>
+                                            <th scope="col">답변일</th>  <%-- 답변이 있으면 답변일을 불러오기 --%>
                                         </tr>
-                                        
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-02</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
+                                            <th scope="row">3</th>
+                                            <td>user1@naver.com</td>
+                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
+                                            <td>123120</td>
+                                            <td>Y</td>
+                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
+                                            <td>11</td>
+                                            <td>128.478.452.101</td>
                                             <td>2020-09-01</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
+                                            <th scope="row">2</th>
+                                            <td>user1@naver.com</td>
+                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
+                                            <td>123120</td>
+                                            <td>Y</td>
+                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
+                                            <td>11</td>
+                                            <td>128.478.452.101</td>
+                                            <td>2020-09-01</td>
+                                            <td>2020-09-02</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>user1@naver.com</td>
+                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
+                                            <td>123120</td>
+                                            <td>Y</td>
+                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
+                                            <td>11</td>
+                                            <td>128.478.452.101</td>
                                             <td>2020-09-01</td>
                                             <td>2020-09-02</td>
                                         </tr>

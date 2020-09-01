@@ -97,15 +97,14 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" href="4index.jsp?center=O_admin/payment_management.jsp"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
-                                <span class="hide-menu">결제관리</span>
+                                <span class="hide-menu">결제 관리</span>
                             </a>
                         </li>
-                        
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_password.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
                                 aria-expanded="false"><i class="fa fa-key" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -116,15 +115,15 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >고객 관리</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy.jsp"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/member_management.jsp"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">회원관리</span>
                             </a>
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="#" aria-expanded="false"
-                        	   href="">
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	   aria-expanded="false" >
                         	
                         	<i data-feather="edit" class="feather-icon"></i><span
                                     class="hide-menu">문의답변관리</span>
@@ -138,7 +137,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/blacklist_management.jsp"
                                 aria-expanded="false"><i class="fa fa-thumb-tack" aria-hidden="true"></i>
                                 <span class="hide-menu">회원 신고</span>
                             </a>
@@ -176,45 +175,54 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">서비스 결제 현황</h4>
-                                <h6 class="card-subtitle">서비스 결제 현황이 무료회원 포함 최신순으로 표시됩니다.</h6>
+                                <h4 class="card-title">회원 관리 현황</h4>
+                                <h6 class="card-subtitle">전체 회원의 정보가 기본 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col">결제계정</th>
-                                            <th scope="col">사용회차</th>
-                                            <th scope="col">서비스명</th>
-                                            <th scope="col">시작일</th>
-                                            <th scope="col">만료일</th>
-                                            <th scope="col">유효여부</th>
+                                            <th scope="col">계정</th>
+                                            <th scope="col">이름</th>
+                                            <th scope="col">학원관리자 여부</th>
+                                            <th scope="col">가입일</th>
+                                            <th scope="col">계정 정지일</th>
+                                            <th scope="col">탈퇴일</th>
                                         </tr>
+                                        
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
+                                            <th scope="row">naver1@daum.com</th>
+                                            <td>김네이버</td>
+                                            <td>Y</td>
                                             <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td>O</td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
+                                            <th scope="row">naver2@daum.com</th>
+                                            <td>이네이버</td>
+                                            <td>N</td>
                                             <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td>O</td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
+                                            <th scope="row">naver3@daum.com</th>
+                                            <td>한네이버</td>
+                                            <td>N</td>
                                             <td>2020-09-01</td>
                                             <td>2020-09-03</td>
-                                            <td>O</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">naver4@daum.com</th>
+                                            <td>최네이버</td>
+                                            <td>N</td>
+                                            <td>2020-09-01</td>
+                                            <td></td>
+                                            <td>2020-09-03</td>
                                         </tr>
 
 

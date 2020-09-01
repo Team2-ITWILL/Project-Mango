@@ -46,7 +46,6 @@
                     <div class="navbar-brand">
                         <!-- Logo icon -->
                             <span class="logo-text">
-                            
                                 <h1 class="mypagelogo">관리자 페이지</h1>
                             </span>
                     </div>
