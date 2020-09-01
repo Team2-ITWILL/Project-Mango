@@ -55,7 +55,7 @@
 					      <div class="row align-items-center mb-5">
 					        <div class="col-7">
 					          <span class="font-subhead text-muted mb-2">기억나셨나요?</span>
-					          	<a href="4index.jsp?center=member/member_sign_in.jsp">로그인</a>
+					          	<a href="./MemberLogin.me">로그인</a>
 					        </div> 
 					        <div class="col-5 text-right">
 					          <button type="submit" class="btn btn-primary">전송</button>
