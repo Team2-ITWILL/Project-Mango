@@ -948,9 +948,51 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		
 		return list;
-	}
+	} // getSearchListAcademy() 끝
 
-	
+	// 좋아요 한 학원 목록
+	public List<AcademyBean> getLikeAcaList(int acaMainNum, int startRow,int pageSize){
+		
+		AcademyBean bean = null;
+		List<AcademyBean> acaList = new ArrayList<AcademyBean>();
+		try {
+			getConnection();
+			sql = "select * from academy where aca_main_num=? "
+					+ "order by aca_main_num limit ?,?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, acaMainNum);
+			pstmt.setInt(2, startRow-1);
+			pstmt.setInt(3, pageSize);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				bean = new AcademyBean();
+				bean.setAcaMainNum(rs.getInt(1));
+				bean.setAcaNum(rs.getString(2));
+				bean.setAcaCode(rs.getString(3));
+				bean.setAcaAttr(rs.getString(7));
+				bean.setAcaName(rs.getString(8));
+				bean.setAcaStartDate(rs.getString(9));
+				bean.setAcaCategory1(rs.getString(10));
+				bean.setAcaCategory2(rs.getString(11));
+				bean.setAcaAddrZip(rs.getString(12));
+				bean.setAcaAddrDoro(rs.getString(13));
+				bean.setAcaAddrDetailed(rs.getString(14));
+				bean.setMem_email(rs.getString(15));
+				
+				acaList.add(bean);
+			}
+		} catch (Exception e) {
+			System.out.println("getAcademyContent()에서 예외 발생");
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
+		
+		return acaList;
+	} // getLikeAcaList() 끝
 	
 	//학원관리자 회원정보 변경
 	@Override
@@ -1016,12 +1058,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}
 		
 		return bean;
-	}
+	}	
 	
 	
-	
-	
-	
-	
-	
-}
+} // AcademyDAO 끝	

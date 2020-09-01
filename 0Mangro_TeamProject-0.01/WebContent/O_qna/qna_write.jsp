@@ -33,27 +33,13 @@
 
 	<form name="fwrite" id="fwrite" action="./QnaBoardWriteAction.qna" enctype="multipart/form-data" autocomplete="off" style="width:100%">
 		
-		
-		<input type="hidden" name="uid" value="20082722432501">
-	    <input type="hidden" name="w" value="">
-	    <input type="hidden" name="bo_table" value="qna">
-	    <input type="hidden" name="wr_id" value="0">
-	    <input type="hidden" name="sca" value="">
-	    <input type="hidden" name="sfl" value="">
-	    <input type="hidden" name="stx" value="">
-	    <input type="hidden" name="spt" value="">
-	    <input type="hidden" name="sst" value="">
-	    <input type="hidden" name="sod" value="">
-	    <input type="hidden" name="page" value="">
-	    <input type="hidden" name="secret" value="secret">
-	    
-	    
 	    
 	 	<!-- write box (s) -->
 	 	<div class="bo_w_info write_div">
 	    	
 	    	<label for="wr_name" class="sound_only">이메일<strong>필수</strong></label>
-	        <input type="text" name="mem_email" value="" id="wr_name" class="frm_input required" placeholder="이메일">
+	        <input type="text" name="mem_email" value = "${id_email}" id="wr_name" class="frm_input required disa" 
+	        readonly="readonly">
 	    
 	        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
 	        <input type="password" name="qna_board_pwd" id="wr_password" class="frm_input required" placeholder="비밀번호">

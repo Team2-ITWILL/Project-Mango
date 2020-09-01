@@ -211,3 +211,7 @@ a.btn_cancel,button.btn_cancel{padding:15px 20px; background:#fff; color:#666; b
 .formchkNrad label{display:inline-block; padding:5px 5px;}
 .bo_w_info b{font-size:11px;color:#333;}
 .bo_w_info span{font-size:11px;color:#b99e74;}
+
+.disa{
+	background-color: #FFFAF0;
+}

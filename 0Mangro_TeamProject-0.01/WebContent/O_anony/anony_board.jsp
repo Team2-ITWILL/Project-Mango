@@ -64,6 +64,15 @@
 </script>
 
 
+<%
+// 검색관련
+	String searchKeyword = "";
+	if(request.getSession().getAttribute("searchKeyword") != null ){
+		searchKeyword = (String)request.getSession().getAttribute("searchKeyword");
+	}	
+
+%>
+
 
 	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
 		<div class="container">
@@ -91,11 +100,15 @@
 						<%-- 검색영역 --%>
 						<hr>
 						<div class="input-group col-12 p-0 mb-3">
-							<input type="search" id="query" name="query" class="form-control"
+						  <form action="./AnonyBoardListAction.anob" method="post">
+							<input type="search" id="query" name="searchKeyword" class="form-control"
 								   placeholder="검색">
+								   
+							<%-- 검색Button--%>
 							<button type="submit" class="btn font-subhead btn-outline-primary text-nowrap width-100 search-btn">
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</button>
+						  </form>
 						</div>
 						
 						<ul class="comments_list"> 
@@ -180,18 +193,9 @@
 										
 										
 										<%------ 첨부파일이 있을 때 표시----%>
-										<c:choose>
-											<c:when test="${anbList.ano_board_file ne null }">
+											<c:if test="${anbList.ano_board_file ne null }">
 												<span><img src="images/etc/file.png" width="15"></span>
-											</c:when>
-											<c:otherwise>
-											</c:otherwise>
-										
-										</c:choose>
-										
-										
-										
-										
+											</c:if>
 																				
 											</div>&nbsp;&nbsp;&nbsp;
 										</div>
