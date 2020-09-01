@@ -138,7 +138,7 @@
 						
 						
 						
-						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
+						<div class="comment_total">댓글 <span class="cmCount">10</span></div>
 						<form class="" action="" method="post">
 				      		<div class="form-group mb-8">
 							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>
