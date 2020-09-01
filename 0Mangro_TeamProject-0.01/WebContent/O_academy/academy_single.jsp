@@ -158,14 +158,6 @@
 }
 </style>
 
-<%
-	
-	request.setCharacterEncoding("utf-8");
-	String contextPath = request.getContextPath();
-	//request.setAttribute("email", "coke@naver.com");
-	
-%>
-
 
 	<script type="text/javascript">
 		
@@ -382,7 +374,7 @@
 			
 			$.ajax({
 				type : "post",
-				url : "<%=contextPath%>/likeAcaRev",
+				url : "${pageContext.request.contextPath}/likeAcaRev",
 				data : {data : _data},
 				success:function(data,status){
 					var json = JSON.parse(data);

@@ -37,7 +37,7 @@
     /* Modal Content/Box */
     .modal-content {
         background-color: #fefefe;
-        margin: 2% auto; /* 15% from the top and centered */
+        margin: 1% auto; /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
         width: 30%;
@@ -47,9 +47,9 @@
     	cursor:pointer;
     	background-color:#DDDDDD;
     	text-align: center;
-    	padding-bottom: 10px;
-    	padding-top: 10px;
-    	margin-top: 20px;
+    	padding-bottom: 6px;
+    	padding-top: 6px;
+    	margin-top: 12px;
     }
 	
 	.modal-content h6{
@@ -59,7 +59,8 @@
 	}
 	
 	.modal-content h4{
-		margin: 10px auto;
+		margin: 0 auto;
+		margin-bottom: 8px;
 		font-weight: bolder;
 		color: #6610f2;
 	}
@@ -207,16 +208,28 @@
 	})
 	
 	
-	
-	
+	/* 팝업  */
+    $(window).load(function() {
+        if (cookiedata.indexOf("maindiv=done") < 0) {
+            $('#myModal').show();
+        };
+    });
+		
+    //쿠키 셋팅
+    function setCookie(name, value, expiredays) {
+        var todayDate = new Date();
+        todayDate.setDate(todayDate.getDate() + expiredays);
+        document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+    }
 
-	 jQuery(document).ready(function() {
-                $('#myModal').show();
-        });
-        //팝업 Close 기능
-        function close_pop(flag) {
-             $('#myModal').hide();
-      };
+    //체크하고 닫을시 쿠키 생성후 팝업 히든
+    function close_pop() {
+        $('#myModal').hide();
+        if (document.pop_form.chkbox.checked) {
+            setCookie("maindiv", "done", 1);
+        }
+        document.all['myModal'].style.visibility = "hidden";
+    }
 
 </script>
 
@@ -241,10 +254,18 @@
 			                2. 방문시 직원으로부터 발열 체크를 해주세요.<br>
 			                3. 손을 자주 30초 이상 깨끗이 씻도록 해주세요.<br>
 			                </p>
-			            <div class="modal_close" onClick="close_pop();">
-			                <span class="pop_bt">
-			                     		닫기
-			                </span>
+			            <div class="modal_close">
+			            	<form name="pop_form">
+			                	<a href="#" onclick="close_pop()">
+			                	<span class="pop_bt">
+			                	닫기
+			                	</span>
+			                	</a>
+			                <br>
+			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
+			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
+			                </label>
+			                </form>
 			            </div>
 			      </div>
 			 
@@ -926,6 +947,20 @@
 		</div>
 	</div> -->
 
+
+
+ 
+ 
+    <!-- 오늘하루 이창을 열지 않음 2-->
+    <script language="Javascript">
+        cookiedata = document.cookie;
+        if (cookiedata.indexOf("maindiv=done") < 0) {
+            document.all['myModal'].style.visibility = "visible";
+        } else {
+            document.all['myModal'].style.visibility = "hidden";
+        }
+ 
+    </script>
 
 	
 	
