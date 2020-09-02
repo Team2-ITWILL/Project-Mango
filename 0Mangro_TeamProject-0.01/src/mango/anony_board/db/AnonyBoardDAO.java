@@ -111,7 +111,7 @@ public class AnonyBoardDAO extends DBconnection {
 			System.out.println("InsertANBoard메소드 두번째 쿼리에서 예외 발생 : "+ e);				
 			e.printStackTrace();
 		}finally { resourceClose();}
-	};
+	}
 
 	
 	

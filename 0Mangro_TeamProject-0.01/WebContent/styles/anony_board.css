@@ -61,6 +61,7 @@ div
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 ul
 {
 	list-style: none;
@@ -1898,8 +1899,7 @@ section
 
 
 .search-btn {
-	width: 80px !important;
-	
+	width: 107px !important;
 }
 
 .form-control:focus {
@@ -1932,4 +1932,12 @@ section
     background-color: #6610f2 !important;
 	
 	
+}
+
+.comment_tail { margin-right:20px;}
+.dateDiv{margin-bottom: -7px;}
+.searchForm {
+	padding:0 !important; 
+	margin:0 !important; 
+	border:0 !important;
 }

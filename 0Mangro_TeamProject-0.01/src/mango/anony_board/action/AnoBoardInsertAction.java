@@ -43,14 +43,6 @@ public class AnoBoardInsertAction implements Action {
 				// [글작성 페이지 폼의 요소들을 BoardBean객체에 저장 ]
 				AnonyBoardBean anbean = new AnonyBoardBean();
 
-//				mem_email varchar(20) 
-//				ano_board_nick varchar(100) 
-//				ano_board_title varchar(45) 
-//				ano_board_content varchar(500) 
-//				ano_board_file varchar(25
-//				[ano_board_write.jsp 뷰페이지에서 form으로 받아온 값 5개 세팅]
-				// 제목 본문 파일 (익명닉네임)
-				// 조회수 0 날짜String ip
 				anbean.setMem_email(multi.getParameter("mem_email"));
 				anbean.setAno_board_nick(multi.getParameter("ano_board_nick"));
 				anbean.setAno_board_title(multi.getParameter("ano_board_title"));
@@ -63,12 +55,6 @@ public class AnoBoardInsertAction implements Action {
 				float f_size = 0;
 				
 				
-//				// [만일 파일이 존재한다면 파일의 크기를 얻어오기]
-//					File f = multi.getFile(multi.getParameter("ano_board_file"));
-//						if(multi.getParameter("ano_board_file") != null){
-//							f_size = f.length();
-//						}
-//				
 				
 				// [Action에서 처리할 값]
 				anbean.setAno_board_ip((String)request.getRemoteAddr());
