@@ -25,7 +25,6 @@ public class LikedAcaListAction implements Action{
 		request.setCharacterEncoding("utf-8");
 		
 		String email = request.getParameter("id_email");
-		System.out.println("email : " +email);
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
@@ -65,7 +64,6 @@ public class LikedAcaListAction implements Action{
 			
 			int acaMainNum = likeList.get(i);
 			
-			System.out.println("acamainNum : "+ acaMainNum);
 			if(count != 0){
 				
 				bean = dao.getLikeAcaBean(acaMainNum);
