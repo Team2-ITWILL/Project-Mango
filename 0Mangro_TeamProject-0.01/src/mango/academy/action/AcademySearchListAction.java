@@ -152,6 +152,7 @@ public class AcademySearchListAction implements Action {
 				request.setAttribute("startPage", startPage);//스타트페이지수
 				request.setAttribute("endPage", endPage);//마지막 페이지수
 				request.setAttribute("Page","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch);//페이지명
+				request.setAttribute("PageTwo","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch+"&select5="+ select5);//페이지명
 				
 				forward.setRedirect(false);
 				forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
