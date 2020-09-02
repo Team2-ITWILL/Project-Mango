@@ -172,15 +172,15 @@
 										<span>2020-08-22 00:29</span>
 										
 										
-										<%-- 댓글수정하기 button --%>
+										<%-- 댓글수정하기 button : 클릭시 댓글수정창 Open--%>
 										<img src="images/etc/revise.png" id="comm_modify" 
-											 class="comm_icon revise"  onclick=""  width="20">
+											 class="comm_icon revise"  onclick="modifyCommOpen()" id="comm_modify" width="20">
 										
-										<%-- 댓글삭제하기 button--%>
-										<img src="images/etc/delete.png" onclick="" id="comm_delete" class="comm_icon" width="20">
+										<%-- 댓글삭제하기 button : 수정, 대댓글 버튼과 달리 누르자마자 ajax로 삭제--%>
+										<img src="images/etc/delete.png" onclick="delete_comment(1)" id="comm_delete" class="comm_icon" width="20">
 										
-										<%-- 대댓글 달기 button--%>
-										<img src="images/etc/reply.png" onclick="" id="comm_reply" class="comm_icon" width="20">
+										<%-- 대댓글 달기 button : 클릭시 대댓글창 Open --%>
+										<img src="images/etc/reply.png" onclick="replyCommOpen()" id="comm_reply" class="comm_icon" width="20">
 
 										<%-- 내용 --%>
 										<div class="comment_author">
@@ -188,26 +188,31 @@
 										</div>
 									</div>
 								</div>
-								
 								<%---------- [▼ 대댓글 작성form :  각 버튼 클릭하면 숨겨져있던 form태그영역 나타남] --------------%>
 
-								<form class="" action="" method="post">
+								<form class="" action="" method="post" style="display: none;" id="replyCommFR">
 						      		<div class="form-group mb-8">
-						      		
 										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
 										<button class="comments_write_button comm_btn replytxtbtn" type="submit">댓글달기</button>
 			       					</div>
 						      	</form>
 						      	
 								<%---------- [▼ 댓글 수정form] --------------%>
-								<form class="" action="" method="post">
+								<form class="" action="" method="post" id="updateCommFR">
 						      		<div class="form-group mb-8">
 						      		
-										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
-										<button class="comments_write_button comm_btn replytxtbtn" type="submit">댓글수정하기</button>
+										<textarea name="ano_comment_content" class="form-control replytxtarea" 
+										          id="update_content" placeholder="내용을 입력해주세요."></textarea>
+										          
+								<%-- 댓글 리스트 기능할때는 메소드안에 진짜 코멘트번호로 바꾸기 --%>		          
+										<button class="comments_write_button comm_btn replytxtbtn" type="button"
+										        onclick="update_comment(1)">
+										 댓글수정하기
+										</button>
 			       					</div>
 						      	</form>
 							</li> 
+					     <hr> 
 <%-------------------------------------------------------- [▲ 댓글 1줄]  --------------------------------------------------------------------------%>
 
 						</ul>
@@ -264,34 +269,135 @@
 	}//add_comment() func 끝
 	
 	 
+//---[2] 실시간 댓글수정(ajax) ----------------------------------------------------------------------------------------------------------------
+	 
+		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+
+	function update_comment(ano_comment_num){		
+		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardUpdateAction.cano",
+	        data: { 
+	        		//mem_email : $("#session_memEmail").val(),
+	        		ano_comment_num : ano_comment_num,
+	        		ano_board_num : $("#init_boardNum").val(),
+	        		ano_comment_content : $("#update_content").val()
+	        },
+	        success : function(data){
+	               alert("ajax로 댓글 수정하기 성공");
+	               
+	               // 댓글 수정 후 댓글 내용 입력창 비워주기
+	               $("#update_content").val("");
+	               
+	               // 댓글 수정창 없애기
+	               $("#updateCommFR").attr("style","display:none;")
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//update_comment() func 끝
+	
+	
+//---[3] 실시간 댓글삭제(ajax) ----------------------------------------------------------------------------------------------------------------
+	 
+		// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+
+	function delete_comment(ano_comment_num){		
+		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardDeleteAction.cano",
+	        data: { 
+	        		ano_comment_num : ano_comment_num,
+	        		ano_board_num : $("#init_boardNum").val()
+	        },
+	        success : function(data){
+	               alert("ajax로 댓글 삭제하기 성공");
+	               
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//update_comment() func 끝
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	/**
 	 * 초기 페이지 로딩시 댓글 불러오기
 	 */
-/* 	$(function(){
-	    
+ 	$(function(){
 	    getCommentList();
 	    
-	}); */
-	 
+	}); 
+	
 	/**
 	 * 댓글 불러오기(Ajax)
 	 */
-/* 	function getCommentList(){
+ 	function getCommentList(){
 	    
 	    $.ajax({
 	        type:'GET',
 	        url : "./CommentAnoBoardListAction.cano",
-	        dataType : "json",
-	        data:$("#comm_insertFr").serialize(),
+	        dataType : "text",
+	        data: { ano_board_num:$("#init_boardNum").val() },
 	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data, status, object){
-	            var html = "";
+	        	alert("댓글 데이터 가져오기 성공!"+data)
+	        	var jsonData = JSON.parse(data);
+	        	var allComments = jsonData.Allcomments;
+	        	
+	        	/* for(var i=0; i<allComments.length; i++){
+	        		
+	        		if()
+	        		
+	        		
+	        	} */
+	        	
+	        	
+/* 	            var html = "";
 	            var cCnt = data.length;
 	            
 	            if(data.length > 0){
-	            	
-	            	
-	            /*     
+	                 
 	                for(i=0; i<data.length; i++){
 	                    html += "<div>";
 	                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
@@ -310,31 +416,16 @@
 	            }
 	            
 	            $("#cCnt").html(cCnt);
-	            $("#commentList").html(html); 
+	            $("#commentList").html(html);  */
 	            
 	        },
 	        error:function(request,status,error){
-	            
+	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            console.log(status);
 	       }
 	        
 	    });
-	}	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 	
 	
