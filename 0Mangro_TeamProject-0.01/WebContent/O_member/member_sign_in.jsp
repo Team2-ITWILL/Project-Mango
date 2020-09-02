@@ -157,7 +157,7 @@
 						        </label>
 						        <div class="col-7 find_password">
 						          <span class="font-subhead text-muted mb-2 go_find_pwd">
-						          	<a href="4index.jsp?center=O_member/member_password.jsp">비밀번호를 잊으셨나요? </a>
+						          	<a href="./MemberFindPw.me">비밀번호를 잊으셨나요? </a>
 						          </span>
 						        </div> 
 						        
