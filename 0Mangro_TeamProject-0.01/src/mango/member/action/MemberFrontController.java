@@ -1,4 +1,5 @@
 package mango.member.action;
+
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mango.action.Action;
 import mango.action.ActionForward;
+
 public class MemberFrontController extends HttpServlet {
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) 
@@ -37,7 +39,7 @@ public class MemberFrontController extends HttpServlet {
 		
 		
 		
-/* ---------------------------------- 회원가입	시작 ---------------------------------- */		
+/* ---------------------------------- 일반 회원가입 시작 ---------------------------------- */		
 		
 		if(command.equals("/MemberJoin.me")){
 			
@@ -56,7 +58,26 @@ public class MemberFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 
-/* ---------------------------------- 회원가입	끝 ---------------------------------- */		
+/* ---------------------------------- 일반 회원가입 끝 ---------------------------------- */		
+			
+			
+			
+/* ---------------------------------- 네이버 회원가입 시작 ---------------------------------- */		
+
+		}else if(command.equals("/MemberNaverJoinAction.me")){
+			
+			action = new MemberNaverJoinAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/MemberNaverJoinAction.me : "+ e);
+				e.printStackTrace();
+			}	
+			
+			
+			
+/* ---------------------------------- 네이버 회원가입 끝 ---------------------------------- */		
 			
 			
 			
