@@ -14,6 +14,7 @@
 <!-- 제이쿼리 & js  -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
+
 <!-- 링크목록  -->
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -64,7 +65,7 @@
 <body>
 
 
-	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
+	<%-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동)--%>
 		<div class="container">
 			<div class="row">
 
@@ -137,60 +138,82 @@
 						<hr>
 						
 						
-						
-						<div class="comment_total">댓글 <span class="cmCount">10</span></div>
-						<form class="" action="" method="post">
+<%-------------------------------------------------------- [▼ 댓글달기 영역 ]  --------------------------------------------------------------------------%>
+						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
+						<form action="" method="post" name="comm_insertFr">  
+						<%-- 현재페이지에서 액션페이지로 보낼 값 : 작성자, 글번호, 댓글내용 --%>
 				      		<div class="form-group mb-8">
-							<button class="comments_write_button writeBtn" type="submit">댓글달기</button>
-								<textarea name="text" class="form-control" placeholder="내용을 입력해주세요."></textarea>
+								<input type="hidden" name="mem_email" id="session_memEmail" value="${id_email}">
+								<input type="hidden" name="ano_board_num" id="init_boardNum" value="${boardSingle.ano_board_num}">
+					      		
+						<%-- 댓글달기 버튼 클릭시 ajax를 통해 댓글 insert + 비동기식 댓글 리스트 불러오기 --%>
+								<button class="comments_write_button writeBtn" type="button" 
+								        onclick="add_comment(${boardSingle.ano_board_num})">
+								댓글달기
+								</button>
+					      		<textarea name="ano_comment_content" id="init_content" class="form-control" id="comm_content"></textarea>
 	       					</div>
 				      	</form>
+				      	
 						<ul class="comments_list"> 
-<!-------------------------------------------------------- [▼ 코멘트 1줄]  -------------------------------------------------------------------------->
+<%-------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
 							<li> 
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
-								<!-- ▲ 링크걸어 이동 -->
-										<!-- 댓글 프로필사진 -->
+								<%-- ▲ 링크걸어 이동 --%>
+										<%-- 댓글 프로필 사진 --%>
 										<img src="images/etc/default_mango.png" class="user_profile" width="60" >
-									<div class="comment_content">
-										<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">#9090  </span> 										
-										<!-- 날짜 -->
+										<div class="comment_content">
+										<i class="fa fa-user" aria-hidden="true"></i> 
+										
+										<%-- 랜덤 닉네임 --%>
+										<span class="icons_margin">#9090  </span> 										
+										
+										<%-- 날짜 --%>
 										<span>2020-08-22 00:29</span>
 										
-										<img src="images/etc/revise.png" class="comm_icon revise" width="20">
-										<img src="images/etc/delete.png" class="comm_icon" width="20">
-										<img src="images/etc/reply.png" class="comm_icon" width="20">
+										
+										<%-- 댓글수정하기 button : 클릭시 댓글수정창 Open--%>
+										<img src="images/etc/revise.png" id="comm_modify" 
+											 class="comm_icon revise"  onclick="modifyCommOpen()" id="comm_modify" width="20">
+										
+										<%-- 댓글삭제하기 button : 수정, 대댓글 버튼과 달리 누르자마자 ajax로 삭제--%>
+										<img src="images/etc/delete.png" onclick="delete_comment(1)" id="comm_delete" class="comm_icon" width="20">
+										
+										<%-- 대댓글 달기 button : 클릭시 대댓글창 Open --%>
+										<img src="images/etc/reply.png" onclick="replyCommOpen()" id="comm_reply" class="comm_icon" width="20">
 
-										<!-- 내용 -->
+										<%-- 내용 --%>
 										<div class="comment_author">
 											<span>오.. 엄청 험난한 2019년을 보냈나본데</span>
 										</div>
 									</div>
 								</div>
-								
-<!------------------------------[대댓글, 댓글수정 form 표시영역(각 버튼 클릭하면 숨겨져있던 form태그 나타나도록)]  ------------------------------------------------------------>
+								<%---------- [▼ 대댓글 작성form :  각 버튼 클릭하면 숨겨져있던 form태그영역 나타남] --------------%>
 
-								<!-- (대댓글 쓰기 form) -->
-								<form class="" action="" method="post">
+								<form class="" action="" method="post" style="display: none;" id="replyCommFR">
 						      		<div class="form-group mb-8">
-						      		
 										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
 										<button class="comments_write_button comm_btn replytxtbtn" type="submit">댓글달기</button>
 			       					</div>
 						      	</form>
 						      	
-<!----------------------------------------------------------------------------------------------------------------------------------------------->
-						      	
-								<!-- (댓글수정 form) -->
-								<form class="" action="" method="post">
+								<%---------- [▼ 댓글 수정form] --------------%>
+								<form class="" action="" method="post" id="updateCommFR">
 						      		<div class="form-group mb-8">
 						      		
-										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
-										<button class="comments_write_button comm_btn replytxtbtn" type="submit">댓글수정하기</button>
+										<textarea name="ano_comment_content" class="form-control replytxtarea" 
+										          id="update_content" placeholder="내용을 입력해주세요."></textarea>
+										          
+								<%-- 댓글 리스트 기능할때는 메소드안에 진짜 코멘트번호로 바꾸기 --%>		          
+										<button class="comments_write_button comm_btn replytxtbtn" type="button"
+										        onclick="update_comment(1)">
+										 댓글수정하기
+										</button>
 			       					</div>
 						      	</form>
 							</li> 
-<!-------------------------------------------------------- [▲ 코멘트 1줄]  -------------------------------------------------------------------------->
+					     <hr> 
+<%-------------------------------------------------------- [▲ 댓글 1줄]  --------------------------------------------------------------------------%>
 
 						</ul>
 					</div> <!-- comments_container -->
@@ -198,9 +221,272 @@
 						
 		</div> <!-- container -->
 
+<%-------------------------------------------------------- [스크립트 영역]  --------------------------------------------------------------------------%>
 
-<!-------------------------------------------------------- [스크립트 영역]  -------------------------------------------------------------------------->
-<script src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+
+//---[1] 실시간 댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
+
+	// [필요한 변수 선언 및 초기화] 
+	// - 댓글내용 textarea요소를 변수에 저장(대댓글, 수정form 아닌 최초로 댓글달때 form id값 'init_content')
+	var init_content = document.getElementById("init_content"); 
+	
+	function add_comment(ano_board_num){
+		
+		// [1-1] 댓글 내용 여부 검증 & 로그인여부 처리
+		if(init_content.value == ""){
+			alert("댓글 내용을 입력하세요.");
+			return;
+			
+		}else if( $("#session_memEmail").val() == ""){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href="./MemberLogin.me";
+			return;
+		}
+
+		// [1-2] ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardInsertAction.cano",
+	        data: { 
+	        		mem_email:$("#session_memEmail").val(), 
+	        		ano_board_num:$("#init_boardNum").val(),
+	        		ano_comment_content:$("#init_content").val()
+	        },
+	        success : function(data){
+	               alert("ajax로 댓글 넣기 성공");
+	               // 댓글 insert후 댓글 내용 입력창 비워주기
+	               $("#init_content").val("");
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//add_comment() func 끝
+	
+	 
+//---[2] 실시간 댓글수정(ajax) ----------------------------------------------------------------------------------------------------------------
+	 
+		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+
+	function update_comment(ano_comment_num){		
+		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardUpdateAction.cano",
+	        data: { 
+	        		//mem_email : $("#session_memEmail").val(),
+	        		ano_comment_num : ano_comment_num,
+	        		ano_board_num : $("#init_boardNum").val(),
+	        		ano_comment_content : $("#update_content").val()
+	        },
+	        success : function(data){
+	               alert("ajax로 댓글 수정하기 성공");
+	               
+	               // 댓글 수정 후 댓글 내용 입력창 비워주기
+	               $("#update_content").val("");
+	               
+	               // 댓글 수정창 없애기
+	               $("#updateCommFR").attr("style","display:none;")
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//update_comment() func 끝
+	
+	
+//---[3] 실시간 댓글삭제(ajax) ----------------------------------------------------------------------------------------------------------------
+	 
+		// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+
+	function delete_comment(ano_comment_num){		
+		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardDeleteAction.cano",
+	        data: { 
+	        		ano_comment_num : ano_comment_num,
+	        		ano_board_num : $("#init_boardNum").val()
+	        },
+	        success : function(data){
+	               alert("ajax로 댓글 삭제하기 성공");
+	               
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//update_comment() func 끝
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	/**
+	 * 초기 페이지 로딩시 댓글 불러오기
+	 */
+ 	$(function(){
+	    getCommentList();
+	    
+	}); 
+	
+	/**
+	 * 댓글 불러오기(Ajax)
+	 */
+ 	function getCommentList(){
+	    
+	    $.ajax({
+	        type:'GET',
+	        url : "./CommentAnoBoardListAction.cano",
+	        dataType : "text",
+	        data: { ano_board_num:$("#init_boardNum").val() },
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+	        success : function(data, status, object){
+	        	alert("댓글 데이터 가져오기 성공!"+data)
+	        	var jsonData = JSON.parse(data);
+	        	var allComments = jsonData.Allcomments;
+	        	
+	        	/* for(var i=0; i<allComments.length; i++){
+	        		
+	        		if()
+	        		
+	        		
+	        	} */
+	        	
+	        	
+/* 	            var html = "";
+	            var cCnt = data.length;
+	            
+	            if(data.length > 0){
+	                 
+	                for(i=0; i<data.length; i++){
+	                    html += "<div>";
+	                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
+	                    html += data[i].comment + "<tr><td></td></tr>";
+	                    html += "</table></div>";
+	                    html += "</div>";
+	                }
+	                
+	            } else {
+	                
+	                html += "<div>";
+	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+	                html += "</table></div>";
+	                html += "</div>";
+	                
+	            }
+	            
+	            $("#cCnt").html(cCnt);
+	            $("#commentList").html(html);  */
+	            
+	        },
+	        error:function(request,status,error){
+	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            console.log(status);
+	       }
+	        
+	    });
+	}	
+	
+	
+	
+	
+	
+	
+	// [2-2] ajax를 통한 실시간 댓글달기 
+/* 	var comment_pwd = $("#comment_pwd").val();
+	var comment_content = $("[name='comment_content']");
+	var comment_num = $("#comment_num").text();
+
+	function addComment() { 
+		
+	
+	// [ajax를 통한 댓글등록 및 실시간 댓글 동기화 ]
+		$.ajax({
+		    type: "get",
+		    url: "./addCommentPro.jsp",
+		    async:true,
+		    cache: false,
+		    dataType: "text",
+		    data: {
+		    	   member_id:$("#member_id").val(), 
+		    	   board_num:$("#num").val(),
+		    	   comment_pwd:$("#comment_pwd").val(),
+		    	   comment_content:$("[name='comment_content']").val()  
+		    	  },
+		    	   
+		   	success: function(data, textStatus) {
+		   		//성공했다면 ajax로 받아온 값들 파싱 후 각각 지역변수로 담기
+
+		    	var jsonData = JSON.parse(data);
+		    	var member_id = jsonData.member_id;				
+		    	var comment_date = jsonData.comment_date;				
+		    	var comment_content = jsonData.comment_content;				
+
+	    		$("[name=comment_pwd],[name=comment_content]").val(""); //작성했던 댓글입력창 비우기
+	    		
+	    		// 댓글 등록 후 중복표시를 방지하기 위해 기존 댓글영역을 비우고 댓글목록을 다시한번 불러오기
+	    		$("#comment-addArea").empty();
+	    		getComments();
+		   	},//success
+			
+			error: function(data, textStatus) {
+				
+				alert("ajax로 댓글 쓰기 실패"+data);
+				console.log(data);
+				
+			}//error
+			
+		});//ajax
+		
+	}//function addComment() : 댓글추가 메서드 */
+	
+
+
+
+</script>
+
+<%-------------------------------------------------------- [스크립트 링크 영역]  --------------------------------------------------------------------------%>
+<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/easing/easing.js"></script>
