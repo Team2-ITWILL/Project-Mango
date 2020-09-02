@@ -89,6 +89,16 @@ public class CommentAnonyFrontController extends HttpServlet {
 			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardDeleteAction.cano에서 예외");
 			e.printStackTrace();
 		} 
+	}else if(command.equals("/CommentAnoBoardReplyAction.cano")){
+		action = new CommentAnoBoardReplyAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardReplyAction.cano에서 예외");
+			e.printStackTrace();
+		} 
+		
 	}
 	
 	if(forward!=null){ //new ActionForward()객체가 존재시
