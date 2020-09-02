@@ -392,20 +392,18 @@
  	function getCommentList(){
 	    
 	    $.ajax({
-	        type:'GET',
+	        type:'get',
 	        url : "./CommentAnoBoardListAction.cano",
 	        dataType : "text",
 	        data: { ano_board_num:$("#init_boardNum").val() },
 	        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data, status, object){
-	        	alert("댓글 데이터 가져오기 성공!"+data)
-	        	var jsonData = JSON.parse(data);
-	        	var allComments = jsonData.Allcomments;  
-	        	var commentsCount = allComments.length;  // 총 댓글수
+	        	var jsonData = data;
+	        	var allComments = jsonData.commentArray;
+	        	alert("댓글 데이터 가져오기 성공!"+allComments);
+	        	console.log(allComments.length + "댓글갯수");
 	        	
 	        	var commentsHTML = ""; // 데이터를 불러와 댓글을 생성하는 html코드를 저장
-	        	
-	        	if(commentsCount > 0){
 	        		
 		        	for(var i=0; i<allComments.length; i++){
 		        	
@@ -474,11 +472,10 @@
 		        	// ▶ li 영역 끝
 		        	commentsHTML += "</li>  <hr>";
 		        		
-		        	} 
+		        	}//if 
 		        	
-	        	}
+		        	$(".comments_list").append(commentsHTML); // <ul class="comments_list">
 	        	
-	        	$(".comments_list").append(commentsHTML); // <ul class="comments_list">
 
 	            
 	        },
