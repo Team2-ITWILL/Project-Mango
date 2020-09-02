@@ -286,7 +286,7 @@
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 												<input type="hidden" name="select4">
-												<input type="hidden" name="select5">
+												<input type="hidden" name="select5" value="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
 												<select class="dropdown_item_select home_search_input" id="add1" name="select1">

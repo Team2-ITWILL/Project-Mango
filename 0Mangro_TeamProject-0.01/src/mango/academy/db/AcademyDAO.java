@@ -586,6 +586,26 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		rs=pstmt.executeQuery();	
 		
 	}		
+		// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		sql="select count(*)"
+				+" from academy where aca_name like ? "                           
+				+" and aca_search_addr1 =? " 
+				+" and aca_search_addr2 =? " 
+				+" and aca_search_addr3 =? "; 
+		pstmt=con.prepareStatement(sql);
+		
+
+		pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+	}		
 	else{//그냥 검색하기 만 눌렀을 경우
 		
 		sql="select count(*)"
@@ -1596,6 +1616,93 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			pstmt.setString(3,(String)formsearch.get("s3"));
 			pstmt.setInt(4,StartRow);
 			pstmt.setInt(5,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
+		}		// 검색 창 입력 O, 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X	
+		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+						+" from academy_review"
+						+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where aca_name like ? "
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+						+" 								from academy_review"
+						+ "								 group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+						+"							 from academy_review"
+						+ "					 			group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? "  
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+						+" 								from academy_review) r "
+						+" on a.aca_main_num=r.aca_main_num "    
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? "  
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " limit ? , ?";
+				
+				
+			}
+			
+			
+			
+			
+			
+			pstmt=con.prepareStatement(sql);
+
+			pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s2"));
+			pstmt.setString(4,(String)formsearch.get("s3"));
+			pstmt.setInt(5,StartRow);
+			pstmt.setInt(6,pageSize);
 			
 			rs=pstmt.executeQuery();	
 			
