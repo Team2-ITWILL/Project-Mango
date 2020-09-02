@@ -190,32 +190,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    
+                                 <c:if test="${count >0}">   
+                                 
+                                 <c:forEach  var="i" items="${PayMentlist}">
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td>O</td>
+                                            <th scope="row">${i.memEmail}</th>
+                                            <td>${i.pmUseNum}</td>
+                                            <td>${i.pmName}</td>
+                                            <td>${i.pmStartDate}</td>
+                                            <td>${i.pmExpDate}</td>
+                                            <td>${i.pmCheck}</td>
                                         </tr>
+                                 </c:forEach>       
+                                        
+                                </c:if>
+                                    
+                                 <c:if test="${count==0}">   
+                                 
                                         <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td>O</td>
+                                            <th scope="row" colspan="5">이용권을 사용하고 있는 회원목록이 없습니다</th>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>1</td>
-                                            <td>(무료)3일 후기 무제한</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td>O</td>
-                                        </tr>
-
-
+                                        
+                                </c:if>
+                                
+                                
+                                
+                                 
                                     </tbody>
                                 </table>
                             </div>
@@ -228,33 +229,60 @@
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
+					  	<a class="page-link prev" href="${Page}&pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
-					  
+					 
+					<c:if test="${count!=0}">   
                     <!-- < (이전페이지 가기)-->
+					     <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
+					  	<c:if test="${startPage-pageBlock<0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
+					  	</a>	
 					  </li>
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  
+					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  
+					  
+					  
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="${Page}&pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+                    
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  	<a class="page-link next" href="${Page}&pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+					  
+					  </c:if>
 					</ul>                    
                  
                     
