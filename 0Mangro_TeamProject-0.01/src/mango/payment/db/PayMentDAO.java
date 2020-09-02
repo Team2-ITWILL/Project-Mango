@@ -1,6 +1,9 @@
 
 package mango.payment.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -128,7 +131,8 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 			sql="select p.mem_email,p.pm_use_num,p.pm_name,date_format(p.pm_start_date, '%Y-%m-%d') "
 			+ " pm_start_date ,date_format(p.pm_exp_date, '%Y-%m-%d') pm_exp_date, p.pm_check , m.maxnum, DATEDIFF( p.pm_exp_date,now() ) result "
 			+" from payment p join (select mem_email, max(pm_use_num) maxnum "
-			+					 " from payment) m "
+			+					 " from payment"
+			+ "						group by mem_email) m "
 			+" on p.mem_email = m.mem_email "
 			+" where p.mem_email=? ";     
 			
@@ -179,6 +183,103 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 	}
 	
 	
+	
+	public List<PaymentBean> getadminAllList(int startRow ,int pageSize){
+		
+		
+		List<PaymentBean> pbList =new ArrayList<PaymentBean>();
+		
+		try {
+			getConnection();
+		
+			
+			sql="select mem_email, pm_use_num, pm_name ,date_format(pm_start_date, '%Y-%m-%d') "
+			+ " pm_start_date ,date_format(pm_exp_date, '%Y-%m-%d') pm_exp_date, pm_check "
+			+ " from payment "
+			+ " limit ?,? ";
+		
+			pstmt=con.prepareStatement(sql);
+		
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, pageSize);
+			
+			rs=pstmt.executeQuery();
+		
+			
+			while(rs.next()){
+			
+				PaymentBean pb =new PaymentBean(rs.getString(1),rs.getInt(2),rs.getString(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+				
+	
+				pbList.add(pb);
+				
+			}
+				
+			
+			
+			
+		
+		} catch (Exception e) {
+		
+			System.out.println("getPaymentCount()메소드에서  오류발생"+e);
+			
+		}finally {
+			
+			resourceClose();
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return pbList;
+	}
+
+
+
+	public int getPaymentCount() {
+		
+		int count=0;
+		
+		try {
+			getConnection();
+		
+			
+			sql="select count(*) from payment";
+		
+			pstmt=con.prepareStatement(sql);
+		
+			rs=pstmt.executeQuery();
+		
+			
+			if(rs.next()){
+				
+				
+			count=rs.getInt(1);
+				
+			}
+			
+			
+		
+		} catch (Exception e) {
+		
+			System.out.println("getPaymentCount()메소드에서  오류발생"+e);
+			
+		}finally {
+			
+			resourceClose();
+			
+		}
+		
+		
+		
+		return count;
+	}
 	
 	
 
