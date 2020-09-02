@@ -138,24 +138,22 @@
 						<hr>
 						
 						
-						
-						<div class="comment_total">댓글 <span class="cmCount">10</span></div>
-						<form action="./CommentAnoBoardInsertAction.cano" method="post" name="comm_insertFr">
+<%-------------------------------------------------------- [▼ 댓글달기 영역 ]  --------------------------------------------------------------------------%>
+						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
+						<form action="" method="post" name="comm_insertFr">  
 						<%-- 현재페이지에서 액션페이지로 보낼 값 : 작성자, 글번호, 댓글내용 --%>
 				      		<div class="form-group mb-8">
-							<input type="hidden" name="mem_email" value="${id_email}">
-							<input type="hidden" name="ano_board_num" value="${boardSingle.ano_board_num}">
-				      		
-								<input type="text" name="ano_comment_content" class="form-control" id="comm_content" >
-				      		<%-- 댓글달기 버튼 클릭시 ajax를 통해 댓글 insert + 비동기식 댓글 리스트 불러오기 --%>
-							<button class="comments_write_button writeBtn" type="button" 
-							        onclick="add_comment(${boardSingle.ano_board_num})">
-							댓글달기
-							</button>
+								<input type="hidden" name="mem_email" id="session_memEmail" value="${id_email}">
+								<input type="hidden" name="ano_board_num" id="init_boardNum" value="${boardSingle.ano_board_num}">
+					      		
+						<%-- 댓글달기 버튼 클릭시 ajax를 통해 댓글 insert + 비동기식 댓글 리스트 불러오기 --%>
+								<button class="comments_write_button writeBtn" type="button" 
+								        onclick="add_comment(${boardSingle.ano_board_num})">
+								댓글달기
+								</button>
+					      		<textarea name="ano_comment_content" id="init_content" class="form-control" id="comm_content"></textarea>
 	       					</div>
 				      	</form>
-							      	
-				      	
 				      	
 						<ul class="comments_list"> 
 <%-------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
@@ -222,41 +220,39 @@
 
 <script type="text/javascript">
 
-//---[1] 실시간 댓글달기 : 댓글내용 입력 검사----------------------------------------------------------------------------------------------------------------
-//  - 댓글내용 미기입시  alert, 입력시 CommentAnoBoardInsertAction로 submit
+//---[1] 실시간 댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
-/*  ----실시간 댓글달기 유효성검증 코드보존
-	var comm_content = document.getElementById("comm_content");
-	function comm_insertCheck() {
-		if(comm_content.value == ""){
-			alert("댓글 내용을 입력하세요.");
-		}else{
-			comm_insertFr.submit();
-		} 
-	} */
-
-
-	// 댓글내용 textarea요소를 변수에 저장
-	var comm_content = document.getElementById("comm_content");
-	var queryString = $("form[name='comm_insertFr']").serialize();
+	// [필요한 변수 선언 및 초기화] 
+	// - 댓글내용 textarea요소를 변수에 저장(대댓글, 수정form 아닌 최초로 댓글달때 form id값 'init_content')
+	var init_content = document.getElementById("init_content"); 
 	
 	function add_comment(ano_board_num){
-		// 댓글 입력값 여부 검증 처리
-		if(comm_content.value == ""){
+		
+		// [1-1] 댓글 내용 여부 검증 & 로그인여부 처리
+		if(init_content.value == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
+			
+		}else if( $("#session_memEmail").val() == ""){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href="./MemberLogin.me";
+			return;
 		}
-		
-		// 
+
+		// [1-2] ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardInsertAction.cano",
-	        data: queryString,
+	        data: { 
+	        		mem_email:$("#session_memEmail").val(), 
+	        		ano_board_num:$("#init_boardNum").val(),
+	        		ano_comment_content:$("#init_content").val()
+	        },
 	        success : function(data){
 	               alert("ajax로 댓글 넣기 성공");
-	                getCommentList();
-	                //$("#comm_content").val("");
-	            
+	               // 댓글 insert후 댓글 내용 입력창 비워주기
+	               $("#init_content").val("");
+	               //getCommentList();
 	        },
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -264,7 +260,9 @@
 	       }
 	        
 	    });
-	}
+		
+	}//add_comment() func 끝
+	
 	 
 	/**
 	 * 초기 페이지 로딩시 댓글 불러오기
