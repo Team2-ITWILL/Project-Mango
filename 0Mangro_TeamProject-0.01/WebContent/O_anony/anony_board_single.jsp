@@ -7,15 +7,15 @@
 <html lang="ko">
 <head>
 <title>익명사담방</title>
-<!-- 메타데이터  -->
+<%-- 메타데이터  --%>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="mango">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 제이쿼리 & js  -->
+<%-- 제이쿼리 & js  --%>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 
-<!-- 링크목록  -->
+<%-- 링크목록 --%>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
@@ -156,78 +156,9 @@
 				      	</form>
 				      	
 						<ul class="comments_list"> 
-<%-------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
-								<%-- ▼ li class에 댓글번호 매핑해주기 --%>
-							<li class="datNum"> 
-								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
-								
 
-										<%-- 댓글 프로필 사진 --%>
-										<img src="images/etc/default_mango.png" class="user_profile" width="60" >
-										<div class="comment_content">
-										<i class="fa fa-user" aria-hidden="true"></i> 
-										
-										<%-- 랜덤 닉네임 --%>
-										<span class="icons_margin">#9090  </span> 										
-										
-										<%-- 날짜 --%>
-										<span>2020-08-22 00:29</span>
-										
-										
-										<%-- 댓글수정하기 button : 클릭시 댓글수정창 Open--%>
-										<img src="images/etc/revise.png" id="comm_modify" 
-											 class="comm_icon revise"  onclick="commentOpen('up8')" id="comm_modify" width="20">
-										
-										<%-- 댓글삭제하기 button : 수정, 대댓글 버튼과 달리 누르자마자 ajax로 삭제--%>
-										<img src="images/etc/delete.png" onclick="delete_comment(1)" id="comm_delete" class="comm_icon" width="20">
-										
-										<%-- 대댓글 달기 button : 클릭시 대댓글창 Open --%>
-										<img src="images/etc/reply.png" onclick="commentOpen('re8')" id="comm_reply" class="comm_icon" width="20">
+<%------------------------------------ ↑    [ajax로 댓글 동적 생성되는 영역 : ul태그 사이]      ↓ ----------------------------------------------- --%>
 
-										<%-- 내용 --%>
-										<div class="comment_author">
-											<span>오.. 엄청 험난한 2019년을 보냈나본데</span>
-										</div>
-									</div>
-								</div>
-								<%---------- [▼ 대댓글 작성form :  각 버튼 클릭하면 숨겨져있던 form태그영역 나타남( id에 댓글번호 묻어두기 )] --------------%>
-
-
-								<form class="" action="" method="post" style="display: none;" id="replyCommFR8">
-						      		<div class="form-group mb-8">
-						      		<%-- ▼ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
-									<input type="hidden" name="ano_re_ref" value=8>
-									<input type="hidden" name="ano_re_lev" value=1>
-									<input type="hidden" name="ano_re_seq" value=1>
-									<%-- ▲ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
-						      		
-										<textarea name="reply_content" class="form-control replytxtarea" 
-												  id="reply_content"   placeholder="내용을 입력해주세요."></textarea>
-										<button class="comments_write_button comm_btn replytxtbtn" type="button"
-												onclick="reply_comment(8)"									
-										>댓글달기
-										
-										</button>
-			       					</div>
-						      	</form>
-						      	
-								<%---------- [▼ 댓글 수정form] 각 버튼 클릭하면 숨겨져있던 form태그영역 나타남 ( id에 댓글번호 묻어두기 )--------------%>
-								<form class="" action="" method="post" style="display: none;" id="updateCommFR8">
-						      		<div class="form-group mb-8">
-						      		
-										<textarea name="ano_comment_content" class="form-control replytxtarea" 
-										          id="update_content" placeholder="내용을 입력해주세요."></textarea>
-										          
-								<%-- 댓글 리스트 기능할때는 메소드안에 진짜 코멘트번호로 바꾸기 --%>		          
-										<button class="comments_write_button comm_btn replytxtbtn" type="button"
-										        onclick="update_comment(8)">
-										 댓글수정하기
-										</button>
-			       					</div>
-						      	</form>
-							</li> 
-					     <hr> 
-<%-------------------------------------------------------- [▲ 댓글 1줄]  --------------------------------------------------------------------------%>
 
 						</ul>
 					</div> <!-- comments_container -->
@@ -450,6 +381,10 @@
 	    getCommentList();
 	    
 	}); 
+
+	
+	
+	
 	
 	/**
 	 * 댓글 불러오기(Ajax)
@@ -461,44 +396,90 @@
 	        url : "./CommentAnoBoardListAction.cano",
 	        dataType : "text",
 	        data: { ano_board_num:$("#init_boardNum").val() },
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+	        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data, status, object){
 	        	alert("댓글 데이터 가져오기 성공!"+data)
 	        	var jsonData = JSON.parse(data);
-	        	var allComments = jsonData.Allcomments;
+	        	var allComments = jsonData.Allcomments;  
+	        	var commentsCount = allComments.length;  // 총 댓글수
 	        	
-	        	/* for(var i=0; i<allComments.length; i++){
-	        		
-	        		if()
-	        		
-	        		
-	        	} */
+	        	var commentsHTML = ""; // 데이터를 불러와 댓글을 생성하는 html코드를 저장
 	        	
+	        	if(commentsCount > 0){
+	        		
+		        	for(var i=0; i<allComments.length; i++){
+		        	
+		        	// ▶ li시작 
+		        	commentsHTML += "<li class='comment"+allComments[i].ano_comment_num+"'> ";
+		        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start'> ";
+		        	// ▶ 프로필사진(망고) 
+		        	commentsHTML +=   "<img src='images/etc/default_mango.png' class='user_profile' width='60' > ";
+		        	commentsHTML +=   "<div class='comment_content'> ";
+		        	// ▶ 랜덤닉네임 
+		        	commentsHTML +=   "<i class='fa fa-user' aria-hidden='true'></i> ";
+		        	commentsHTML +=   "<span class='icons_margin'>"+allComments[i].ano_board_nick+"</span> ";
+		        	// ▶ 날짜 
+		        	commentsHTML +=   "<span>"+allComments[i].ano_comment_date+"</span> ";
+		        	
+		        	// ▶ 댓글 수정 버튼
+		        	commentsHTML +=   "<img src='images/etc/revise.png' id='comm_modify' class='comm_icon revise' width='20' " ;
+		        	commentsHTML +=   "onclick='commentOpen('up"+allComments[i].ano_comment_num+")' >";
+		        	
+		        	// ▶ 댓글 삭제 버튼
+		        	commentsHTML +=   "<img src='images/etc/delete.png' id='comm_delete' class='comm_icon' width='20' " ;
+		        	commentsHTML +=   "onclick='delete_comment("+allComments[i].ano_comment_num+")' >";
+
+		        	// ▶ 대댓글 버튼
+		        	commentsHTML +=   "<img src='images/etc/reply.png' id='comm_reply' class='comm_icon' width='20' " ;
+		        	commentsHTML +=   "onclick='commentOpen('re"+allComments[i].ano_comment_num+")' >";
+		        	
+		        	// ▶ 내용
+		        	commentsHTML +=   "<div class='comment_author'>" ;
+		        	commentsHTML +=   "<span>"+allComments[i].ano_comment_content+"</span>";
+		        	
+		        	// ▶ 댓글 리스트 영역 끝 
+		        	commentsHTML +=   "</div>  </div>  </div>" ;
+		        	
+		        	// [대댓글 작성form, 댓글수정 form 영역 시작] 
+		        	// ▶ 대댓글 작성form (replyCommFR)
+		        	commentsHTML +=   "<form method='post' style='display: none;' id='replyCommFR"+allComments[i].ano_comment_num+"'>" ;
+		        	commentsHTML +=     "<div class='form-group mb-8'>";
+		        	
+		        	// ▶ 대댓글 작성form 중 ref,lev,seq 등 대댓글을 위한 hidden영역
+		        	commentsHTML +=      "<input type='hidden' name='ano_re_ref' value='"+allComments[i].ano_re_ref+"'>";
+		        	commentsHTML +=      "<input type='hidden' name='ano_re_lev' value='"+allComments[i].ano_re_lev+"'>";
+		        	commentsHTML +=      "<input type='hidden' name='ano_re_seq' value='"+allComments[i].ano_re_seq+"'>";
+		        	
+		        	// ▶ 대댓글 작성form 중 textarea
+		        	commentsHTML +=      "<textarea name='reply_content' class='form-control replytxtarea' ";
+		        	commentsHTML +=       "id='reply_content' placeholder='내용을 입력해주세요.'></textarea>";
+		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
+		        	commentsHTML +=       "onclick='reply_comment("+allComments[i].ano_comment_num+")'>댓글달기 </button> </div>"
+		        		              "</form>";
+
+		        	//--------------------------------------------------------------------------------------------------------	              
+		        		              
+		        		              
+		        	// ▶ 댓글 수정form (replyCommFR)
+		        	commentsHTML +=   "<form method='post' style='display: none;' id='updateCommFR"+allComments[i].ano_comment_num+"'>" ;
+		        	commentsHTML +=     "<div class='form-group mb-8'>";
+		        	
+		        	// ▶ 댓글 수정form 중 textarea
+		        	commentsHTML +=      "<textarea name='ano_comment_content' class='form-control replytxtarea' ";
+		        	commentsHTML +=       "id='update_content' placeholder='내용을 입력해주세요.'></textarea>";
+		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
+		        	commentsHTML +=       "onclick='update_comment("+allComments[i].ano_comment_num+")'>댓글수정하기 </button> </div>"
+		        		              "</form>";
+		          		
+		        	// ▶ li 영역 끝
+		        	commentsHTML += "</li>  <hr>";
+		        		
+		        	} 
+		        	
+	        	}
 	        	
-/* 	            var html = "";
-	            var cCnt = data.length;
-	            
-	            if(data.length > 0){
-	                 
-	                for(i=0; i<data.length; i++){
-	                    html += "<div>";
-	                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
-	                    html += data[i].comment + "<tr><td></td></tr>";
-	                    html += "</table></div>";
-	                    html += "</div>";
-	                }
-	                
-	            } else {
-	                
-	                html += "<div>";
-	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
-	                html += "</table></div>";
-	                html += "</div>";
-	                
-	            }
-	            
-	            $("#cCnt").html(cCnt);
-	            $("#commentList").html(html);  */
+	        	$(".comments_list").append(commentsHTML); // <ul class="comments_list">
+
 	            
 	        },
 	        error:function(request,status,error){

@@ -31,7 +31,6 @@ public class CommentAnoBoardReplyAction implements Action {
 		
 		commBean.setAno_re_ref(Integer.parseInt(request.getParameter("ano_re_ref")));
 		commBean.setAno_re_seq(Integer.parseInt(request.getParameter("ano_re_seq")));
-		System.out.println("값은 받아옴 seq = " + Integer.parseInt(request.getParameter("ano_re_seq")));
 		commBean.setAno_re_lev(Integer.parseInt(request.getParameter("ano_re_lev")));
 		
 		commBean.setAno_comment_ip((String)request.getRemoteAddr());
