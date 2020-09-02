@@ -98,7 +98,7 @@ li.thirdKey {
 			
 		
 		
-		
+	
 		
 
 		
@@ -222,6 +222,11 @@ li.thirdKey {
 		
 		
 		
+		
+		
+		
+		
+		
 	
 	});	//$(function)
 
@@ -258,7 +263,7 @@ li.thirdKey {
 <!------------------------------------------ [  검색form  ] --------------------------------------------------------------->
 						<!-- 타자 검색영역 -->
 						<!-- 키워드선택 검색영역 -->     
-						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="post">
+						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="get">
 				
 							<div class="searchInput">
 								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기" name="mainsearch" id="mainsearch">
@@ -267,22 +272,22 @@ li.thirdKey {
 							
 							<div class="selectOption">
 								<select id="courses_search_select1" class="courses_search_select courses_search_input" name="select1">
-									<option value="">시/도</option>
-										<option value="서울특별시">서울특별시</option>
-										<option value="부산광역시">부산광역시</option>
-										<option value="대구광역시">대구광역시</option>
-										<option value="인천광역시">인천광역시</option>
-										<option value="광주광역시">광주광역시</option>
-										<option value="대전광역시">대전광역시</option>
-										<option value="울산광역시">울산광역시</option>
-										<option value="세종특별자치시">세종특별자치시</option>
-										<option value="경기도">경기도</option>
-										<option value="강원도">강원도</option>
+									<option value="">시/도</option> 
+										<option value="서울특별시" >서울특별시</option>
+										<option value="부산광역시" >부산광역시</option>
+										<option value="대구광역시" >대구광역시</option>
+										<option value="인천광역시" >인천광역시</option>
+										<option value="광주광역시" >광주광역시</option>
+										<option value="대전광역시" >대전광역시</option>
+										<option value="울산광역시" >울산광역시</option>
+										<option value="세종특별자치시" >세종특별자치시</option>
+										<option value="경기도" >경기도</option>
+										<option value="강원도" >강원도</option>
 										<option value="충청북도">충청북도</option>
-										<option value="충청남도">충청남도</option>
-										<option value="전라북도">전라북도</option>
-										<option value="전라남도">전라남도</option>
-										<option value="경상북도">경상북도</option>
+										<option value="충청남도" >충청남도</option>
+										<option value="전라북도" >전라북도</option>
+										<option value="전라남도" >전라남도</option>
+										<option value="경상북도" >경상북도</option>
 										<option value="경상남도">경상남도</option>
 											<option value="제주특별자치도">제주특별자치도</option>		
 								</select>						
@@ -304,6 +309,8 @@ li.thirdKey {
 									<option>리뷰많은 순</option>
 									<option>평점 높은 순</option>
 								</select>
+								
+								
 							</div>
 						</form>
 					</div> <!-- class="courses_search_container" -->

@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import mango.connection.db.DBconnection;
+import mango.member.db.MemberBean;
 
 public class AcademyDAO extends DBconnection implements IAcademy{
 
@@ -948,8 +949,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		return list;
 	} // getSearchListAcademy() 끝
-	
-	
+
 	// 좋아요 한 학원 목록
 	public AcademyBean getLikeAcaBean(int acaMainNum){
 		
@@ -990,6 +990,71 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		return bean;
 	} // getLikeAcaBean() 끝
 	
+	//학원관리자 회원정보 변경
+	@Override
+	public int reviseAcademyInfo(MemberBean bean) {
+		int result = 0;
+		try {
+			getConnection();
+			
+			String query = "select decode(?, m.mem_pwd, 'true, 'false') as result "
+					+ "from member m join academy aca "
+					+ "on m.mem_email = aca.mem_email";
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, bean.getMemPwd());
+			pstmt.executeQuery();
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println("reviseAcademyInfo()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}
+		
+		return result;
+	}
+
+	//getAcademyContent() 오버로딩(매개변수 이메일 기준으로 변경)
+	@Override
+	public AcademyBean getAcademyContent(String email) {
+		AcademyBean bean = null;
+		
+		try {
+			getConnection();
+			sql = "select * from academy where mem_email=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				bean = new AcademyBean();
+				bean.setAcaMainNum(rs.getInt(1));
+				bean.setAcaNum(rs.getString(2));
+				bean.setAcaCode(rs.getString(3));
+				bean.setAcaAttr(rs.getString(7));
+				bean.setAcaName(rs.getString(8));
+				bean.setAcaStartDate(rs.getString(9));
+				bean.setAcaCategory1(rs.getString(10));
+				bean.setAcaCategory2(rs.getString(11));
+				bean.setAcaAddrZip(rs.getString(12));
+				bean.setAcaAddrDoro(rs.getString(13));
+				bean.setAcaAddrDetailed(rs.getString(14));
+				bean.setMem_email(rs.getString(15));
+				
+			}
+		} catch (Exception e) {
+			System.out.println("getAcademyContent(String email)에서 예외 발생");
+			e.printStackTrace();
+		}finally {
+			resourceClose();
+		}
+		
+		return bean;
+	}	
 	
 	
-} // AcademyDAO 끝
+} // AcademyDAO 끝	

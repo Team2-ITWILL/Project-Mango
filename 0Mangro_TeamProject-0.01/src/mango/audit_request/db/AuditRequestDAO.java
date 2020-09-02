@@ -14,16 +14,14 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		try {
 			getConnection();
 			String sql = "select * from audit_request "
-					+ "where aca_num=?";
+					+ "where mem_email=?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, aab.getAcaNum());
+			pstmt.setString(1, aab.getMemEmail());
 			
 			rs = pstmt.executeQuery();		
 			
-			AuditRequestBean bean;
-			
-			
+			AuditRequestBean bean = null;			
 			
 			while(rs.next()){
 //				System.out.println("localdate6 : " + rs.getDate(6).toLocalDate());
@@ -69,20 +67,14 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		int result = 0;
 		try {
 			getConnection();
-			String sql = "insert into audit_request("
-					+ "mem_email, aca_num, aca_name, "
-					+ "audit_wish_subject, audit_wish_date, "
-					+ "audit_request_date, "
-					+ "audit_confirm_date) "					
-					+ " values(?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into audit_request "				
+					+ " values(null, ?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt = con.prepareStatement(sql);	
 			
-//			System.out.println(insert.getMemEmail());
-//			System.out.println(insert.getAcaNum());
-//			System.out.println(insert.getAcaName());
-
+			System.out.println(insert.toString());
 			
+			//1번 컬럼  audit_num은 auto-increment 설정되어있음
 			pstmt.setString(1, insert.getMemEmail());
 			pstmt.setInt(2, insert.getAcaNum());
 			pstmt.setString(3, insert.getAcaName());
@@ -124,16 +116,16 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			if(check.equals("approve")){
 				sql = "update audit_request "
 						+ "set audit_confirm_date = curdate() "
-						+ "where audit_num = ? and aca_num = ?";
+						+ "where audit_num = ? and aca_main_num = ?";
 				
 			}else if(check.equals("reject")){
 				sql = "update audit_request "
 						+ "set audit_confirm_date = null "
-						+ "where audit_num = ? and aca_num = ?";
+						+ "where audit_num = ? and aca_main_num = ?";
 				
 			}else if(check.equals("delete")){
 				sql = "delete from audit_request "					
-						+ "where audit_num = ? and aca_num = ?";
+						+ "where audit_num = ? and aca_main_num = ?";
 			}			
 			
 			pstmt = con.prepareStatement(sql);	
@@ -157,7 +149,7 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		try {
 			getConnection();
 			String sql = "delete from audit_request "					
-					+ "where audit_num = ? and aca_num = ?";
+					+ "where audit_num = ? and aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);	
 			pstmt.setInt(1, delete.getAuditNum());

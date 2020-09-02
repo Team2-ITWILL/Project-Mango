@@ -217,6 +217,7 @@ public class AnonyBoardDAO extends DBconnection {
 	public List<AnonyBoardBean> getANBoardList(String searchKeyword){
 		List<AnonyBoardBean> anbList = new ArrayList<AnonyBoardBean>();
 		
+		System.out.println("getANBoardList() 메소드 실행");
 		try {
 			getConnection();
 			sql = "SELECT * FROM anony_board ";
@@ -253,8 +254,8 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
+				System.out.println("dao에서 보여지는 anb"+anb);
 				anbList.add(anb);
-				
 			}//while 끝
 			
 			

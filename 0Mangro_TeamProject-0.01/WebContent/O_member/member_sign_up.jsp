@@ -116,8 +116,8 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "rU2ooEzY2CNR72wYidQf",
-				callbackUrl: "http://localhost:8080/0Mangro_TeamProject-0.01/O_member/member_sign_up.jsp",
-				isPopup: true, /* 팝업을 통한 연동처리 여부 */
+				callbackUrl: "http://192.168.6.19:8080/0Mangro_TeamProject-0.01/O_member/naverJoinCallBack.jsp",
+				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
 			}
 		);
@@ -158,6 +158,7 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일</label>
 						        <input type="email" class="form-control is-invalid" name="id_email" id="id_email" placeholder="이메일" 
+						               required
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"> 

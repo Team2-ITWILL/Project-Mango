@@ -93,6 +93,13 @@ public class AuditRequestBean {
 	public void setAuditConfirmDate(LocalDate auditConfirmDate) {
 		this.auditConfirmDate = auditConfirmDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "AuditRequestBean [auditNum=" + auditNum + ", memEmail=" + memEmail + ", acaNum=" + acaNum + ", acaName="
+				+ acaName + ", auditSubject=" + auditSubject + ", auditRequestDate=" + auditRequestDate
+				+ ", auditWishDate=" + auditWishDate + ", auditConfirmDate=" + auditConfirmDate + "]";
+	}
     
     
 
