@@ -83,6 +83,7 @@ li.thirdKey {
 	var search2=null;
 	var search3=null;
 	var search4=null;
+	var search5=null;
 	var mainsearch=null;
 
 	$(function(){
@@ -220,6 +221,17 @@ li.thirdKey {
 		
 		});//change
 		
+		$("#courses_search_select5").change(function(){
+		// 	j_test(this);
+			search5=$("#courses_search_select5 option:selected").val();
+			
+			location.href="${Page}&select5="+search5;
+			
+			
+		
+		
+		});//change
+		
 		
 		
 		
@@ -303,18 +315,19 @@ li.thirdKey {
 									<option value="">카테고리</option>
 									
 								</select>
-								<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
-									<option>기본순</option>
-									<option>좋아요 많은 순</option>
-									<option>리뷰많은 순</option>
-									<option>평점 높은 순</option>
-								</select>
 								
+							<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
+									<option value="basic">기본순</option>
+									<option value="like">좋아요 많은 순</option>
+									<option value="review">리뷰많은 순</option>
+									<option value="rating">평점 높은 순</option>
+							</select>
 								
 							</div>
 						</form>
+						
 					</div> <!-- class="courses_search_container" -->
-
+							
 
 
 
