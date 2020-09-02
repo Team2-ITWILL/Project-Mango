@@ -67,12 +67,29 @@ public class CommentAnonyFrontController extends HttpServlet {
 		try {
 			forward = action.excute(request, response);
 		} catch (Exception e) {
-			System.out.println("AnonyBoardFrontController의 /ommentAnoBoardListAction.cano에서 예외");
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardListAction.cano에서 예외");
 			e.printStackTrace();
 		} 
 	
+	}else if(command.equals("/CommentAnoBoardUpdateAction.cano")){
+		action = new CommentAnoBoardUpdateAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardUpdateAction.cano에서 예외");
+			e.printStackTrace();
+		} 
+	}else if(command.equals("/CommentAnoBoardDeleteAction.cano")){
+		action = new CommentAnoBoardDeleteAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardDeleteAction.cano에서 예외");
+			e.printStackTrace();
+		} 
 	}
-	
 	
 	if(forward!=null){ //new ActionForward()객체가 존재시
 		
@@ -108,6 +125,6 @@ public class CommentAnonyFrontController extends HttpServlet {
 
 
 	
-	
+
 	
 }
