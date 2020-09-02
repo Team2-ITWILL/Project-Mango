@@ -161,11 +161,7 @@
 							<li class="datNum"> 
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 								
-								<%-- ▼ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
-								<input type="hidden" name="ano_re_ref" value="0">
-								<input type="hidden" name="ano_re_lev" value="0">
-								<input type="hidden" name="ano_re_seq" value="0">
-								<%-- ▲ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
+
 										<%-- 댓글 프로필 사진 --%>
 										<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 										<div class="comment_content">
@@ -199,9 +195,15 @@
 
 								<form class="" action="" method="post" style="display: none;" id="replyCommFR8">
 						      		<div class="form-group mb-8">
+						      		<%-- ▼ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
+									<input type="hidden" name="ano_re_ref" value=8>
+									<input type="hidden" name="ano_re_lev" value=1>
+									<input type="hidden" name="ano_re_seq" value=1>
+									<%-- ▲ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
+						      		
 										<textarea name="reply_content" class="form-control replytxtarea" 
-												  id="reply_content"				placeholder="내용을 입력해주세요."></textarea>
-										<button class="comments_write_button comm_btn replytxtbtn" type="submit"
+												  id="reply_content"   placeholder="내용을 입력해주세요."></textarea>
+										<button class="comments_write_button comm_btn replytxtbtn" type="button"
 												onclick="reply_comment(8)"									
 										>댓글달기
 										
@@ -394,8 +396,10 @@
 	        data: { 
 	        		mem_email:$("#session_memEmail").val(), 
 	        		ano_board_num:$("#init_boardNum").val(),
-	        		ano_comment_content:$("#init_content").val(),
-	        		ano_re_ref:ano_comment_num
+	        		ano_comment_content:$("#reply_content").val(),
+	        		ano_re_ref:ano_comment_num,
+	        		ano_re_lev:0, // 나중에 제값 넣어주기
+	        		ano_re_seq:0 // 나중에 제값 넣어주기
 	        },
 	        success : function(data){
 	               alert("ajax로 대댓글 달기 성공");
@@ -507,56 +511,6 @@
 	
 	
 	
-	
-	
-	
-	// [2-2] ajax를 통한 실시간 댓글달기 
-/* 	var comment_pwd = $("#comment_pwd").val();
-	var comment_content = $("[name='comment_content']");
-	var comment_num = $("#comment_num").text();
-
-	function addComment() { 
-		
-	
-	// [ajax를 통한 댓글등록 및 실시간 댓글 동기화 ]
-		$.ajax({
-		    type: "get",
-		    url: "./addCommentPro.jsp",
-		    async:true,
-		    cache: false,
-		    dataType: "text",
-		    data: {
-		    	   member_id:$("#member_id").val(), 
-		    	   board_num:$("#num").val(),
-		    	   comment_pwd:$("#comment_pwd").val(),
-		    	   comment_content:$("[name='comment_content']").val()  
-		    	  },
-		    	   
-		   	success: function(data, textStatus) {
-		   		//성공했다면 ajax로 받아온 값들 파싱 후 각각 지역변수로 담기
-
-		    	var jsonData = JSON.parse(data);
-		    	var member_id = jsonData.member_id;				
-		    	var comment_date = jsonData.comment_date;				
-		    	var comment_content = jsonData.comment_content;				
-
-	    		$("[name=comment_pwd],[name=comment_content]").val(""); //작성했던 댓글입력창 비우기
-	    		
-	    		// 댓글 등록 후 중복표시를 방지하기 위해 기존 댓글영역을 비우고 댓글목록을 다시한번 불러오기
-	    		$("#comment-addArea").empty();
-	    		getComments();
-		   	},//success
-			
-			error: function(data, textStatus) {
-				
-				alert("ajax로 댓글 쓰기 실패"+data);
-				console.log(data);
-				
-			}//error
-			
-		});//ajax
-		
-	}//function addComment() : 댓글추가 메서드 */
 	
 
 

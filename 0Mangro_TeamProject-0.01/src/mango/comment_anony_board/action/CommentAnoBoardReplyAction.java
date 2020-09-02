@@ -16,20 +16,32 @@ public class CommentAnoBoardReplyAction implements Action {
 		
 		request.setCharacterEncoding("UTF-8");
 		int ano_board_num = Integer.parseInt(request.getParameter("ano_board_num"));
+		System.out.println("값은 받아옴 ano_board_num = " + ano_board_num );
+//		mem_email:$("#session_memEmail").val(), 
+//		ano_board_num:$("#init_boardNum").val(),
+//		ano_comment_content:$("#init_content").val(),
+//		ano_re_ref:ano_comment_num
+//		
 		
 		// DAO에 넘길 값 처리(총 10개 변수 중 6개 메소드 내에서 자체처리)
 		CommentAnonyBoardBean commBean = new CommentAnonyBoardBean();
 		commBean.setAno_board_num(ano_board_num);
 		commBean.setMem_email(request.getParameter("mem_email"));
 		commBean.setAno_comment_content(request.getParameter("ano_comment_content"));
+		
+		commBean.setAno_re_ref(Integer.parseInt(request.getParameter("ano_re_ref")));
+		commBean.setAno_re_seq(Integer.parseInt(request.getParameter("ano_re_seq")));
+		System.out.println("값은 받아옴 seq = " + Integer.parseInt(request.getParameter("ano_re_seq")));
+		commBean.setAno_re_lev(Integer.parseInt(request.getParameter("ano_re_lev")));
+		
 		commBean.setAno_comment_ip((String)request.getRemoteAddr());
 		
-		// DAO 생성 및 댓글 insert메소드 사용
+		// DAO 생성 및 대댓글 insert메소드(replyCommANBoard) 사용
 		CommentAnonyBoardDAO commDAO = new CommentAnonyBoardDAO();
-		commDAO.insertCommANBoard(commBean);
+		commDAO.replyCommANBoard(commBean);
 		
 		
-		System.out.println(commBean);
+		System.out.println("CommentAnoBoardReplyAction에서 대댓글 객체 상태보기"+commBean);
 		
 		// 댓글 insert 후 해당 게시글로 돌아가기
 		ActionForward forward = new ActionForward();

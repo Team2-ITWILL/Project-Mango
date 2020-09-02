@@ -95,8 +95,9 @@ public class CommentAnonyFrontController extends HttpServlet {
 		try {
 			forward = action.excute(request, response);
 		} catch (Exception e) {
-			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardReplyAction.cano에서 예외");
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardReplyAction.cano에서 예외"+e.getMessage());
 			e.printStackTrace();
+			
 		} 
 		
 	}
