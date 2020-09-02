@@ -3,6 +3,7 @@ package mango.liked_academy.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +25,7 @@ public class LikedAcaListAction implements Action{
 		request.setCharacterEncoding("utf-8");
 		
 		String email = request.getParameter("id_email");
+		System.out.println("email : " +email);
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
@@ -31,14 +33,9 @@ public class LikedAcaListAction implements Action{
 		// 학원조아DAO
 		LikedAcademyDAO ldao = new LikedAcademyDAO();
 		
-		// 학원후기DAO
-		AcademyReviewDAO rdao = new AcademyReviewDAO();
 		
-		List<Integer> likeList = ldao.likedAcaNumList(email);
-		List<Double> scoreList = new ArrayList<Double>();
 		
-		// 좋아요 누른 학원 수
-		int count = likeList.size();
+		
 		
 
 		//  한 페이지에 4개 글 목록 반환
@@ -54,26 +51,30 @@ public class LikedAcaListAction implements Action{
 		int currentPage=Integer.parseInt(pageNum);
 		int startRow=(currentPage-1)*pageSize+1;
 		
-		List<AcademyBean> likeAcaList = null;
-		
-		int i =likeList.size()-1;
-		while(i>=0){
-			
-			int acaMainNum = likeList.get(i);
-			double avgScore = 
-					Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(acaMainNum)));
-			
-			scoreList.add(avgScore);
-			
-			if(count != 0){
-				likeAcaList = dao.getLikeAcaList(acaMainNum, startRow, pageSize);
-			}
-			i--;
-		}
-		
-		
 		// 끝행번호
 		int endRow=currentPage*pageSize;
+		
+		int count = ldao.getLikeAcademyCount(email);
+		List<Integer> likeList = ldao.likedAcaNumList(email, startRow, pageSize);
+		// 좋아요 누른 학원 수
+				
+		List<AcademyBean> likeAcaList = new ArrayList<AcademyBean>();;
+		AcademyBean bean = null;
+		int i =0;
+		while(i<likeList.size()){
+			
+			int acaMainNum = likeList.get(i);
+			
+			System.out.println("acamainNum : "+ acaMainNum);
+			if(count != 0){
+				
+				bean = dao.getLikeAcaBean(acaMainNum);
+				likeAcaList.add(bean);
+				
+			}
+			i++;
+		}
+		
 		
 		
 		
@@ -82,16 +83,15 @@ public class LikedAcaListAction implements Action{
 		int pageCount =count/pageSize+(count%pageSize==0?0:1);
 		//한화면에 보여줄 페이지수 설정
 		int pageBlock=3;
-		// 한화면에 보여줄 시작페이지 구하기  1~4  => 1  /  5~8 => 5
+		// 한화면에 보여줄 시작페이지 구하기  1~10  => 1  /  11~20 => 11
 		int startPage=((currentPage-1)/pageBlock)*pageBlock+1;
 		// 한화면에 보여줄 끝페이지 구하기
 		int endPage=startPage+pageBlock-1;
 		if(endPage > pageCount){
 			endPage = pageCount;
 		}
-		System.out.println(pageCount);
 		System.out.println(startPage);
-		System.out.println(pageBlock);
+		System.out.println(endPage);
 		
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
 		request.setAttribute("likeAcaList", likeAcaList); // List -> Object 저장
@@ -100,7 +100,6 @@ public class LikedAcaListAction implements Action{
 		request.setAttribute("pageBlock", pageBlock);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
-		request.setAttribute("scoreList", scoreList);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
