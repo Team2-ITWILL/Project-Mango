@@ -84,17 +84,42 @@ public class LikedAcademyDAO extends DBconnection{
 		
 	} // unlikeAca() 끝
 	
+	// 학원후기갯수 반환
+	public int getLikeAcademyCount(String mem_email) {
+		int result = 0;
+		try {
+			getConnection();
+			sql = "select count(*) from liked_academy where mem_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getLikeAcademyCount()에서 예외발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	} // getLikeAcademyCount() 끝
+	
 	// 내가 좋아요한 학원 번호리스트
-	public List<Integer> likedAcaNumList(String mem_email){
+	public List<Integer> likedAcaNumList(String mem_email, int startRow,int pageSize){
 		
 		List<Integer> amNumList = new ArrayList<Integer>();
 		
 		try {
 			getConnection();
-			sql ="select aca_main_num from liked_academy where mem_email = ?";
-			
+			sql ="select aca_main_num from liked_academy where mem_email = ? "
+					+ "order by liked_aca_date desc limit ?,?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mem_email);
+			pstmt.setInt(2, startRow-1);
+			pstmt.setInt(3, pageSize);
 			
 			rs = pstmt.executeQuery();
 			
