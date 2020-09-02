@@ -366,7 +366,7 @@ li.thirdKey {
 							<!-- Course -->
 							
 							<c:forEach var="i" items="${requestScope.academyList}">
-							<div class="courses_container">
+							<div class="courses_container" onclick="location.href='./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}'">
 								<div class="courses_row">
 									<div class="col-md-8 course_col">
 										<div class="course">
@@ -477,7 +477,7 @@ li.thirdKey {
 					
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					  <li class="page-item"><a class="page-link" href="${PageTwo}&pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
