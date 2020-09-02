@@ -41,7 +41,8 @@
 	.boardrevise{ color: #000; margin-left:8px;}
 	.cmCount{color:#3094ff;}
 	.ifnotwriter{  margin-top: 20px; }	
-	
+	.nickWidth { display: inline-block; width: 150px;}
+	#replyLev { margin-left: 30px; }
 }
 	
 </style>
@@ -139,7 +140,7 @@
 						
 						
 <%-------------------------------------------------------- [▼ 댓글달기 영역 ]  --------------------------------------------------------------------------%>
-						<div class="comment_total">댓글 <span class="cmCount">108798</span></div>
+						<div class="comment_total">댓글 <span class="cmCount"></span></div>
 						<form action="" method="post" name="comm_insertFr">  
 						<%-- 현재페이지에서 액션페이지로 보낼 값 : 작성자, 글번호, 댓글내용 --%>
 				      		<div class="form-group mb-8">
@@ -170,16 +171,6 @@
 
 <script type="text/javascript">
 
-	// [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]
-	// - 클릭시 숨겨진 각각의 form창 open
-	function commentOpen(opt) {
-		if(opt == "re"+8 ){
-			$("#replyCommFR8").toggle();
-		}else if(opt == "up"+8){
-			$("#updateCommFR8").toggle();
-			
-		}
-	}
 
 
 
@@ -187,12 +178,12 @@
 
 	// [필요한 변수 선언 및 초기화] 
 	// - 댓글내용 textarea요소를 변수에 저장(대댓글, 수정form 아닌 최초로 댓글달때 form id값 'init_content')
-	var init_content = document.getElementById("init_content"); 
+	//var init_content = document.getElementById("init_content"); 
 	
 	function add_comment(ano_board_num){
 		
 		// [1-1] 댓글 내용 여부 검증 & 로그인여부 처리
-		if(init_content.value == ""){
+		if($("#init_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
 			
@@ -212,10 +203,10 @@
 	        		ano_comment_content:$("#init_content").val()
 	        },
 	        success : function(data){
-	               alert("ajax로 댓글 넣기 성공");
+	               //alert("ajax로 댓글 넣기 성공");
 	               // 댓글 insert후 댓글 내용 입력창 비워주기
 	               $("#init_content").val("");
-	               //getCommentList();
+	               getCommentList();
 	        },
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -231,11 +222,12 @@
 	 
 		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 
-	var update_content = document.getElementById("update_content"); 
+	//var update_content = document.getElementById("update_content"); 
+	
 	function update_comment(ano_comment_num){		
 
-		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
-		if(update_content.value == ""){
+		// [4] 수정댓글 내용 여부 검증 & 로그인여부 처리
+		if($("#update_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
 			
@@ -250,14 +242,14 @@
 	        		ano_comment_content : $("#update_content").val()
 	        },
 	        success : function(data){
-	               alert("ajax로 댓글 수정하기 성공");
+	               //alert("ajax로 댓글 수정하기 성공");
 	               
 	               // 댓글 수정 후 댓글 내용 입력창 비워주기
 	               $("#update_content").val("");
 	               
 	               // 댓글 수정창 없애기
 	               $("#updateCommFR"+ano_comment_num).attr("style","display:none;");
-	               //getCommentList();
+	               getCommentList();
 	        },
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -283,9 +275,9 @@
 	        		ano_board_num : $("#init_boardNum").val()
 	        },
 	        success : function(data){
-	               alert("ajax로 댓글 삭제하기 성공");
+	               //alert("ajax로 댓글 삭제하기 성공");
 	               
-	               //getCommentList();
+	               getCommentList();
 	        },
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -304,11 +296,11 @@
 
 	// [필요한 변수 선언 및 초기화] 
 	// - 대댓글내용 textarea요소를 변수에 저장
-	var reply_content = document.getElementById("reply_content"); 
+	//var reply_content = document.getElementById("reply_content"); 
 	
 	function reply_comment(ano_comment_num){
 		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
-		if(reply_content.value == ""){
+		if( $("#reply_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
 			
@@ -338,7 +330,7 @@
 	               $("#reply_content").val("");
 	               // 대댓글 입력창 없애기
 	               $("#replyCommFR"+ano_comment_num).attr("style","display:none;");
-	               //getCommentList();
+	               getCommentList();
 	        },
 	        error:function(request,status,error){
 	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -397,11 +389,13 @@
 	        dataType : "text",
 	        data: { ano_board_num:$("#init_boardNum").val() },
 	        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-	        success : function(data, status, object){
-	        	var jsonData = data;
+	        success : function(data, textStatus){
+	        	//alert("댓글 데이터 가져오기 성공!"+data);
+	        	//console.log(data.length + "댓글갯수");
+	        	$(".comments_list").empty(); 
+				$(".cmCount").empty(); 
+	        	var jsonData = JSON.parse(data);
 	        	var allComments = jsonData.commentArray;
-	        	alert("댓글 데이터 가져오기 성공!"+allComments);
-	        	console.log(allComments.length + "댓글갯수");
 	        	
 	        	var commentsHTML = ""; // 데이터를 불러와 댓글을 생성하는 html코드를 저장
 	        		
@@ -409,27 +403,39 @@
 		        	
 		        	// ▶ li시작 
 		        	commentsHTML += "<li class='comment"+allComments[i].ano_comment_num+"'> ";
-		        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start'> ";
+		        	
+		        	// [if문] - 대댓글인 경우
+		        	if(allComments[i].ano_re_lev > 0){
+			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start' id='replyLev' > ";
+		        	}else{
+			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start'> ";
+		        	}
+		        	
 		        	// ▶ 프로필사진(망고) 
 		        	commentsHTML +=   "<img src='images/etc/default_mango.png' class='user_profile' width='60' > ";
 		        	commentsHTML +=   "<div class='comment_content'> ";
 		        	// ▶ 랜덤닉네임 
 		        	commentsHTML +=   "<i class='fa fa-user' aria-hidden='true'></i> ";
-		        	commentsHTML +=   "<span class='icons_margin'>"+allComments[i].ano_board_nick+"</span> ";
+		        	commentsHTML +=   "<span class='icons_margin nickWidth'>"+allComments[i].ano_board_nick+"</span> ";
 		        	// ▶ 날짜 
 		        	commentsHTML +=   "<span>"+allComments[i].ano_comment_date+"</span> ";
 		        	
-		        	// ▶ 댓글 수정 버튼
-		        	commentsHTML +=   "<img src='images/etc/revise.png' id='comm_modify' class='comm_icon revise' width='20' " ;
-		        	commentsHTML +=   "onclick='commentOpen('up"+allComments[i].ano_comment_num+")' >";
 		        	
-		        	// ▶ 댓글 삭제 버튼
-		        	commentsHTML +=   "<img src='images/etc/delete.png' id='comm_delete' class='comm_icon' width='20' " ;
-		        	commentsHTML +=   "onclick='delete_comment("+allComments[i].ano_comment_num+")' >";
+		        	// [if문] - 본인인 경우
+		        	if(allComments[i].mem_email == "<c:out value='${id_email}' />") {
+			        	// ▶ 댓글 수정 버튼
+			        	commentsHTML +=   "<img src='images/etc/revise.png' id='comm_modify' class='comm_icon revise' width='20' " ;
+			        	commentsHTML +=   "onclick='upCommentOpen("+allComments[i].ano_comment_num+")'>";
+			        	
+			        	// ▶ 댓글 삭제 버튼
+			        	commentsHTML +=   "<img src='images/etc/delete.png' id='comm_delete' class='comm_icon' width='20' " ;
+			        	commentsHTML +=   "onclick='delete_comment("+allComments[i].ano_comment_num+")' >";
+		        	}
 
+		        	
 		        	// ▶ 대댓글 버튼
 		        	commentsHTML +=   "<img src='images/etc/reply.png' id='comm_reply' class='comm_icon' width='20' " ;
-		        	commentsHTML +=   "onclick='commentOpen('re"+allComments[i].ano_comment_num+")' >";
+		        	commentsHTML +=   "onclick='repCommentOpen("+allComments[i].ano_comment_num+")' >";
 		        	
 		        	// ▶ 내용
 		        	commentsHTML +=   "<div class='comment_author'>" ;
@@ -440,8 +446,8 @@
 		        	
 		        	// [대댓글 작성form, 댓글수정 form 영역 시작] 
 		        	// ▶ 대댓글 작성form (replyCommFR)
-		        	commentsHTML +=   "<form method='post' style='display: none;' id='replyCommFR"+allComments[i].ano_comment_num+"'>" ;
-		        	commentsHTML +=     "<div class='form-group mb-8'>";
+		        	//commentsHTML +=   "<form method='post' style='display: none;' id='replyCommFR"+allComments[i].ano_comment_num+"'>" ;
+		        	commentsHTML +=     "<div class='form-group mb-8' style='display: none;' id='replyCommFR"+allComments[i].ano_comment_num+"' >";
 		        	
 		        	// ▶ 대댓글 작성form 중 ref,lev,seq 등 대댓글을 위한 hidden영역
 		        	commentsHTML +=      "<input type='hidden' name='ano_re_ref' value='"+allComments[i].ano_re_ref+"'>";
@@ -452,22 +458,22 @@
 		        	commentsHTML +=      "<textarea name='reply_content' class='form-control replytxtarea' ";
 		        	commentsHTML +=       "id='reply_content' placeholder='내용을 입력해주세요.'></textarea>";
 		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
-		        	commentsHTML +=       "onclick='reply_comment("+allComments[i].ano_comment_num+")'>댓글달기 </button> </div>"
-		        		              "</form>";
+		        	commentsHTML +=       "onclick='reply_comment("+allComments[i].ano_comment_num+")'>댓글달기 </button> </div>";
+		        		             // "</form>";
 
 		        	//--------------------------------------------------------------------------------------------------------	              
 		        		              
 		        		              
 		        	// ▶ 댓글 수정form (replyCommFR)
-		        	commentsHTML +=   "<form method='post' style='display: none;' id='updateCommFR"+allComments[i].ano_comment_num+"'>" ;
-		        	commentsHTML +=     "<div class='form-group mb-8'>";
+		        	//commentsHTML +=   "<form method='post' style='display: none;' id='updateCommFR"+allComments[i].ano_comment_num+"'>" ;
+		        	commentsHTML +=     "<div class='form-group mb-8' style='display: none;' id='updateCommFR"+allComments[i].ano_comment_num+"' >";
 		        	
 		        	// ▶ 댓글 수정form 중 textarea
 		        	commentsHTML +=      "<textarea name='ano_comment_content' class='form-control replytxtarea' ";
 		        	commentsHTML +=       "id='update_content' placeholder='내용을 입력해주세요.'></textarea>";
 		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
-		        	commentsHTML +=       "onclick='update_comment("+allComments[i].ano_comment_num+")'>댓글수정하기 </button> </div>"
-		        		              "</form>";
+		        	commentsHTML +=       "onclick='update_comment("+allComments[i].ano_comment_num+")'>댓글수정하기 </button> </div>";
+		        		              //"</form>";
 		          		
 		        	// ▶ li 영역 끝
 		        	commentsHTML += "</li>  <hr>";
@@ -475,7 +481,7 @@
 		        	}//if 
 		        	
 		        	$(".comments_list").append(commentsHTML); // <ul class="comments_list">
-	        	
+	        		$(".cmCount").append(allComments.length); // 댓글 총 개수
 
 	            
 	        },
@@ -489,7 +495,21 @@
 	
 	
 	
+	// [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]
+	// - 클릭시 숨겨진 각각의 form창 open
+	function repCommentOpen(ano_comment_num) {
+		if( $("#session_memEmail").val() == ""){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href="./MemberLogin.me";
+		}else{
+			$("#replyCommFR"+ano_comment_num).toggle();
+		}
+	}
 	
+	function upCommentOpen(ano_comment_num) {
+			$("#updateCommFR"+ano_comment_num).toggle();
+		
+	}
 
 
 

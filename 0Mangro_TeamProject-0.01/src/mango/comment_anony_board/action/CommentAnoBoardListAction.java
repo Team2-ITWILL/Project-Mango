@@ -43,7 +43,7 @@ public class CommentAnoBoardListAction implements Action {
 		System.out.println("내보낼 전체 댓글 개수 : "+commentList.size());
 		
 		// [개별 댓글을 담을 제이슨object]
-		JSONObject singleComment = new JSONObject();
+		JSONObject singleComment;
 		
 		// [개별 댓글을 담을 배열객체]
 		JSONArray commentArray = new JSONArray();
@@ -106,7 +106,7 @@ public class CommentAnoBoardListAction implements Action {
 		}// for문 끝-------------------------------------------------		
 		
 		// [allComments 제이슨 객체에 댓글 전체목록 담기]
-		allComments.put("commentArray",commentArray);
+		allComments.put("commentArray", commentArray);
 		String jsonData = allComments.toJSONString();
 		System.out.println("내보낼 제이슨 객체 : "+commentArray);		
 		System.out.println("내보낼 객체 크기 : "+commentArray.size());		

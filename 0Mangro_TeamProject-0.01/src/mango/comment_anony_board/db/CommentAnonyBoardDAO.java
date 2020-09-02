@@ -157,7 +157,7 @@ public class CommentAnonyBoardDAO extends DBconnection{
 			
 			sql = "SELECT * FROM comment_anony_board "
 				+ "WHERE ano_board_num=? "
-				+ "ORDER BY ano_comment_date DESC, ano_re_ref DESC, ano_re_seq ASC ";
+				+ "ORDER BY ano_re_ref DESC, ano_re_seq ASC ";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ano_board_num);
