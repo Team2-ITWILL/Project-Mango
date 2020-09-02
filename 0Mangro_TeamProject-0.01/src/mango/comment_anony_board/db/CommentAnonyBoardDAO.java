@@ -61,7 +61,7 @@ public class CommentAnonyBoardDAO extends DBconnection{
 		pstmt.setInt(2, commBean.getAno_board_num());
 		pstmt.setString(3, commBean.getAno_comment_content() );
 		pstmt.setString(4, commBean.getMem_email());
-		pstmt.setInt(5, 0); // re_ref 부모댓글번호
+		pstmt.setInt(5, ano_comment_num); // re_ref 부모댓글번호
 		pstmt.setInt(6, 0); // re_lev 들여쓰기값
 		pstmt.setInt(7, 0); // re_seq 부모댓글 내 순번
 		
@@ -222,6 +222,101 @@ public class CommentAnonyBoardDAO extends DBconnection{
 		
 		return comm_count;
 	}//getCountComments()
+	
+	
+	
+	// [INSERT 대댓글 달기 메소드]
+	// - 대댓글 달기 규칙 
+	//     순서1) re_ref 그룹값은 부모글의 번호(num)값을 사용한다.
+	//     순서2) re_seq 값은 부모글의 re_seq값에 + 1 한다. 
+	//     순서3) re_lev 값은 부모글의 re_lev에서 + 1 한다. 
+	
+	public void replyCommANBoard(CommentAnonyBoardBean commBean){
+		int ano_comment_num = 0;
+		
+		// 댓글번호 증가 작업
+		try {
+			getConnection();
+			sql = "SELECT max(ano_comment_num) FROM comment_anony_board";
+			
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){ // 테이블에 댓글이 있다면 +1
+				ano_comment_num = rs.getInt(1)+1; 
+			}else { // 테이블에 댓글이 없다면 1부터 시작
+				ano_comment_num = 1; 
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println(" replyCommANBoard() 첫번째 쿼리에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}
+		
+		
+		
+		// [re_sql 답글 순서 배치(가장 최근에 달린 글이 가장 위로 올라 오도록)]
+		// 조건 :  부모글 그룹과 같은 그룹(부모댓글과 같은 그룹번호를 가진)이면서
+		//      부모글의 seq값보다 큰 항목들은 seq값을 1 증가시킨다.
+		try{
+			
+			sql = "UPDATE comment_anony_board "
+             	+ "SET ano_re_seq = ano_re_seq + 1 "
+				+ "WHERE ano_re_ref = ? "
+				+ "AND ano_re_seq > ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, commBean.getAno_re_ref() );
+			pstmt.setInt(2, commBean.getAno_re_seq());
+			pstmt.executeUpdate();
+			
+			
+		// [INSERT 대댓글 ]
+			sql = "INSERT INTO comment_anony_board "
+				 + "(ano_comment_num, " 
+				 + "ano_board_num, "
+				 + "ano_comment_content, " 
+				 + "mem_email, "
+				 + "ano_re_ref, "
+				 + "ano_re_lev, "
+				 + "ano_re_seq, "
+				 + "ano_comment_date, "
+				 + "ano_comment_ip, "
+				 + "ano_board_nick) "
+				 + "VALUES(?,?,?,?,?,?,?,now(),?,?) "; 
+			
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, ano_comment_num);
+			pstmt.setInt(2, commBean.getAno_board_num());
+			pstmt.setString(3, commBean.getAno_comment_content() );
+			pstmt.setString(4, commBean.getMem_email());
+			pstmt.setInt(5, commBean.getAno_re_ref()); // re_ref 부모댓글번호
+			pstmt.setInt(6, commBean.getAno_re_lev()+1); // re_lev 들여쓰기값
+			pstmt.setInt(7, commBean.getAno_re_seq()+1); // re_seq 부모댓글 내 순번
+			pstmt.setString(8, commBean.getAno_comment_ip());
+			// 댓글 닉네임 생성을 위해 AnonyBoardDAO의 getRandomNickname() 사용
+			AnonyBoardDAO andao = new AnonyBoardDAO();
+			pstmt.setString(9, andao.getRandomNickname()); 
+			
+			
+			pstmt.executeUpdate();
+		
+		}catch(Exception e){
+			System.out.println("replyCommANBoard() 두번째 쿼리 에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}finally { resourceClose();}
+		
+		
+	}//replyCommANBoard()
+	
+	
+	
+	
+	
+	
 	
 	
 	

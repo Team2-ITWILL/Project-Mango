@@ -157,9 +157,11 @@
 				      	
 						<ul class="comments_list"> 
 <%-------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
-							<li> 
+								<%-- ▼ li class에 댓글번호 매핑해주기 --%>
+							<li class="datNum"> 
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
-								<%-- ▲ 링크걸어 이동 --%>
+								
+
 										<%-- 댓글 프로필 사진 --%>
 										<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 										<div class="comment_content">
@@ -174,13 +176,13 @@
 										
 										<%-- 댓글수정하기 button : 클릭시 댓글수정창 Open--%>
 										<img src="images/etc/revise.png" id="comm_modify" 
-											 class="comm_icon revise"  onclick="modifyCommOpen()" id="comm_modify" width="20">
+											 class="comm_icon revise"  onclick="commentOpen('up8')" id="comm_modify" width="20">
 										
 										<%-- 댓글삭제하기 button : 수정, 대댓글 버튼과 달리 누르자마자 ajax로 삭제--%>
 										<img src="images/etc/delete.png" onclick="delete_comment(1)" id="comm_delete" class="comm_icon" width="20">
 										
 										<%-- 대댓글 달기 button : 클릭시 대댓글창 Open --%>
-										<img src="images/etc/reply.png" onclick="replyCommOpen()" id="comm_reply" class="comm_icon" width="20">
+										<img src="images/etc/reply.png" onclick="commentOpen('re8')" id="comm_reply" class="comm_icon" width="20">
 
 										<%-- 내용 --%>
 										<div class="comment_author">
@@ -188,17 +190,29 @@
 										</div>
 									</div>
 								</div>
-								<%---------- [▼ 대댓글 작성form :  각 버튼 클릭하면 숨겨져있던 form태그영역 나타남] --------------%>
+								<%---------- [▼ 대댓글 작성form :  각 버튼 클릭하면 숨겨져있던 form태그영역 나타남( id에 댓글번호 묻어두기 )] --------------%>
 
-								<form class="" action="" method="post" style="display: none;" id="replyCommFR">
+
+								<form class="" action="" method="post" style="display: none;" id="replyCommFR8">
 						      		<div class="form-group mb-8">
-										<textarea name="text" class="form-control replytxtarea" placeholder="내용을 입력해주세요."></textarea>
-										<button class="comments_write_button comm_btn replytxtbtn" type="submit">댓글달기</button>
+						      		<%-- ▼ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
+									<input type="hidden" name="ano_re_ref" value=8>
+									<input type="hidden" name="ano_re_lev" value=1>
+									<input type="hidden" name="ano_re_seq" value=1>
+									<%-- ▲ 대댓글 기능을 위한 정보 : value에 값 매핑해주기 --%>
+						      		
+										<textarea name="reply_content" class="form-control replytxtarea" 
+												  id="reply_content"   placeholder="내용을 입력해주세요."></textarea>
+										<button class="comments_write_button comm_btn replytxtbtn" type="button"
+												onclick="reply_comment(8)"									
+										>댓글달기
+										
+										</button>
 			       					</div>
 						      	</form>
 						      	
-								<%---------- [▼ 댓글 수정form] --------------%>
-								<form class="" action="" method="post" id="updateCommFR">
+								<%---------- [▼ 댓글 수정form] 각 버튼 클릭하면 숨겨져있던 form태그영역 나타남 ( id에 댓글번호 묻어두기 )--------------%>
+								<form class="" action="" method="post" style="display: none;" id="updateCommFR8">
 						      		<div class="form-group mb-8">
 						      		
 										<textarea name="ano_comment_content" class="form-control replytxtarea" 
@@ -206,7 +220,7 @@
 										          
 								<%-- 댓글 리스트 기능할때는 메소드안에 진짜 코멘트번호로 바꾸기 --%>		          
 										<button class="comments_write_button comm_btn replytxtbtn" type="button"
-										        onclick="update_comment(1)">
+										        onclick="update_comment(8)">
 										 댓글수정하기
 										</button>
 			       					</div>
@@ -224,6 +238,19 @@
 <%-------------------------------------------------------- [스크립트 영역]  --------------------------------------------------------------------------%>
 
 <script type="text/javascript">
+
+	// [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]
+	// - 클릭시 숨겨진 각각의 form창 open
+	function commentOpen(opt) {
+		if(opt == "re"+8 ){
+			$("#replyCommFR8").toggle();
+		}else if(opt == "up"+8){
+			$("#updateCommFR8").toggle();
+			
+		}
+	}
+
+
 
 //---[1] 실시간 댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
@@ -273,13 +300,20 @@
 	 
 		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 
+	var update_content = document.getElementById("update_content"); 
 	function update_comment(ano_comment_num){		
+
+		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
+		if(update_content.value == ""){
+			alert("댓글 내용을 입력하세요.");
+			return;
+			
+		}		
 		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardUpdateAction.cano",
 	        data: { 
-	        		//mem_email : $("#session_memEmail").val(),
 	        		ano_comment_num : ano_comment_num,
 	        		ano_board_num : $("#init_boardNum").val(),
 	        		ano_comment_content : $("#update_content").val()
@@ -291,7 +325,7 @@
 	               $("#update_content").val("");
 	               
 	               // 댓글 수정창 없애기
-	               $("#updateCommFR").attr("style","display:none;")
+	               $("#updateCommFR"+ano_comment_num).attr("style","display:none;");
 	               //getCommentList();
 	        },
 	        error:function(request,status,error){
@@ -306,7 +340,7 @@
 	
 //---[3] 실시간 댓글삭제(ajax) ----------------------------------------------------------------------------------------------------------------
 	 
-		// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+	// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 
 	function delete_comment(ano_comment_num){		
 		
@@ -329,13 +363,61 @@
 	        
 	    });
 		
-	}//update_comment() func 끝
+	}//delete_comment() func 끝
 	
 	 
 	 
 	 
 	 
-	 
+//---[4] 실시간 대댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
+
+	// [필요한 변수 선언 및 초기화] 
+	// - 대댓글내용 textarea요소를 변수에 저장
+	var reply_content = document.getElementById("reply_content"); 
+	
+	function reply_comment(ano_comment_num){
+		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
+		if(reply_content.value == ""){
+			alert("댓글 내용을 입력하세요.");
+			return;
+			
+		}else if( $("#session_memEmail").val() == ""){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href="./MemberLogin.me";
+			return;
+		}		
+		
+		
+
+		// [4] ajax를 통한 대댓글 INSERT 작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+	    $.ajax({
+	        type: "POST",
+	        url : "./CommentAnoBoardReplyAction.cano",
+	        data: { 
+	        		mem_email:$("#session_memEmail").val(), 
+	        		ano_board_num:$("#init_boardNum").val(),
+	        		ano_comment_content:$("#reply_content").val(),
+	        		ano_re_ref:ano_comment_num,
+	        		ano_re_lev:0, // 나중에 제값 넣어주기
+	        		ano_re_seq:0 // 나중에 제값 넣어주기
+	        },
+	        success : function(data){
+	               alert("ajax로 대댓글 달기 성공");
+	               // 댓글 insert후 대댓글 내용 입력창 비워주기
+	               $("#reply_content").val("");
+	               // 대댓글 입력창 없애기
+	               $("#replyCommFR"+ano_comment_num).attr("style","display:none;");
+	               //getCommentList();
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+	}//reply_comment() func 끝
+		 
 	 
 	 
 	 
@@ -429,56 +511,6 @@
 	
 	
 	
-	
-	
-	
-	// [2-2] ajax를 통한 실시간 댓글달기 
-/* 	var comment_pwd = $("#comment_pwd").val();
-	var comment_content = $("[name='comment_content']");
-	var comment_num = $("#comment_num").text();
-
-	function addComment() { 
-		
-	
-	// [ajax를 통한 댓글등록 및 실시간 댓글 동기화 ]
-		$.ajax({
-		    type: "get",
-		    url: "./addCommentPro.jsp",
-		    async:true,
-		    cache: false,
-		    dataType: "text",
-		    data: {
-		    	   member_id:$("#member_id").val(), 
-		    	   board_num:$("#num").val(),
-		    	   comment_pwd:$("#comment_pwd").val(),
-		    	   comment_content:$("[name='comment_content']").val()  
-		    	  },
-		    	   
-		   	success: function(data, textStatus) {
-		   		//성공했다면 ajax로 받아온 값들 파싱 후 각각 지역변수로 담기
-
-		    	var jsonData = JSON.parse(data);
-		    	var member_id = jsonData.member_id;				
-		    	var comment_date = jsonData.comment_date;				
-		    	var comment_content = jsonData.comment_content;				
-
-	    		$("[name=comment_pwd],[name=comment_content]").val(""); //작성했던 댓글입력창 비우기
-	    		
-	    		// 댓글 등록 후 중복표시를 방지하기 위해 기존 댓글영역을 비우고 댓글목록을 다시한번 불러오기
-	    		$("#comment-addArea").empty();
-	    		getComments();
-		   	},//success
-			
-			error: function(data, textStatus) {
-				
-				alert("ajax로 댓글 쓰기 실패"+data);
-				console.log(data);
-				
-			}//error
-			
-		});//ajax
-		
-	}//function addComment() : 댓글추가 메서드 */
 	
 
 
