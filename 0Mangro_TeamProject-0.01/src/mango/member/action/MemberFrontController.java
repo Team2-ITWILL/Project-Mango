@@ -75,9 +75,41 @@ public class MemberFrontController extends HttpServlet {
 				e.printStackTrace();
 			}	
 			
-			
-			
 /* ---------------------------------- 네이버 회원가입 끝 ---------------------------------- */		
+			
+			
+			
+/* ---------------------------------- 회원 가입 메일 인증번호 전송 시작 ---------------------------------- */		
+			
+		}else if(command.equals("/MemberMailAction.me")){
+			
+			action = new MemberMailAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/MemberMailAction.me : " + e);
+				e.printStackTrace();
+			}
+			
+/* ---------------------------------- 회원가입 메일 인증번호 전송 끝 ---------------------------------- */		
+
+			
+			
+/* ---------------------------------- 비밀번호 찾기 메일 전송 시작 ---------------------------------- */		
+
+		}else if(command.endsWith("/MemberFindPwMailAction.me")){
+			
+			action = new MemberFindPwMailAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/MemberFindPwMailAction.me : " + e);
+				e.printStackTrace();
+			}
+			
+/* ---------------------------------- 비밀번호 찾기 메일 전송 끝 ---------------------------------- */		
 			
 			
 			
@@ -193,8 +225,32 @@ public class MemberFrontController extends HttpServlet {
 			}
 		
 /* ---------------------------------- 회원 정보 수정 끝  ---------------------------------- */	
+
+			
+			
+/* ---------------------------------- 비밀번호 찾기 시작   ---------------------------------- */	
+		
+		}else if(command.equals("/MemberFindPw.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/4index.jsp?center=O_member/member_password.jsp");
+			
+		}else if(command.equals("/MemberFindPwAction.me")){
+			
+			action = new MemberFindPwAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("MemberFindPwAction.me : " + e);
+			}
+		
+/* ---------------------------------- 비밀번호 찾기 끝  ---------------------------------- */	
 		
 		}
+		
 		
 		
 		

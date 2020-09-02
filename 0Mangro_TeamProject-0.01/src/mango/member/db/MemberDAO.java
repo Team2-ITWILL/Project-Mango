@@ -306,6 +306,37 @@ public class MemberDAO extends DBconnection{
 
 
 
+	/* 비밀번호 찾기 기능 메서드 */
+	public String findPw(String email) {
+	
+		String pw = "";
+		
+		try {
+			getConnection();
+			
+			sql = "SELECT mem_pwd FROM member WHERE mem_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				pw = rs.getString("mem_pwd");
+			}
+			
+			System.out.println("비밀번호 조회 완료 !!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> findPw()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return pw;
+	}
+
+
+
 
 
 
