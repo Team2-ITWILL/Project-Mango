@@ -149,22 +149,25 @@ public class CommentAnonyBoardDAO extends DBconnection{
 	public List<CommentAnonyBoardBean> getAllCommentsANBoard(int ano_board_num){
 		
 		List<CommentAnonyBoardBean> commentList = new ArrayList<CommentAnonyBoardBean>();
+		CommentAnonyBoardBean commBean = null;
 		
 		
 		try {
 			getConnection();
 			
 			sql = "SELECT * FROM comment_anony_board "
-				+ "WHERE ano_board_num=?";
+				+ "WHERE ano_board_num=? "
+				+ "ORDER BY ano_re_ref DESC, ano_re_seq ASC ";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ano_board_num);
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()){
+			while(rs.next()){
 				// 댓글1개의 정보를 저장할 commBean 객체 생성
-				CommentAnonyBoardBean commBean = new CommentAnonyBoardBean();
+				commBean = new CommentAnonyBoardBean();
 				
+				commBean.setAno_board_num(rs.getInt("ano_board_num"));
 				commBean.setAno_comment_num(rs.getInt("ano_comment_num"));
 				commBean.setAno_comment_content(rs.getString("ano_comment_content"));
 				commBean.setMem_email(rs.getString("mem_email"));;
@@ -173,12 +176,14 @@ public class CommentAnonyBoardDAO extends DBconnection{
 				commBean.setAno_re_seq(rs.getInt("ano_re_seq"));
 				commBean.setAno_board_nick(rs.getString("ano_board_nick"));
 				commBean.setAno_comment_date(rs.getTimestamp("ano_comment_date"));
+				commBean.setAno_comment_ip(rs.getString("ano_comment_ip"));
 				
 				// commBean객체 1개를 List객체 commentList에 담기 
 				commentList.add(commBean);
 				//-------------------------
 				
-			}//if
+			}//rs.next()
+			
 		} catch (SQLException e) {
 			System.out.println("getSingleComment()메소드에서 sql예외 발생 : "+ e);
 			

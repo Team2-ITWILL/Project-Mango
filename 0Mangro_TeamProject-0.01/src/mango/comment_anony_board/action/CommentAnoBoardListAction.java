@@ -1,5 +1,6 @@
 package mango.comment_anony_board.action;
 
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,25 +23,32 @@ public class CommentAnoBoardListAction implements Action {
 		System.out.println("CommentAnoBoardListAction excute()");
 		
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
 		int ano_board_num = Integer.parseInt(request.getParameter("ano_board_num"));
+		
+		System.out.println("받아온 글 번호 : "+ano_board_num);
 		// [댓글 목록을 담아 반환할 List 선언 및 초기화 & DAO 선언 및 초기화]
 		List<CommentAnonyBoardBean> commentList = new ArrayList<CommentAnonyBoardBean>();
 		CommentAnonyBoardDAO commDAO = new CommentAnonyBoardDAO();
 		
 		// [해당 게시글 댓글 전체 개수 불러오는 메소드 실행]
 		int comm_count = commDAO.getCountANBComments(ano_board_num);
+		System.out.println("받아온 댓글 전체 개수 : "+comm_count);
 		
 		// [해당 게시글 댓글 전체 목록 불러오는 메소드 실행]
 		commentList = commDAO.getAllCommentsANBoard(ano_board_num);
 		
+		System.out.println("내보낼 전체 댓글 내용 : "+commentList);
+		System.out.println("내보낼 전체 댓글 개수 : "+commentList.size());
 		
 		// [개별 댓글을 담을 제이슨object]
-		JSONObject singleComment = new JSONObject();
+		JSONObject singleComment;
 		
 		// [개별 댓글을 담을 배열객체]
 		JSONArray commentArray = new JSONArray();
 		
-		// [제이슨 배열객체 전체를 담을 컨테이너]
+		// [제이슨 객체 전체를 담을 컨테이너]
 		JSONObject allComments = new JSONObject();
 		
 		// [for문 안에서 댓글1개의 각 요소를 저장할 변수를 선언]
@@ -95,24 +103,27 @@ public class CommentAnoBoardListAction implements Action {
 			
 			// 각 댓글을 commentArray 제이슨 배열객체에 차례대로 저장
 			commentArray.add(singleComment);
-			
 		}// for문 끝-------------------------------------------------		
 		
-		// [totalComment 제이슨 객체에 댓글 전체목록 담기]
-		allComments.put("Allcomments",commentArray);
+		// [allComments 제이슨 객체에 댓글 전체목록 담기]
+		allComments.put("commentArray", commentArray);
 		String jsonData = allComments.toJSONString();
+		System.out.println("내보낼 제이슨 객체 : "+commentArray);		
+		System.out.println("내보낼 객체 크기 : "+commentArray.size());		
+//		System.out.println("내보낼 제이슨 객체 : "+jsonData);		
+//		System.out.println("내보낼 객체 크기 : "+jsonData.length());		
+		// [제이슨 객체 내보내기]
+		PrintWriter out = response.getWriter();
+//		out.println(allComments);
+		out.println(jsonData);
 		
-		System.out.println(jsonData);
-		// 댓글목록과 총 댓글수 데이터를 가지고 해당 게시글로 돌아가기
-		request.setAttribute("jsonData", jsonData);
-		request.setAttribute("comm_count", comm_count);
+		// [댓글목록 데이터를 가지고 해당 게시글로 돌아가기]
 		
-		
-		ActionForward forward = new ActionForward();
+/*		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
-		forward.setPath("/AnoBoardSingleAction.anob?ano_board_num="+ano_board_num);
+		forward.setPath("/AnoBoardSingleAction.anob?ano_board_num="+ano_board_num); */
 				
-		return forward;
+		return null;
 	}
 
 }
