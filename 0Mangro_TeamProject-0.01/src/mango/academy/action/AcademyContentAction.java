@@ -79,9 +79,6 @@ public class AcademyContentAction implements Action{
 			endPage = pageCount;
 		}
 		int iAvgScore = (int)avgScore;
-		System.out.println(pageCount);
-		System.out.println(startPage);
-		System.out.println(pageBlock);
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장

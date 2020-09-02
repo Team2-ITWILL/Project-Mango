@@ -22,14 +22,11 @@ public class LikedAcademyFrontController extends HttpServlet{
 		//예)MangoProject/MemberLogin.me 
 		String RequestURI=request.getRequestURI();
 		
-		System.out.println(RequestURI);
 		
 		//MangoProject 얻기
 		String contextPath=request.getContextPath();
-		System.out.println(contextPath);
 		
 		
-		System.out.println(contextPath.length());//path에 길이 얻기
 	
 		//MemberLogin.me 얻기
 		String command=RequestURI.substring(contextPath.length());
