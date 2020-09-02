@@ -92,7 +92,7 @@
 						<%-- 검색영역 --%>
 						<hr>
 						<div class="input-group col-12 p-0 mb-3">
-						  <form action="./AnonyBoardListAction.anob" method="post" class="form-control" style="border:0; margin:0;">
+						  <form action="./AnonyBoardListAction.anob" method="post" class="form-control searchForm">
 							<input type="search" id="query" name="searchKeyword" class="form-control" style="padding:10px; cursor: pointer;"
 								   placeholder="검색">
 								   
@@ -151,7 +151,7 @@
 												
 											</div>&nbsp;&nbsp;&nbsp;
 											
-											<div class="comment_extra comment_tail">
+											<div class="comment_extra comment_tail dateDiv">
 												<img src="images/etc/date.png" width="20">
 												
 										<%------ 날짜 ----%>
