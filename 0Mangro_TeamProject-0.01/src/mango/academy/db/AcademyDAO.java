@@ -754,6 +754,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				
 				
 
+
 						
 						
 				if(s5.equals("like")){//좋아요 많은순
@@ -815,6 +816,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 							
 			
 						}
+
 				
 				
 				
