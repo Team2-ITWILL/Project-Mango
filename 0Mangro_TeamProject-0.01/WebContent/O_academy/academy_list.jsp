@@ -452,7 +452,7 @@ li.thirdKey {
 							 <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="${Page}&pageNum=1">
+					  	<a class="page-link prev" href="${PageTwo}&pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
@@ -468,7 +468,7 @@ li.thirdKey {
 					  		<c:set var="pN" value="${startPage-pageBlock}"/>
 					  	</c:if>
 					  
-					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
+					  	<a class="page-link prev" href="${PageTwo}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>	
 					  
@@ -491,7 +491,7 @@ li.thirdKey {
 					  	</c:if>
 					  
 					  <li class="page-item"><%--다음 페이지 --%>
-					  	<a class="page-link next" href="${Page}&pageNum=${pP}">
+					  	<a class="page-link next" href="${PageTwo}&pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
@@ -502,7 +502,7 @@ li.thirdKey {
                     
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="${Page}&pageNum=${pageCount}">
+					  	<a class="page-link next" href="${PageTwo}&pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
