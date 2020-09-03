@@ -131,7 +131,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -198,7 +198,7 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="./MemberUpdate.me"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
@@ -252,7 +252,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
+                        	<a class="sidebar-link sidebar-link" href=""
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>
@@ -260,7 +260,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="./MemberDelete.me" aria-expanded="false">
+                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>
