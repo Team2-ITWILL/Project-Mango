@@ -33,18 +33,69 @@ public class MemberFindPwAction implements Action{
 			out.println("location.href='/MemberFindPwMailAction.me'");
 			out.println("</script>");
 			
+			// 보내는 사람(망고)
+			String smtpServer = "smtp.naver.com";
+		    final String sendId = "mango_academy"; // 아이디
+		    final String sendPass = "gkrdnjs0000"; // 비밀번호
+		    String sendEmailAddress = "mango_academy@naver.com"; // 보내는 사람
+		    int smtpPort = 465; // SMTP 포트번호
+			
+		    // 받는 사람 (가입할 사람의 주소)
+		    System.out.println(request.getParameter("id_email"));
+		    String recieveEamilAddress = request.getParameter("id_email");
+			
+		    String subject = "Mango(망고) 비밀번호 확인 메일입니다"; // 메일 제목
+		    String content = "안녕하세요. Mango(망고) 비밀번호 확인 메일입니다."
+		      				 + "\n비밀번호는 "+ mb.getMemPwd() + " 입니다.";
+		    
+			try {
+				Properties props = System.getProperties();
+			    props.put("mail.smtp.host", smtpServer);
+			    props.put("mail.smtp.port", smtpPort);
+			    props.put("mail.smtp.auth", "true");
+			    props.put("mail.smtp.ssl.enable", "true");
+			    props.put("mail.smtp.ssl.trust", smtpServer);
+			    
+			    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			       protected PasswordAuthentication getPasswordAuthentication() {
+			          return new PasswordAuthentication(sendId, sendPass);
+			       }
+			       
+			    });
+			
+			session.setDebug(true);
+		         
+	        Message mimeMessage = new MimeMessage(session);
+	        mimeMessage.setFrom(new InternetAddress(sendEmailAddress));
+	        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recieveEamilAddress));
+	        mimeMessage.setSubject(subject);
+	        mimeMessage.setText(content);
+	        Transport.send(mimeMessage);
+			
+	        response.setContentType("text/html; charset=UTF-8");
+	        out.println("<script>");
+	        out.println("location.href='./MemberLogin.me'");
+	        out.println("</script>");
+	        
+			} catch (Exception e) {
+				e.printStackTrace();
+		        System.out.println("MemberFindPwAction : " + e);
+		        response.setContentType("text/html; charset=UTF-8");
+		        out.println("<script>");
+		        out.println("alert('이메일 인증에 실패하였습니다.');");
+		        out.println("alert('다시 시도해 주십시오.');");
+		        out.println("window.close();");
+		        out.println("</script>");
+			}
+
 			return null;
-			
 		}else{
-			
 			response.setContentType("text/html; charset=UTF-8"); 
-			
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('가입한 이메일이 없습니다.')");
 			out.println("location.href='./MemberFindPw.me'");
 			out.println("</script>");
-			
 		}
 		
 //		ActionForward forward = new ActionForward();

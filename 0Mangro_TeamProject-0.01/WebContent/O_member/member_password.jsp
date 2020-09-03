@@ -27,6 +27,26 @@
 
 
 </head>
+
+<script type="text/javascript">
+/* ----------------------------------- 이메일 입력 확인 ------------------------------- */
+	$(function inputchk(){
+	
+		$("findPw").submit(function(){	
+		
+			if($("#id_email").val() == ""){
+				alert("이메일을 입력하세요.");
+				$("#id_email").focus();
+				return false;
+			}
+
+		}); // submit 끝
+		
+	}); // inputchk() 끝
+/* ----------------------------------- 이메일 입력 확인 ------------------------------- */
+</script>
+
+
 <body>
 
 		<div class="container">

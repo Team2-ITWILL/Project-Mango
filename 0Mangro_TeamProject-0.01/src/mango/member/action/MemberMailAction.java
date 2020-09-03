@@ -109,10 +109,41 @@ public class MemberMailAction implements Action{
          response.setContentType("text/html; charset=UTF-8");
          
          PrintWriter out = response.getWriter();
-         out.println("인증번호 : <input type='text' id=checknum1>");
-         
-         out.println("<input type='button' value='인증' onclick='check();'>");
+
+//         out.println("인증번호 : <input type='text' id=checknum1>");
+//                 out.println("<input type='button' value='인증' onclick='check();'>");
+                 
+
          out.println("<script type='text/javascript' src='http://code.jquery.com/jquery-3.2.0.min.js' ></script>");
+         out.println("<link rel='stylesheet' type='text/css' href='styles/bootstrap4/bootstrap.min.css'>");
+         out.println("<link rel='stylesheet' type='text/css' href='styles/form_basic_page.css'>");
+         
+         // <-------------- <style> -------------->
+         out.println("<style type='text/css'>");
+         out.println("input {height: 50px;}");
+         out.println(".btn-primary {color:#fff !important;background-color: #000 !important;border-color: #000 !important;cursor: pointer !important;}");
+         out.println(".btn-primary:hover {background-color: #6610f2 !important;}");
+         out.println("#rememberCheck {margin-left: -25px; z-index: 1 ; opacity: 1;}");
+         out.println(".authBtn {float:right; width:100px;} .authSpan{color: #000; font-size: 1.1em;}");
+         out.println("</style> ");
+         // <-------------- </style> -------------->
+         
+         
+         // <-------------- <div> -------------->
+         out.println("<div class='js-form-message form-group' id='startAuth'>");
+		 	
+         	out.println("<label class='form-label' for='id_password1'>");
+		 		out.println("<span class='d-flex justify-content-between align-items-center authSpan'>인증번호</span>");
+		 	out.println("</label>");
+       
+		 out.println("<input type='text' class='form-control' name='' id='checknum1' placeholder='인증번호 입력'");
+		 out.println("aria-label='인증번호 입력' required >");
+		 
+		 out.println("<input type='button' class='btn btn-primary right-btn authBtn' value='인증' onclick='check();'> </div>");
+		// <-------------- </div> -------------->
+		 
+		 
+		// <-------------- <script> -------------->
          out.println("<script type='text/javascript'>");
          	out.println("function check(){");
          	out.println("var str=$('#checknum1').val();");
@@ -126,16 +157,19 @@ public class MemberMailAction implements Action{
          	out.println(
          	"var lastAns= (ansArr1.charAt(str.charAt(0)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1+str.charAt(3)*1));");
         
-         //인증 코드를 비교하기 위해 저장 
+         // 인증 코드를 비교하기 위해 저장 
          	out.println("var lastAns1='" + checkStr + "';");
+         	out.println("var joinCheck='';");
          
          // 입력한 번호를 코드화하여 , 인증 코드와 같은 지 비교.
          	out.println("if(lastAns1 == lastAns){");
          	
 	         	out.println("alert('이메일 인증이 완료되었습니다.');");
-	         	out.println("opener.document.join.mailDup.value='mailCheck';");
-	         	out.println("opener.document.join.mailDupId.value='"+recieveEamilAddress+"';");
-	         	out.println("window.close();");
+	         	out.println(" joinCheck = 'success'; ");
+	         	out.println("document.join.mailDupId.value='"+recieveEamilAddress+"';");
+//	         	out.println("opener.document.join.mailDup.value='mailCheck';");
+//	         	out.println("opener.document.join.mailDupId.value='"+recieveEamilAddress+"';");
+//	         	out.println("window.close();");
 
 	        out.println("}else{");
          
@@ -143,15 +177,19 @@ public class MemberMailAction implements Action{
          // 암호화 코드가 변함으로써 인증 코드를 예측 할 수 없게 한다. 
 		        out.println("alert('이메일 인증에 실패하였습니다.');");
 		        out.println("alert('다시 시도해 주십시오.');");
-		        out.println("window.close();");
+//		        out.println("window.close();");
          
 		    out.println("}"); // else끝
          
 	     out.println("}"); // function check() 끝 
         
 	     out.println("</script>");
-         
+
+	  // <-------------- </script> -------------->
+	     
+
       } catch (Exception e) {
+    	  System.out.println("MemberMailAction : " + e);
          e.printStackTrace();
         
          response.setContentType("text/html; charset=UTF-8");
@@ -160,7 +198,7 @@ public class MemberMailAction implements Action{
          out.println("<script>");
          out.println("alert('이메일 인증에 실패하였습니다.');");
          out.println("alert('다시 시도해 주십시오.');");
-         out.println("window.close();");
+//       out.println("window.close();");
          out.println("</script>");
 
 	      }

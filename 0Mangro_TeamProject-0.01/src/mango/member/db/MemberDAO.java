@@ -335,14 +335,6 @@ public class MemberDAO extends DBconnection{
 		return pw;
 	}
 
-
-
-
-
-
-	
-	
-	
 	
 	
 	
