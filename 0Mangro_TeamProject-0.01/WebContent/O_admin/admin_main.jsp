@@ -47,7 +47,7 @@
                         <!-- Logo icon -->
                             <span class="logo-text">
                             
-                                <h1 class="mypagelogo">관리자 페이지</h1>
+                                <h1 class="mypagelogo">관리자 메뉴</h1>
                             </span>
                     </div>
                     
@@ -575,124 +575,6 @@
                 <!-- *************************************************************** -->
                 <!-- End Top Leader Table -->
                 <!-- *************************************************************** -->
-
-
-
-
- <!----------------------------------[ 테이블]---------------------------------------------------------->
-
-                    
-
-
-
-                    
-                    
-
-                    
-                    <!-- (일반회원)내가 작성한 문의글 -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">내가 작성한 문의글</h4>
-                                <h6 class="card-subtitle">작성한 문의게시글이 최근순으로 표시됩니다.</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">글번호</th>
-                                            <th scope="col">작성자(계정)</th>
-                                            <th scope="col">제목</th>
-                                            <th scope="col">내용</th>
-                                            <th scope="col">조회수</th>
-                                            <th scope="col">댓글수</th>
-                                            <th scope="col">작성일자</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                    
-                    <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
-                    <ul class="pagination">
-                    <!-- << (첫페이지로 가기) -->
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-                    <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-                    <!-- >> (마지막페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-					</ul>                    
-                 
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

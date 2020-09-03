@@ -101,7 +101,6 @@ a:hover {
 	height: 100%;
 	text-align: center;  
 	background: #f3f3f300;
-    border: 1px solid #ff6f6e;
     border-radius: 10px;
 	
 }
@@ -133,12 +132,14 @@ a:hover {
 	background-color: #6610f2;
 }
 
+.admin-register{
+    border: 1px solid #ff6f6e;
+}
 
 .admin-register a:hover, .mypage a:hover, .logout a:hover{
 	text-decoration: none;
 	color: #fff;
 	background-color: #e95765;
-	
 }
 
 .sign-up, .mypage, .logout {

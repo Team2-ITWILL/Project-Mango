@@ -276,7 +276,7 @@
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/mainslider5.jpg)"></div>
+					<div class="home_slider_background" style="background-image:url(images/mainslider6.jpg)"></div>
 					<div class="home_slider_content">
 						<div class="container">
 							<div class="row">
@@ -539,7 +539,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="courses_button trans_200">
-						<a href="4index.jsp?center=O_academy/academy_list.jsp">더 많은 인기학원 보기</a>
+						<a href="./AcademyList.aca">더 많은 인기학원 보기</a>
 					</div>
 				</div>
 			</div>
@@ -554,7 +554,7 @@
 
 
 	<!-- Features -->
-
+<!-- 
 	<div class="features">
 		<div class="container">
 			<div class="row">
@@ -567,7 +567,7 @@
 			</div>
 			<div class="row features_row">
 				
-				<!-- Features Item -->
+				Features Item
 				<div class="col-lg-3 feature_col">
 					<div class="feature text-center trans_400">
 						<div class="feature_icon"><img src="images/icon_1.png" alt=""></div>
@@ -576,7 +576,7 @@
 					</div>
 				</div>
 
-				<!-- Features Item -->
+				Features Item
 				<div class="col-lg-3 feature_col">
 					<div class="feature text-center trans_400">
 						<div class="feature_icon"><img src="images/icon_2.png" alt=""></div>
@@ -585,7 +585,7 @@
 					</div>
 				</div>
 
-				<!-- Features Item -->
+				Features Item
 				<div class="col-lg-3 feature_col">
 					<div class="feature text-center trans_400">
 						<div class="feature_icon"><img src="images/icon_3.png" alt=""></div>
@@ -594,7 +594,7 @@
 					</div>
 				</div>
 
-				<!-- Features Item -->
+				Features Item
 				<div class="col-lg-3 feature_col">
 					<div class="feature text-center trans_400">
 						<div class="feature_icon"><img src="images/icon_4.png" alt=""></div>
@@ -606,7 +606,7 @@
 			</div>
 		</div>
 	</div>
-
+ -->
 
 	<!-- Events -->
 

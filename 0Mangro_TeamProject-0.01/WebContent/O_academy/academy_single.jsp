@@ -156,6 +156,14 @@
 #mapReport{
 	margin-top: 60px;
 }
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .cheongang {
+    width: 100%;
+    }
+}
+
 </style>
 
 
@@ -469,7 +477,7 @@
 						<div class="course_tabs_container">
 							<div class="tabs d-flex flex-row align-items-center justify-content-start">
 								<div class="tab">학원 상세정보</div>
-								<div class="tab">커리큘럼</div>
+								<div class="tab">청강과목</div>
 								<div class="tab active">후기보기</div>
 							</div>
 							
@@ -549,97 +557,52 @@
 									</div>
 								</div>
 
-								<!-- Curriculum -->
-								
-
-								
+								<%-- 청강 가능 과목탭(audit_management 테이블의 데이터 활용) --%>
 								<div class="tab_panel tab_panel_2">
-									<!-- 등록된 커리큘럼이 없을 경우 -->
-								<div class="tab_panel_title">아직 등록된 커리큘럼이 없습니다.</div>
+								
+								<%-- 등록된 청강가능 과목 없을 경우 --%>
+								<div class="tab_panel_title">아직 등록된 청강가능 과목이 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
-											<p>학원을 등록하고 커리큘럼을 등록해보세요!</p>
+											<p>학원을 등록하고 청강가능 과목을 등록해보세요!</p>
 										</div>
 									<div class="tab_panel_registerBtn">등록하기</div>
 
-											<!-- Dropdowns -->
+								<%-- 등록된 청강가능 과목 있을 경우 --%>
 											<ul class="dropdowns">
-												<li class="has_children">
-													<div class="dropdown_item">
-														<div class="dropdown_item_title"><span>Lecture 1:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-														<div class="dropdown_item_text">
-															<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-														</div>
-													</div>
-													<ul>
-														<li>
-															<div class="dropdown_item">
-																<div class="dropdown_item_title"><span>Lecture 1.1:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-																<div class="dropdown_item_text">
-																	<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-																</div>
-															</div>
-														</li>
-														<li>
-															<div class="dropdown_item">
-																<div class="dropdown_item_title"><span>Lecture 1.2:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-																<div class="dropdown_item_text">
-																	<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-																</div>
-															</div>
-														</li>
-													</ul>
-												</li>
-												<li class="has_children">
-													<div class="dropdown_item">
-														<div class="dropdown_item_title"><span>Lecture 2:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-														<div class="dropdown_item_text">
-															<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-														</div>
-													</div>
-													<ul>
-														<li>
-															<div class="dropdown_item">
-																<div class="dropdown_item_title"><span>Lecture 2.1:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-																<div class="dropdown_item_text">
-																	<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-																</div>
-															</div>
-														</li>
-														<li>
-															<div class="dropdown_item">
-																<div class="dropdown_item_title"><span>Lecture 2.2:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-																<div class="dropdown_item_text">
-																	<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-																</div>
-															</div>
-														</li>
-													</ul>
-												</li>
+											<%--------------------------- ▼ 과목 1개  --------------------------%>
 												<li>
 													<div class="dropdown_item">
-														<div class="dropdown_item_title"><span>Lecture 3:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
+														<div class="dropdown_item_title">
+															<span>망고 수학</span> 
+															<span>지속시간 :
+																<span>3</span>시간 
+															</span>
+														</div>
 														<div class="dropdown_item_text">
-															<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
+															<p>자세한 수강 일정표와 상세사항은 해당 학원으로 문의바랍니다.</p>
 														</div>
 													</div>
 												</li>
+											<%--------------------------- ▲ 과목 1개  --------------------------%>
+											<%--------------------------- ▼ 과목 1개  --------------------------%>
 												<li>
 													<div class="dropdown_item">
-														<div class="dropdown_item_title"><span>Lecture 4:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
+														<div class="dropdown_item_title">
+															<%-- ▼ db데이터  --%>
+															<span>망고 영어</span> 
+															<span>지속시간 :
+																<span>2</span>시간 
+															</span>
+															<%-- ▲ db데이터  --%>
+														</div>
 														<div class="dropdown_item_text">
-															<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
+															<%-- ▼ html태그로 작성만 해두기 --%>
+															<p>자세한 수강 일정표와 상세사항은 해당 학원으로 문의바랍니다.</p>
 														</div>
 													</div>
 												</li>
-												<li>
-													<div class="dropdown_item">
-														<div class="dropdown_item_title"><span>Lecture 5:</span> Lorem Ipsn gravida nibh vel velit auctor aliquet.</div>
-														<div class="dropdown_item_text">
-															<p>Lorem Ipsn gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auci elit consequat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus.</p>
-														</div>
-													</div>
-												</li>
+											<%--------------------------- ▲ 과목 1개  --------------------------%>
 											</ul>
 										</div>
 									</div>
@@ -693,7 +656,9 @@
 										<c:forEach var="reBean" items="${reList}">
 											<li id="reviewNum_${reBean.reviewNum }">
 												<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
-													<div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div>
+												
+												<%--- 후기 사진 삭제 고려해보기(우선 주석처리) --%>
+													<!-- <div class="comment_image"><div><img src="images/comment_1.jpg" alt=""></div></div> -->
 													<div class="comment_content">
 														<div class="comment_title_container d-flex flex-row align-items-center justify-content-start">
 															<div class="comment_author"><a href="#">${reBean.reviewTitle}</a></div>
@@ -703,7 +668,9 @@
 														<div class="comment_text">
 															
 															<c:if test="${id_email == null || id_email eq ''}">
-															결제안한 회원에게 보이는 형태
+															
+															<%-- 결제안한 회원에게 보이는 형태 --%>
+															
 															<div class="blind_review">
 																<div class="blind_top_div">
 																	<div class="no_membership">
@@ -716,7 +683,8 @@
 																</div>
 															</div>
 															</c:if>
-															<!-- 유료회원이면 보이는 형태 -->
+															
+															<%-- 유료 회원에게 보이는 형태 --%>
 															<c:if test="${id_email ne null}">
 																<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
 																<p><span class="strength">장점</span><br>
@@ -729,7 +697,7 @@
 														<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 														
 														
-														<!-- 만일 해당 계정으로 도움돼요 했다면 색칠해진 아이콘 -->
+															<%-- 만일 해당 계정으로 도움돼요 했다면 색칠해진 아이콘 --%>
 															<div class="comment_extra comment_likes">
 															<img id="cntLikeImg_${reBean.reviewNum }" src="images/thumb-up.png" width="22"
 																onclick="likeAcaReview(${reBean.reviewNum })" style="cursor:pointer;">
