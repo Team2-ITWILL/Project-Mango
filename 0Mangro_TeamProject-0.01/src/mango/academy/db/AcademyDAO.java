@@ -1796,7 +1796,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						rs.getString(10), rs.getString(11), //acaCategory
 						rs.getString(12), rs.getString(13), rs.getString(14), //address
 						rs.getString(15),	//mem_email						
-						rs.getDouble(16)   //reviewScore
+						rs.getDouble(17)   //reviewScore
 				
 						);			
 				
