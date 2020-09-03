@@ -51,28 +51,6 @@
 				return false;
 			}
 			
-			/* 인증번호
-			if($("#emailcheck").val == ""){
-				alert("인증번호를 확인하세요.");
-				$("#emailcheck").focus();
-				return false;
-
-			} */			
-
-			 
-			if(joinCheck != "success"){
-
-		        alert("이메일 인증을 해주세요.");
-		        return false;
-			}
-			
-			/*else{
-				
-				if($("#mailDup").val() != $("#id_email").val()){
-		           alert("이메일 인증을 다시 해주세요.");
-		           return false;
-		        }
-		    }
 			
 			// 비밀번호
 			if($("#id_password1").val() == ""){
@@ -94,7 +72,25 @@
 				$("#yackuan-check").focus();
 				return false;
 			}
-	
+			
+			
+			// 인증 버튼 클릭여부 확인
+			if(flag != true) {
+		        alert("이메일 인증을 해주세요.");
+				return false;
+			}
+			
+			
+			// 정확한 인증번호 입력여부 확인
+			if( $("#fromIframe").val() != "success" ){
+				alert("인증번호를 정확히 입력 후 인증버튼을 눌러주세요.");
+				console.log($("#fromIframe").val());
+				return false;
+			}
+			
+			
+			
+			
 		}); // submit() 끝	
 			
 	}); // check() 끝
@@ -103,20 +99,20 @@
 	
 	
 //<--------------------------- 이메일 인증 번호 전송  ------------------------->	
+	
+	var flag = false;
 	function emailCheck(){
 		
+		flag = true; // 전송버튼 클릭했는지 체크
 		var email = $("#id_email").val(); 
-//		window.alert(email); // 데이터 확인
 		var urlVar = "./MemberMailAction.me?email="+$("#id_email").val();
-/* 		var urlVar = "./MemberMailAction.me#startAuth?email="+$("#id_email").val(); */
-		/* window.open("./MemberMailAction.me?email="+$("#id_email").val(),"","width=400, height=200"); */
-//		location.href = "/MemberMailAction.me?email="+$("#id_email").val();
 		
 		$("#authEmailSpan").removeAttr("style"); // 이메일 인증번호창 활성화 되기까지 대기시간 소요 알림문구 보이게
 		$("#iframeHere").attr("src",urlVar); // iframe의 src를 이메일인증창 주소로 연결
 		$("#iframeHere").removeAttr("style","display:none;"); // iframe의 숨김표시 해제
 		
 	}
+	
 //<--------------------------- 이메일 인증 번호 전송  ------------------------->	
 </script>
 
@@ -132,8 +128,9 @@
 						
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
 					      <form class="sign_upClass" action="./MemberJoinAction.me" method="post" id="join" onsubmit="return check()">
-					      
+
 					      <div class="mb-5 mt-2">
+
 					        <p>아래 3개 필수 데이터를 모두 입력해주세요.</p>
 					      </div>
 	  
@@ -181,11 +178,7 @@
 					      <!-- 이름 -->
 					      <div class="form-group">
 						        <label class="form-label" for="id_name">이름</label>
-						        <input type="text" class="form-control is-valid" name="id_name" id="id_name" placeholder="이름" aria-label="Email address"
-						               required
-						               data-msg="이름을 입력해주세요."
-						               data-error-class="form-error"
-						               data-success-class="form-success">
+						        <input type="text" class="form-control" name="id_name" id="id_name" placeholder="이름" aria-label="Email address">
 					        
 					      </div>
 					      
@@ -193,32 +186,17 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일 
 						        </label>
-						        <input type="email" class="form-control is-invalid" name="id_email" id="id_email" placeholder="이메일" 
-						               required
-						               data-msg="이메일을 입력해주세요."
-						               data-error-class="form-error"
-						               data-success-class="form-success"> 
+						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" > 
 						        <button type="button" class="btn btn-primary right-btn" onclick="emailCheck()">전송</button>
-						        <%-- 인증성공여부 확인 : 인증성공시 value값 success, 기본값 fail --%>
+						        
 						        	<span style="display: none;" id="authEmailSpan">
-						        		잠시 후 인증번호창이 활성화되면 인증번호를 입력하세요.
+						        		잠시 후 인증번호창이 활성화되면 <br>
+						        		입력한 메일로 전송된 인증번호를 입력하세요.
 						        	</span>
 					      </div>
 					               
-					  	  <!-- 인증번호 버튼 -->
-	 				 <!-- <div class="js-form-message form-group">
-						        <label class="form-label" for="id_password1">
-						          <span class="d-flex justify-content-between align-items-center">인증번호</span>
-						        </label>
-						        <input type="text" class="form-control" name="" id="emailcheck" placeholder="인증번호 입력"
-						               aria-label="인증번호 입력" required
-						               data-msg="올바른 비밀번호를 입력해주세요."
-						               data-error-class="form-error"
-						               data-success-class="form-success">
-						        <button type="button" class="btn btn-primary right-btn">확인</button>
-					      </div> -->
-						  
-						  <iframe src="" id="iframeHere" style="display: none;" width=600 height=150 border=0 scrolling="no" frameborder="0"></iframe>
+						<%-- iframe을 통해 인증번호 입력창 불러오기 --%>							  
+						  <iframe src="" id="iframeHere" style="display: none;" width=600 height=150 scrolling="no" frameborder="0"></iframe>
 					      
 					      
 					      <!-- 비밀번호 입력 & 비밀번호 확인 -->
@@ -226,32 +204,22 @@
 					        <label class="form-label" for="id_password1">
 					          <span class="d-flex justify-content-between align-items-center">비밀번호</span>
 					        </label>
-					        
+					      </div> 
 					        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
-					               aria-label="********" required
-					               data-msg="올바른 비밀번호를 입력해주세요."
-					               data-error-class="form-error"
-					               data-success-class="form-success">
+					        		style="margin-bottom: 30px;">
 					               
 					      <div class="js-form-message form-group">
 					        <label class="form-label" for="id_password1">
 					          <span class="d-flex justify-content-between align-items-center">비밀번호 확인</span>
 					        </label>
 					        
-					        <input type="password" class="form-control" name="id_password2" id="id_password2" placeholder="********"
-					               aria-label="********" required
-					               data-msg="비밀번호가 일치하지 않습니다."
-					               data-error-class="form-error"
-					               data-success-class="form-success">
+					        <input type="password" class="form-control" name="id_password2" id="id_password2" placeholder="********">
 					      </div>
 					        
 					      <div class="mb-6">
 					        <div class="js-form-message">
 					          <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
-					            <input type="checkbox" class="custom-control-input" id="yackuan-check" name="termsCheckbox" required
-					                   data-msg="이용약관, 개인정보 취급방침에 동의해주세요"
-					                   data-error-class="form-error"
-					                   data-success-class="form-success">
+					            <input type="checkbox" class="custom-control-input" id="yackuan-check" name="termsCheckbox">
 					            <label class="font-subhead custom-control-label" for="termsCheckbox">
 					            
 					              <p class="m-0">
@@ -274,6 +242,7 @@
 					        </div>
 					
 					      </div>
+					      	 	<input type="hidden" style="display: inline-block;" id="fromIframe" ></div>
 					      </form>
       <!-------------------------------------------- [form태그 끝] -------------------------------------------------------->
 				    </div> <!-- section_title_container text-center -->
