@@ -240,6 +240,7 @@ div
 	position: relative;
 	width: 100%;
 	max-width: 310px;
+	font-size: 0.8em;
 }
 
 #bo_sch legend{
@@ -380,6 +381,19 @@ a.btn_write:hover{
 	border: 1px solid #bbbcc3;
 	margin: 2px 0;
 }
+.pg_current{
+	display: inline-block;
+	background: #666;
+	color: #fff;
+	border: 1px solid #444;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	min-width: 30px;
+	border-radius: 15px;
+	font-family: 'Noto Sans Korean','Malgun Gothic', dotum, sans-serif; 
+}
 
 .pg_page{
 	color: #555;
@@ -410,3 +424,23 @@ span.sv_member{
 	font-size: 12px;
 }
 
+a, a:HOVER, a:VISITED, a:ACTIVE{ 
+	text-decoration: none;
+	color: #000;
+}
+
+a.pg_current{
+	font-size: 0.7em;
+	color: white;
+	text-decoration: none;
+	margin-right: 8px;
+}
+
+a.pg_current:HOVER{
+	font-size: 0.7em;
+	color: white;
+	text-decoration: none;
+}
+a.btn_write{
+	color: white;
+}

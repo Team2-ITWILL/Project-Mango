@@ -26,7 +26,7 @@ public class QnaBoardListSearchAction
 
     int count = qdao.getSearchQnaBoardCount(search_key, search_word);
 
-    int pageSize = 5;
+    int pageSize = 10;
     String pageNum = request.getParameter("pageNum");
 
     if (pageNum == null) {
@@ -42,7 +42,7 @@ public class QnaBoardListSearchAction
     }
 
     int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-    int pageBlock = 3;
+    int pageBlock = 5;
     int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
     int endPage = startPage + pageBlock - 1;
 
