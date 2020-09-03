@@ -51,7 +51,7 @@
 				return false;
 			}
 			
-			 인증번호
+			// 인증번호
 			if($("#emailcheck").val == ""){
 				alert("인증번호를 확인하세요.");
 				$("#emailcheck").focus();
