@@ -189,7 +189,7 @@
 						        <button type="button" class="btn btn-primary right-btn" id="mailDup" onclick="emailCheck()">전송</button>
 					      </div>
 					               
-					      <!-- 인증번호 버튼 -->
+					  <%--<!-- 인증번호 버튼 -->
 	 				 	  <div class="js-form-message form-group">
 						        <label class="form-label" for="id_password1">
 						          <span class="d-flex justify-content-between align-items-center">인증번호</span>
@@ -200,7 +200,7 @@
 						               data-error-class="form-error"
 						               data-success-class="form-success">
 						        <button type="button" class="btn btn-primary right-btn">확인</button>
-					      </div> 
+					      </div> --%>
 						  
 					      
 					      <!-- 비밀번호 입력 & 비밀번호 확인 -->
