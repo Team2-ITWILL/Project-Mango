@@ -23,11 +23,11 @@ public class MemberMailAction implements Action{
      
 	   request.setCharacterEncoding("UTF-8");
 
-      // 보내는 사람(네이버 망고아이디)
+      // 보내는 사람(망고)
       String smtpServer = "smtp.naver.com";
-      final String sendId = "mango_academy"; // 아이디  / mango_academy 
-      final String sendPass = "gkrdnjs0000"; // 비밀번호  / gkrdnjs0000
-      String sendEmailAddress = "mango_academy@naver.com"; // 보내는 사람
+      final String sendId = "gyrud13"; // 아이디
+      final String sendPass = "kimhk6744@"; // 비밀번호
+      String sendEmailAddress = "gyrud13@naver.com"; // 보내는 사람
 
       int smtpPort = 465; // SMTP 포트번호
 
@@ -109,9 +109,11 @@ public class MemberMailAction implements Action{
          response.setContentType("text/html; charset=UTF-8");
          
          PrintWriter out = response.getWriter();
+
 //         out.println("인증번호 : <input type='text' id=checknum1>");
 //                 out.println("<input type='button' value='인증' onclick='check();'>");
                  
+
          out.println("<script type='text/javascript' src='http://code.jquery.com/jquery-3.2.0.min.js' ></script>");
          out.println("<link rel='stylesheet' type='text/css' href='styles/bootstrap4/bootstrap.min.css'>");
          out.println("<link rel='stylesheet' type='text/css' href='styles/form_basic_page.css'>");
@@ -182,8 +184,10 @@ public class MemberMailAction implements Action{
 	     out.println("}"); // function check() 끝 
         
 	     out.println("</script>");
+
 	  // <-------------- </script> -------------->
 	     
+
       } catch (Exception e) {
     	  System.out.println("MemberMailAction : " + e);
          e.printStackTrace();

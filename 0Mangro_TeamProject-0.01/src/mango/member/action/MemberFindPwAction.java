@@ -1,20 +1,12 @@
 package mango.member.action;
 
 import java.io.PrintWriter;
-import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
-import mango.member.db.MemberBean;
 import mango.member.db.MemberDAO;
 
 public class MemberFindPwAction implements Action{
@@ -27,15 +19,18 @@ public class MemberFindPwAction implements Action{
 		/* 비밀번호 조회하기 */
 		MemberDAO mdao = new MemberDAO();
 		String email = (String)request.getParameter("id_email");
-		MemberBean mb = mdao.findPw(email);
+		String pw = mdao.findPw(email);
 		
-		if(mb != null){
+		System.out.println(pw);
+		
+		if(pw != null){
 			
 			response.setContentType("text/html; charset=UTF-8"); 
 			
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('비밀번호를 전송했습니다.')");
+			out.println("location.href='/MemberFindPwMailAction.me'");
 			out.println("</script>");
 			
 			// 보내는 사람(망고)
@@ -92,6 +87,7 @@ public class MemberFindPwAction implements Action{
 		        out.println("window.close();");
 		        out.println("</script>");
 			}
+
 			return null;
 		}else{
 			response.setContentType("text/html; charset=UTF-8"); 
@@ -105,6 +101,7 @@ public class MemberFindPwAction implements Action{
 //		ActionForward forward = new ActionForward();
 //		forward.setRedirect(false);
 //		forward.setPath("./MemberFindPw.me");
+		
 		return null;
 	}
 	

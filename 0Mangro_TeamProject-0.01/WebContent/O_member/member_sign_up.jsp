@@ -56,10 +56,12 @@
 				alert("인증번호를 확인하세요.");
 				$("#emailcheck").focus();
 				return false;
+
 			} */			
 
 			 
 			if(joinCheck != "success"){
+
 		        alert("이메일 인증을 해주세요.");
 		        return false;
 			}
@@ -70,7 +72,7 @@
 		           alert("이메일 인증을 다시 해주세요.");
 		           return false;
 		        }
-		    } */
+		    }
 			
 			// 비밀번호
 			if($("#id_password1").val() == ""){

@@ -97,7 +97,7 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_admin/payment_management.jsp"
+                        	<a class="sidebar-link" href="./Management.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">결제 관리</span>
@@ -105,7 +105,7 @@
                         </li>
 						
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
-                                aria-expanded="false"><i class="fa fa-key" aria-hidden="true"></i>
+                                aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
 

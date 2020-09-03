@@ -23,6 +23,19 @@ public class PaymentBean {
 	 
 	 // 유효한지 안한지 체크
 	 private String pmCheck;
+
+	 
+	 public PaymentBean(){}
+	 
+	 public PaymentBean(String memEmail, int pmUseNum, String pmName, Date pmStartDate, Date pmExpDate, String pmCheck) {
+		 super();
+		 this.memEmail = memEmail;
+		 this.pmUseNum = pmUseNum;
+		 this.pmName = pmName;
+		 this.pmStartDate = pmStartDate;
+		 this.pmExpDate = pmExpDate;
+		 this.pmCheck = pmCheck;
+	 }
 	
 	 public String getMemEmail() {
 	     return memEmail;
@@ -59,8 +72,8 @@ public class PaymentBean {
 	 public Date getPmStartDate() {
 	     return pmStartDate;
 	 }
-	
-	 public void setPmStartDate(Date pmStartDate) {
+
+	public void setPmStartDate(Date pmStartDate) {
 	     this.pmStartDate = pmStartDate;
 	 }
 	

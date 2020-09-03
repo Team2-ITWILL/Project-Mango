@@ -778,13 +778,13 @@
 					
 					<ul class="pagination">
 					 <!-- << (첫페이지로 가기) -->
+					<c:if test="${count!=0}"> 
 					  <li class="page-item"> 
 					  	<a class="page-link prev" href="AcademyContentAction.aca?acaMainNum=${academyBean.acaMainNum }&pageNum=1">
 					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
 					  	</a>
 					  </li>
 					  
-					<c:if test="${count!=0}"> 
                     <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item">
 					  	<c:if test="${startPage-pageBlock<=0}">

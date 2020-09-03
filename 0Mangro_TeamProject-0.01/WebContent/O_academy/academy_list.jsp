@@ -83,6 +83,7 @@ li.thirdKey {
 	var search2=null;
 	var search3=null;
 	var search4=null;
+	var search5=null;
 	var mainsearch=null;
 
 	$(function(){
@@ -220,6 +221,17 @@ li.thirdKey {
 		
 		});//change
 		
+		$("#courses_search_select5").change(function(){
+		// 	j_test(this);
+			search5=$("#courses_search_select5 option:selected").val();
+			
+			location.href="${Page}&select5="+search5;
+			
+			
+		
+		
+		});//change
+		
 		
 		
 		
@@ -303,18 +315,19 @@ li.thirdKey {
 									<option value="">카테고리</option>
 									
 								</select>
-								<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
-									<option>기본순</option>
-									<option>좋아요 많은 순</option>
-									<option>리뷰많은 순</option>
-									<option>평점 높은 순</option>
-								</select>
 								
+							<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
+									<option value="basic">기본순</option>
+									<option value="like">좋아요 많은 순</option>
+									<option value="review">리뷰많은 순</option>
+									<option value="rating">평점 높은 순</option>
+							</select>
 								
 							</div>
 						</form>
+						
 					</div> <!-- class="courses_search_container" -->
-
+							
 
 
 
@@ -353,7 +366,7 @@ li.thirdKey {
 							<!-- Course -->
 							
 							<c:forEach var="i" items="${requestScope.academyList}">
-							<div class="courses_container">
+							<div class="courses_container" onclick="location.href='./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}'">
 								<div class="courses_row">
 									<div class="col-md-8 course_col">
 										<div class="course">
@@ -439,7 +452,7 @@ li.thirdKey {
 							 <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="${Page}&pageNum=1">
+					  	<a class="page-link prev" href="${PageTwo}&pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
@@ -455,7 +468,7 @@ li.thirdKey {
 					  		<c:set var="pN" value="${startPage-pageBlock}"/>
 					  	</c:if>
 					  
-					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
+					  	<a class="page-link prev" href="${PageTwo}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>	
 					  
@@ -464,7 +477,7 @@ li.thirdKey {
 					
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					  <li class="page-item"><a class="page-link" href="${PageTwo}&pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
@@ -478,7 +491,7 @@ li.thirdKey {
 					  	</c:if>
 					  
 					  <li class="page-item"><%--다음 페이지 --%>
-					  	<a class="page-link next" href="${Page}&pageNum=${pP}">
+					  	<a class="page-link next" href="${PageTwo}&pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
@@ -489,7 +502,7 @@ li.thirdKey {
                     
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="${Page}&pageNum=${pageCount}">
+					  	<a class="page-link next" href="${PageTwo}&pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>

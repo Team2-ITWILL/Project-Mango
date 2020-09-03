@@ -376,6 +376,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			//검색창에만 입력했을시에
 		if(formsearch.get("main")!=null&&formsearch.get("s1")==null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null ){
 			
+			
+	
 			sql="select count(*)"
 			+" from academy "                           
 			+" where aca_name like ? " 
@@ -584,6 +586,26 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		rs=pstmt.executeQuery();	
 		
 	}		
+		// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		sql="select count(*)"
+				+" from academy where aca_name like ? "                           
+				+" and aca_search_addr1 =? " 
+				+" and aca_search_addr2 =? " 
+				+" and aca_search_addr3 =? "; 
+		pstmt=con.prepareStatement(sql);
+		
+
+		pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+	}		
 	else{//그냥 검색하기 만 눌렀을 경우
 		
 		sql="select count(*)"
@@ -636,24 +658,98 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	public List<AcademyBean> getSearchListAcademy(HashMap<String,Object> formsearch ,int StartRow, int pageSize){
 		
 		List<AcademyBean> list = new ArrayList();
+		
 			
 			try {
+				
 				getConnection();
-		
+				
+				String s5= (String)formsearch.get("s5");
 				
 				//검색창에만 입력했을시에
 			if(formsearch.get("main")!=null&&formsearch.get("s1")==null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null ){
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
-								 					+" from academy_review) r"
-						 +" on a.aca_main_num=r.aca_main_num"                      
-				+" where aca_name like ? " 
-				+" or a.aca_search_addr1 like ? " 
-				+" or a.aca_search_addr2 like ? " 
-				+" or a.aca_search_addr3 like ? "
-				+" or a.aca_category1 like ? "
-				+ " limit ? , ?";
+				
+				
+				
+				if(s5.equals("like")){//좋아요 많은순
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+							+ "												from liked_academy"
+							+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+							+" where a.aca_name like ? " 
+							+" or a.aca_search_addr1 like ? " 
+							+" or a.aca_search_addr2 like ? " 
+							+" or a.aca_search_addr3 like ? "
+							+" or a.aca_category1 like ? "
+							+ " order by acalike desc "
+							+ " limit ? , ?";
+					
+					
+					
+					
+				}else if(s5.equals("review")){//리뷰 후기 많은순
+					
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+							+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num "                      
+							+" where a.aca_name like ? " 
+							+" or a.aca_search_addr1 like ? " 
+							+" or a.aca_search_addr2 like ? " 
+							+" or a.aca_search_addr3 like ? "
+							+" or a.aca_category1 like ? "
+							+ " order by count desc "
+							+ " limit ? , ?";
+					
+					
+				}else if(s5.equals("rating")){//평점 높은순 
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														  +" from academy_review"
+														  + " group by aca_main_num ) r"
+							+" on a.aca_main_num=r.aca_main_num"                      
+							+" where a.aca_name like ? " 
+							+" or a.aca_search_addr1 like ? " 
+							+" or a.aca_search_addr2 like ? " 
+							+" or a.aca_search_addr3 like ? "
+							+" or a.aca_category1 like ? "
+							+ " order by  avgscore desc "
+							+ " limit ? , ? ";
+					
+				}else if(s5.equals("basic")){//기본
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+									 					+" from academy_review "
+									 					+ " group by aca_main_num ) r"
+							 +" on a.aca_main_num=r.aca_main_num"                      
+					+" where a.aca_name like ? " 
+					+" or a.aca_search_addr1 like ? " 
+					+" or a.aca_search_addr2 like ? " 
+					+" or a.aca_search_addr3 like ? "
+					+" or a.aca_category1 like ? "
+					+ " limit ? , ? ";
+					
+	
+				}
+				
+				
+				
+		
+				
+				
+				
 				
 				
 				pstmt=con.prepareStatement(sql);
@@ -676,13 +772,75 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 			
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
-								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                    
-						+" where a.aca_name like ? " 
-						+" and a.aca_search_addr1 = ? "
-						+ " limit ? , ?";
+				
+
+
+						
+						
+				if(s5.equals("like")){//좋아요 많은순
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+									+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+																+" from academy_review"
+																+ " group by aca_main_num) r"
+									+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+									+ "												from liked_academy"
+									+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+ " order by acalike desc,a.aca_main_num asc "
+									+ " limit ? , ?";
+							
+							
+							
+							
+						}else if(s5.equals("review")){//리뷰 후기 많은순
+							
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+									+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+																+" from academy_review"
+																+ " group by aca_main_num) r"
+									+" on a.aca_main_num=r.aca_main_num "                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+ " order by count desc,a.aca_main_num asc "
+									+ " limit ? , ?";
+							
+							
+						}else if(s5.equals("rating")){//평점 높은순 
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+									+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+																  +" from academy_review"
+																  + " group by aca_main_num ) r"
+									+" on a.aca_main_num=r.aca_main_num"                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+ " order by  avgscore desc,a.aca_main_num asc "
+									+ " limit ? , ? ";
+							
+						}else if(s5.equals("basic")){//기본
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+									 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+											 					+" from academy_review) r "
+									 +" on a.aca_main_num=r.aca_main_num "                    
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+ " limit ? , ?";
+							
+			
+						}
+
+				
+				
+				
+				
 						pstmt=con.prepareStatement(sql);
 						
 						pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
@@ -698,14 +856,77 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
-								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                              
-						+" where a.aca_name like ? " 
-						+" and a.aca_search_addr1 = ? "
-						+" and a.aca_category1 = ? "
-						+ " limit ? , ?";
+				
+				
+					if(s5.equals("like")){//좋아요 많은순
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+									+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+																+" from academy_review"
+																+ " group by aca_main_num) r"
+									+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+									+ "												from liked_academy"
+									+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+" and a.aca_category1 = ? "
+									+ " order by acalike desc,a.aca_main_num asc "
+									+ " limit ? , ?";
+							
+							
+							
+							
+						}else if(s5.equals("review")){//리뷰 후기 많은순
+							
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+									+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+																+" from academy_review"
+																+ " group by aca_main_num) r"
+									+" on a.aca_main_num=r.aca_main_num "                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+" and a.aca_category1 = ? "
+									+ " order by count desc,a.aca_main_num asc "
+									+ " limit ? , ?";
+							
+							
+						}else if(s5.equals("rating")){//평점 높은순 
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+									+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+																  +" from academy_review"
+																  + " group by aca_main_num ) r"
+									+" on a.aca_main_num=r.aca_main_num"                      
+									+" where a.aca_name like ? " 
+									+" and a.aca_search_addr1 = ? "
+									+" and a.aca_category1 = ? "
+									+ " order by  avgscore desc,a.aca_main_num asc "
+									+ " limit ? , ? ";
+							
+						}else if(s5.equals("basic")){//기본
+							
+							
+							sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+									 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+											 					+" from academy_review) r "
+									 +" on a.aca_main_num=r.aca_main_num "                    
+									 +" where a.aca_name like ? " 
+									 +" and a.aca_search_addr1 = ? "
+									 +" and a.aca_category1 = ? "
+									 + " limit ? , ?";
+							
+			
+						}
+				
+				
+				
+		
+		
+				
 				
 				pstmt=con.prepareStatement(sql);
 				
@@ -722,13 +943,68 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
-								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                          
-						+" where a.aca_search_addr1 = ? "
-						+" and a.aca_category1 = ? "
-						+" limit ? , ?";
+				if(s5.equals("like")){//좋아요 많은순
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+							+ "												from liked_academy"
+							+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+							+" where a.aca_search_addr1 = ? "
+							+" and a.aca_category1 = ? "
+							+ " order by acalike desc,a.aca_main_num asc "
+							+ " limit ? , ?";
+					
+					
+					
+					
+				}else if(s5.equals("review")){//리뷰 후기 많은순
+					
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+							+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num "                      
+							+" where a.aca_search_addr1 = ? "
+							+" and a.aca_category1 = ? "
+							+ " order by count desc,a.aca_main_num asc "
+							+ " limit ? , ?";
+					
+					
+				}else if(s5.equals("rating")){//평점 높은순 
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														  +" from academy_review"
+														  + " group by aca_main_num ) r"
+							+" on a.aca_main_num=r.aca_main_num"                      
+							+" where a.aca_search_addr1 = ? "
+							+" and a.aca_category1 = ? "
+							+ " order by  avgscore desc,a.aca_main_num asc "
+							+ " limit ? , ? ";
+					
+				}else if(s5.equals("basic")){//기본
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+									 					+" from academy_review) r "
+							 +" on a.aca_main_num=r.aca_main_num "                    
+							 +" where a.aca_search_addr1 = ? "
+							 +" and a.aca_category1 = ? "
+							 + " limit ? , ?";
+					
+	
+				}
+				
+				
+				
 						
 				pstmt=con.prepareStatement(sql);
 				
@@ -743,12 +1019,72 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 X
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-					+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
-								 					+" from academy_review) r" 
-				    +" on a.aca_main_num=r.aca_main_num "  
-					+" where a.aca_search_addr1 = ? "
-				    +" limit ? , ? ";
+				
+				
+				
+				
+				
+					if(s5.equals("like")){//좋아요 많은순
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+							+ "												from liked_academy"
+							+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+							+" where a.aca_search_addr1 = ? "
+							+ " order by acalike desc,a.aca_main_num asc "
+							+ " limit ? , ?";
+					
+					
+					
+					
+				}else if(s5.equals("review")){//리뷰 후기 많은순
+					
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+							+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+														+" from academy_review"
+														+ " group by aca_main_num) r"
+							+" on a.aca_main_num=r.aca_main_num "                      
+							+" where a.aca_search_addr1 = ? "
+							+ " order by count desc,a.aca_main_num asc "
+							+ " limit ? , ?";
+					
+					
+				}else if(s5.equals("rating")){//평점 높은순 
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+														  +" from academy_review"
+														  + " group by aca_main_num ) r"
+							+" on a.aca_main_num=r.aca_main_num"                      
+							+" where a.aca_search_addr1 = ? "
+							+ " order by  avgscore desc,a.aca_main_num asc "
+							+ " limit ? , ? ";
+					
+				}else if(s5.equals("basic")){//기본
+					
+					
+					sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+							 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+									 					+" from academy_review) r "
+							 +" on a.aca_main_num=r.aca_main_num "                    
+							 +" where a.aca_search_addr1 = ? "
+							 + " limit ? , ?";
+					
+	
+				}
+				
+				
+				
+				
+				
+				
 				
 				pstmt=con.prepareStatement(sql);
 				
@@ -762,15 +1098,81 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 O , 광역시도 선택 O,지역구 O , 카테고리 선택 O
 			else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
-								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                     
+				
+				
+				
+				if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
 						+" where a.aca_name like ? " 
 						+" and a.aca_search_addr1 =? " 
 						+" and a.aca_search_addr2 =? " 
 						+" and a.aca_category1 =? "
-						+" limit ? , ?";
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                    
+						 +" where a.aca_name like ? " 
+							+" and a.aca_search_addr1 =? " 
+							+" and a.aca_search_addr2 =? " 
+							+" and a.aca_category1 =? "
+						 + " limit ? , ?";
+				
+
+			}
+			
+				
+				
+				
+				
 				
 				pstmt=con.prepareStatement(sql);
 				
@@ -787,14 +1189,80 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 O	
 			else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 				
-				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
-						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
-								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                              
+				
+				
+				
+				
+				
+				if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
 						+" where a.aca_search_addr1 =? " 
 						+" and a.aca_search_addr2 =? " 
 						+" and a.aca_category1 =? "
-						+" limit ? , ?";
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_category1 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+								 					+" from academy_review) r "
+						 +" on a.aca_main_num=r.aca_main_num "                    
+							+" where a.aca_search_addr1 =? " 
+							+" and a.aca_search_addr2 =? " 
+							+" and a.aca_category1 =? "
+						 + " limit ? , ?";
+				
+
+			}
+			
+				
+				
+				
+				
+				
 				pstmt=con.prepareStatement(sql);
 				
 				pstmt.setString(1,(String)formsearch.get("s1"));
@@ -809,36 +1277,163 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 X	
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
 				
+			
+				
+				if(s5.equals("like")){//좋아요 많은순
+					
+					
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+				}else if(s5.equals("basic")){//기본
+				
+				
 				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
 								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                               
-						+" where a.aca_search_addr1 =? " 
-						+" and a.aca_search_addr2 =? "
-						+" limit ? , ?";
-				pstmt=con.prepareStatement(sql);
+						 +" on a.aca_main_num=r.aca_main_num "                    
+						 +" where a.aca_search_addr1 =? " 
+							+" and a.aca_search_addr2 =? "
+						 + " limit ? , ?";
 				
-				pstmt.setString(1,(String)formsearch.get("s1"));
-				pstmt.setString(2,(String)formsearch.get("s2"));
-				pstmt.setInt(3,StartRow);
-				pstmt.setInt(4,pageSize);
+	
+				}
 				
+				
+			
+					pstmt=con.prepareStatement(sql);
+					
+					pstmt.setString(1,(String)formsearch.get("s1"));
+					pstmt.setString(2,(String)formsearch.get("s2"));
+					pstmt.setInt(3,StartRow);
+					pstmt.setInt(4,pageSize);
+					
 				rs=pstmt.executeQuery();	
 				
 			}//
 	//		//전체 검색 창 입력 O , 광역시도 선택 O,지역구 O ,읍면동 O , 카테고리 선택 O	
 		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
 			
-			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+			
+			
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 = ? " 
+						+" and a.aca_search_addr2 = ? " 
+						+" and a.aca_search_addr3 = ? " 
+						+" and a.aca_category1 = ? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 = ? " 
+						+" and a.aca_search_addr2 = ? " 
+						+" and a.aca_search_addr3 = ? " 
+						+" and a.aca_category1 = ? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_name like ? " 
+						+" and a.aca_search_addr1 = ? " 
+						+" and a.aca_search_addr2 = ? " 
+						+" and a.aca_search_addr3 = ? " 
+						+" and a.aca_category1 = ? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+				}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
 								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                             
+								 					+" on a.aca_main_num=r.aca_main_num "  			 					
 					+" where a.aca_name like ? " 
 					+" and a.aca_search_addr1 = ? " 
 					+" and a.aca_search_addr2 = ? " 
 					+" and a.aca_search_addr3 = ? " 
 					+" and a.aca_category1 = ? "
-					+" limit ? , ?";
+						 + " limit ? , ?";
+				
+	
+				}
+			
+			
+			
+			
+			
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
@@ -856,15 +1451,80 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	     // 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 O			
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
 			
-			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+			
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "     
+						+" and a.aca_category1 =? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "     
+						+" and a.aca_category1 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "     
+						+" and a.aca_category1 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+				}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
 								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                   
-					+" where a.aca_search_addr1 =? " 
-					+" and a.aca_search_addr2 =? " 
-					+" and a.aca_search_addr3 =? "     
-					+" and a.aca_category1 =? "
-					+" limit ? , ?";
+								 					+" on a.aca_main_num=r.aca_main_num "    
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "     
+						+" and a.aca_category1 =? "
+						 + " limit ? , ?";
+				
+	
+				}
+			
+			
+			
+		
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1,(String)formsearch.get("s1"));
@@ -880,14 +1540,75 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
 		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
 			
-			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+			
+				if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+				}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
 								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "                       
-					+" where a.aca_search_addr1 =? " 
-					+" and a.aca_search_addr2 =? " 
-					+" and a.aca_search_addr3 =? "
-					+" limit ? , ?";
+						+" on a.aca_main_num=r.aca_main_num "    
+						+" where a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						 + " limit ? , ?";
+				
+	
+				}
+			
+			
+			
+			
+		
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1,(String)formsearch.get("s1"));
@@ -898,14 +1619,151 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			rs=pstmt.executeQuery();	
 			
+		}		// 검색 창 입력 O, 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X	
+		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+						+" from academy_review"
+						+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+" where aca_name like ? "
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+						+" 								from academy_review"
+						+ "								 group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? " 
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+						+"							 from academy_review"
+						+ "					 			group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? "  
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
+						+" 								from academy_review) r "
+						+" on a.aca_main_num=r.aca_main_num "    
+						+" where a.aca_name like ? "
+						+" and a.aca_search_addr1 =? "  
+						+" and a.aca_search_addr2 =? " 
+						+" and a.aca_search_addr3 =? "
+						+ " limit ? , ?";
+				
+				
+			}
+			
+			
+			
+			
+			
+			pstmt=con.prepareStatement(sql);
+
+			pstmt.setString(1,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s2"));
+			pstmt.setString(4,(String)formsearch.get("s3"));
+			pstmt.setInt(5,StartRow);
+			pstmt.setInt(6,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
 		}		
 		else{//그냥 검색하기 만 눌렀을 경우
 			
-			sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(k.acalike , 0) acalike"
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike"
+						+ "												from liked_academy"
+						+ "												group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(r.count,0) count"
+						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore"
+													+" from academy_review"
+													+ " group by aca_main_num) r"
+						+" on a.aca_main_num=r.aca_main_num "                      
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
+						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+													  +" from academy_review"
+													  + " group by aca_main_num ) r"
+						+" on a.aca_main_num=r.aca_main_num"                      		
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+				}else if(s5.equals("basic")){//기본
+				
+				
+				sql="select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore " 
 								 					+" from academy_review) r "
-						 +" on a.aca_main_num=r.aca_main_num "    
-					+" limit ? , ?";
+						+" on a.aca_main_num=r.aca_main_num "    
+						 + " limit ? , ?";
+				
+	
+				}
+			
+			
+
 					 
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1,StartRow);
@@ -951,19 +1809,16 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	} // getSearchListAcademy() 끝
 
 	// 좋아요 한 학원 목록
-	public List<AcademyBean> getLikeAcaList(int acaMainNum, int startRow,int pageSize){
+	public AcademyBean getLikeAcaBean(int acaMainNum){
 		
 		AcademyBean bean = null;
-		List<AcademyBean> acaList = new ArrayList<AcademyBean>();
 		try {
 			getConnection();
-			sql = "select * from academy where aca_main_num=? "
-					+ "order by aca_main_num limit ?,?";
+			sql = "select * from academy where aca_main_num=? ";
+					
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acaMainNum);
-			pstmt.setInt(2, startRow-1);
-			pstmt.setInt(3, pageSize);
 			
 			rs = pstmt.executeQuery();
 			
@@ -982,7 +1837,6 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				bean.setAcaAddrDetailed(rs.getString(14));
 				bean.setMem_email(rs.getString(15));
 				
-				acaList.add(bean);
 			}
 		} catch (Exception e) {
 			System.out.println("getAcademyContent()에서 예외 발생");
@@ -991,8 +1845,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			resourceClose();
 		}
 		
-		return acaList;
-	} // getLikeAcaList() 끝
+		return bean;
+	} // getLikeAcaBean() 끝
 	
 	//학원관리자 회원정보 변경
 	@Override

@@ -55,7 +55,7 @@
 					<div class="section_title_container text-center">
 						<h4 class="section_title">비밀번호 찾기</h4>
       
-					      <form class="sign_upClass" action="./MemberFindPwAction.me" method="post" onsubmit="return inputchk()" id="findPw">
+					      <form class="sign_upClass" action="./MemberFindPwAction.me" method="post">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>가입 시 입력하신 이메일 주소로 비밀번호 재설정 메일이 발송됩니다. <br>메일을 입력 후 전송버튼을 클릭하시고 메일을 확인해주세요.</p>
