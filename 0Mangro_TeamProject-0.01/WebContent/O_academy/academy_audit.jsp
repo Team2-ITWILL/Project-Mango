@@ -131,11 +131,11 @@
 						        <label class="form-label audit_subject">청강신청과목
 						       		<select  name="audit_subject" class="form-control">	
 						       			<!-- 학원에서 지정한  청강가능과목만 표시 영역-->					       			
-							       		<option>과목 선택
+							       		<option disabled>과목 선택</option>
 							       		
 							       		<!-- 등록된 청강과목리스트로의 과목들을 select option으로 등록 -->
 							       		<c:forEach var="vo" items="${list}">	
-							       			<option>${vo.auditAvailSubj}							       			
+							       			<option>${vo.auditAvailSubj}</option>							       			
 										</c:forEach>
 										
 									</select>	

@@ -175,7 +175,8 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >학원관리</span></li>
                         
                         <li class="sidebar-item"> 
-                       	 	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_aca_admin_page/aca_admin_revise.jsp"
+                       	 	<a class="sidebar-link sidebar-link" 
+                       	 		href="./AcademyGetAdminInfo.aca"
                            		aria-expanded="false">
                                 <i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">학원 정보</span>

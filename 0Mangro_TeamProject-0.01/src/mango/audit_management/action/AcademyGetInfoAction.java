@@ -1,6 +1,9 @@
 package mango.audit_management.action;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +36,7 @@ public class AcademyGetInfoAction implements Action{
 		
 		AcademyDAO dao = new AcademyDAO();
 		
-		AcademyBean bean = dao.getAcademyContent(email);
+		AcademyBean bean = dao.getAcademyContent(email);	
 		
 		//----email을 기준으로 학원 정보를 가져와서 aca_audit_manage.jsp로 보내준다 -----------//
 		request.setAttribute("academyBean", bean);

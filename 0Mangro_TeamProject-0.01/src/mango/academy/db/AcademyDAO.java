@@ -34,16 +34,17 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			while(rs.next()){
 				bean = new AcademyBean(
-						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), 
-						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15)
-						,rs.getDouble(17)   
-						);	
-			
+						rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getString(4), rs.getString(5), rs.getString(6),
+						rs.getString(7), rs.getString(8), rs.getString(9), 
+						rs.getString(10), rs.getString(11), //acaCategory
+						rs.getString(12), rs.getString(13), rs.getString(14), //address
+						rs.getString(15),	//mem_email						
+						rs.getDouble(16)  //reviewScore
+						
+						);				
 				
-				list.add(bean);	
-				
-				
+				list.add(bean);			
 			
 			}			
 			
@@ -1784,10 +1785,20 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 
 			while(rs.next()){
 				AcademyBean bean = new AcademyBean(
-						rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+						/*rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
 						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), 
 						rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15),
-						rs.getDouble(17));	
+						rs.getDouble(17));	*/	
+						
+						rs.getInt(1), rs.getString(2), rs.getString(3), 
+						rs.getString(4), rs.getString(5), rs.getString(6),
+						rs.getString(7), rs.getString(8), rs.getString(9), 
+						rs.getString(10), rs.getString(11), //acaCategory
+						rs.getString(12), rs.getString(13), rs.getString(14), //address
+						rs.getString(15),	//mem_email						
+						rs.getDouble(16)   //reviewScore
+				
+						);			
 				
 				list.add(bean);				
 			}			
@@ -1850,20 +1861,34 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	
 	//학원관리자 회원정보 변경
 	@Override
-	public int reviseAcademyInfo(MemberBean bean) {
+	public int reviseAcademyInfo(AcademyBean vo) {
 		int result = 0;
 		try {
 			getConnection();
 			
-			String query = "select decode(?, m.mem_pwd, 'true, 'false') as result "
-					+ "from member m join academy aca "
-					+ "on m.mem_email = aca.mem_email";
+			String query = "update academy set "					
+					+ " aca_name = ?, "
+					+ " aca_start_date = ?, " 
+					+ " aca_category1 = ?, " 
+					+ " aca_category2 = ?, " 
+					+ " aca_addr_zip = ?, " 
+					+ " aca_addr_doro = ? "			
+					+ " where mem_email=?";			
 			
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, bean.getMemPwd());
-			pstmt.executeQuery();
+			pstmt = con.prepareStatement(query);			
 			
+			pstmt.setString(1, vo.getAcaName());
+			pstmt.setString(2, vo.getAcaStartDate());
+			pstmt.setString(3, vo.getAcaCategory1());
+			pstmt.setString(4, vo.getAcaCategory2());
+			pstmt.setString(5, vo.getAcaAddrZip());
+			pstmt.setString(6, vo.getAcaAddrDoro());
+			pstmt.setString(7, vo.getMem_email());
 			
+			System.out.println(vo.toString());
+	
+			
+			result = pstmt.executeUpdate();			
 			
 		} catch (Exception e) {
 			System.out.println("reviseAcademyInfo()에서 예외 발생");
@@ -1903,6 +1928,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				bean.setAcaAddrDetailed(rs.getString(14));
 				bean.setMem_email(rs.getString(15));
 				
+				//System.out.println(bean.toString());
 			}
 		} catch (Exception e) {
 			System.out.println("getAcademyContent(String email)에서 예외 발생");

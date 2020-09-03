@@ -50,7 +50,7 @@ public interface IAcademy {
 	
 	
 	//학원관리자 회원정보 변경
-	public int reviseAcademyInfo(MemberBean bean);
+	public int reviseAcademyInfo(AcademyBean bean);
 	
 	//학원관리자 회원정보 가져오기(오버로딩)
 	public AcademyBean getAcademyContent(String email);

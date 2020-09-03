@@ -122,7 +122,33 @@ public class AcademyFrontController extends HttpServlet {
 				System.out.println("/AcademySearchList.aca에서 예외 발생");
 			}
 			
+		}else if(command.equals("/AcademyGetAdminInfo.aca")){			
+			action =new AcademyAdminInfoAction();		
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {				
+				e.printStackTrace();
+				System.out.println("/AcademyGetAdminInfo.aca에서 예외 발생");
+			}			
+		}else if(command.equals("/AcademyImgUpload.aca")){			
+			action =new AcademyImgUploadAction();	
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {				
+				e.printStackTrace();
+				System.out.println("/AcademyImgUpload.aca에서 예외 발생");
+			}			
+		}else if(command.equals("/AcademyReviseAction.aca")){			
+			action =new AcademyReviseAction();	
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {				
+				e.printStackTrace();
+				System.out.println("/AcademyReviseAction.aca에서 예외 발생");
+			}			
 		}
+		
+		
 		
 		
 		
