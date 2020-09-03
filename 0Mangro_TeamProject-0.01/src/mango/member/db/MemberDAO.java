@@ -105,12 +105,14 @@ public class MemberDAO extends DBconnection{
 				// 비밀번호가 일치할 때
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 						
-					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null) ){ 
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null) 
+					|| !(rs.getString("mem_baned") == null) ){ 
 						check = -2;
 						
-					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_seceded") == null) ){
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
+					}else if((rs.getString("mem_seceded") == null) 
+						  && (rs.getString("mem_baned") == null)){
 						check = 1;
 					}
 				
@@ -156,12 +158,14 @@ public class MemberDAO extends DBconnection{
 				if(rs.getString("mem_email").equals(mb.getMemPwd()) 
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
-					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null) ){ 
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null)
+					|| !(rs.getString("mem_baned") == null)){ 
 						check = -2;
 						
-					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_seceded") == null) ){
+						// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
+					}else if((rs.getString("mem_seceded") == null) 
+						  && (rs.getString("mem_baned") == null)){
 						check = 1;
 					}
 				}	
@@ -307,9 +311,9 @@ public class MemberDAO extends DBconnection{
 
 
 	/* 비밀번호 찾기 기능 메서드 */
-	public String findPw(String email) {
+	public MemberBean findPw(String email) {
 	
-		String pw = "";
+		MemberBean mb = new MemberBean();
 		
 		try {
 			getConnection();
@@ -321,7 +325,7 @@ public class MemberDAO extends DBconnection{
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
-				pw = rs.getString("mem_pwd");
+				mb.setMemPwd(rs.getString("mem_pwd"));
 			}
 			
 			System.out.println("비밀번호 조회 완료 !!");
@@ -332,7 +336,7 @@ public class MemberDAO extends DBconnection{
 		} finally {
 			resourceClose();
 		}
-		return pw;
+		return mb;
 	}
 
 
