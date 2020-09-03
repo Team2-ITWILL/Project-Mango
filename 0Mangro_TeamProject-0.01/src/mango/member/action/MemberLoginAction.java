@@ -60,7 +60,7 @@ public class MemberLoginAction implements Action{
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("window.alert('탈퇴한 계정입니다.');");
+			out.print("window.alert('탈퇴하거나 정지된 계정입니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			
