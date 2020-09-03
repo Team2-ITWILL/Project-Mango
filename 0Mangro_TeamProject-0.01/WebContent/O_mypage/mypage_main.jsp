@@ -125,11 +125,7 @@
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
                                 <span class="hide-menu">내 정보</span></a>
 						</li>
-						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="./MemberFindPw.me"
-                                aria-expanded="false"><i class="fa fa-key" aria-hidden="true"></i>
-                                <span class="hide-menu">비밀번호 찾기</span></a>
-						</li>
+
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
                         <li class="list-divider"></li> <!-- 구분선 -->
