@@ -1,7 +1,5 @@
 package mango.member.db;
-
 import mango.connection.db.DBconnection;
-
 public class MemberDAO extends DBconnection{
 	
 	/* 일반 회원 가입  메서드 */
@@ -16,7 +14,6 @@ public class MemberDAO extends DBconnection{
 			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, "
 					+ "mem_joindate)"
 					+ " VALUES (?,?,?, now())";
-
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, mb.getMemEmail());
@@ -58,7 +55,6 @@ public class MemberDAO extends DBconnection{
 			sql = "INSERT INTO member (mem_email, mem_name, "
 					+ "mem_joindate)"
 					+ " VALUES (?,?, now())";
-
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, mb.getMemEmail());
@@ -105,12 +101,14 @@ public class MemberDAO extends DBconnection{
 				// 비밀번호가 일치할 때
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 						
-					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null) ){ 
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null) 
+					|| !(rs.getString("mem_baned") == null) ){ 
 						check = -2;
 						
-					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_seceded") == null) ){
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
+					}else if((rs.getString("mem_seceded") == null) 
+						  && (rs.getString("mem_baned") == null)){
 						check = 1;
 					}
 				
@@ -122,9 +120,7 @@ public class MemberDAO extends DBconnection{
 			}else{
 				check = -1; // SELECT 결과에 아이디 없을 때 (-1)
 			}
-
 			System.out.println("DB 조회 성공 !!");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("--> loginCheck()에서 SQL구문 오류 : " + e);
@@ -156,12 +152,14 @@ public class MemberDAO extends DBconnection{
 				if(rs.getString("mem_email").equals(mb.getMemPwd()) 
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
-					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null) ){ 
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null)
+					|| !(rs.getString("mem_baned") == null)){ 
 						check = -2;
 						
-					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_seceded") == null) ){
+						// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
+					}else if((rs.getString("mem_seceded") == null) 
+						  && (rs.getString("mem_baned") == null)){
 						check = 1;
 					}
 				}	
@@ -169,9 +167,7 @@ public class MemberDAO extends DBconnection{
 			}else{
 				check = -1; // SELECT 결과에 아이디 없을 때 (-1)
 			}
-
 			System.out.println("DB 조회 성공 !!");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("--> naverloginCheck()에서 SQL구문 오류 : " + e);
@@ -191,13 +187,10 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
-
 			sql = "SELECT * FROM member WHERE mem_email = ?";
-
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
 			rs = pstmt.executeQuery();
-
 			if(rs.next()){
 				
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
@@ -206,11 +199,9 @@ public class MemberDAO extends DBconnection{
 					sql = "UPDATE member "
 						+ "SET mem_seceded = now() "
 						+ "WHERE mem_email = ?";
-
 					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, mb.getMemEmail());
 					pstmt.executeUpdate();
-
 				}else{
 					check = 0;
 				}
@@ -229,8 +220,6 @@ public class MemberDAO extends DBconnection{
 		}
 		return check;
 	} // 회원 탈퇴 / deleteMember() 끝
-
-
 	
 	
 	
@@ -244,17 +233,13 @@ public class MemberDAO extends DBconnection{
 			sql = "SELECT mem_name "
 				+ "FROM member "
 				+ "WHERE mem_email = ?";
-
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
-
 			if(rs.next()){
 				name = rs.getString("mem_name");
 			}
-
 			System.out.println("회원 이름 조회 완료 !!");
-
 		} catch (Exception e) {
 			System.out.println("--> selectMember()에서 SQL 구문 오류 : "+ e);
 			e.printStackTrace();
@@ -303,13 +288,10 @@ public class MemberDAO extends DBconnection{
 		}
 		return result;
 	} // 회원 정보 수정 / updateMember() 끝
-
-
-
 	/* 비밀번호 찾기 기능 메서드 */
-	public String findPw(String email) {
+	public MemberBean findPw(String email) {
 	
-		String pw = "";
+		MemberBean mb = new MemberBean();
 		
 		try {
 			getConnection();
@@ -321,7 +303,7 @@ public class MemberDAO extends DBconnection{
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
-				pw = rs.getString("mem_pwd");
+				mb.setMemPwd(rs.getString("mem_pwd"));
 			}
 			
 			System.out.println("비밀번호 조회 완료 !!");
@@ -332,9 +314,8 @@ public class MemberDAO extends DBconnection{
 		} finally {
 			resourceClose();
 		}
-		return pw;
+		return mb;
 	}
-
 	
 	
 	

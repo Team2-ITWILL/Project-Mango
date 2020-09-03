@@ -96,20 +96,6 @@ public class MemberFrontController extends HttpServlet {
 
 			
 			
-/* ---------------------------------- 비밀번호 찾기 메일 전송 시작 ---------------------------------- */		
-
-		}else if(command.endsWith("/MemberFindPwMailAction.me")){
-			
-			action = new MemberFindPwMailAction();
-			
-			try {
-				forward = action.excute(request, response);
-			} catch (Exception e) {
-				System.out.println("/MemberFindPwMailAction.me : " + e);
-				e.printStackTrace();
-			}
-			
-/* ---------------------------------- 비밀번호 찾기 메일 전송 끝 ---------------------------------- */		
 			
 			
 			
