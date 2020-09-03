@@ -51,18 +51,20 @@
 				return false;
 			}
 			
-			// 인증번호
+			/* 인증번호
 			if($("#emailcheck").val == ""){
 				alert("인증번호를 확인하세요.");
 				$("#emailcheck").focus();
 				return false;
-			} 			
+			} */			
 
-			 /*
-			if($("#mailDup").val() != "mailCheck"){
+			 
+			if(joinCheck != "success"){
 		        alert("이메일 인증을 해주세요.");
 		        return false;
-			}else{
+			}
+			
+			/*else{
 				
 				if($("#mailDup").val() != $("#id_email").val()){
 		           alert("이메일 인증을 다시 해주세요.");
@@ -103,8 +105,14 @@
 		
 		var email = $("#id_email").val(); 
 //		window.alert(email); // 데이터 확인
-		window.open("./MemberMailAction.me?email="+$("#id_email").val(),"","width=400, height=200");
+		var urlVar = "./MemberMailAction.me?email="+$("#id_email").val();
+/* 		var urlVar = "./MemberMailAction.me#startAuth?email="+$("#id_email").val(); */
+		/* window.open("./MemberMailAction.me?email="+$("#id_email").val(),"","width=400, height=200"); */
 //		location.href = "/MemberMailAction.me?email="+$("#id_email").val();
+		
+		$("#authEmailSpan").removeAttr("style"); // 이메일 인증번호창 활성화 되기까지 대기시간 소요 알림문구 보이게
+		$("#iframeHere").attr("src",urlVar); // iframe의 src를 이메일인증창 주소로 연결
+		$("#iframeHere").removeAttr("style","display:none;"); // iframe의 숨김표시 해제
 		
 	}
 //<--------------------------- 이메일 인증 번호 전송  ------------------------->	
@@ -181,17 +189,22 @@
 					      
 					      <!-- 이메일 -->
 					      <div class="js-form-message form-group">
-						        <label class="form-label" for="id_email">이메일</label>
+						        <label class="form-label" for="id_email">이메일 
+						        </label>
 						        <input type="email" class="form-control is-invalid" name="id_email" id="id_email" placeholder="이메일" 
 						               required
 						               data-msg="이메일을 입력해주세요."
 						               data-error-class="form-error"
 						               data-success-class="form-success"> 
-						        <button type="button" class="btn btn-primary right-btn" id="mailDup" onclick="emailCheck()">전송</button>
+						        <button type="button" class="btn btn-primary right-btn" onclick="emailCheck()">전송</button>
+						        <%-- 인증성공여부 확인 : 인증성공시 value값 success, 기본값 fail --%>
+						        	<span style="display: none;" id="authEmailSpan">
+						        		잠시 후 인증번호창이 활성화되면 인증번호를 입력하세요.
+						        	</span>
 					      </div>
 					               
-					  <%--<!-- 인증번호 버튼 -->
-	 				 	  <div class="js-form-message form-group">
+					  	  <!-- 인증번호 버튼 -->
+	 				 <!-- <div class="js-form-message form-group">
 						        <label class="form-label" for="id_password1">
 						          <span class="d-flex justify-content-between align-items-center">인증번호</span>
 						        </label>
@@ -201,8 +214,10 @@
 						               data-error-class="form-error"
 						               data-success-class="form-success">
 						        <button type="button" class="btn btn-primary right-btn">확인</button>
-					      </div> --%>
+					      </div> -->
 						  
+						  <iframe src="" id="iframeHere" style="display: none;" width=600 height=150 border=0 scrolling="no" frameborder="0"></iframe>
+					      
 					      
 					      <!-- 비밀번호 입력 & 비밀번호 확인 -->
 					      <div class="js-form-message form-group">

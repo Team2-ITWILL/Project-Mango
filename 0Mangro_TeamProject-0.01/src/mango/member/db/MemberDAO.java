@@ -339,14 +339,6 @@ public class MemberDAO extends DBconnection{
 		return mb;
 	}
 
-
-
-
-
-
-	
-	
-	
 	
 	
 	

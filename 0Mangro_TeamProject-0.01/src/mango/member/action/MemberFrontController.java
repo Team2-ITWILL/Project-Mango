@@ -241,11 +241,6 @@ public class MemberFrontController extends HttpServlet {
 		
 		
 		
-		
-		
-		
-		
-		
 		if(forward != null){ //new ActionForward()객체가 존재 하고..
 			
 			if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..

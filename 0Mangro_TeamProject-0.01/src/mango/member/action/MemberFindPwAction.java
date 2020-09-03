@@ -78,35 +78,28 @@ public class MemberFindPwAction implements Action{
 	        Transport.send(mimeMessage);
 			
 	        response.setContentType("text/html; charset=UTF-8");
-	         
 	        out.println("<script>");
 	        out.println("location.href='./MemberLogin.me'");
 	        out.println("</script>");
 	        
 			} catch (Exception e) {
 				e.printStackTrace();
-		        
+		        System.out.println("MemberFindPwAction : " + e);
 		        response.setContentType("text/html; charset=UTF-8");
-		         
 		        out.println("<script>");
 		        out.println("alert('이메일 인증에 실패하였습니다.');");
 		        out.println("alert('다시 시도해 주십시오.');");
 		        out.println("window.close();");
 		        out.println("</script>");
 			}
-			
 			return null;
-			
 		}else{
-			
 			response.setContentType("text/html; charset=UTF-8"); 
-			
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('가입한 이메일이 없습니다.')");
 			out.println("location.href='./MemberFindPw.me'");
 			out.println("</script>");
-			
 		}
 		
 //		ActionForward forward = new ActionForward();

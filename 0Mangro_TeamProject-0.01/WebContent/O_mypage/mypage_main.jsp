@@ -107,7 +107,6 @@
                         <li class="nav-small-cap">
                         	<span class="hide-menu divide">설정 및 관리</span>
                         	<span class="rounded p-1 font-footnote border text-primary">일반인</span>
-                        	
                         </li>
 
                         <li class="sidebar-item"> 
@@ -137,7 +136,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=1"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email}&pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
