@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.member.db.MemberBean;
 import mango.member.db.MemberDAO;
 
 public class MemberFindPwAction implements Action{
@@ -26,11 +27,9 @@ public class MemberFindPwAction implements Action{
 		/* 비밀번호 조회하기 */
 		MemberDAO mdao = new MemberDAO();
 		String email = (String)request.getParameter("id_email");
-		String pw = mdao.findPw(email);
+		MemberBean mb = mdao.findPw(email);
 		
-		System.out.println(pw);
-		
-		if(pw != null){
+		if(mb != null){
 			
 			response.setContentType("text/html; charset=UTF-8"); 
 			
@@ -41,9 +40,9 @@ public class MemberFindPwAction implements Action{
 			
 			// 보내는 사람(망고)
 			String smtpServer = "smtp.naver.com";
-		    final String sendId = "gyrud13"; // 아이디
-		    final String sendPass = "kimhk6744@"; // 비밀번호
-		    String sendEmailAddress = "gyrud13@naver.com"; // 보내는 사람
+		    final String sendId = "mango_academy"; // 아이디
+		    final String sendPass = "gkrdnjs0000"; // 비밀번호
+		    String sendEmailAddress = "mango_academy@naver.com"; // 보내는 사람
 		    int smtpPort = 465; // SMTP 포트번호
 			
 		    // 받는 사람 (가입할 사람의 주소)
@@ -52,7 +51,7 @@ public class MemberFindPwAction implements Action{
 			
 		    String subject = "Mango(망고) 비밀번호 확인 메일입니다"; // 메일 제목
 		    String content = "안녕하세요. Mango(망고) 비밀번호 확인 메일입니다."
-		      				 + "\n비밀번호는 ";
+		      				 + "\n비밀번호는 "+ mb.getMemPwd() + " 입니다.";
 		    
 			try {
 				Properties props = System.getProperties();
@@ -80,7 +79,9 @@ public class MemberFindPwAction implements Action{
 			
 	        response.setContentType("text/html; charset=UTF-8");
 	         
-	        out.println("비밀번호 : <input type='text' id=checknum1>");
+	        out.println("<script>");
+	        out.println("location.href='./MemberLogin.me'");
+	        out.println("</script>");
 	        
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -111,7 +112,6 @@ public class MemberFindPwAction implements Action{
 //		ActionForward forward = new ActionForward();
 //		forward.setRedirect(false);
 //		forward.setPath("./MemberFindPw.me");
-		
 		return null;
 	}
 	
