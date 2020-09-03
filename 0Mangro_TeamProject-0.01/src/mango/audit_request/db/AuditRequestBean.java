@@ -18,12 +18,12 @@ public class AuditRequestBean {
 
     // 청강희망과목 
     private String auditSubject;
-
-    // 청강신청일자 
-    private LocalDate auditRequestDate;
-
+    
     // 청강희망일자 
     private LocalDate auditWishDate;
+
+    // 청강신청일자 
+    private LocalDate auditRequestDate;  
 
     // 청강승인일자 
     private LocalDate auditConfirmDate;
@@ -32,15 +32,15 @@ public class AuditRequestBean {
     public AuditRequestBean(
     		int auditNum, String memEmail, 
     		int acaNum, String acaName, String auditSubject,
-    		LocalDate auditRequestDate, LocalDate auditWishDate, LocalDate auditConfirmDate
+    		LocalDate auditWishDate, LocalDate auditRequestDate, LocalDate auditConfirmDate
     		){
     	this.auditNum = auditNum;
     	this.memEmail = memEmail;
     	this.acaNum = acaNum;
     	this.acaName = acaName;
     	this.auditSubject = auditSubject;
-    	this.auditRequestDate = auditRequestDate;
     	this.auditWishDate = auditWishDate;
+    	this.auditRequestDate = auditRequestDate;    
     	this.auditConfirmDate = auditConfirmDate;    	
     }
     
@@ -93,14 +93,14 @@ public class AuditRequestBean {
 	public void setAuditConfirmDate(LocalDate auditConfirmDate) {
 		this.auditConfirmDate = auditConfirmDate;
 	}
-	
 	@Override
 	public String toString() {
 		return "AuditRequestBean [auditNum=" + auditNum + ", memEmail=" + memEmail + ", acaNum=" + acaNum + ", acaName="
-				+ acaName + ", auditSubject=" + auditSubject + ", auditRequestDate=" + auditRequestDate
-				+ ", auditWishDate=" + auditWishDate + ", auditConfirmDate=" + auditConfirmDate + "]";
+				+ acaName + ", auditSubject=" + auditSubject + ", auditWishDate=" + auditWishDate
+				+ ", auditRequestDate=" + auditRequestDate + ", auditConfirmDate=" + auditConfirmDate + "]";
 	}
-    
+	
+
     
 
    

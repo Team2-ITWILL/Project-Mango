@@ -26,6 +26,9 @@ public interface IAuditRequest {
 	//누적 청강수 불러오기
 	public int getAuditCount();
 	
+	//과목 당 청강신청이 들어온 개수
+	public int getAuditCountOfSubject(String subject);
+	
 	//승인된 청강 개수
 	public int getAuditCountApproval();
 	

@@ -58,8 +58,45 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 
 	@Override
 	public List<AuditRequestBean> getAllAuditList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<AuditRequestBean> list = new ArrayList<AuditRequestBean>();
+		try {
+			getConnection();
+			String sql = "select * from audit_request";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();		
+			
+			AuditRequestBean bean = null;			
+			
+			while(rs.next()){
+				
+				java.time.LocalDate confirmDate = null;				
+				if(rs.getDate(8) != null)
+					confirmDate = rs.getDate(8).toLocalDate();
+				else
+					confirmDate = null;
+				
+				bean = new AuditRequestBean(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getDate(6).toLocalDate(),
+						rs.getDate(7).toLocalDate(),						
+						confirmDate
+						
+						);
+				list.add(bean);
+			}
+		
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}	
+		return list;	
 	}
 
 	@Override
@@ -97,8 +134,39 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 
 	@Override
 	public int CheckAuditList(AuditRequestBean check) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		//★★★기본값 : 1★★★ 
+		//중복 레코드셋이 존재하지 않는다면 청강신청이 가능하므로 1 반환
+		int result = 1;
+		
+		try {
+			getConnection();
+			String sql = "select audit_wish_subject from audit_request "
+					+ "where mem_email = ?";		
+			
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, check.getMemEmail());			
+			rs = pstmt.executeQuery();					
+			
+			while(rs.next()){
+				//한 사람 당 과목 중복 신청 불가
+				//form에서 선택한 과목이 DB에 이미 등록되어 있으면 청강신청 불가 
+				if(check.getAuditSubject().equals(rs.getString(1))){							
+					result = 0;
+					break;							
+				}else{
+					//DB에 없으면 중복X -> 청강신청 가능
+					result = 1;	
+				}					
+			}					
+			
+		} catch (Exception e) {
+			System.out.println("CheckAuditList()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return result;
 	}
 
 	@Override
@@ -208,6 +276,29 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			
 		} catch (Exception e) {
 			System.out.println("getAuditCountApproval()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return count;
+	}
+
+	@Override
+	public int getAuditCountOfSubject(String subject) {
+		int count = 0;
+		try {
+			getConnection();
+			String sql = "select count(*) from audit_request where audit_wish_subject=?";			
+			pstmt = con.prepareStatement(sql);	
+			pstmt.setString(1, subject);
+			rs = pstmt.executeQuery();
+			
+			rs.next();			
+			
+			count = rs.getInt(1);			
+			
+		} catch (Exception e) {
+			System.out.println("getAuditCountOfSubject()에서 예외 발생");
 			e.printStackTrace();
 		} finally{
 			resourceClose();

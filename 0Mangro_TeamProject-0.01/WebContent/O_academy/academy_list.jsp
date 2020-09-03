@@ -76,8 +76,19 @@ li.thirdKey {
 
 <script type="text/javascript">
 
-
-
+	 
+	//div태그 클릭 -> 학원정보페이지로 이동
+	function ToAcaContent(div, acaMainNum, pageNum){		
+		div.onclick = function(){
+			
+			location.href = "./AcademyContentAction.aca?acaMainNum=" 
+					+ acaMainNum 
+					+ "&pageNum=" 
+					+ pageNum;
+					
+		};	
+	}
+		
 
 	var search1=null;
 	var search2=null;
@@ -218,13 +229,7 @@ li.thirdKey {
 		
 			});//getJSON
 		
-		});//change
-		
-		
-		
-		
-		
-		
+		});//change		
 		
 		
 	
@@ -359,7 +364,7 @@ li.thirdKey {
 										<div class="course">
 										
 												<!-- course_body -->
-												<div class="course_body">
+												<div class="course_body" onclick="ToAcaContent(this, ${i.acaMainNum}, ${pageNum})">
 													<!-- 학원 사진 -->
 													<div class="aca_profile_div" style="display: inline-block;">
 														<img src="images/etc/default_mango.png" class="aca_profile_img">

@@ -21,27 +21,24 @@ public class AuditRequestListAction implements Action{
 		request.setCharacterEncoding("utf-8");
 		String email = (String)request.getSession().getAttribute("id_email");
 		
-		System.out.println("AuditRequestListAction.java 실행");
+		//System.out.println("AuditRequestListAction.java 실행");
 		
 		AuditRequestDAO dao = new AuditRequestDAO();
 		
-		int count = dao.getAuditCount();
-		int count_app = dao.getAuditCountApproval();
-		System.out.println("누적 청강수 : " + count);
-		System.out.println("승인된 청강수 : " + count_app);
+		//특정회원의 청강현황 조회
+		//AuditRequestBean bean = new AuditRequestBean();	
+		//bean.setMemEmail(email);		
+		//List<AuditRequestBean> list = dao.getAuditList(bean);		
 		
-		AuditRequestBean bean = new AuditRequestBean();	
-		bean.setMemEmail(email);
-		
-		List<AuditRequestBean> list = dao.getAuditList(bean);
+		//모든 회원의 청강신청현황 조회
+		List<AuditRequestBean> list = dao.getAllAuditList();		
 		request.setAttribute("AuditList", list);
 		
-		//화면갱신 -> request값 날라가는 듯
-//		PrintWriter out = response.getWriter();
-//		out.println("<script>");
-//		out.println("location.reload(true)");
-//		out.println("</script>");
-//		
+		int total = dao.getAuditCount();
+		int count_approved = dao.getAuditCountApproval();
+		request.setAttribute("total", total);
+		request.setAttribute("count_approved", count_approved);
+
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("./4index.jsp?center=O_aca_admin_page/aca_audit_list.jsp");

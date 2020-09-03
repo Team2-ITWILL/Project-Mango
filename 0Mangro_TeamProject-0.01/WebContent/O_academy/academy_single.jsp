@@ -423,7 +423,7 @@
 						</div>
 						<div class="course_info_title"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; ${academyBean.acaAddrDoro }</div>
 						<div class="cheongang tab_panel_registerBtn"
-							 onclick="location.href='4index.jsp?center=O_academy/academy_audit.jsp?acaMainNum=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'"
+							 onclick="location.href='./AuditGetSubj.adrq?aca_main_num=${academyBean.acaMainNum }&acaName=${academyBean.acaName}'"
 						>
 						청강신청하기
 						</div>

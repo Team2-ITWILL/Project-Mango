@@ -47,8 +47,10 @@ public class AcademyBean {
     
     //학원 관리자   
     private String mem_email;
-
-    private double reviewScore;
+    
+    //리뷰 점수
+    private double reviewScore;    
+   
 
     public AcademyBean() { }
     public AcademyBean(
@@ -57,7 +59,7 @@ public class AcademyBean {
         	String acaAttr, String acaName, String acaStartDate,
         	String acaCategory1, String acaCategory2, 
         	String acaAddrZip, String acaAddrDoro, String acaAddrDetailed,
-        	String mem_email,double reviewScore
+        	String mem_email, double reviewScore
     		) 
     {	
     	this.acaMainNum = acaMainNum;
@@ -75,7 +77,8 @@ public class AcademyBean {
     	this.acaAddrDoro = acaAddrDoro;
     	this.acaAddrDetailed = acaAddrDetailed;
     	this.mem_email = mem_email; 
-    	this.reviewScore=reviewScore;
+    	this.reviewScore = reviewScore;
+    
     }
 
     // getter, setter
@@ -201,6 +204,7 @@ public class AcademyBean {
 		this.mem_email = mem_email;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "AcademyBean [acaMainNum=" + acaMainNum + ", acaNum=" + acaNum + ", acaCode=" + acaCode
@@ -208,8 +212,10 @@ public class AcademyBean {
 				+ acaSearchAddr3 + ", acaAttr=" + acaAttr + ", acaName=" + acaName + ", acaStartDate=" + acaStartDate
 				+ ", acaCategory1=" + acaCategory1 + ", acaCategory2=" + acaCategory2 + ", acaAddrZip=" + acaAddrZip
 				+ ", acaAddrDoro=" + acaAddrDoro + ", acaAddrDetailed=" + acaAddrDetailed + ", mem_email=" + mem_email
-				+ ", reviewScore=" + reviewScore + "]";
+				+ ", reviewScore=" + reviewScore +  "]";
 	}
+	
+	
 
 	
 }

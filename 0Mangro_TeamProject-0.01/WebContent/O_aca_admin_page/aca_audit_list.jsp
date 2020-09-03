@@ -319,6 +319,8 @@
                             <div class="card-body">
                                 <h4 class="card-title">청강신청 현황</h4>
                                 <h6 class="card-subtitle">학원의 청강신청내역이 최근순으로 표시됩니다.</h6>
+                                <h6 style="text-decoration: underline;">총 신청 수 : ${total}, &nbsp;&nbsp; 승인된 청강 수 : ${count_approved} </h6>
+                                
                             </div>
                             <div class="table-responsive">         
                                 <table class="table">
