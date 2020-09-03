@@ -159,17 +159,19 @@ public class MemberMailAction implements Action{
         
          // 인증 코드를 비교하기 위해 저장 
          	out.println("var lastAns1='" + checkStr + "';");
-         	out.println("var joinCheck='';");
+         	
          
          // 입력한 번호를 코드화하여 , 인증 코드와 같은 지 비교.
          	out.println("if(lastAns1 == lastAns){");
          	
-	         	out.println("alert('이메일 인증이 완료되었습니다.');");
-	         	out.println(" joinCheck = 'success'; ");
-	         	out.println("document.join.mailDupId.value='"+recieveEamilAddress+"';");
-//	         	out.println("opener.document.join.mailDup.value='mailCheck';");
-//	         	out.println("opener.document.join.mailDupId.value='"+recieveEamilAddress+"';");
-//	         	out.println("window.close();");
+         	out.println("alert('이메일 인증이 완료되었습니다.');");
+         // 이메일 인증 완료 후 인증버튼 숨기기 + 인증번호 입력창 readonly 전환
+         	out.println("$('.authBtn').attr('style','display:none;');");
+         	out.println("$('#checknum1').attr('readonly','readonly');");
+
+     	 // 부모창인 member_sign_up.jsp의 flag역할 <input>태그에 성공값 주기(check()함수 에서 검증)
+         	out.println("$(top.document).find('#fromIframe').val('success');");
+         	out.println("document.join.mailDupId.value='"+recieveEamilAddress+"';");
 
 	        out.println("}else{");
          
