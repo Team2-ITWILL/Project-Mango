@@ -96,7 +96,8 @@ public class PaymentFrontController extends HttpServlet {
 			forward.setRedirect(false);
 			
 			
-		}else if(command.equals("/getListMyPayMent.pay")){
+		}
+		else if(command.equals("/getListMyPayMent.pay")){
 			
 			System.out.println("/getListMyPayMent.pay 옴");
 			
@@ -107,8 +108,20 @@ public class PaymentFrontController extends HttpServlet {
 			}catch (Exception e) {
 				System.out.println("/getListMyPayMent.pay에서 오류");
 			
-			}
-			
+		}
+		}else if(command.equals("/Management.pay")){
+				
+				System.out.println("/Management.pay");
+				
+				action = new AdminAllListaciton();
+				
+				try {
+					forward=action.excute(request, response);
+				}catch (Exception e) {
+					System.out.println("/getListMyPayMent.pay에서 오류");
+					
+				}
+				
 			
 		
 		}

@@ -9,7 +9,6 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.member.db.MemberBean;
 import mango.member.db.MemberDAO;
-
 public class MemberLoginAction implements Action{
 	
 	@Override

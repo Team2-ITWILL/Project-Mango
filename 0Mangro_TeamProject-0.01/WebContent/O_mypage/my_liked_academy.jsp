@@ -362,7 +362,7 @@
                                     <tbody>
                                     	<c:if test="${count!=0}"> 
                                     	<c:forEach var="acaBean" items="${likeAcaList}">
-                                    		<tr onclick="location.href='./AcademyContentAction.aca?acaMainNum=${acaBean.acaMainNum}&pageNum=${pageNum}'">
+                                    		<tr onclick="location.href='./AcademyContentAction.aca?acaMainNum=${acaBean.acaMainNum}&pageNum=1'">
 	                                            <td scope="row">${acaBean.acaName}</td>
 	                                            <td>${acaBean.acaCategory1}</td>
 	                                            <td>${acaBean.acaAddrDoro}</td>

@@ -42,6 +42,14 @@ String id_email = (String)session.getAttribute("id_email");
 
 
 
+if(id_email == null){
+	
+	id_email = "";
+	
+}
+
+
+
 %>
 
 
@@ -53,15 +61,17 @@ String id_email = (String)session.getAttribute("id_email");
 <body>
 
 
+
+
+
 	<!-- qna_container (s) -->
-	
-	
 	<div class = "qna_container container">
 	
 		<div class = "qna_title">
-			고객센터 	-> 테스트용 지울 것 [전체 글 개수 ${count}] 	
-			
+			고객센터
 		</div>
+	
+	
 	
 	
 		
@@ -69,14 +79,12 @@ String id_email = (String)session.getAttribute("id_email");
 	<form name="fboardlist" id="fboardlist" action="#" onsubmit="#" method="post">
 
 
-   		<h2 class="sound_only">기본게시판 목록</h2>
-    
-    
     
 	    <div class="likeTbl">
 	       
+	       
 	        <ul>
-			  
+	        
 				  <li class="likeTblTr likeTblTh">
 				  	<div class="mvInlineN">번호</div>
 				    <div>제목</div>
@@ -85,100 +93,127 @@ String id_email = (String)session.getAttribute("id_email");
 				    <div class="mvInlineN td_datetime"><a href="#">날짜<i class="fa fa-sort" aria-hidden="true"></i></a></div>
 				  </li>
 				  
-				  
-				<!-- 공지사항 -->
-				<li class="bo_notice likeTblTr likeTblTd">
-				  
-				  	<div class="mvInlineN td_num2">
-				    	<strong class="notice_icon">
-				    		<i class="fa fa-bullhorn" aria-hidden="true"></i>
-				    		<span class="sound_only">공지</span>
-				    	</strong>
-				    </div>
-				    
-				    
-				    <div class="td_subject" style="padding-left:0px">
-						<div class="bo_tit">
-					    	<a href="#none">
-								공지사항 - 제목        
-								<em> <span class="hot_icon">H<span class="sound_only">인기글</span></span> </em>
-								<span class="sound_only">댓글</span><span class="cnt_cmt">+ 1</span><span class="sound_only">개</span>
-							</a>
-						</div>
-					</div>
-					
-					<span class="onlyMvV" style="padding-left:0px"></span>
-					<div class="mvInlinev td_name sv_use"><span class="sv_member">작성자</span></div>
-					<div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
-					<div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i> 00-00</div>
-		
-				</li>
 				
 				
 				<%
-					
+				
+				// 글 리스트가 존재한다면
 				if(count != 0 ){
 					
+								
 					for(int i = 0; i < qnaboardList.size(); i++){
 						
+						
 						QnaBoardBean qbean = qnaboardList.get(i);
+						
 						
 						// 들여쓰기 값 초기화
 						int wid = 0;
 						
 				%>
- 
-				       
-				       
-				<!-- 일반글 출력 -->
-
-				<li class=" likeTblTr likeTblTd">
+				
+				
+				
+				<!-- --------------------------------- 공지사항 표시 ----------------------------------->
+				<%
+					// 공지사항의 값은 0과 1으로 구분
+					// qna_notice의 값이 1이면 공지사항이고 0이면 일반글
 					
+					// 공지사항이라면?
+					if(qbean.getQna_notice().equals("1")){
+				
+				%>
+					<li class="bo_notice likeTblTr likeTblTd">
+					  
+					  	<div class="mvInlineN td_num2">
+					    	<strong class="notice_icon">
+					    		<i class="fa fa-bullhorn" aria-hidden="true"></i>
+					    		<span class="sound_only">공지</span>
+					    	</strong>
+					    </div>
+					    
+					    
+					    <div class="td_subject" style="padding-left:0px">
+					    
+							<div class="bo_tit">
+								<a href="./QnaBoardContent.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+									<%=qbean.getQna_board_title()%>   
+									<em> <span class="hot_icon">H<span class="sound_only">인기글</span></span> </em>
+								</a>
+							</div>
+							
+						</div>
+						
+						
+						<span class="onlyMvV" style="padding-left:0px"></span>
+						
+						<div class="mvInlinev td_name sv_use"><span class="sv_member"></span>
+							관리자
+						</div>
+						
+						<div class="mvInlinev td_num"><i class="fa fa-eye"></i>
+							<%=qbean.getQna_board_read()%>
+						</div>
+						
+						<div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>
+							<%= new SimpleDateFormat("yyyy.MM.dd").format(qbean.getQna_board_date())%>
+						</div>
+						
+					</li>
+				
+				<!-- --------------------------------- 공지사항 끝 ----------------------------------->
+				<%
+					}
+					// 만약 일반글이라면?
+					else if(qbean.getQna_notice().equals("0")){
+				%>
+				<!-- --------------------------------- 일반글 시작 ----------------------------------->
+				<li class=" likeTblTr likeTblTd">
+				
 					<div class="mvInlineN td_num2"><%=qbean.getQna_board_num() %></div>
 					
 					<div class="td_subject" style="padding-left:0px">
+					
+					
 						<div class="bo_tit">
-						
 				<%
-						// 글 작성자와 세션 아이디가 같다면	=> 글 작성자가 자신의 글을 누르면
-						// SecretAction없이 바로 글로 이동 
-						if(qbean.getMem_email().equals(id_email)){
+							// 글 작성자와 세션 아이디가 같다면	=> 글 작성자가 자신의 글을 누르면
+							// SecretAction없이 바로 글로 이동 
+							if(qbean.getMem_email().equals(id_email) || id_email.equals("admin@mango.com")){
 				%>
-							<a href="./QnaBoardContent.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+								<a href="./QnaBoardContent.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
 				<%
-						} 
-						// 글 작성자와 세션 아이디가 다르거나 세션 아이디가 없다면
-						// SecretAction으로 글 비밀번호 검증 후 글 확인이 가능
-						else{
+							} 
+							// 글 작성자와 세션 아이디가 다르거나 세션 아이디가 없다면
+							// SecretAction으로 글 비밀번호 검증 후 글 확인이 가능
+							else{
 				%>
-							<a href="./QnaBoardSecret.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
+								<a href="./QnaBoardSecret.qna?qna_board_num=<%=qbean.getQna_board_num()%>&pageNum=<%=pageNum%>">
 				<%
-						}
+							}
 					
-						
-						// qna_re_lev가 존재한다면(= 답글이라면) 들여쓰기 값을 지정
-						if(qbean.getQna_re_lev() > 0){
-							
-							wid = qbean.getQna_re_lev() * 10;
+
+							// qna_re_lev가 존재한다면(= 답글이라면) 들여쓰기 값을 지정
+							if(qbean.getQna_re_lev() > 0){
+								
+								wid = qbean.getQna_re_lev() * 10;
 				%>
-					<img src = "images/qna_img/level.gif" width = "<%=wid%>">
-					<img src = "http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/img/icon_reply.gif" class="icon_reply" alt="답변글">
-						
+								<img src = "images/qna_img/level.gif" width = "<%=wid%>">
+								<img src = "http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/img/icon_reply.gif" class="icon_reply" alt="답변글">
 				<%		
-						}
+							}	
 				%>
-					
-					<%= qbean.getQna_board_title() %>
+								<!-- 제목 출력 -->
+								<%= qbean.getQna_board_title() %>
 				
 				<%		
 						// 조회수가 10이 넘는다면 H를 사용하여 인기글 아이콘을 제목 옆에 위치함
 						if(qbean.getQna_board_read() >= 10){
 				%>  
-    					
-								<span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
-								
+				
+							<span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
 				<%
-							}
+						}
 				%>
 							</a>
 					     </div>
@@ -193,95 +228,11 @@ String id_email = (String)session.getAttribute("id_email");
 				</li>
 					
 				<%
+						}
 					}
 				}
-				
 					
 				%>
-				
-					
-					
-				<!-- 예제 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-				<li class=" likeTblTr likeTblTd">
-					
-					<div class="mvInlineN td_num2">글번호</div>
-					
-					<!-- 글제목 -->
-					<div class="td_subject" style="padding-left:0px">
-						<div class="bo_tit">
-							<a href="#none">
-								첨부파일 + 이미지 첨부 + 인기글
-								<em><i class="fa fa-download" aria-hidden="true"></i><i class="fa fa-link" aria-hidden="true"></i><span class="hot_icon">H<span class="sound_only">인기글</span></span></em></a>
-					    </div>
-					</div>
-					
-					<span class="onlyMvV" style="padding-left:0px"></span>
-				    <div class="mvInlinev td_name sv_use"><span class="sv_member">글쓴이</span></div>
-				    <div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
-				    <div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>날짜</div>
-				
-				</li>
-				
-				
-				<li class=" likeTblTr likeTblTd">
-					<div class="mvInlineN td_num2">글번호</div>
-					<div class="td_subject" style="padding-left:0px">
-						<div class="bo_tit">
-							<a href="#none">
-								글제목
-								<em><i class="fa fa-download" aria-hidden="true"></i><i class="fa fa-link" aria-hidden="true"></i><span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
-								<span class="sound_only">댓글</span><span class="cnt_cmt">+ 8</span><span class="sound_only">개</span>
-							</a>
-						</div>
-					</div>
-						<span class="onlyMvV" style="padding-left:0px"></span>
-				        <div class="mvInlinev td_name sv_use"><span class="sv_member">글쓴이</span></div>
-				        <div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
-				        <div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>날짜</div>
-				</li>
-				
-				
-				
-				<li class=" likeTblTr likeTblTd">
-					<div class="mvInlineN td_num2">글번호</div>
-					
-					<div class="td_subject" style="padding-left:10px">
-				    	<div class="bo_tit">
-				        	<a href="#none">
-				            	<img src="http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/img/icon_reply.gif" class="icon_reply" alt="답변글">
-				                Re: 답변글                       
-								<em><span class="hot_icon">H<span class="sound_only">인기글</span></span></em>
-							</a>
-				        </div>
-				
-					</div>
-						<span class="onlyMvV" style="padding-left:10px"></span>
-				        <div class="mvInlinev td_name sv_use"><span class="sv_member">글쓴이</span></div>
-				        <div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
-				        <div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>날짜</div>
-				 </li>
-				        
-				        
-				        
-				 <li class=" likeTblTr likeTblTd">
-				 
-				 	<div class="mvInlineN td_num2">글번호</div>
-				 	
-				    <div class="td_subject" style="padding-left:20px">
-				    	<div class="bo_tit">
-				        	<a href="#none">
-				            	<img src="http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/basic/img/icon_reply.gif" class="icon_reply" alt="답변글">
-				                Re: Re: 다답변글            
-								<em><span class="hot_icon">H<span class="sound_only">인기글</span></span></em></a>
-				        </div>
-					</div>
-					
-						<span class="onlyMvV" style="padding-left:20px"></span>
-				        <div class="mvInlinev td_name sv_use"><span class="sv_member">글쓴이</span></div>
-				        <div class="mvInlinev td_num"><i class="fa fa-eye"></i>조회수</div>
-				        <div class="mvInlinev td_datetime"><i class="fa fa-clock-o"></i>날짜</div>
-				</li>
-				<!-- 예제---------------------------------------------------------------------------------- -->
 				
 				
 				
@@ -293,13 +244,19 @@ String id_email = (String)session.getAttribute("id_email");
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<!-- write button (s) -->
 		<div class = "bo_fx">
 			
 			<ul class = "write_btn_user">
 				
 				<li>
-			
+						<%-- 로그인을 했다면 글쓰기 출력 --%>
 						<c:if test="${id_email ne null}">
 
 							<a href = "./QnaBoardWrite.qna" class = "btn_write">
@@ -319,6 +276,14 @@ String id_email = (String)session.getAttribute("id_email");
 		
 		
 	</form>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -361,17 +326,19 @@ String id_email = (String)session.getAttribute("id_email");
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- paging button -->
 	<nav class = "pg_wrap">
 		<span class = "pg">
-
-
-
-
-
-
-
-
 
 
 <!-- -------------------- 페이징 블록 수정 CSS 수정 ---------------------------------------- -->
@@ -380,23 +347,25 @@ String id_email = (String)session.getAttribute("id_email");
 <%
 		
 			
-		if(count != 0){
+		if(count > 0){
+			
 			
 			if(startPage > pageBlock){
 %>
-			
 			<a href = "./QnaBoard.qna?pageNum=<%=startPage-pageBlock%>" class = "pg_page">
 <!-- 			<img src="images/qna_img/btn_next.png" class = "btnimg"> -->
 			Prev
 			</a>
 <%			
-		}
+			}
+			
+			
 			for(int i = startPage; i <= endPage; i++){
 				
-%>
-			<a href = "./QnaBoard.qna?pageNum=<%=i%>" class = "pg_page"><%=i%></a>
+%>			
+				<a href = "./QnaBoard.qna?pageNum=<%=i%>" class = "pg_current"><%=i%></a>
 <%
-		}
+			}
 			
 			if(endPage < pageCount){
 %>
@@ -404,8 +373,9 @@ String id_email = (String)session.getAttribute("id_email");
 			<a href="./QnaBoard.qna?pageNum=<%=startPage+pageBlock%>"  class = "pg_page">Next</a>
 	
 <%
+			}
 		}
-	}
+					
 %>		
 
 			

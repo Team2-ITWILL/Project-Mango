@@ -107,7 +107,6 @@
                         <li class="nav-small-cap">
                         	<span class="hide-menu divide">설정 및 관리</span>
                         	<span class="rounded p-1 font-footnote border text-primary">일반인</span>
-                        	
                         </li>
 
                         <li class="sidebar-item"> 
@@ -125,11 +124,7 @@
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
                                 <span class="hide-menu">내 정보</span></a>
 						</li>
-						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_password.jsp"
-                                aria-expanded="false"><i class="fa fa-key" aria-hidden="true"></i>
-                                <span class="hide-menu">비밀번호 찾기</span></a>
-						</li>
+
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
                         <li class="list-divider"></li> <!-- 구분선 -->
@@ -137,7 +132,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=1"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email}&pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>

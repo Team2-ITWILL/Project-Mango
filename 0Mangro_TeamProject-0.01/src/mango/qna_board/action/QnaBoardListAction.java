@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.qna_board.db.QnaBoardBean;
 import mango.qna_board.db.QnaBoardDAO;
 
 public class QnaBoardListAction implements Action {
@@ -17,10 +18,10 @@ public class QnaBoardListAction implements Action {
     System.out.println("QnaBoardListAction excute() 실행");
 
     QnaBoardDAO qbao = new QnaBoardDAO();
-    List qnaboardList = null;
+    List<QnaBoardBean> qnaboardList = null;
 
     int count = qbao.getQnaBoardCount();
-    int pageSize = 5;
+    int pageSize = 10;
     String pageNum = request.getParameter("pageNum");
 
     if (pageNum == null) {
@@ -28,18 +29,18 @@ public class QnaBoardListAction implements Action {
     }
 
     int currentPage = Integer.parseInt(pageNum);
-    int startRow = (currentPage - 1) * pageSize + 1;
+    int startRow = (currentPage-1)*pageSize+1;
     int endRow = currentPage * pageSize;
 
     if (count != 0) {
       qnaboardList = qbao.getQnaBoardList(startRow, pageSize);
     }
 
-    int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-    int pageBlock = 3;
-    int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
+    int pageBlock = 5;
+    int startPage = ((currentPage-1)/pageBlock) * pageBlock + 1;
 
-    int endPage = startPage + pageBlock - 1;
+    int endPage = startPage + pageBlock-1;
 
     if (endPage > pageCount) {
       endPage = pageCount;

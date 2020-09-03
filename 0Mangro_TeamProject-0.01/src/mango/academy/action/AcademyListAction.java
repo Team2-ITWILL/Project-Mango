@@ -31,7 +31,6 @@ public class AcademyListAction implements Action{
 		String select2=request.getParameter("select2");
 		String select3=request.getParameter("select3");
 		String select4=request.getParameter("select4");
-//		System.out.println(request.getParameter("select5"));
 		
 		
 		
@@ -73,12 +72,24 @@ public class AcademyListAction implements Action{
 			Formsearch.put("main",mainsearch);
 		}
 		*/
+		HashMap<String,Object> Formsearch  = new HashMap<String,Object>();
+		
+		String select5=request.getParameter("select5");
+		if(select5 ==null){//main검색어
+			
+				select5="basic";
+		
+		}
+		
+		
+		Formsearch.put("s5",select5);
+
 		
 		AcademyDAO adao =new AcademyDAO();
 		
 		
-		//int count=adao.getAcademyCount(Formsearch);
-		int count=adao.getAcademyCount();
+		int count=adao.getAcademyCount(Formsearch);
+		//int count=adao.getAcademyCount();
 		
 		
 		
@@ -114,8 +125,8 @@ public class AcademyListAction implements Action{
 		
 		if(count != 0){
 			
-			//Academylist = adao.getSearchListAcademy(Formsearch, startRow, pageSize);
-			Academylist = adao.AllAcademyList(startRow, pageSize);
+			Academylist = adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			//Academylist = adao.AllAcademyList(startRow, pageSize);
 	
 		}
 		//전체페이지수 구하기
@@ -148,8 +159,10 @@ public class AcademyListAction implements Action{
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
 		request.setAttribute("Page","AcademyList.aca?");
+		request.setAttribute("PageTwo","AcademyList.aca?select5="+select5);//페이지명
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
+		
 		
 		
 		return forward;

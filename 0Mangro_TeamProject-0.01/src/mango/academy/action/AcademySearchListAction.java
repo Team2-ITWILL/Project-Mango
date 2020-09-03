@@ -28,13 +28,14 @@ public class AcademySearchListAction implements Action {
 		String select2=request.getParameter("select2");
 		String select3=request.getParameter("select3");
 		String select4=request.getParameter("select4");  
-		System.out.println(request.getParameter("select5"));
+		String select5=request.getParameter("select5");
+		
 		
 		
 		
 		if(select1.equals("") && select1.length()==0){//광역시도
 			
-			System.out.println("이값은 널입니다");
+			System.out.println("이값은 널입니다1");
 		
 		}else{
 			
@@ -43,38 +44,48 @@ public class AcademySearchListAction implements Action {
 		
 		if(select2.equals("") && select2.length()==0){//지역구
 			
-			System.out.println("이값은 널입니다");
+			System.out.println("이값은 널입니다2");
 		}else{
 			Formsearch.put("s2",select2);
 		}
 		
 		if(select3.equals("") && select3.length()==0){//읍면동
 			
-			System.out.println("이값은 널입니다");
+			System.out.println("이값은 널입니다3");
 		}else{
 			Formsearch.put("s3",select3);
 		}
 		
 		if(select4.equals("") && select4.length()==0){//카테고리
 			
-			System.out.println("이값은 널입니다");
+			System.out.println("이값은 널입니다4");
 		}else{
 			Formsearch.put("s4",select4);
 		}
 		
 		if(mainsearch.equals("") && mainsearch.length()==0){//main검색어
 			
-			System.out.println("이값은 널입니다");
+			System.out.println("이값은 널입니다5");
 		
 		}else{  
 			Formsearch.put("main",mainsearch);
 		}
 		
 		
+		if(select5.equals("") && select5.length()==0){//문단
+			
+			System.out.println("이값은 널입니다6");
+		
+		}else{  
+			Formsearch.put("s5",select5);
+		}
+		
+		
+		
 		AcademyDAO adao =new AcademyDAO();
 		
 		
-		int count=adao.getAcademyCount( Formsearch);
+		int count=adao.getAcademyCount(Formsearch);
 	
 		System.out.println("Count 수 : "+count);
 		
@@ -141,6 +152,7 @@ public class AcademySearchListAction implements Action {
 				request.setAttribute("startPage", startPage);//스타트페이지수
 				request.setAttribute("endPage", endPage);//마지막 페이지수
 				request.setAttribute("Page","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch);//페이지명
+				request.setAttribute("PageTwo","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch+"&select5="+ select5);//페이지명
 				
 				forward.setRedirect(false);
 				forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");

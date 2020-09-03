@@ -10,6 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.anony_board.action.AnoBoardDeleteAction;
+import mango.anony_board.action.AnoBoardFileDownAction;
+import mango.anony_board.action.AnoBoardInsertAction;
+import mango.anony_board.action.AnoBoardSingleAction;
+import mango.anony_board.action.AnoBoardToUpdateFormAction;
+import mango.anony_board.action.AnoBoardUpdateAction;
+import mango.anony_board.action.AnoBoardWriteAction;
+import mango.anony_board.action.AnonyBoardListAction;
 
 public class CommentAnonyFrontController extends HttpServlet {
 
@@ -44,37 +52,71 @@ public class CommentAnonyFrontController extends HttpServlet {
 	
 	
 	
+	// 익명사담방 목록보기 화면
+	if(command.equals("/CommentAnoBoardInsertAction.cano")){
+		action = new CommentAnoBoardInsertAction();
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardInsertAction.cano에서 예외");
+			e.printStackTrace();
+		} 
+		
+	}else if(command.equals("/CommentAnoBoardListAction.cano")){
+		action = new CommentAnoBoardListAction();
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardListAction.cano에서 예외");
+			e.printStackTrace();
+		} 
 	
-	
-	
-	
-	
-	if(forward!=null){ //new ActionForward()객체가 존재 하고..
-	
-	if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..
-	
-	//리다이렉트 방식으로 페이지 이동!  페이지 주소 경로 노출 함 
-	
-	//join.jsp화면 이동
-	
-	response.sendRedirect(forward.getPath());
-	
-	}else{//false -> forward() 방식일때...
-	
-	RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
-	dispatcher.forward(request, response);
+	}else if(command.equals("/CommentAnoBoardUpdateAction.cano")){
+		action = new CommentAnoBoardUpdateAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardUpdateAction.cano에서 예외");
+			e.printStackTrace();
+		} 
+	}else if(command.equals("/CommentAnoBoardDeleteAction.cano")){
+		action = new CommentAnoBoardDeleteAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardDeleteAction.cano에서 예외");
+			e.printStackTrace();
+		} 
+	}else if(command.equals("/CommentAnoBoardReplyAction.cano")){
+		action = new CommentAnoBoardReplyAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			System.out.println("AnonyBoardFrontController의 /CommentAnoBoardReplyAction.cano에서 예외"+e.getMessage());
+			e.printStackTrace();
+			
+		} 
+		
 	}
+	
+	if(forward!=null){ //new ActionForward()객체가 존재시
+		
+		if(forward.isRedirect()){//true -> sendRedirect() 방식일떄..
+			
+			response.sendRedirect(forward.getPath());
+			
+		}else{//false -> forward() 방식일때...
+			
+			RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
+			dispatcher.forward(request, response);
+		}
 	
 	}//if 
 	
-	
-	
-	
-	}//doProcess
-	
-	
-	
-	
+}//doProcess
 	
 	
 	
@@ -94,6 +136,6 @@ public class CommentAnonyFrontController extends HttpServlet {
 
 
 	
-	
+
 	
 }

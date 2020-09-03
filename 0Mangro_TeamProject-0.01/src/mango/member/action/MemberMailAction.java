@@ -3,6 +3,9 @@ package mango.member.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mango.action.Action;
+import mango.action.ActionForward;
+
 import java.io.PrintWriter;
 import java.util.Properties;
 
@@ -13,150 +16,193 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import mango.action.Action;
-import mango.action.ActionForward;
+public class MemberMailAction implements Action{
 
-// 이메일 인증 번호를 발송하는 기능의 액션클래스
-public class MemberMailAction implements Action {
+   @Override
+   public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+     
+	   request.setCharacterEncoding("UTF-8");
 
-	@Override
-	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) 
-			throws Exception {
-	
-		request.setCharacterEncoding("UTF-8");
-		
-		// 인증메일을 보내는 사람(망고)
-		String host = "smtp.gmail.com";
-		final String user = "gyrud6744"; // 자신의 네이버 계정
-		final String password = "busy1260@";// 자신의 네이버 패스워드
-		String sendEmailAddress = "gyrud6744@gmail.com";
+      // 보내는 사람(망고)
+      String smtpServer = "smtp.naver.com";
+      final String sendId = "gyrud13"; // 아이디
+      final String sendPass = "kimhk6744@"; // 비밀번호
+      String sendEmailAddress = "gyrud13@naver.com"; // 보내는 사람
 
-		// 인증메일을 받는 사람
-		System.out.println(request.getParameter("id_email"));
-		String to_email = request.getParameter("id_email");
-		
-		// 랜덤으로 인증번호 4자리를 뽑아준다.
-		int[] num_arr = new int[4];
-		for (int i = 0; i < 4; i++) {
-			num_arr[i] = (int) (Math.random() * 10);
-		}
+      int smtpPort = 465; // SMTP 포트번호
 
-		// 인증번호를 암호화 하기 위한 암호코드.
-        String[] Str_arr = new String[] {"─","│",
-							             "├","┬","┤","┴",
-							             "┼","━","┃",
-							             "┣","┳","┫",
-							             "┻","╋","┠","┯","┨",
-							             "┷","┿","┝","┰","┥",
-							             "┸","╂",
-							             "┞","┟ ","┡","┢","┦",
-							             "┧","┪","┭","┮","┱",
-							             "┲","┵","┶","┹","┺",
-							             "┽","┾","╀","╁","╃",
-							             "╄","╅","╆","╇","╈",
-							             "╉","╊","l","ㅣ","I"};
-		
-	    // 인증 번호를 받을 때마다 인증암호 코드가 랜덤하게 섞어주는 코드 
-	    for (int i = 0; i < Str_arr.length; i++) {
-		       String S;
-		       S = Str_arr[i];
-		       int K;
-		       K = (int) (Math.random() * Str_arr.length);
-		       Str_arr[i] = Str_arr[K];
-		       Str_arr[K] = S;
-	    }
-        
-	    // 섞인 코드를 확인한다. 
-	    for (int i = 0; i < Str_arr.length; i++) {
-	         System.out.print(Str_arr[i]);
-	    }
-	    
-		String subject = "Mango(망고) 회원가입 인증메일입니다."; // ---제목
-	    String checknum = "" + num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3];
-	    String checkStr = Str_arr[num_arr[0]] + Str_arr[num_arr[0] + num_arr[1]]
-	            + Str_arr[num_arr[0] + num_arr[1] + num_arr[2]]
-	            + Str_arr[num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3]];
-	    String content = "안녕하세요. 가입 인증 메일입니다.\n인증번호는 " + num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3] + "입니다."; // ---내용
-		
-		// SMTP 서버 정보를 설정한다.
-		try {
-			Properties props = System.getProperties();
-			props.put("mail.smtp.host", host); 
-			props.put("mail.smtp.port", 465);
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.ssl.enable", "true");
-			props.put("mail.smtp.ssl.trust", host);
-			
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator(){
+      // 받는 사람 (가입할 사람의 주소)
+      System.out.println(request.getParameter("email"));
+      String recieveEamilAddress = request.getParameter("email");
 
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(user, password);
-				}
-			});
-			
-			// 메일 내용
-			session.setDebug(true); // for debug
-	        Message mimeMessage = new MimeMessage(session);
-	        mimeMessage.setFrom(new InternetAddress(sendEmailAddress));
-	        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
-	        mimeMessage.setSubject(subject);
-	        mimeMessage.setText(content);
-	        Transport.send(mimeMessage);
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("인증번호 : <input type='text' id=checknum1>");
-	        out.println("<input type='button' value='인증' onclick='check();'>");
-	        out.println("<script type='text/javascript' src='http://code.jquery.com/jquery-3.2.0.min.js' ></script>");
-	        out.println("<script type='text/javascript'>");
-	        out.println("function check(){");
-	        out.println("var str=$('#checknum1').val();");
-	        out.println("var ansArr1='';");
-	        
-	        for (int i = 0; i < Str_arr.length; i++) {
-	           out.println("ansArr1=ansArr1+'" + Str_arr[i] + "';");
+      
+      // 인증번호 4개를 랜덤으로 뽑아줌.
+      int[] num_arr = new int[4];
+      for (int i = 0; i < 4; i++) {
+         num_arr[i] = (int) (Math.random() * 10);
+
+      }
+      
+      // 인증 번호를 암호화 하기 위한 암호코드.
+      String[] Str_arr = new String[] {"─","│",
+              "├","┬","┤","┴",
+              "┼","━","┃",
+              "┣","┳","┫",
+              "┻","╋","┠","┯","┨",
+              "┷","┿","┝","┰","┥",
+              "┸","╂",
+              "┞","┟ ","┡","┢","┦",
+              "┧","┪","┭","┮","┱",
+              "┲","┵","┶","┹","┺",
+              "┽","┾","╀","╁","╃",
+              "╄","╅","╆","╇","╈",
+              "╉","╊","l","ㅣ","I"};
+
+      // 인증 번호를 받을 때마다 인증 코드를 랜덤하게 섞어주는 코드 
+      for (int i = 0; i < Str_arr.length; i++) {
+         String S;
+         S = Str_arr[i];
+         int K;
+         K = (int) (Math.random() * Str_arr.length);
+         Str_arr[i] = Str_arr[K];
+         Str_arr[K] = S;
+      }
+      
+      // 섞인 코드를 확인한다
+      for (int i = 0; i < Str_arr.length; i++) {
+         System.out.print(Str_arr[i]);
+      }
+      
+      String subject = "Mango(망고) 회원가입 인증 메일입니다"; // 메일 제목
+      String checknum = "" + num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3];
+      String checkStr = Str_arr[num_arr[0]] + Str_arr[num_arr[0] + num_arr[1]]
+			          + Str_arr[num_arr[0] + num_arr[1] + num_arr[2]]
+			          + Str_arr[num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3]];
+      String content = "안녕하세요. Mango(망고) 회원 가입 인증 메일입니다."
+      				 + "\n인증 번호는 " + num_arr[0] + num_arr[1] + num_arr[2] + num_arr[3] + "입니다."; // 메일 내용
+      
+      try {
+         
+    	 Properties props = System.getProperties();
+         props.put("mail.smtp.host", smtpServer);
+         props.put("mail.smtp.port", smtpPort);
+         props.put("mail.smtp.auth", "true");
+         props.put("mail.smtp.ssl.enable", "true");
+         props.put("mail.smtp.ssl.trust", smtpServer);
+         
+         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+               return new PasswordAuthentication(sendId, sendPass);
             }
-	        
-	        // 입력한 인증번호를 암호화 
-	        out.println(
-	              "var lastAns= (ansArr1.charAt(str.charAt(0)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1+str.charAt(3)*1));");
-	        
-	        //인증 코드를 비교하기 위해 저장 
-	        out.println("var lastAns1='" + checkStr + "';");
-	        
-	        // 입력한 번호를 코드화하여 , 인증 코드와 같은 지 비교.
-	        out.println("if(lastAns1==lastAns){");
-	        
-	        out.println("alert('이메일 인증이 성공 하였습니다.');");
-	        
-	        out.println("opener.document.join.mailDup.value='mailCheck';");
-	        out.println("opener.document.join.mailDupId.value='"+to_email+"';");
-	         
-	        out.println("window.close();");
+            
+         });
+         
+         session.setDebug(true);
+         
+         Message mimeMessage = new MimeMessage(session);
+         mimeMessage.setFrom(new InternetAddress(sendEmailAddress));
+         mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recieveEamilAddress));
+         mimeMessage.setSubject(subject);
+         mimeMessage.setText(content);
+         Transport.send(mimeMessage);
+         
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
+
+//         out.println("인증번호 : <input type='text' id=checknum1>");
+//                 out.println("<input type='button' value='인증' onclick='check();'>");
+                 
+
+         out.println("<script type='text/javascript' src='http://code.jquery.com/jquery-3.2.0.min.js' ></script>");
+         out.println("<link rel='stylesheet' type='text/css' href='styles/bootstrap4/bootstrap.min.css'>");
+         out.println("<link rel='stylesheet' type='text/css' href='styles/form_basic_page.css'>");
+         
+         // <-------------- <style> -------------->
+         out.println("<style type='text/css'>");
+         out.println("input {height: 50px;}");
+         out.println(".btn-primary {color:#fff !important;background-color: #000 !important;border-color: #000 !important;cursor: pointer !important;}");
+         out.println(".btn-primary:hover {background-color: #6610f2 !important;}");
+         out.println("#rememberCheck {margin-left: -25px; z-index: 1 ; opacity: 1;}");
+         out.println(".authBtn {float:right; width:100px;} .authSpan{color: #000; font-size: 1.1em;}");
+         out.println("</style> ");
+         // <-------------- </style> -------------->
+         
+         
+         // <-------------- <div> -------------->
+         out.println("<div class='js-form-message form-group' id='startAuth'>");
+		 	
+         	out.println("<label class='form-label' for='id_password1'>");
+		 		out.println("<span class='d-flex justify-content-between align-items-center authSpan'>인증번호</span>");
+		 	out.println("</label>");
+       
+		 out.println("<input type='text' class='form-control' name='' id='checknum1' placeholder='인증번호 입력'");
+		 out.println("aria-label='인증번호 입력' required >");
+		 
+		 out.println("<input type='button' class='btn btn-primary right-btn authBtn' value='인증' onclick='check();'> </div>");
+		// <-------------- </div> -------------->
+		 
+		 
+		// <-------------- <script> -------------->
+         out.println("<script type='text/javascript'>");
+         	out.println("function check(){");
+         	out.println("var str=$('#checknum1').val();");
+         	out.println("var ansArr1='';");
+         
+         for (int i = 0; i < Str_arr.length; i++) {
+            out.println("ansArr1=ansArr1+'" + Str_arr[i] + "';");
+         }
+         
+         // 입력한 인증번호를 암호화 
+         	out.println(
+         	"var lastAns= (ansArr1.charAt(str.charAt(0)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1)+ansArr1.charAt(str.charAt(0)*1+str.charAt(1)*1+str.charAt(2)*1+str.charAt(3)*1));");
+        
+         // 인증 코드를 비교하기 위해 저장 
+         	out.println("var lastAns1='" + checkStr + "';");
+         	out.println("var joinCheck='';");
+         
+         // 입력한 번호를 코드화하여 , 인증 코드와 같은 지 비교.
+         	out.println("if(lastAns1 == lastAns){");
+         	
+	         	out.println("alert('이메일 인증이 완료되었습니다.');");
+	         	out.println(" joinCheck = 'success'; ");
+	         	out.println("document.join.mailDupId.value='"+recieveEamilAddress+"';");
+//	         	out.println("opener.document.join.mailDup.value='mailCheck';");
+//	         	out.println("opener.document.join.mailDupId.value='"+recieveEamilAddress+"';");
+//	         	out.println("window.close();");
 
 	        out.println("}else{");
-	  
-	        //이메일 인증에 실패하면 다시 이메일 인증을 받아야 되고, 암호화 코드도 변함으로써 인증코드 예측을 더 어렵게 만듬. 
-	        out.println("alert('이메일 인증이 실패 하였습니다.');");
-	        out.println("alert('다시 시도해 주십시오.');");
-	        out.println("window.close();");
-	        out.println("}");
-	        out.println("}");
-	        out.println("</script>");
-	        
-		}catch(Exception e){
-			e.printStackTrace();
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script>");
-	        out.println("alert('이메일 인증이 실패하였습니다.');");
-            out.println("alert('다시 시도해 주십시오.');");
-	        out.println("window.close();");
-	        out.println("</script>");
-		
-		} // try문 끝
-		
-		return null;
-	} // excute() 끝
+         
+         // 이메일 인증에 실패하면 다시 이메일 인증을 받아야 하며,
+         // 암호화 코드가 변함으로써 인증 코드를 예측 할 수 없게 한다. 
+		        out.println("alert('이메일 인증에 실패하였습니다.');");
+		        out.println("alert('다시 시도해 주십시오.');");
+//		        out.println("window.close();");
+         
+		    out.println("}"); // else끝
+         
+	     out.println("}"); // function check() 끝 
+        
+	     out.println("</script>");
+
+	  // <-------------- </script> -------------->
+	     
+
+      } catch (Exception e) {
+    	  System.out.println("MemberMailAction : " + e);
+         e.printStackTrace();
+        
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
+         out.println("<script>");
+         out.println("alert('이메일 인증에 실패하였습니다.');");
+         out.println("alert('다시 시도해 주십시오.');");
+//       out.println("window.close();");
+         out.println("</script>");
+
+	      }
+	     return null;
+   	  }
 	
 }

@@ -27,6 +27,26 @@
 
 
 </head>
+
+<script type="text/javascript">
+/* ----------------------------------- 이메일 입력 확인 ------------------------------- */
+	$(function inputchk(){
+	
+		$("findPw").submit(function(){	
+		
+			if($("#id_email").val() == ""){
+				alert("이메일을 입력하세요.");
+				$("#id_email").focus();
+				return false;
+			}
+
+		}); // submit 끝
+		
+	}); // inputchk() 끝
+/* ----------------------------------- 이메일 입력 확인 ------------------------------- */
+</script>
+
+
 <body>
 
 		<div class="container">
@@ -35,7 +55,7 @@
 					<div class="section_title_container text-center">
 						<h4 class="section_title">비밀번호 찾기</h4>
       
-					      <form class="sign_upClass" action="" method="post">
+					      <form class="sign_upClass" action="./MemberFindPwAction.me" method="post">
 					      
 					      <div class="mb-5 mt-2">
 					        <p>가입 시 입력하신 이메일 주소로 비밀번호 재설정 메일이 발송됩니다. <br>메일을 입력 후 전송버튼을 클릭하시고 메일을 확인해주세요.</p>
@@ -43,7 +63,7 @@
 					      
 					      <div class="js-form-message form-group">
 					        <label class="form-label" for="id_email">이메일</label>
-					        <input type="email" class="form-control" name="" id="id_email" placeholder="이메일" 
+					        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" 
 					               required
 					               data-msg="이메일을 입력해주세요."
 					               data-error-class="form-error"

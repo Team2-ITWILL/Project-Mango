@@ -64,14 +64,6 @@
 </script>
 
 
-<%
-// 검색관련
-	String searchKeyword = "";
-	if(request.getSession().getAttribute("searchKeyword") != null ){
-		searchKeyword = (String)request.getSession().getAttribute("searchKeyword");
-	}	
-
-%>
 
 
 	<!-- 익명게시판(댓글목록과 같은 형태의 게시판 - 클릭하면 상세페이지로 이동) -->
@@ -100,12 +92,12 @@
 						<%-- 검색영역 --%>
 						<hr>
 						<div class="input-group col-12 p-0 mb-3">
-						  <form action="./AnonyBoardListAction.anob" method="post">
-							<input type="search" id="query" name="searchKeyword" class="form-control"
+						  <form action="./AnonyBoardListAction.anob" method="post" class="form-control searchForm">
+							<input type="search" id="query" name="searchKeyword" class="form-control" style="padding:10px; cursor: pointer;"
 								   placeholder="검색">
 								   
 							<%-- 검색Button--%>
-							<button type="submit" class="btn font-subhead btn-outline-primary text-nowrap width-100 search-btn">
+							<button type="submit" class="btn font-subhead btn-outline-primary text-nowrap width-100 search-btn" style="height: 60px; cursor: pointer;">
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</button>
 						  </form>
@@ -159,7 +151,7 @@
 												
 											</div>&nbsp;&nbsp;&nbsp;
 											
-											<div class="comment_extra comment_tail">
+											<div class="comment_extra comment_tail dateDiv">
 												<img src="images/etc/date.png" width="20">
 												
 										<%------ 날짜 ----%>

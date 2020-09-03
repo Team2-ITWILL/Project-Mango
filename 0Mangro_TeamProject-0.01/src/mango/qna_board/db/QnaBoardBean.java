@@ -16,6 +16,7 @@ public class QnaBoardBean
   private int qna_re_lev;
   private int qna_re_ref;
   private int qna_re_seq;
+  private String qna_notice;
 
   public int getQna_board_num()
   {
@@ -107,5 +108,13 @@ public String getQna_board_ip() {
   public void setQna_re_seq(int qna_re_seq) {
     this.qna_re_seq = qna_re_seq;
   }
+
+public String getQna_notice() {
+	return qna_notice;
+}
+
+public void setQna_notice(String qna_notice) {
+	this.qna_notice = qna_notice;
+}
 
 }

@@ -67,7 +67,14 @@ div
 .qnaIco2{background:#c89b43}
 .qnaIco3{background:#cccccc}
 .qnaIco i{display:inline-block !important;}
-
+a:HOVER{
+	text-decoration: none;
+	color: #000;
+}
+a:VISITED {
+	text-decoration: none;
+	color: #000;
+}
 #container {
 	width:75%;
 	max-width: 1200px;
@@ -344,4 +351,22 @@ p{
 	margin: 0;
 	padding: 0;
 	word-break: break-all;
+}
+.fa-smile-o:before{
+	content: "\f118";
+}
+.fa-commenting-o:before{
+	content: "\f27b";
+}
+a{ 
+	text-decoration: none;
+	color: #000;
+}
+h1, h2, h3, h4, h5, h6{
+	font-size: 1em;
+	font-family: 'Noto Sans Korean','Malgun Gothic', dotum, sans-serif;
+}
+i.fa.fa-commenting-o.iconmsg{
+	font-size: 0.4em;
+	color: #000;
 }
