@@ -25,7 +25,9 @@ public class QnaBoardWriteAction
     qbean.setQna_board_title(request.getParameter("qna_board_title"));
     qbean.setQna_board_content(request.getParameter("qna_board_content"));
     qbean.setQna_board_ip(request.getRemoteAddr());
-
+    qbean.setQna_notice(request.getParameter("qna_notice"));
+    
+    
     QnaBoardDAO qdao = new QnaBoardDAO();
     qdao.insertQnaBoard(qbean);
 

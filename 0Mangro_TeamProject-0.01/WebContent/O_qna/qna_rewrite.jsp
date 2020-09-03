@@ -21,6 +21,11 @@
 
 <link rel="stylesheet" type="text/css" href="styles/qna_write.css">
 <!---------------------------------- 제이쿼리  ---------------------------------------------------->
+
+<!---------------------------------- CkEditor  -------------------------------------------------->
+<script src="./ckeditor/ckeditor.js"></script>
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
@@ -57,7 +62,10 @@ int qna_re_seq =Integer.parseInt(request.getParameter("qna_re_seq"));
 	    
 	        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
 	        <input type="password" name="qna_board_pwd" id="wr_password" class="frm_input required" placeholder="비밀번호">
-	    
+	    	
+	    	<input type = "radio" name = "qna_notice" value = "0" checked="checked"> 노 공지사항
+			<input type = "radio" name = "qna_notice" value = "1"> 공지사항으로 설정
+	    	
 	  	</div>
 	
 	
@@ -65,7 +73,7 @@ int qna_re_seq =Integer.parseInt(request.getParameter("qna_re_seq"));
 	    <div class="bo_w_tit write_div">
 	        <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
 	    	<div id="autosave_wrapper write_div">
-	            <input type="text" name="qna_board_title" value="Re: " id="wr_subject" class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
+	            <input type="text" name="qna_board_title" value="[답변]: " id="wr_subject" class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
 	       	</div>
 	    </div>
 	    
@@ -75,7 +83,28 @@ int qna_re_seq =Integer.parseInt(request.getParameter("qna_re_seq"));
 	        <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
 	        <div class="wr_content ">
 	            <span class="sound_only">웹에디터 시작</span>
-				<textarea id="wr_content" name="qna_board_content" class="" maxlength="65536" style="width:100%;height:300px" placeholder="내용을 입력해 주세요."></textarea>
+	           	
+	           	
+	           	<textarea id = "wr_content" name = "qna_board_content" style="width:100%;"></textarea>
+	            
+                <script type="text/javascript">
+                  $(function (){
+                	  
+                	  CKEDITOR.replace('wr_content', {
+                		  
+                		  height: 400,
+                		  removePlugins: 'resize',
+                			
+                		filebrowserBrowseUrl: '${pageContext.request.contextPath}/ckfinder/ckfinder.html',
+                		filebrowserFlashBrowseUrl: '${pageContext.request.contextPath}/ckfinder/ckfinder.html?type=Flash',
+                		filebrowserUploadUrl: '${pageContext.request.contextPath}/ckfinder/core/connector/java/connctor.java?command=QuickUpload&type=Files',
+                		filebrowserImageUploadUrl: '${pageContext.request.contextPath}/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
+                		filebrowserFlashUploadUrl: '${pageContext.request.contextPath}/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash'
+						
+                	  });
+
+                  });
+                  </script>
 				<span class="sound_only">웹 에디터 끝</span>
 			</div>
 	        

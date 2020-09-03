@@ -33,7 +33,7 @@ public class QnaBoardDAO extends DBconnection{
         num = rs.getInt(1) + 1;
       }
 
-      sql = "insert into qna_board(qna_board_num, mem_email, qna_board_pwd, qna_board_title, qna_board_content, qna_board_read, qna_board_date, qna_board_ip, qna_re_lev, qna_re_ref, qna_re_seq)values(?, ?, ?, ?, ?, ?,  now(), ?, ?, ?, ?)";
+      sql = "insert into qna_board(qna_board_num, mem_email, qna_board_pwd, qna_board_title, qna_board_content, qna_board_read, qna_board_date, qna_board_ip, qna_re_lev, qna_re_ref, qna_re_seq, qna_notice) values(?, ?, ?, ?, ?, ?,  now(), ?, ?, ?, ?, ?)";
 
       pstmt =  con.prepareStatement(sql);
       pstmt.setInt(1, num);
@@ -46,6 +46,7 @@ public class QnaBoardDAO extends DBconnection{
       pstmt.setInt(8, 0);
       pstmt.setInt(9, num);
       pstmt.setInt(10, 0);
+      pstmt.setString(11, qbean.getQna_notice());
 
       pstmt.executeUpdate();
       
@@ -165,16 +166,46 @@ public class QnaBoardDAO extends DBconnection{
     
 	List<QnaBoardBean> qnaBoardList = new ArrayList();
     
+	
     try{
     	
     	
       getConnection();
+      
+      
+      
+      sql = "select * from qna_board where qna_notice = 1 order by qna_notice desc, qna_re_ref desc, qna_re_seq asc";
+      pstmt = con.prepareStatement(sql);
+      rs = pstmt.executeQuery();
+      
+      
+      while(rs.next()){
+    	  
+    	  QnaBoardBean qbean = new QnaBoardBean();
 
-       sql = "select * from qna_board order by qna_re_ref desc, qna_re_seq asc limit ?, ?";
-       pstmt = con.prepareStatement( sql);
-       pstmt.setInt(1, startRow - 1);
-       pstmt.setInt(2, pageSize);
-       rs =  pstmt.executeQuery();
+          qbean.setQna_board_num(rs.getInt("qna_board_num"));
+          qbean.setMem_email(rs.getString("mem_email"));
+          qbean.setQna_board_pwd(rs.getString("qna_board_pwd"));
+          qbean.setQna_board_title(rs.getString("qna_board_title"));
+          qbean.setQna_board_content(rs.getString("qna_board_content"));
+          qbean.setQna_board_read(rs.getInt("qna_board_read"));
+          qbean.setQna_board_date(rs.getTimestamp("qna_board_date"));
+          qbean.setQna_board_ip(rs.getString("qna_board_ip"));
+          qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
+          qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
+          qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+          qbean.setQna_notice(rs.getString("qna_notice"));
+
+          qnaBoardList.add(qbean);
+      }
+       
+
+      
+      sql = "select * from qna_board where qna_notice = 0 order by qna_notice desc, qna_re_ref desc, qna_re_seq asc limit ?, ?";
+      pstmt = con.prepareStatement(sql);
+      pstmt.setInt(1, startRow-1);
+      pstmt.setInt(2, pageSize);
+      rs =  pstmt.executeQuery();
 
       while (rs.next()){
     	  
@@ -192,11 +223,13 @@ public class QnaBoardDAO extends DBconnection{
         qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
         qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
         qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+        qbean.setQna_notice(rs.getString("qna_notice"));
 
         qnaBoardList.add(qbean);
         
       }
 
+      
     } catch (Exception e) {
     	
       System.out.println("getQnaBoardList()에서 오류" + e);
@@ -224,7 +257,9 @@ public class QnaBoardDAO extends DBconnection{
   
   public List<QnaBoardBean> getSearchQnaBoardList(int startRow, int pageSize, String search_key, String search_word){
     
+	  
 	List<QnaBoardBean> qnaBoardList = new ArrayList();
+	
 	
     try {
       
@@ -232,17 +267,16 @@ public class QnaBoardDAO extends DBconnection{
       getConnection();
 
       
-      
-      if ((search_key == null) || (search_word.equals(null))) {
+      if ((search_key == null) || (search_word.equals(null) || (search_word.equals("") ))) {
     	  
-         sql = "select * from qna_board order by qna_re_ref desc, qna_re_seq asc, qna_board_num desc limit ?, ?";
+         sql = "select * from qna_board order by qna_notice desc, qna_re_ref desc, qna_re_seq asc, qna_board_num desc limit ?, ?";
       
       }
       else{
     	  
          sql = "select * from qna_board where " + 
           search_key + " like '%" + search_word + "%' " + 
-          "order by qna_re_ref desc, qna_re_seq asc, qna_board_num desc limit ?, ?";
+          " order by qna_notice desc, qna_re_ref desc, qna_re_seq asc, qna_board_num desc limit ?, ?";
       }
 
       
@@ -268,6 +302,7 @@ public class QnaBoardDAO extends DBconnection{
         qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
         qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
         qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+        qbean.setQna_notice(rs.getString("qna_notice"));
 
         qnaBoardList.add(qbean);
         
@@ -326,6 +361,7 @@ public class QnaBoardDAO extends DBconnection{
         qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
         qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
         qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+        qbean.setQna_notice(rs.getString("qna_notice"));
      
       }
 
@@ -408,11 +444,12 @@ public class QnaBoardDAO extends DBconnection{
     		
           check = 1;
 
-          sql = "update qna_board set qna_board_title = ?, qna_board_content = ? where qna_board_num = ?";
+          sql = "update qna_board set qna_board_title = ?, qna_board_content = ?, qna_notice = ? where qna_board_num = ?";
           pstmt = con.prepareStatement( sql);
           pstmt.setString(1, qbean.getQna_board_title());
           pstmt.setString(2, qbean.getQna_board_content());
-          pstmt.setInt(3, qbean.getQna_board_num());
+          pstmt.setString(3, qbean.getQna_notice());
+          pstmt.setInt(4, qbean.getQna_board_num());
 
           pstmt.executeUpdate();
         
@@ -536,7 +573,7 @@ public class QnaBoardDAO extends DBconnection{
        pstmt.setInt(2, qbean.getQna_re_seq());
        pstmt.executeUpdate();
 
-       sql = "insert into qna_board(qna_board_num, mem_email, qna_board_pwd, qna_board_title, qna_board_content, qna_board_read, qna_board_date, qna_board_ip, qna_re_lev, qna_re_ref, qna_re_seq)values(?, ?, ?, ?, ?, ?,  now(), ?, ?, ?, ?)";
+       sql = "insert into qna_board(qna_board_num, mem_email, qna_board_pwd, qna_board_title, qna_board_content, qna_board_read, qna_board_date, qna_board_ip, qna_re_lev, qna_re_ref, qna_re_seq, qna_notice)values(?, ?, ?, ?, ?, ?,  now(), ?, ?, ?, ?, ?)";
 
        pstmt =  con.prepareStatement( sql);
        pstmt.setInt(1, num);
@@ -549,6 +586,7 @@ public class QnaBoardDAO extends DBconnection{
        pstmt.setInt(8, qbean.getQna_re_lev() + 1);
        pstmt.setInt(9, qbean.getQna_re_ref());
        pstmt.setInt(10, qbean.getQna_re_seq() + 1);
+       pstmt.setString(11, qbean.getQna_notice());
 
        pstmt.executeUpdate();
        
@@ -608,6 +646,7 @@ public class QnaBoardDAO extends DBconnection{
           qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
           qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
           qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+          qbean.setQna_notice(rs.getString("qna_notice"));
 
           qnaBoardList.add(qbean);
         
