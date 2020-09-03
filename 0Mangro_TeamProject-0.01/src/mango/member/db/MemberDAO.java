@@ -106,11 +106,11 @@ public class MemberDAO extends DBconnection{
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 						
 					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_baned") == null) ){ 
+					if(!(rs.getString("mem_seceded") == null) ){ 
 						check = -2;
 						
 					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_baned") == null) ){
+					}else if((rs.getString("mem_seceded") == null) ){
 						check = 1;
 					}
 				
@@ -157,11 +157,11 @@ public class MemberDAO extends DBconnection{
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
 					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_baned") == null) ){ 
+					if(!(rs.getString("mem_seceded") == null) ){ 
 						check = -2;
 						
 					// 탈퇴일자 컬럼이 null일 때 로그인 성공
-					}else if((rs.getString("mem_baned") == null) ){
+					}else if((rs.getString("mem_seceded") == null) ){
 						check = 1;
 					}
 				}	
@@ -204,7 +204,7 @@ public class MemberDAO extends DBconnection{
 					check = 1;
 					
 					sql = "UPDATE member "
-						+ "SET mem_baned = now() "
+						+ "SET mem_seceded = now() "
 						+ "WHERE mem_email = ?";
 
 					pstmt = con.prepareStatement(sql);

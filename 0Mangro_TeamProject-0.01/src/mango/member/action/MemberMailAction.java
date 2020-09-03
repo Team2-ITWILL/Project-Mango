@@ -26,7 +26,7 @@ public class MemberMailAction implements Action{
       // 보내는 사람(망고)
       String smtpServer = "smtp.naver.com";
       final String sendId = "gyrud13"; // 아이디
-      final String sendPass = "busy1260@"; // 비밀번호
+      final String sendPass = "kimhk6744@"; // 비밀번호
       String sendEmailAddress = "gyrud13@naver.com"; // 보내는 사람
 
       int smtpPort = 465; // SMTP 포트번호
