@@ -204,6 +204,18 @@
 
 
 
+<!-- 16. 404, 500에러 페이지를 위한 추가 사항 -->
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/ErrorPage/Error404.jsp</location>
+  </error-page>
+  
+  
+  <error-page>
+    <error-code>500</error-code>
+    <location>/ErrorPage/Error500.jsp</location>
+  </error-page>
 
 
   

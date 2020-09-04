@@ -350,7 +350,7 @@ label, input, button, select, img{
 a:link { text-decoration: none;}
 a:visited { text-decoration: none;}
 a:hover { text-decoration: underline;}
-a{ color: #000; text-decoration: none;}
+a{text-decoration: none;}
 
 a.btn_write, .btn_write{
 	background: #666666;
@@ -423,8 +423,10 @@ a.btn_write:hover{
 span.sv_member{
 	font-size: 12px;
 }
-
-a, a:HOVER, a:VISITED, a:ACTIVE{ 
+a{
+	text-decoration: none;
+}
+a:HOVER, a:VISITED, a:ACTIVE{ 
 	text-decoration: none;
 	color: #000;
 }

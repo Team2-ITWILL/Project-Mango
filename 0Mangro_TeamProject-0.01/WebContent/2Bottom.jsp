@@ -78,8 +78,8 @@
 									<div class="footer_title">도움이 필요하세요?</div>
 									<div class="footer_links_container">
 										<ul>
-											<li><a href="4index.jsp?center=O_qna_board/qna_board.jsp">자주묻는<br>질문(FAQ)</a></li>
-											<li><a href="4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp">고객센터</a></li>
+											<li><a href="./QnaBoardContent.qna?qna_board_num=1&pageNum=1">자주묻는<br>질문(FAQ)</a></li>
+											<li><a href="./QnaBoard.qna">고객센터</a></li>
 										</ul>
 									</div>
 								</div>
