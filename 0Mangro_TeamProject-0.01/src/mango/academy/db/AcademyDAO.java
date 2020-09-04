@@ -2020,7 +2020,36 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}
 		
 		return arr;
+	}
+
+	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
+	@Override
+	public int changeAcademyEmail(AcademyBean vo) {
+		int result = 0;
+		try {
+			getConnection();
+			
+			String query = "update academy set "					
+					+ " mem_email = ? "					
+					+ " where aca_name=?";			
+			
+			pstmt = con.prepareStatement(query);			
+			
+			pstmt.setString(1, vo.getMem_email());	
+			pstmt.setString(2, vo.getAcaName());	
+			
+			result = pstmt.executeUpdate();			
+			
+		} catch (Exception e) {
+			System.out.println("changeAcademyEmail()에서 예외 발생");
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}		
+		return result;
 	}	
+	
+	
 	
 	
 } // AcademyDAO 끝	

@@ -192,14 +192,25 @@
 <%--------------------------------------[학원 정보 찾아서 가져오기]-----------------------------------------------------------------%>			
 							       
 							       <div class="form-group mb-8">
+							       			<!-- 검색결과가 추가될 리스트 -->
+							       			<datalist id = "searchList"></datalist>
+											
 									        <label class="form-label" for="anony_pwd"><span>DB에 등록된 학원 찾기</span></label>
-									        <input type="text" class="form-control" name="aca_search" id="aca_search" placeholder="ex) 망고학원" required>
+									        <!-- 학원 검색 태그 -->
+									        <input type="text" class="form-control" 
+									               name="aca_search" id="aca_search" 									        	  
+									        	   placeholder="학원명을 입력하세요" required>
+									        <!-- 검색 결과 출력 태그 -->
+									        
+									        <input type="text" class="form-control" 
+									               name="aca_search_result" id="aca_search_result" 
+									        	   placeholder="검색 결과(클릭하시면 목록이 출력됩니다)">
+									        	   <!-- list="searchList"  -->
+									         	   	   
 									        <br>
 									        <input type="button" class="btn btn-write" onclick="" value="학원 찾기" id="search_aca_btn" list="searchList"><br> 
 											
-											<datalist id = "searchList">
-												
-											</datalist>
+											
 								   </div>
 						      
 <%--------------------------------------[입력란 중 Daum API에서 처리하는 폼영역]-----------------------------------------------------------------%>
@@ -350,32 +361,58 @@
 					url : "./registerSearch.areg",			
 					success : function(data) {
 						//alert('ajax success from registerSearch.areg');
-						console.log('data : ' + data);
+						//console.log('data : ' + data);
 						
 						var addr_zip = document.querySelector("input[name='addr_zip']");
-						var addr_doro = document.querySelector("input[name='addr_doro']");
-						var acaName = document.querySelector("input[name='acaName']");
+						var addr_doro = document.querySelector("input[name='addr_doro']");					
+						var aca_name = document.querySelector("input[name='acaName']");					
 						
 						//datalist -> 다시 검색하면 datalist 초기화
 						var searchList = document.querySelector("#searchList");
-										
+								
+						//datalist가 들어갈 input 태그
+						var aca_search_result = document.querySelector("input[name='aca_search_result']");
+						
+						//재검색을 위하여 input태그의 기존 검색결과 삭제
+						searchList.innerHTML = "";
+						aca_search_result.value = "";
 						
 						//data : JSONArray
 						//학원 명이 여러 개 검색될 경우 처리 -> datalist
 						for(var i in data){
+							//option 태그 생성 및 검색한 학원명을 삽입
 							var opt = document.createElement("option");
 							opt.value = data[i].aca_name;
-							//searchList
+							
+							//option 태그를 datalist 태그에 삽입
+							searchList.appendChild(opt);						
 						}
+						//datalist를 input태그 list 속성에 추가
+						aca_search_result.setAttribute('list', 'searchList');	//태그id로 속성값 부여				
 						
-						addr_zip.value = data.aca_addr_zip;
-						addr_doro.value = data.aca_addr_doro;
-						acaName.value = data.aca_name;
-	
+						//console.log(searchList);
+						//console.log(aca_search_result);		
+						
+						//검색결과창에서 값을 선택하면 주소,이름 태그에 가져온 값 대입
+						aca_search_result.addEventListener('change', function(){
+							for(var i in data){
+								if(aca_search_result.value == data[i].aca_name){									
+									addr_zip.value = data[i].aca_addr_zip;
+									addr_doro.value = data[i].aca_addr_doro;	
+									aca_name.value = data[i].aca_name;	
+								}								
+							}
+						});
 						
 					}
 				});
 			});
+			
+			
+			
+			
+			
+			
 		}
 	
 	//////////////////////////////////////////////////////////////

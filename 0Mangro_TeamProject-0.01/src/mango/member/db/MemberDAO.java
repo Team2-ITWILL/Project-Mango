@@ -418,7 +418,30 @@ public class MemberDAO extends DBconnection{
 	} // 회원 관리 페이징 / getMGCount() 끝
 	
 	
-	
+	//학원관리자 등록 시 admin값 변경하는 메서드
+	public int changeAdmin(String email){
+		int result = 0;		
+		try {
+			getConnection();
+			
+			sql = "update member "
+					+ "set mem_admin = ? "
+					+ "where mem_email = ?";			
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, 1);
+			pstmt.setString(2, email);			
+			
+			result = pstmt.executeUpdate();	
+			
+		} catch (Exception e) {
+			System.out.println("changeAdmin()에서 예외 발생" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}		
+		return result;		
+	}//changeAdmin()
 	
 	
 	

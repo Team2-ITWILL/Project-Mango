@@ -60,5 +60,8 @@ public interface IAcademy {
 	//학원에 대한정보를 갖고오는 메서드(이름으로 검색) -> JSON Array
 	public JSONArray getAcademyInfoBySearchToJSON(String acaName);
 	
+	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
+	public int changeAcademyEmail(AcademyBean vo);
+	
 
 }
