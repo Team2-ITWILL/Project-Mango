@@ -1,5 +1,9 @@
 package mango.member.db;
+import java.util.ArrayList;
+import java.util.List;
+
 import mango.connection.db.DBconnection;
+import mango.payment.db.PaymentBean;
 public class MemberDAO extends DBconnection{
 	
 	/* 일반 회원 가입  메서드 */
@@ -11,20 +15,30 @@ public class MemberDAO extends DBconnection{
 			getConnection();
 			System.out.println("DB 연결 성공 !!");
 			
-			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, "
-					+ "mem_joindate)"
+			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, mem_joindate)"
 					+ " VALUES (?,?,?, now())";
-			pstmt = con.prepareStatement(sql);
 			
+			// [참고] pm_use_num : 사용회자 / 무료 체험도 1번 횟수로 적용
+			//       pm_name : 이용권 이름 / 가입 무제한 이용권 (3일)
+
+			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
 			pstmt.setString(2, mb.getMemName());
 			pstmt.setString(3, mb.getMemPwd());
 			
-			System.out.println(mb);
-			
 			result = pstmt.executeUpdate();
 			
 			if(result != 0){
+				
+				getConnection();
+				
+				sql = "INSERT INTO payment (mem_email, pm_use_num, pm_name, pm_start_date, pm_exp_date) "
+					+ " VALUES (?, 1,'가입 무제한 이용권 (3일)',now(), DATE_ADD(NOW(), INTERVAL 3 DAY))";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, mb.getMemEmail());
+				pstmt.executeUpdate();
+
 				return true;
 			}
 			
@@ -288,6 +302,9 @@ public class MemberDAO extends DBconnection{
 		}
 		return result;
 	} // 회원 정보 수정 / updateMember() 끝
+	
+	
+	
 	/* 비밀번호 찾기 기능 메서드 */
 	public MemberBean findPw(String email) {
 	
@@ -315,7 +332,97 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		}
 		return mb;
-	}
+	} // 비밀번호 찾기  / findPw() 끝
+
+
+
+
+	/* 모든 회원 조회 (회원 관리창) 기능 메서드  */
+	public ArrayList ListAll(int startRow ,int pageSize) {
+
+		ArrayList listAll = new ArrayList();
+		
+		try {
+			getConnection();
+			
+			sql = "SELECT * "
+				+ "FROM member m JOIN payment p "
+				+ "WHERE m.mem_email = p.mem_email "		
+				+ "LIMIT ?, ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				MemberBean mb = new MemberBean();
+				PaymentBean pb = new PaymentBean();
+				
+				mb.setMemEmail(rs.getString("mem_email"));
+				mb.setMemName(rs.getString("mem_name"));
+				mb.setMemAdmin(rs.getString("mem_admin"));
+				mb.setMemJoindate(rs.getString("mem_joindate"));
+				mb.setMemBaned(rs.getString("mem_baned"));
+				mb.setMemSeceded(rs.getString("mem_seceded"));
+				pb.setPmName(rs.getString("pm_name"));
+				pb.setPmStartDate(rs.getDate("pm_start_date"));
+				pb.setPmExpDate(rs.getDate("pm_exp_date"));
+			
+				listAll.add(mb);
+				listAll.add(pb);
+			}
+
+			System.out.println(listAll.toString());
+			System.out.println("전체 회원 조회 완료 !!");
+			
+		} catch (Exception e) {
+			System.out.println("--> ListAll()에서 SQL구문 오류 :" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return listAll;
+	} // 모든 회원 조회 / ListAll() 끝
+	
+	
+	
+	
+	/* 회원 관리 페이징 처리 기능 메서드 */
+	public int getMGCount() {
+		
+		int count = 0;
+		
+		try {
+			getConnection();
+
+			sql = "SELECT COUNT(*) FROM member";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+			System.out.println("회원 관리 페이징 처리 완료 !!");
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> getMGCount()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return count;
+	} // 회원 관리 페이징 / getMGCount() 끝
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
