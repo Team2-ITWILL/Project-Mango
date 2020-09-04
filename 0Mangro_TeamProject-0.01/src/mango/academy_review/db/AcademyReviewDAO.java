@@ -97,6 +97,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		return result;
 	} // getAvgReviewScore() 끝
 	
+	// 학원 후기 작성
 	@Override
 	public void InsertAcademyReview(AcademyReviewBean ab) {
 		// review_num

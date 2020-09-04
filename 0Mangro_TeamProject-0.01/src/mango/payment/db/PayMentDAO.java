@@ -241,7 +241,7 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 	}
 
 
-
+	// 멤버십 가입자 수
 	public int getPaymentCount() {
 		
 		int count=0;
@@ -282,6 +282,30 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 	}
 	
 	
+	// 멤버십 만료 체크
+	public String checkPayment(String mem_email){
+		
+		String check = "X";
+		try {
+			getConnection();
+			sql = "select pm_check from payment where mem_email=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				check = rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return check;
+		
+	}
 
 	
 	
