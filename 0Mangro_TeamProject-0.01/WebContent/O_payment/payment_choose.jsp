@@ -97,9 +97,64 @@
 		a.setDate(d.getDate()+90)
 		$(".month3").text(d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate());
 		$(".month4").text(d.getFullYear()+"-"+(d.getMonth()+4)+"-"+a.getDate());
+	
+	
+	
+	
+	
+		$.ajax({
+				type:"post",
+				async:true,
+				url:"NewGetPayMent.pay",
+				data:{email :'${email}'},
+				dataType:"text",
+				success:function(data,textStatus){
+			
+					
+					var pm = data;
+					
+					console.log(pm)
+					
+					if(pm != "null"){
+						
+						$(".svc_use_num > span").text(pm);
+					
+					}else{
+						
+						$(".svc_use_num").text("최근에 사용하신 이용권이 없습니다");
+						
+					}
+					
+					
+				
+				},
+				error:function(){
+					alert("에러가 발생했습니다");
+				
+				}
+		
+		})//ajax
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	})	
 		
 		
+	
+	
+	
+	
+	
+	
 		
 	
 	
@@ -158,23 +213,12 @@
 						<div class="comments_title">멤버십 결제 선택</div>
 							
 												
-							
-							<c:if  test="${newName.pmName != null}"><!--if문 -->
-							
-							
-									<h6 class="svc_use_num">회원님의 최근 이용 서비스는 <span>${newName.pmName}</span>입니다.</h6> 								
+										
+									<h6 class="svc_use_num">회원님의 최근 이용 서비스는 <span></span>입니다.</h6> 								
 							
 								
 						
-							
-							</c:if>
-							
-							<c:if test="${newName.pmName == null}">							
-							
-								<h6 class="svc_use_num"><span>이용중인 서비스가 없습니다</span></h6>  
-							
- 							</c:if> 
-
+			
 							
 					
 				    

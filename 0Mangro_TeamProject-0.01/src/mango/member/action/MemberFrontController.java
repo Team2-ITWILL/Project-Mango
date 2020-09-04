@@ -234,6 +234,29 @@ public class MemberFrontController extends HttpServlet {
 			}
 		
 /* ---------------------------------- 비밀번호 찾기 끝  ---------------------------------- */	
+			
+			
+			
+/* ---------------------------------- 회원관리 시작  ---------------------------------- */	
+
+		}else if(command.equals("/MemberManagement.me")){
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/4index.jsp?center=O_admin/member_management.jsp");
+			
+		}else if(command.equals("/MemberManagementAction.me")){
+			
+			action = new MemberManagementAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("MemberManagementAction.me : "+ e);
+			}
+			
+/* ---------------------------------- 회원관리 끝  ---------------------------------- */	
 		
 		}
 		
