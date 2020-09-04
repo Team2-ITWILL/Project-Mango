@@ -9,6 +9,7 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.member.db.MemberBean;
 import mango.member.db.MemberDAO;
+import mango.payment.db.PayMentDAO;
 public class MemberLoginAction implements Action{
 	
 	@Override
@@ -21,6 +22,8 @@ public class MemberLoginAction implements Action{
 		
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
+		
+		PayMentDAO pdao = new PayMentDAO();
 		
 		mb.setMemEmail(id_email);
 		mb.setMemPwd(chk_pwd);
@@ -66,9 +69,14 @@ public class MemberLoginAction implements Action{
 			return null;
 		}
 		
+		// 멤버십 여부 (O,X)
+		String membership = pdao.checkPayment(id_email);
+		System.out.println(membership);
+		
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("id_email", id_email);
+		session.setAttribute("membership", membership);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(true);
