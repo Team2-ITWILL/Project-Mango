@@ -188,43 +188,37 @@
                                             <th scope="col">가입일</th>
                                             <th scope="col">계정 정지일</th>
                                             <th scope="col">탈퇴일</th>
+                                            <th scope="col">사용중인 이용권</th>
+                                            <th scope="col">이용권 시작일자</th>
+                                            <th scope="col">이용권 종료일자</th>
                                         </tr>
-                                        
                                     </thead>
                                     <tbody>
+                                    	
+                                    	
+                                     <c:if test="${count > 0}">
+                                      <c:forEach var="memberlist" items="${memberlist}">
                                         <tr>
-                                            <th scope="row">naver1@daum.com</th>
-                                            <td>김네이버</td>
+                                            <th scope="row">${memberlist.mem_email}</th>
+                                            <td>${memberlist.mem_name}</td>
                                             <td>Y</td>
                                             <td>2020-09-01</td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
+                                      </c:forEach>
+                                     </c:if> 
+                                        
+                                        
+                                     <c:if test="${count == 0}">   
                                         <tr>
-                                            <th scope="row">naver2@daum.com</th>
-                                            <td>이네이버</td>
-                                            <td>N</td>
-                                            <td>2020-09-01</td>
-                                            <td></td>
-                                            <td></td>
+                                            <th scope="row" colspan="5">가입한 회원이 없습니다.</th>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">naver3@daum.com</th>
-                                            <td>한네이버</td>
-                                            <td>N</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-03</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">naver4@daum.com</th>
-                                            <td>최네이버</td>
-                                            <td>N</td>
-                                            <td>2020-09-01</td>
-                                            <td></td>
-                                            <td>2020-09-03</td>
-                                        </tr>
-
+                                	 </c:if>
+                                        
 
                                     </tbody>
                                 </table>
@@ -243,38 +237,56 @@
 					  	</a>
 					  </li>
 					  
+					  
+					<c:if test="${count != 0}">   
                     <!-- < (이전페이지 가기)-->
 					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
+					   <c:if test="${startPage - pageBlock < 0}">
+					   		<c:set var="pN" value="1"/>
+					   </c:if>
+
+					   <c:if test="${startPage - pageBlock > 0}">
+					  		<c:set var="pN" value="${startPage - pageBlock}"/>
+					   </c:if>	
+
+					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
+					  
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					</c:forEach>
+					  
+                    
                     <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					   	<c:if test="${startPage + pageBlock > pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage + pageBlock < pageCount}">
+					  		<c:set var="pP" value="${startPage + pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="${Page}&pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
-                    <!-- >> (마지막페이지 가기)-->
+					  
+					  
+					  
+                    <!-- > (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  	<a class="page-link next" href="${Page}&pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+					  
+					</c:if>
 					</ul>                    
                  
-                    
-
-
-
-
-
-
-
 
 
 
