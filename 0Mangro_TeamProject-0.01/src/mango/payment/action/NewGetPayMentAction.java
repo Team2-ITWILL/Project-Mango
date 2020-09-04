@@ -1,5 +1,7 @@
 package mango.payment.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,9 @@ public class NewGetPayMentAction implements Action {
 		
 		request.setCharacterEncoding("utf-8");
 		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out=response.getWriter();
+		
 		PayMentDAO pdao = new PayMentDAO();
 		PaymentBean pbean=new PaymentBean();
 		
@@ -27,19 +32,15 @@ public class NewGetPayMentAction implements Action {
 		
 		PaymentBean pb=pdao.getNewPayment(pbean);
 		
-		System.out.println("이용권 확인"+pb.getPmName());
+		System.out.println("이용권 확인 :"+pb.getPmName());
+	
 		
-		HttpSession session =request.getSession();
+		out.print(pb.getPmName());
 		
-		request.setAttribute("newName", pb);
-		
-		ActionForward af = new ActionForward();
 		
 		 
-		af.setPath("./MainPayMent.pay");
-		af.setRedirect(false);
-		
-		return af;
+
+		return null;
 	
 	
 	}
