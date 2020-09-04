@@ -97,6 +97,55 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			resourceClose();
 		}	
 		return list;	
+	}	
+	
+	
+
+	@Override
+	public List<AuditRequestBean> getAllAuditListApproved(int aca_main_num) {
+		List<AuditRequestBean> list = new ArrayList<AuditRequestBean>();
+		try {
+			getConnection();
+			String sql = "select * "
+					+ "from audit_request "
+					+ "where aca_main_num = ? "
+					+ "and audit_confirm_date is not null";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, aca_main_num);
+			
+			rs = pstmt.executeQuery();		
+			
+			AuditRequestBean bean = null;			
+			
+			while(rs.next()){
+				
+				java.time.LocalDate confirmDate = null;				
+				if(rs.getDate(8) != null)
+					confirmDate = rs.getDate(8).toLocalDate();
+				else
+					confirmDate = null;
+				
+				bean = new AuditRequestBean(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getDate(6).toLocalDate(),
+						rs.getDate(7).toLocalDate(),						
+						confirmDate
+						
+						);
+				list.add(bean);
+			}
+		
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}	
+		return list;	
 	}
 
 	@Override

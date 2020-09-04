@@ -11,6 +11,9 @@ public interface IAuditRequest {
 	// 청강신청 목록 전부다 갖고오기(사이트관리자페이지)
 	public List<AuditRequestBean> getAllAuditList();
 	
+	// 승인된 청강신청 목록 전부다 갖고오기(사이트관리자페이지) - 학원관리자마다 각각의데이터 불러옴
+	public List<AuditRequestBean> getAllAuditListApproved(int aca_main_num);
+	
 	// 청강 신청
 	public int InsertAudit(AuditRequestBean insert);
 	

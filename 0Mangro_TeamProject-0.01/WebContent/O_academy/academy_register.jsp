@@ -186,7 +186,21 @@
 					      >
 					      <!-- enctype="multipart/form-data"> -->
       
+      							
 						      <div class="js-form-message form-group">
+			
+<%--------------------------------------[학원 정보 찾아서 가져오기]-----------------------------------------------------------------%>			
+							       
+							       <div class="form-group mb-8">
+									        <label class="form-label" for="anony_pwd"><span>DB에 등록된 학원 찾기</span></label>
+									        <input type="text" class="form-control" name="aca_search" id="aca_search" placeholder="ex) 망고학원" required>
+									        <br>
+									        <input type="button" class="btn btn-write" onclick="" value="학원 찾기" id="search_aca_btn" list="searchList"><br> 
+											
+											<datalist id = "searchList">
+												
+											</datalist>
+								   </div>
 						      
 <%--------------------------------------[입력란 중 Daum API에서 처리하는 폼영역]-----------------------------------------------------------------%>
 
@@ -317,7 +331,54 @@
 <!------------------------------------------------------- [스크립트 영역] -------------------------------------------->
 
 	<script type="text/javascript">	
-		 
+	
+		//===============학원 찾기==================
+			
+		window.onload = function(){
+			
+			var search_Btn = document.querySelector("#search_aca_btn"); //학원찾기 버튼
+			search_Btn.addEventListener("click", function(event){
+				
+				var search_val = document.querySelector("input[name='aca_search']").value; 				
+				var transferVal = {'search' : search_val}; //JSON형태로 변환				
+				//console.log(search_val);
+				//console.log(transferVal);
+				
+				$.ajax({
+					data : transferVal,
+					type : "GET",
+					url : "./registerSearch.areg",			
+					success : function(data) {
+						//alert('ajax success from registerSearch.areg');
+						console.log('data : ' + data);
+						
+						var addr_zip = document.querySelector("input[name='addr_zip']");
+						var addr_doro = document.querySelector("input[name='addr_doro']");
+						var acaName = document.querySelector("input[name='acaName']");
+						
+						//datalist -> 다시 검색하면 datalist 초기화
+						var searchList = document.querySelector("#searchList");
+										
+						
+						//data : JSONArray
+						//학원 명이 여러 개 검색될 경우 처리 -> datalist
+						for(var i in data){
+							var opt = document.createElement("option");
+							opt.value = data[i].aca_name;
+							//searchList
+						}
+						
+						addr_zip.value = data.aca_addr_zip;
+						addr_doro.value = data.aca_addr_doro;
+						acaName.value = data.aca_name;
+	
+						
+					}
+				});
+			});
+		}
+	
+	//////////////////////////////////////////////////////////////
 		// [input type='file' 버튼 숨기기] -> hideBtn 뒤에 가려짐
 		function hideFileBtn(hideBtn, fileTagID){				 
 			 document.getElementById(fileTagID).click();	
