@@ -126,9 +126,9 @@
 						<div class="comments_title">멤버십 이용내역</div>
 						<h6 class="svc_use_num">총 <span class="allpay">1</span>회 이용</h6> 
 						
-<!-- 						<div class="paid_service_btn" onclick="location.href='4index.jsp?center=O_payment/payment_choose.jsp'">멤버십 결제하기</div> -->
+ 						<div class="paid_service_btn" onclick="location.href='4index.jsp?center=O_payment/payment_choose.jsp'">멤버십 결제하기</div>
 						
-						<div class="paid_service_btn" onclick="location.href='NewGetPayMent.pay?email=${email}'">멤버십 결제하기</div>
+<%-- 						<div class="paid_service_btn" onclick="location.href='NewGetPayMent.pay?email=${email}'">멤버십 결제하기</div> --%>
 					  
 					  </div>
 <!-------------------------------------------------- [멤버십 이용 내역 확인]  -------------------------------------------------------------------------->
