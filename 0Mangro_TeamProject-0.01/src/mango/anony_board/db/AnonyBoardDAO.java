@@ -223,16 +223,18 @@ public class AnonyBoardDAO extends DBconnection {
 			sql = "SELECT * FROM anony_board ";
 			
 			if(searchKeyword != "") {
-				// 제목과, 내용, 닉네임 중 일치하는 검색키워드를 필터링 
+				// 제목과, 내용, 닉네임, 첨부파일명 중 일치하는 검색키워드를 필터링 
 				sql += "WHERE ano_board_title LIKE ? ";
 				sql += "OR ano_board_content LIKE ? ";
 				sql += "OR ano_board_nick LIKE ? ";
+				sql += "OR ano_board_file LIKE ? ";
 				sql += "ORDER BY ano_board_num DESC";
 				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchKeyword+"%");
 				pstmt.setString(2, "%"+searchKeyword+"%");
 				pstmt.setString(3, "%"+searchKeyword+"%");
+				pstmt.setString(4, "%"+searchKeyword+"%");
 				
 			}else {
 				sql += "ORDER BY ano_board_num DESC";
@@ -275,12 +277,26 @@ public class AnonyBoardDAO extends DBconnection {
 			getConnection();
 			sql = "SELECT count(*) FROM anony_board ";
 			
-			if(searchKeyword != ""){// 키워드가 있을 경우
+			if(searchKeyword != "") {
+				// 제목과, 내용, 닉네임, 첨부파일명 중 일치하는 검색키워드를 필터링 
 				sql += "WHERE ano_board_title LIKE ? ";
+				sql += "OR ano_board_content LIKE ? ";
+				sql += "OR ano_board_nick LIKE ? ";
+				sql += "OR ano_board_file LIKE ? ";
+				sql += "ORDER BY ano_board_num DESC";
+				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchKeyword+"%");
+				pstmt.setString(2, "%"+searchKeyword+"%");
+				pstmt.setString(3, "%"+searchKeyword+"%");
+				pstmt.setString(4, "%"+searchKeyword+"%");
 				
-			}else{ pstmt = con.prepareStatement(sql); }
+			}else {
+				sql += "ORDER BY ano_board_num DESC";
+				pstmt = con.prepareStatement(sql);
+			}
+			
+			
 			
 			rs = pstmt.executeQuery();
 			
