@@ -453,7 +453,7 @@ li.thirdKey {
 												<div class="course_body" onclick="ToAcaContent(this, ${i.acaMainNum}, ${pageNum})">
 													<!-- 학원 사진 -->
 													<div class="aca_profile_div" style="display: inline-block;">
-														<img src="images/etc/default_mango.png" class="aca_profile_img">
+														<img src="images/etc/${i.memProfileImg}" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
 														<a href="./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}">

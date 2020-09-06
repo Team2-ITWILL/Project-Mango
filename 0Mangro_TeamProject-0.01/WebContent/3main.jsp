@@ -76,14 +76,14 @@
 	$(document).ready(function(){
 		
 		// 후기 top3 출력
-		var topReviewList = document.querySelectorAll(".course_body");
+ 		var topReviewList = document.querySelectorAll(".course_body");
 		
-		if(topReviewList != null){
-			for(var i=0;i<topReviewList.length;i++){
-				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
-				reviewTop(obj);
-			}
-		}
+ 		if(topReviewList != null){
+ 			for(var i=0;i<topReviewList.length;i++){
+ 				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
+ 				reviewTop(obj);
+ 			}
+ 		} 
 		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
@@ -127,14 +127,14 @@
 			$(".sel2").empty();
 			$(".sel3").empty();
 			
-			$(".sel3").append("<option value=''>읍/면/동</option>");
+			$(".sel3").append("<option value='s3'>읍/면/동</option>");
 			
 			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select2="<option option value=''>시/군/구</option>";
+				var select2="<option option value='s2'>시/군/구</option>";
 				$.each(data.address , function (index,item) {
 			
 					
@@ -168,7 +168,7 @@
 				console.log(data.address);
 				
 				
-				var select3="<option value=''>읍/면/동</option>";
+				var select3="<option value='s3'>읍/면/동</option>";
 				
 				$.each(data.address , function (index,item) {
 					
@@ -271,6 +271,91 @@
     	
     } */
 
+    
+    
+    
+    
+    
+	$(".home_search_button").click(function(){
+		
+		var research="AcademySearchList.aca?";
+		
+		var Mainsearch1=$("#add1 option:selected").val();
+		var Mainsearch2=$(".sel2 option:selected").val();
+        var Mainsearch3=$(".sel3 option:selected").val();
+		var mainsearch = $(".home_search_input").val();
+		
+		
+		research+="select5="+search5+"&";
+		
+		if(search1 != "s1" || search2 != "s2" ||search3 != "s3"||mainsearch !=""){
+		
+			
+		if(search1 != "s1"){
+			
+			
+			research+="select1="+Mainsearch1+"&";
+			
+		}
+		if(search2 != "s2"){
+			
+			research+="select2="+Mainsearch2+"&";
+			
+		}
+		if(search3 != "s3"){
+			
+			research+="select3="+Mainsearch3+"&";
+			
+		}
+		
+		
+		if(mainsearch !=""){
+			
+			research+="mainsearch="+mainsearch+"&";
+			
+			
+		}
+		
+		
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		return;
+		}
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		
+	
+		
+	
+	})
+	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
 
 </head>
@@ -325,12 +410,11 @@
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden" name="select4">
 												<input type="hidden" name="select5" value="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
-												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
-													<option value="">시/도</option>
+												<select class="dropdown_item_select home_search_input" id="add1" >
+													<option value="s1">시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
 													<option value="대구광역시">대구광역시</option>
@@ -349,16 +433,16 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input sel2"  name="select2">
-													<option value="">시/군/구</option>
+												<select class="dropdown_item_select home_search_input sel2"  >
+													<option value="s2">시/군/구</option>
 													
 												</select>
-												<select class="dropdown_item_select home_search_input sel3"  name="select3">
-													<option value="">읍/면/동</option>
+												<select class="dropdown_item_select home_search_input sel3"  >
+													<option value="s3">읍/면/동</option>
 												
 												</select>
 											</div>
-											<button type="submit" class="home_search_button">search</button>
+											<button type="button" class="home_search_button">search</button>
 										</form>
 									</div>
 								</div>
