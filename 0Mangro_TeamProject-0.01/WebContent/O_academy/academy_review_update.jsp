@@ -170,7 +170,8 @@ function checkz(){
 						      
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_title">이 학원에 대한 한 줄 요약
-						        	<input type="text" class="form-control" name="review_title" placeholder="ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" > 
+						        	<input type="text" class="form-control" name="review_title" 
+						        	maxlength="25" placeholder="(최대 25자) ex) 수업 내용이 알차고 쉽게 설명해주셔서 좋았어요!" required> 
 						        </label>
 							  </div>
 							  
