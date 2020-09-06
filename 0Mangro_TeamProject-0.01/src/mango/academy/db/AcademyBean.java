@@ -49,7 +49,14 @@ public class AcademyBean {
     private String mem_email;
     
     //리뷰 점수
-    private double reviewScore;    
+    private double reviewScore; 
+    
+    //누적 청강수 
+    private int add_audit;
+    
+    //학원 프로필사진
+    private String memProfileImg;
+    
    
 
     public AcademyBean() { }
@@ -59,7 +66,7 @@ public class AcademyBean {
         	String acaAttr, String acaName, String acaStartDate,
         	String acaCategory1, String acaCategory2, 
         	String acaAddrZip, String acaAddrDoro, String acaAddrDetailed,
-        	String mem_email, double reviewScore
+        	String mem_email, double reviewScore,int add_audit,String memProfileImg
     		) 
     {	
     	this.acaMainNum = acaMainNum;
@@ -78,10 +85,28 @@ public class AcademyBean {
     	this.acaAddrDetailed = acaAddrDetailed;
     	this.mem_email = mem_email; 
     	this.reviewScore = reviewScore;
-    
+    	this.add_audit = add_audit;
+    	this.memProfileImg = memProfileImg;
     }
+    
+    
+    
+    
 
-    // getter, setter
+    
+    public String getMemProfileImg() {
+		return memProfileImg;
+	}
+	public void setMemProfileImg(String memProfileImg) {
+		this.memProfileImg = memProfileImg;
+	}
+	public int getAdd_audit() {
+		return add_audit;
+	}
+	public void setAdd_audit(int add_audit) {
+		this.add_audit = add_audit;
+	}
+	// getter, setter
     public int getAcaMainNum() {
 		return acaMainNum;
 	}
