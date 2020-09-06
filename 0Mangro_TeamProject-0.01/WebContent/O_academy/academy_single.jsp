@@ -149,8 +149,8 @@
 }
 
 .pagination{
-	margin-top: 20px;
-	margin-left: 210px;
+	margin-top: 60px;
+	margin-left: 28%;
 }
 
 #mapReport{
@@ -480,7 +480,7 @@
 						<div class="course_tabs_container">
 							<div class="tabs d-flex flex-row align-items-center justify-content-start">
 								<div class="tab">학원 상세정보</div>
-								<div class="tab">청강과목</div>
+								<div class="tab">청강목록</div>
 								<div class="tab active">후기보기</div>
 							</div>
 							
@@ -564,22 +564,27 @@
 								<div class="tab_panel tab_panel_2">
 								
 								<%-- 등록된 청강가능 과목 없을 경우 --%>
+								<c:if test="${auditList eq null}">
 								<div class="tab_panel_title">아직 등록된 청강가능 과목이 없습니다.</div>
 									<div class="tab_panel_content">
 										<div class="tab_panel_text">
 											<p>학원을 등록하고 청강가능 과목을 등록해보세요!</p>
 										</div>
-									<div class="tab_panel_registerBtn">등록하기</div>
+									<div class="tab_panel_registerBtn" style="margin: 30px auto;">등록하기</div>
+									
+								</c:if>	
 
 								<%-- 등록된 청강가능 과목 있을 경우 --%>
+									<c:if test="${auditList ne null}">
 											<ul class="dropdowns">
+											<c:forEach var="auditBean" items="${auditList}">
 											<%--------------------------- ▼ 과목 1개  --------------------------%>
 												<li>
 													<div class="dropdown_item">
 														<div class="dropdown_item_title">
-															<span>망고 수학</span> 
-															<span>지속시간 :
-																<span>3</span>시간 
+															<span>청강과목 : ${auditBean.auditAvailSubj }</span></br>
+															<span>청강시간 :
+																<span>${auditBean.auditLastTime }</span>시간 
 															</span>
 														</div>
 														<div class="dropdown_item_text">
@@ -587,26 +592,10 @@
 														</div>
 													</div>
 												</li>
-											<%--------------------------- ▲ 과목 1개  --------------------------%>
-											<%--------------------------- ▼ 과목 1개  --------------------------%>
-												<li>
-													<div class="dropdown_item">
-														<div class="dropdown_item_title">
-															<%-- ▼ db데이터  --%>
-															<span>망고 영어</span> 
-															<span>지속시간 :
-																<span>2</span>시간 
-															</span>
-															<%-- ▲ db데이터  --%>
-														</div>
-														<div class="dropdown_item_text">
-															<%-- ▼ html태그로 작성만 해두기 --%>
-															<p>자세한 수강 일정표와 상세사항은 해당 학원으로 문의바랍니다.</p>
-														</div>
-													</div>
-												</li>
+											</c:forEach>
 											<%--------------------------- ▲ 과목 1개  --------------------------%>
 											</ul>
+										</c:if>	
 										</div>
 									</div>
 								</div>
@@ -687,15 +676,47 @@
 															</div>
 															</c:if>
 															
-															<%-- 유료 회원에게 보이는 형태 --%>
+															<%-- 로그인 한 경우 --%>
 															<c:if test="${id_email ne null}">
-																<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
-																<p><span class="strength">장점</span><br>
-																	${reBean.reviewGood}
-																</p>
-																<p><span class="weakness">단점</span><br>
-																	${reBean.reviewBad}
-																</p>
+																<%-- 결제한 회원에게 보이는 형태 --%>
+																<c:if test="${membership eq 'O' }">
+																	<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
+																	<p><span class="strength">장점</span><br>
+																		${reBean.reviewGood}
+																	</p>
+																	<p><span class="weakness">단점</span><br>
+																		${reBean.reviewBad}
+																	</p>
+																</c:if>
+
+																<%-- 결제안한 회원에게 보이는 형태 --%>
+																<c:if test="${membership ne 'O' }">
+																	<%-- 작성자일 경우 --%>
+																	<c:if test="${id_email eq reBean.memEmail }">
+																		<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
+																		<p><span class="strength">장점</span><br>
+																			${reBean.reviewGood}
+																		</p>
+																		<p><span class="weakness">단점</span><br>
+																			${reBean.reviewBad}
+																		</p>
+																	</c:if>
+																	<%-- 작성자아님 --%>
+																	<c:if test="${id_email ne reBean.memEmail }">
+																		<div class="blind_review">
+																	<div class="blind_top_div">
+																		<div class="no_membership">
+																			<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
+																			회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
+																			<div class= "review_login" onclick="location.href='NewGetPayMent.pay?email=${id_email}'">
+																				<h5>멤버십 가입</h5>
+																			</div>
+																		</div>
+																	</div>
+																	</div>
+																	</c:if>
+
+																</c:if>
 															</c:if>
 														<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 														
@@ -739,13 +760,8 @@
 											
 
 									</div>
-								</div>
-							</div>
-							
-							 <!-- 끝 페이지 앞으로가기 설정 -->
-					   
-                    
-					<!-- </ul> -->  
+									
+									<!-- </ul> -->  
 					
 					<ul class="pagination">
 					 <!-- << (첫페이지로 가기) -->
@@ -801,7 +817,13 @@
 						</a>
 					  </li>
 					</c:if>		 
-					</ul>  	 
+					</ul>
+								</div>
+							</div>
+							
+							 <!-- 끝 페이지 앞으로가기 설정 -->
+					   
+                    
 						</div> <!-- 전체 탭 마지막 태그-->
 					</div>
 				</div>

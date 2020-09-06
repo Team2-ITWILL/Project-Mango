@@ -75,7 +75,7 @@
 <script>
 	$(document).ready(function(){
 		
-		// 후기 top3 출력
+		/* // 후기 top3 출력
 		var topReviewList = document.querySelectorAll(".course_body");
 		
 		if(topReviewList != null){
@@ -83,7 +83,7 @@
 				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
 				reviewTop(obj);
 			}
-		}
+		} */
 		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
