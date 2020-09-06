@@ -248,7 +248,9 @@
     /* 팝업 끝  */
     
     // 후기Top3 
-    function reviewTop(obj){
+    // 임시 주석처리
+    
+/*     function reviewTop(obj){
     	
     	var _data = '{"num":"'+obj+'"}';
     	
@@ -267,7 +269,7 @@
     		
     	});
     	
-    }
+    } */
 
 </script>
 

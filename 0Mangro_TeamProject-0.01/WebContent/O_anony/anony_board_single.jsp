@@ -14,7 +14,6 @@
 <%-- 제이쿼리 & js  --%>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-
 <%-- 링크목록 --%>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -176,13 +175,10 @@
 
 //---[1] 실시간 댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
-	// [필요한 변수 선언 및 초기화] 
-	// - 댓글내용 textarea요소를 변수에 저장(대댓글, 수정form 아닌 최초로 댓글달때 form id값 'init_content')
-	//var init_content = document.getElementById("init_content"); 
 	
 	function add_comment(ano_board_num){
 		
-		// [1-1] 댓글 내용 여부 검증 & 로그인여부 처리
+		// [댓글 내용 여부 검증 & 로그인여부 처리]
 		if($("#init_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
@@ -193,7 +189,7 @@
 			return;
 		}
 
-		// [1-2] ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+		// [ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardInsertAction.cano",
@@ -220,10 +216,8 @@
 	 
 //---[2] 실시간 댓글수정(ajax) ----------------------------------------------------------------------------------------------------------------
 	 
-		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
-
-	//var update_content = document.getElementById("update_content"); 
 	
+	// [ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	function update_comment(ano_comment_num){		
 
 		// [4] 수정댓글 내용 여부 검증 & 로그인여부 처리
@@ -263,8 +257,8 @@
 	
 //---[3] 실시간 댓글삭제(ajax) ----------------------------------------------------------------------------------------------------------------
 	 
-	// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 
+	// [ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기	]	
 	function delete_comment(ano_comment_num){		
 		
 	    $.ajax({
@@ -294,12 +288,9 @@
 	 
 //---[4] 실시간 대댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
-	// [필요한 변수 선언 및 초기화] 
-	// - 대댓글내용 textarea요소를 변수에 저장
-	//var reply_content = document.getElementById("reply_content"); 
 	
 	function reply_comment(ano_comment_num){
-		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
+		// [대댓글 내용 여부 검증 & 로그인여부 처리]
 		if( $("#reply_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
@@ -312,7 +303,7 @@
 		
 		
 
-		// [4] ajax를 통한 대댓글 INSERT 작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+		// [ajax를 통한 대댓글 INSERT 작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardReplyAction.cano",
@@ -344,43 +335,15 @@
 	 
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	/**
-	 * 초기 페이지 로딩시 댓글 불러오기
-	 */
+//---[5] 실시간 댓글 전체목록 불러오기(ajax) ----------------------------------------------------------------------------------------------------------------
+// - 초기 페이지 로딩시 댓글 불러오기 메서드 getCommentList() 호출
+	
  	$(function(){
 	    getCommentList();
 	    
 	}); 
 
-	
-	
-	
-	
-	/**
-	 * 댓글 불러오기(Ajax)
-	 */
+	// [ajax를 통해 댓글 전부를 비동기식으로 불러오기]		
  	function getCommentList(){
 	    
 	    $.ajax({
@@ -495,7 +458,7 @@
 	
 	
 	
-	// [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]
+//---[6] [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]----------------------------------------------------------------------------------------------------------------
 	// - 클릭시 숨겨진 각각의 form창 open
 	function repCommentOpen(ano_comment_num) {
 		if( $("#session_memEmail").val() == ""){
@@ -516,7 +479,6 @@
 </script>
 
 <%-------------------------------------------------------- [스크립트 링크 영역]  --------------------------------------------------------------------------%>
-<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/easing/easing.js"></script>
