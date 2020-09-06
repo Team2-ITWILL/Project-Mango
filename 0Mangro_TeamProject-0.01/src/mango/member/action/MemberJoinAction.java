@@ -1,12 +1,13 @@
 package mango.member.action;
+
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mango.action.Action;
 import mango.action.ActionForward;
 import mango.member.db.MemberBean;
 import mango.member.db.MemberDAO;
+
 public class MemberJoinAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -23,6 +24,7 @@ public class MemberJoinAction implements Action{
 		boolean result = false;
 		
 		result = mdao.insertMember(mb);
+		
 		
 		if(result == false){
 			System.out.println("회원가입 실패 !!");
