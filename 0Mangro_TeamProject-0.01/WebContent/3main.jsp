@@ -76,14 +76,14 @@
 	$(document).ready(function(){
 		
 		// 후기 top3 출력
-		var topReviewList = document.querySelectorAll(".course_body");
+ 		var topReviewList = document.querySelectorAll(".course_body");
 		
-		if(topReviewList != null){
-			for(var i=0;i<topReviewList.length;i++){
-				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
-				reviewTop(obj);
-			}
-		}
+ 		if(topReviewList != null){
+ 			for(var i=0;i<topReviewList.length;i++){
+ 				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
+ 				reviewTop(obj);
+ 			}
+ 		} 
 		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
@@ -248,7 +248,9 @@
     /* 팝업 끝  */
     
     // 후기Top3 
-    function reviewTop(obj){
+    // 임시 주석처리
+    
+/*     function reviewTop(obj){
     	
     	var _data = '{"num":"'+obj+'"}';
     	
@@ -267,7 +269,7 @@
     		
     	});
     	
-    }
+    } */
 
 </script>
 
