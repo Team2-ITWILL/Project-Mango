@@ -149,8 +149,8 @@
 }
 
 .pagination{
-	margin-top: 60px;
-	margin-left: 28%;
+	margin-top: 20px;
+	margin-left: 210px;
 }
 
 #mapReport{
@@ -251,7 +251,8 @@
 			}
 		
 		}
- 
+ 	
+		// 학원 좋아요 (하트 클릭)
 		function likeAcademy(){
 			
 			var email = "${id_email}";
@@ -291,6 +292,7 @@
 			});
 		}
 		
+		// 학원 좋아요 확인
 		function checkLikedAca(){
 			
 			var email = "${id_email}";
@@ -331,6 +333,7 @@
 			});
 		}
 		
+		// 후기 좋아요 확인
 		function getLikeReviewImg(obj){
 			
 			var email = "${id_email}";
@@ -362,7 +365,7 @@
 			});
 		}
 			
-		
+		// 학원 후기 좋아요(따봉 클릭)
 		function likeAcaReview(obj) {
 			
 			/* 
@@ -667,62 +670,32 @@
 														</div>
 														<div class="comment_text">
 															
-															<%-- 로그인 안한 경우--%>
 															<c:if test="${id_email == null || id_email eq ''}">
-																<div class="blind_review">
-																	<div class="blind_top_div">
-																		<div class="no_membership">
-																			<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
-																			회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
-																			<div class= "review_login" onclick="location.href='./MemberLogin.me'">
-																				<h5>로그인</h5>
-																			</div>
+															
+															<%-- 결제안한 회원에게 보이는 형태 --%>
+															
+															<div class="blind_review">
+																<div class="blind_top_div">
+																	<div class="no_membership">
+																		<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
+																		회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
+																		<div class= "review_login" onclick="location.href='./MemberLogin.me'">
+																			<h5>로그인</h5>
 																		</div>
 																	</div>
 																</div>
+															</div>
 															</c:if>
 															
-															<%-- 로그인 한 경우 --%>
+															<%-- 유료 회원에게 보이는 형태 --%>
 															<c:if test="${id_email ne null}">
-																<%-- 결제한 회원에게 보이는 형태 --%>
-																<c:if test="${membership eq 'O' }">
-																	<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
-																	<p><span class="strength">장점</span><br>
-																		${reBean.reviewGood}
-																	</p>
-																	<p><span class="weakness">단점</span><br>
-																		${reBean.reviewBad}
-																	</p>
-																</c:if>
-																
-																<%-- 결제안한 회원에게 보이는 형태 --%>
-																<c:if test="${membership ne 'O' }">
-																	<%-- 작성자일 경우 --%>
-																	<c:if test="${id_email eq reBean.memEmail }">
-																		<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
-																		<p><span class="strength">장점</span><br>
-																			${reBean.reviewGood}
-																		</p>
-																		<p><span class="weakness">단점</span><br>
-																			${reBean.reviewBad}
-																		</p>
-																	</c:if>
-																	<%-- 작성자아님 --%>
-																	<c:if test="${id_email ne reBean.memEmail }">
-																		<div class="blind_review">
-																	<div class="blind_top_div">
-																		<div class="no_membership">
-																			<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
-																			회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
-																			<div class= "review_login" onclick="location.href='NewGetPayMent.pay?email=${id_email}'">
-																				<h5>멤버십 가입</h5>
-																			</div>
-																		</div>
-																	</div>
-																	</div>
-																	</c:if>
-																	
-																</c:if>
+																<div class="review_subject">수강과목 : ${reBean.reviewSubject}</div>
+																<p><span class="strength">장점</span><br>
+																	${reBean.reviewGood}
+																</p>
+																<p><span class="weakness">단점</span><br>
+																	${reBean.reviewBad}
+																</p>
 															</c:if>
 														<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 														
@@ -766,10 +739,13 @@
 											
 
 									</div>
-									
-									 <%-- 페이징 --%>
-									 
-									 <!-- </ul> -->  
+								</div>
+							</div>
+							
+							 <!-- 끝 페이지 앞으로가기 설정 -->
+					   
+                    
+					<!-- </ul> -->  
 					
 					<ul class="pagination">
 					 <!-- << (첫페이지로 가기) -->
@@ -825,14 +801,7 @@
 						</a>
 					  </li>
 					</c:if>		 
-					</ul>  	
-								</div>
-							</div>
-							
-							 <!-- 끝 페이지 앞으로가기 설정 -->
-					   
-                    
-					 
+					</ul>  	 
 						</div> <!-- 전체 탭 마지막 태그-->
 					</div>
 				</div>

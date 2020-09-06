@@ -6,6 +6,9 @@ import java.util.List;
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.net.SendfileState;
 
 import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
@@ -22,9 +25,13 @@ public class LikedAcaListAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		HttpSession session = request.getSession();
+		
+		String mem_email = (String) session.getAttribute("id_email");
+		
+		
 		request.setCharacterEncoding("utf-8");
 		
-		String email = request.getParameter("id_email");
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
@@ -53,8 +60,8 @@ public class LikedAcaListAction implements Action{
 		// 끝행번호
 		int endRow=currentPage*pageSize;
 		
-		int count = ldao.getLikeAcademyCount(email);
-		List<Integer> likeList = ldao.likedAcaNumList(email, startRow, pageSize);
+		int count = ldao.getLikeAcademyCount(mem_email);
+		List<Integer> likeList = ldao.likedAcaNumList(mem_email, startRow, pageSize);
 		// 좋아요 누른 학원 수
 				
 		List<AcademyBean> likeAcaList = new ArrayList<AcademyBean>();;
