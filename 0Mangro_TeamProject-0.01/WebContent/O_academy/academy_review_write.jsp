@@ -166,8 +166,8 @@
 						      <div class="js-form-message form-group">
 						        <label class="form-label review_title">이 학원에 대한 한 줄 요약
 						        	<input type="text" class="form-control" name="review_title" 
-						        	placeholder="(최대 20자) ex) 수업 내용이 알차고 진행이 부드러워서 시간가는줄 몰라요" 
-						        	maxlength="20" required> 
+						        	placeholder="(최대 25자) ex) 수업 내용이 알차고 쉽게 설명해주셔서 좋았어요!" 
+						        	maxlength="25" required> 
 						        </label>
 							  </div>
 							  

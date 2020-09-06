@@ -74,6 +74,17 @@
 
 <script>
 	$(document).ready(function(){
+		
+		// 후기 top3 출력
+		var topReviewList = document.querySelectorAll(".course_body");
+		
+		if(topReviewList != null){
+			for(var i=0;i<topReviewList.length;i++){
+				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
+				reviewTop(obj);
+			}
+		}
+		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
 		    items:1,
@@ -84,12 +95,15 @@
 		    autoplayTimeout:1000,
 		    autoplayHoverPause:true
 		});
+		
 		$('.play').on('click',function(){
 		    owl.trigger('play.owl.autoplay',[1000])
 		})
+		
 		$('.stop').on('click',function(){
 		    owl.trigger('stop.owl.autoplay')
 		})
+		
 	})
 	
 
@@ -229,6 +243,30 @@
             setCookie("maindiv", "done", 1);
         }
         document.all['myModal'].style.visibility = "hidden";
+    }
+    
+    /* 팝업 끝  */
+    
+    // 후기Top3 
+    function reviewTop(obj){
+    	
+    	var _data = '{"num":"'+obj+'"}';
+    	
+    	$.ajax({
+    		type : "post",
+    		url : "${pageContext.request.contextPath}/reviewTop",
+    		data : {data : _data},
+    		success:function(data,status){
+    			console.log(data);
+    			alert(data);
+    			
+    		},
+    		error:function(){
+    			alert("통신에러가 발생했습니다.");
+    		}
+    		
+    	});
+    	
     }
 
 </script>
@@ -455,9 +493,9 @@
 				
 				<!-- Course -->
 				<div class="col-lg-4 course_col">
-					<div class="course">
+					<div class="course_1">
 						<div class="course_image"><img src="images/academy/topaca1.jpg"></div>
-						<div class="course_body">
+						<div class="course_body" id="topReview_1">
 							<h3 class="course_title"><a href="course.jsp">부산학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
@@ -470,11 +508,11 @@
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_1">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_1">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -486,7 +524,7 @@
 				<div class="col-lg-4 course_col">
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca2.jpg"></div>
-						<div class="course_body">
+						<div class="course_body" id="topReview_2">
 							<h3 class="course_title"><a href="course.html">미래학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
@@ -499,11 +537,11 @@
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_2">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_2">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -515,7 +553,7 @@
 				<div class="col-lg-4 course_col">
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca3.jpg"></div>
-						<div class="course_body">
+						<div class="course_body" id="topReview_3">
 							<h3 class="course_title"><a href="course.html">YMC어학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
@@ -527,17 +565,19 @@
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_3">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_3">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+			<%-- TOP3 끝--%>	
 
 			</div>
 			<div class="row">
