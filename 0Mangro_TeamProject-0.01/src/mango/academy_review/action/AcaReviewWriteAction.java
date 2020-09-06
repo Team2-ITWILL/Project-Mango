@@ -35,7 +35,7 @@ public class AcaReviewWriteAction implements Action{
 		
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
+		forward.setRedirect(true);
 		forward.setPath("AcademyContentAction.aca?acaMainNum="+acaMainNum+"&pageNum=1");
 		
 		

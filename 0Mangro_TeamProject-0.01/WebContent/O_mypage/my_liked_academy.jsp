@@ -98,7 +98,6 @@
 			data : {data : _data},
 			success:function(data,status){
 				var json = JSON.parse(data);
-				console.log(data);
 				var score = json.score;
 				var acaMainNum = json.acaMainNum;
 				document.getElementById("score_"+acaMainNum).innerText = score;
