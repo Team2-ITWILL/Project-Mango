@@ -131,7 +131,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -208,7 +208,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -227,7 +227,7 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
+                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            

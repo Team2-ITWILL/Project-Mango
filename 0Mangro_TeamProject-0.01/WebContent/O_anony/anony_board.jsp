@@ -107,6 +107,7 @@
 <%---------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						
 						<c:forEach var="anbList" items="${anbList}">
+						
 							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'">
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
@@ -135,11 +136,13 @@
 										</div>
 										
 										
+										
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra comment_tail">
 												<img src="images/etc/comment.png" width="20">
+												
 										<%------ 댓글수 ----%>
-												<span>미구현</span>
+												<span>${comments[anbList.ano_board_num]}</span>
 											</div> &nbsp;&nbsp;&nbsp;
 											
 											<div class="comment_extra comment_tail">
@@ -194,7 +197,6 @@
 									</div> 
 								</div>
 							</li>
-							 
 						</c:forEach>
 <%---------------------------------------------------------- [▲ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						</ul> 

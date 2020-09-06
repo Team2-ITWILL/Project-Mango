@@ -209,7 +209,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
