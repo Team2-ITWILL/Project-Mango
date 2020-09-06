@@ -159,7 +159,7 @@ public class AcademyListAction implements Action{
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
 		request.setAttribute("Page","AcademyList.aca?");
-		request.setAttribute("PageTwo","AcademyList.aca?select5="+select5);//페이지명
+		request.setAttribute("PageTwo","AcademyList.aca?select5="+select5+"&");//페이지명
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
 		

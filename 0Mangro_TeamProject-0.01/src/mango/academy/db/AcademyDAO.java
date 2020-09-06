@@ -40,8 +40,9 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						rs.getString(10), rs.getString(11), //acaCategory
 						rs.getString(12), rs.getString(13), rs.getString(14), //address
 						rs.getString(15),	//mem_email						
-						rs.getDouble(16)  //reviewScore
-						
+						rs.getDouble(18),  //reviewScore
+						rs.getInt(17),//누적 청강수
+						rs.getString(19)//학원프로필사진
 						);				
 				
 				list.add(bean);			
@@ -651,7 +652,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 	 return count;
 		
 		
-	}
+	}//getAcademyCount
 	
 	
 	
@@ -1796,8 +1797,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						rs.getString(10), rs.getString(11), //acaCategory
 						rs.getString(12), rs.getString(13), rs.getString(14), //address
 						rs.getString(15),	//mem_email						
-						rs.getDouble(18)   //reviewScore
-				
+						rs.getDouble(19),   //reviewScore
+						rs.getInt(17),"없음"
 						);			
 				
 				list.add(bean);				
@@ -1890,7 +1891,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			result = pstmt.executeUpdate();			
 			
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			System.out.println("reviseAcademyInfo()에서 예외 발생");
 			e.printStackTrace();
 		} finally{

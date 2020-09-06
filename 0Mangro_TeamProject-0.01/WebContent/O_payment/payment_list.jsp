@@ -63,6 +63,9 @@
 				var psys=" ";
 				var all="";
 				$.each(data.MyPay , function (index,item) {
+					
+					var result =item.result;
+					
 					psys+="<li>";
 					psys+="<div class='comment_item d-flex flex-row align-items-start jutify-content-start'>";
 					psys+="<div class='comment_image'><div><img src='images/etc/MANGO.PNG' alt=''></div></div>";
@@ -77,7 +80,7 @@
 				    psys+=	"<div class='comment_extras d-flex flex-row align-items-center justify-content-start'>;"
 				    psys+=		"<div class='comment_extra'>";
 				    psys+=				"<img src='images/etc/date.png' width='20'>";
-				    psys+=			"남은 이용기간 :&nbsp;<span>"+item.result+"일</span>";
+				    psys+=			"남은 이용기간 :&nbsp;<span>"+(result < 0 ? 0:result)+ "일</span>";
 				    psys+=			"</div>";
 				    psys+=		"</div>";
 				    psys+=	"</div>";
