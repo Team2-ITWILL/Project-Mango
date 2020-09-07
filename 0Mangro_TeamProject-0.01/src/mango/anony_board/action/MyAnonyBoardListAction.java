@@ -64,6 +64,37 @@ public class MyAnonyBoardListAction implements Action {
 			request.setAttribute("comments", comments);
 			System.out.println(comments);
 			
+			// [페이징 처리를 위한 값 세팅]-----------------------------------------------------------------
+			
+			// [my_anony_board.jsp로부터 클릭한 페이지번호 받아오기]
+			String clickedPageNum = request.getParameter("clickedPageNum");
+			
+			// [클릭한 페이지번호가 null인 경우(처음 페이지 호출된 경우) "1"값 대입]
+			if(clickedPageNum == null) {	clickedPageNum = "1";  }
+			
+			// [클릭으로 인해 현재 보여지는 페이지 번호를 정수타입으로 변경]
+			int currentPage = Integer.parseInt(clickedPageNum);
+			
+			// [하나의 페이지에 보여질 글의 최대 갯수 (10행)]
+			int eachPageSize = 10;
+			
+			// [하나의 블럭에 보여줄 페이지 수 ]
+			// [<<] [<]  [1] [2] [3] [4] [5]  [>] [>>]
+			int pageBlock = 5;
+			
+			// [각 페이지마다 첫번째로 보여질 시작 글번호(첫행 번호)]
+			// - (현재페이지 - 1)*하나의 페이지의 최대 글(행)수
+			// = (5-1)*10 = 40
+			// 1번 11번 21번 31번 41번
+			int startRow = (currentPage - 1)*eachPageSize;
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			ActionForward forward = new ActionForward();
 			forward.setRedirect(false);
