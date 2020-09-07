@@ -156,7 +156,7 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_qna_board.jsp" class="sidebar-link">
+                                	<a href="./MyQnaList.qna" class="sidebar-link">
                                 		<span class="hide-menu">문의게시글</span>
                                 	</a>
                                 </li>            

@@ -58,7 +58,7 @@ int qna_re_seq =Integer.parseInt(request.getParameter("qna_re_seq"));
 	 	<div class="bo_w_info write_div">
 	    	
 	    	<label for="wr_name" class="sound_only">이메일<strong>필수</strong></label>
-	        <input type="text" name="mem_email" id="wr_name" class="frm_input required" placeholder="이메일">
+	        <input type="text" name="mem_email"  value = "${id_email}" readonly="readonly" id="wr_name" class="frm_input required">
 	    
 	        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
 	        <input type="password" name="qna_board_pwd" id="wr_password" class="frm_input required" placeholder="비밀번호">
