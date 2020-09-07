@@ -371,7 +371,8 @@ public class AnonyBoardDAO extends DBconnection {
 		try {
 			getConnection();
 			sql = "SELECT * FROM anony_board "
-				+ "WHERE mem_email = ?";
+				+ "WHERE mem_email = ?" 
+				+ "ORDER BY ano_board_num DESC, ano_board_date DESC ";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, anbean.getMem_email());
@@ -395,12 +396,13 @@ public class AnonyBoardDAO extends DBconnection {
 				myAnonyList.add(anb);
 			}//while 끝
 			
+			System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
+			
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
 			e.printStackTrace();
 		} finally { resourceClose(); }
-			
 		return myAnonyList;
 	}
 	
