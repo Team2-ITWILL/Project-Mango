@@ -260,6 +260,7 @@
     		success:function(data,status){
     			var json = JSON.parse(data);
     			var acaName = json.acaName;
+    			var acaMainNum = json.acaMainNum;
     			var avgScore = json.avgScore;
     			var rankNum = json.num;
     			var revCnt = json.revCnt;
@@ -267,9 +268,8 @@
     			var title2 = json.title2;
     			
     			console.log(data);
-    			reviewCnt_1
-    			avgScore_1
     			document.getElementById("nameRank_"+rankNum).innerText = acaName;
+    			document.getElementById("nameRank_"+rankNum).setAttribute('href','AcademyContentAction.aca?acaMainNum='+acaMainNum+'&pageNum=1')
     			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
     			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
     			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
@@ -511,7 +511,7 @@
 					<div class="course_1">
 						<div class="course_image"><img src="images/academy/topaca1.jpg"></div>
 						<div class="course_body" id="topReview_1">
-							<h3 class="course_title"><a href="course.jsp" id="nameRank_1"></a></h3>
+							<h3 class="course_title"><a href="#" id="nameRank_1"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
@@ -540,7 +540,7 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca2.jpg"></div>
 						<div class="course_body" id="topReview_2">
-							<h3 class="course_title"><a href="course.html" id="nameRank_2"></a></h3>
+							<h3 class="course_title"><a href="#" id="nameRank_2"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
@@ -569,7 +569,7 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca3.jpg"></div>
 						<div class="course_body" id="topReview_3">
-							<h3 class="course_title"><a href="course.html" id="nameRank_3"></a></h3>
+							<h3 class="course_title"><a href="#" id="nameRank_3"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>

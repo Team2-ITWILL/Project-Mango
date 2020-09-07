@@ -63,6 +63,17 @@ public class AcademyReviewFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		// 내가 쓴 후기 받아오기
+		else if(command.equals("/myReviewListAction.arev")){
+			action = new myReviewListAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				System.out.println("/myReviewListAction.arev에서 예외 발생");
+				e.printStackTrace();
+			}
+		}
 		
 		
 		
