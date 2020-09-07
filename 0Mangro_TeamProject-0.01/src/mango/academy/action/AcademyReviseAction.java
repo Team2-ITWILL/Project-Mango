@@ -16,6 +16,7 @@ import mango.academy_files.db.AcademyFilesBean;
 import mango.academy_files.db.AcademyFilesDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.member.db.MemberDAO;
 
 public class AcademyReviseAction implements Action{
 
@@ -43,9 +44,10 @@ public class AcademyReviseAction implements Action{
 	 	AcademyFilesBean afVO = null;
 	 	
 	 	Enumeration e = multi.getFileNames();
-	 	
+
+	 	//int idx = 0;
 		while(e.hasMoreElements()){		
-			System.out.println("e.hasMoreElements() : true");
+			
 	 		String filename = (String)e.nextElement();	 		 		
 	 		
 	  		//--프로젝트경로 미포함--	
@@ -57,6 +59,25 @@ public class AcademyReviseAction implements Action{
 	  		System.out.println("org_file_name : " + org_file_name); 			
 	  		System.out.println("org_file_name : " + stored_file_name); 			
 	  		
+	  		//첫 번째 파일은 프로필 이미지이므로 memberDAO 이용
+	  		//if(idx == 0){
+	  		//=================학원 프로필 이미지 변경=======================
+	  			
+	  			System.out.println("학원 프로필 이미지: " + stored_file_name); 			
+	  			MemberDAO mDAO = new MemberDAO();
+	  			int result = mDAO.updateProfileImg(stored_file_name, email);
+	  			if(result == 0){
+	  				PrintWriter out = response.getWriter();
+	  				out.println("<script>");
+	  				out.println("alert('ProfileImgUpload Failed');");		
+	  				out.println("history.back();");
+	  				out.println("</script>");
+	  				out.close();
+	  			}	  			
+			//}
+	  		
+	  		//=================학원 갤러리 이미지 등록=======================
+	  		/*	
 	  		afVO = new AcademyFilesBean(
   				0, 
   				Integer.parseInt(multi.getParameter("aca_main_num")),
@@ -77,10 +98,15 @@ public class AcademyReviseAction implements Action{
 				out.close();
 				//return null;
 			}
+	  		*/
+	  			
+	  		// 학원 프로필이미지 / 갤러리 이미지 파일 구분을 위한 인덱스
+	  		//idx++;
 	  		
 		}//파일업로드 끝
 	
 		//==========================================================================
+		
 		
 		//=================학원 정보 변경=========================
 		AcademyBean vo = new AcademyBean();	
@@ -96,10 +122,9 @@ public class AcademyReviseAction implements Action{
 		
 		System.out.println(vo.toString());		
 		
-		AcademyDAO dao = new AcademyDAO();
+		AcademyDAO dao = new AcademyDAO();		
 		
-		int result = dao.reviseAcademyInfo(vo);	
-		
+		int result = dao.reviseAcademyInfo(vo);			
 		if(result == 0){
 			PrintWriter out = response.getWriter();
 			out.println("<script>");

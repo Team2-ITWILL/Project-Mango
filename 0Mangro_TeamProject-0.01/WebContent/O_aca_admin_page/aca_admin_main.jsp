@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,9 +25,85 @@
 	input[type=radio] + label {background-image: none;background-color: #3598db;color: #fff;}
 </style>  
     
+<script>
+	window.onload = function(){			
+	
+		//캘린더 초기화 및 실행
+		var calendar = $('#calendar').fullCalendar({	
+			editable: true,		
+			
+			/* events: [
+			  {
+				  title: 'All Day Event',
+				  start: '2020-09-04'				   
+			  },      
+			  {
+				  title: 'test Event',
+				  start: '2020-09-20',	
+				  end: '2020-09-25'
+			  }, 
+			  {
+				  groupId: 999,
+				  title: 'Repeating Event',
+				  start: '2020-09-01T16:00:00',	
+			  },  {
+				  groupId: 999,
+				  title: 'Repeating Event',
+				  start: '2020-09-15T16:00:00',	
+			  },			  
+			],	 */
+			
+		});
+		
+		//승인된 청강신청 목록(JSON Array) from AuditRequestToCalendarAction
+		var arr = ${AuditArray};
+		
+		//청강 데이터를 넣을 배열
+		var events = [];
+		
+		//받아온 JSON Array객체로부터 필요한 값들을 추출하여
+		//각각의 청강신청마다 JSON으로 만들어서
+		//events 배열에 삽입
+		for(var i in arr){
+			var temp = {
+        	  'title' : arr[i].auditSubject 
+        	  		  + '(' 
+        	  		  //+ arr[i].auditNum 
+        			  //+ '번 예약, ' 
+        			  + arr[i].memEmail 
+        			  + ')',
+        			  
+        	  'start' : arr[i].auditWishDate
+			};
+			
+			//JSON -> 배열에 삽입
+			events.push(temp);					
+		}			
+		//console.log(events);
+		
+		// 캘린더 Object
+		var cal = $('#calendar').fullCalendar('getCalendar');
+		// 이벤트 Object를 캘린더에 넣는다
+		cal.refresh = function(){
+			//기존 이벤트 제거
+			cal.removeEvents();
+			//새로운 이벤트 추가
+			cal.addEventSource(events);
+		}
+		//갱신
+		cal.refresh();
+		
+		
+	}
+
+</script>    
+    
 </head>
 
 <body>
+<!-- ----------------------------- -->
+
+
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -252,7 +328,7 @@
                                 <div class="row">
                                     <div class="col-lg-3 border-right pr-0">
                                         <div class="card-body border-bottom">
-                                            <h4 class="card-title mt-2">청강신청 현황(시간날때 구현)</h4>
+                                            <h4 class="card-title mt-2">청강신청 현황</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -283,7 +359,10 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar">
+                                        	
+                                        	<!-- 캘린더 출력 영역 -->
                                             <div id="calendar"></div>
+                                            
                                         </div>
                                     </div>
                                 </div>

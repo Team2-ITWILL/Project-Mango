@@ -12,6 +12,7 @@ import mango.academy_files.db.AcademyFilesBean;
 import mango.academy_files.db.AcademyFilesDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.member.db.MemberDAO;
 
 public class AcademyAdminInfoAction implements Action{
 
@@ -43,12 +44,19 @@ public class AcademyAdminInfoAction implements Action{
 		request.setAttribute("academyVO", vo);		
 		System.out.println(vo.toString());	
 		
+		//=========프로필 이미지 가져오기==============
+		MemberDAO mDAO = new MemberDAO();
+		String profileImg = mDAO.getProfileImg(email);
+		request.setAttribute("profileImg", profileImg);
+		
+		
 		//=========학원 이미지 파일 가져오기=============
+		/*
 		AcademyFilesDAO afDAO = new AcademyFilesDAO();
 		List<AcademyFilesBean> afList = afDAO.getFilesByAcanum(vo.getAcaMainNum());
 		request.setAttribute("afList", afList);
 		System.out.println(afList);
-		
+		*/
 		//==========forwarding===============
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
