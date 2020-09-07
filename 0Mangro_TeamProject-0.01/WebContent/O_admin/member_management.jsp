@@ -188,26 +188,20 @@
                                             <th scope="col">가입일</th>
                                             <th scope="col">계정 정지일</th>
                                             <th scope="col">탈퇴일</th>
-                                            <th scope="col">사용중인 이용권</th>
-                                            <th scope="col">이용권 시작일자</th>
-                                            <th scope="col">이용권 종료일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	
                                     	
                                      <c:if test="${count > 0}">
-                                      <c:forEach var="memberlist" items="${memberlist}">
+                                      <c:forEach var="i" items="${requestScope.memberlist}">
                                         <tr>
-                                            <th scope="row">${memberlist.mem_email}</th>
-                                            <td>${memberlist.mem_name}</td>
-                                            <td>Y</td>
-                                            <td>2020-09-01</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <th scope="row">${i.memEmail}</th>
+                                            <td>${i.memName}</td>
+                                            <td>${i.memAdmin}</td>
+                                            <td>${i.memJoindate}</td>
+                                            <td>${i.memBaned}</td>
+                                            <td>${i.memSeceded}</td>
                                         </tr>
                                       </c:forEach>
                                      </c:if> 

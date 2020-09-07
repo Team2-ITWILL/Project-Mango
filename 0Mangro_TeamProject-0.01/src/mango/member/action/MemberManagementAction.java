@@ -1,6 +1,5 @@
 package mango.member.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import mango.action.Action;
 import mango.action.ActionForward;
 import mango.member.db.MemberDAO;
-import mango.payment.db.PaymentBean;
 
 public class MemberManagementAction implements Action {
 
@@ -22,7 +20,7 @@ public class MemberManagementAction implements Action {
 		
 		MemberDAO mdao = new MemberDAO();
 		int count = mdao.getMGCount();
-
+		
 		
 /* ------------------------- 페이징 처리  --------------------------- */
 		String pageNum = request.getParameter("pageNum");
@@ -43,7 +41,7 @@ public class MemberManagementAction implements Action {
 
 		List memberlist = null;
 
-		System.out.println("시작페이지" +startRow);  
+		System.out.println("시작페이지 : " +startRow);  
 		
 		if(count != 0){
 			memberlist = mdao.ListAll(startRow,pageSize);
@@ -67,7 +65,7 @@ public class MemberManagementAction implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-		request.setAttribute("listAll", memberlist);
+		request.setAttribute("memberlist", memberlist);
 		request.setAttribute("count", count);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("pageCount", pageCount); // 전체 페이지 수
