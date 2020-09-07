@@ -16,6 +16,7 @@ import mango.action.ActionForward;
 import mango.audit_management.db.AuditManagementBean;
 import mango.audit_management.db.AuditManagementDAO;
 
+// 학원 상세페이지 출력
 public class AcademyContentAction implements Action{
 
 	@Override
@@ -45,11 +46,10 @@ public class AcademyContentAction implements Action{
 		AcademyBean bean = dao.getAcademyContent(acaMainNum);
 		// 학원 후기갯수
 		int count = rdao.getAcademyReviewCount(acaMainNum);
+		
+		// 학원 키워드 목록
 		List<AcademyKeywordBean> keyList = null;
 		keyList = akdao.getAcademyKeyword(acaMainNum);
-		for(int i=0;i<keyList.size();i++){
-			
-		}
 		
 		// 평균점수 (소숫점 한자리)
 		double avgScore = 
@@ -76,6 +76,7 @@ public class AcademyContentAction implements Action{
 		List<AcademyReviewBean> reList = null;
 		
 		
+		// 학원 후기 목록 받아오기
 		if(count != 0){
 			reList = rdao.getAcademyReviewList(acaMainNum,startRow,pageSize);
 		}

@@ -75,7 +75,7 @@
 <script>
 	$(document).ready(function(){
 		
-		/* // 후기 top3 출력
+		// 후기 top3 출력
 		var topReviewList = document.querySelectorAll(".course_body");
 		
 		if(topReviewList != null){
@@ -83,7 +83,7 @@
 				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
 				reviewTop(obj);
 			}
-		} */
+		} 
 		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
@@ -248,9 +248,8 @@
     /* 팝업 끝  */
     
     // 후기Top3 
-    // 임시 주석처리
     
-/*     function reviewTop(obj){
+    function reviewTop(obj){
     	
     	var _data = '{"num":"'+obj+'"}';
     	
@@ -259,8 +258,22 @@
     		url : "${pageContext.request.contextPath}/reviewTop",
     		data : {data : _data},
     		success:function(data,status){
+    			var json = JSON.parse(data);
+    			var acaName = json.acaName;
+    			var avgScore = json.avgScore;
+    			var rankNum = json.num;
+    			var revCnt = json.revCnt;
+    			var title1 = json.title1;
+    			var title2 = json.title2;
+    			
     			console.log(data);
-    			alert(data);
+    			reviewCnt_1
+    			avgScore_1
+    			document.getElementById("nameRank_"+rankNum).innerText = acaName;
+    			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
+    			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
+    			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
+    			document.getElementById("avgScore_"+rankNum).innerText = avgScore;
     			
     		},
     		error:function(){
@@ -269,7 +282,7 @@
     		
     	});
     	
-    } */
+    }
 
 </script>
 
@@ -498,23 +511,23 @@
 					<div class="course_1">
 						<div class="course_image"><img src="images/academy/topaca1.jpg"></div>
 						<div class="course_body" id="topReview_1">
-							<h3 class="course_title"><a href="course.jsp">부산학원</a></h3>
+							<h3 class="course_title"><a href="course.jsp" id="nameRank_1"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
-								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_1_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
+								<br><span id="Rank_1_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_1">79회</span>
+									리뷰수(후기수)<span id="reviewCnt_1"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_1">5</span>
+									평균 별점 <span id="avgScore_1"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -527,23 +540,23 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca2.jpg"></div>
 						<div class="course_body" id="topReview_2">
-							<h3 class="course_title"><a href="course.html">미래학원</a></h3>
+							<h3 class="course_title"><a href="course.html" id="nameRank_2"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
-								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_2_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
+								<br><span id="Rank_2_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_2">79회</span>
+									리뷰수(후기수)<span id="reviewCnt_2"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_2">5</span>
+									평균 별점 <span id="avgScore_2"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -556,22 +569,23 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca3.jpg"></div>
 						<div class="course_body" id="topReview_3">
-							<h3 class="course_title"><a href="course.html">YMC어학원</a></h3>
+							<h3 class="course_title"><a href="course.html" id="nameRank_3"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> 
+								<span id="Rank_3_title_1">" 수업이 지루하지 않고 유익해요."</span> <br> 
+								<span id="Rank_3_title_2">" 수업이 지루하지 않고 유익해요."</span>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_3">79회</span>
+									리뷰수(후기수)<span id="reviewCnt_3"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_3">5</span>
+									평균 별점 <span id="avgScore_3"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>

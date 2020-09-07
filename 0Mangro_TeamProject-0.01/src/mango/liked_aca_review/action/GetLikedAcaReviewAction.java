@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import mango.action.ActionForward;
 import mango.liked_aca_review.db.LikedAcaReviewDAO;
 
+// 좋아요 누른 후기인지 확인
 @WebServlet("/getLikedAcaRev")
 public class GetLikedAcaReviewAction extends HttpServlet{
 

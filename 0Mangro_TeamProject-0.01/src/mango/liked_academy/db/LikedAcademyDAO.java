@@ -102,6 +102,8 @@ public class LikedAcademyDAO extends DBconnection{
 		} catch (Exception e) {
 			System.out.println("getLikeAcademyCount()에서 예외발생");
 			e.printStackTrace();
+		}  finally {
+			resourceClose();
 		}
 		
 		return result;
@@ -131,6 +133,8 @@ public class LikedAcademyDAO extends DBconnection{
 		} catch (Exception e) {
 			System.out.println("likedAcaNumList()에서 예외 발생 ㅋ.ㅋ");
 			e.printStackTrace();
+		}  finally {
+			resourceClose();
 		}
 		
 		return amNumList;
