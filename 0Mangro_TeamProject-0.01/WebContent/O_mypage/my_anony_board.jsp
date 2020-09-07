@@ -292,7 +292,7 @@
                                     
                                     <c:when test="${myAnonyListCount != 0 }">
                                     <c:forEach var="myAnonyList" items="${myAnonyList}">
-                                        <tr>
+                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
                                             <th scope="row">${myAnonyList.ano_board_num}</th>
                                             <td align="left">${myAnonyList.ano_board_title}</td>
                                             <td align="left">${myAnonyList.ano_board_content}</td>
@@ -458,10 +458,6 @@
     <script src="styles/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="styles/dist/js/pages/calendar/cal-init.js"></script>
     
-    
-    <!-- 테이블 관련 js  -->
-    <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
     
     
 
