@@ -27,6 +27,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAcademyReviewCount()에서 예외발생");
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return result;
@@ -219,6 +221,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAcaNameTop()에서 예외발생");	
 			e.printStackTrace();
+		}  finally {
+			resourceClose();
 		}
 		
 		
@@ -246,6 +250,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getReviewCntTop()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		
@@ -273,6 +279,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAvgScoreTop()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		
@@ -302,6 +310,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getReviewTitle()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return titleList;

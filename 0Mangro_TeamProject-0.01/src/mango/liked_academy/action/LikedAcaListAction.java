@@ -20,6 +20,8 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.liked_academy.db.LikedAcademyDAO;
 
+
+// 좋아요 누른 학원목록
 public class LikedAcaListAction implements Action{
 
 	@Override
@@ -60,20 +62,22 @@ public class LikedAcaListAction implements Action{
 		// 끝행번호
 		int endRow=currentPage*pageSize;
 		
-		int count = ldao.getLikeAcademyCount(mem_email);
-		List<Integer> likeList = ldao.likedAcaNumList(mem_email, startRow, pageSize);
 		// 좋아요 누른 학원 수
+		int count = ldao.getLikeAcademyCount(mem_email);
+		// 좋아요 누른 학원번호 리스트반환
+		List<Integer> likeList = ldao.likedAcaNumList(mem_email, startRow, pageSize);
 				
 		List<AcademyBean> likeAcaList = new ArrayList<AcademyBean>();;
 		AcademyBean bean = null;
 		int i =0;
+		
 		while(i<likeList.size()){
 			
 			int acaMainNum = likeList.get(i);
 			
 			if(count != 0){
-				
-				bean = dao.getLikeAcaBean(acaMainNum);
+				// 좋아요 누른 학원 목록 반환
+				bean = dao.getAcademyContent(acaMainNum);
 				likeAcaList.add(bean);
 				
 			}

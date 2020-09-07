@@ -23,7 +23,7 @@ public class AcademyKeywordDAO extends DBconnection{
 		return 0;
 	} // insertAcademyKeyword() 끝
 	
-	// 키워드 반환
+	// 학원번호로 키워드 목록 반환
 	public List<AcademyKeywordBean> getAcademyKeyword(int acaMainNum){
 		
 		List<AcademyKeywordBean> acaKeywordList = new ArrayList<AcademyKeywordBean>();

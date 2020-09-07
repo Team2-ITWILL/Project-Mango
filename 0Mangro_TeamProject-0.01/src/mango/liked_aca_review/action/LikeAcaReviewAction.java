@@ -16,6 +16,7 @@ import mango.action.ActionForward;
 import mango.liked_aca_review.db.LikedAcaReviewBean;
 import mango.liked_aca_review.db.LikedAcaReviewDAO;
 
+// 후기 좋아요 클릭
 @WebServlet("/likeAcaRev")
 public class LikeAcaReviewAction extends HttpServlet{
 
