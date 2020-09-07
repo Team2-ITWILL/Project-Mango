@@ -223,16 +223,18 @@ public class AnonyBoardDAO extends DBconnection {
 			sql = "SELECT * FROM anony_board ";
 			
 			if(searchKeyword != "") {
-				// 제목과, 내용, 닉네임 중 일치하는 검색키워드를 필터링 
+				// 제목과, 내용, 닉네임, 첨부파일명 중 일치하는 검색키워드를 필터링 
 				sql += "WHERE ano_board_title LIKE ? ";
 				sql += "OR ano_board_content LIKE ? ";
 				sql += "OR ano_board_nick LIKE ? ";
+				sql += "OR ano_board_file LIKE ? ";
 				sql += "ORDER BY ano_board_num DESC";
 				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchKeyword+"%");
 				pstmt.setString(2, "%"+searchKeyword+"%");
 				pstmt.setString(3, "%"+searchKeyword+"%");
+				pstmt.setString(4, "%"+searchKeyword+"%");
 				
 			}else {
 				sql += "ORDER BY ano_board_num DESC";
@@ -275,12 +277,26 @@ public class AnonyBoardDAO extends DBconnection {
 			getConnection();
 			sql = "SELECT count(*) FROM anony_board ";
 			
-			if(searchKeyword != ""){// 키워드가 있을 경우
+			if(searchKeyword != "") {
+				// 제목과, 내용, 닉네임, 첨부파일명 중 일치하는 검색키워드를 필터링 
 				sql += "WHERE ano_board_title LIKE ? ";
+				sql += "OR ano_board_content LIKE ? ";
+				sql += "OR ano_board_nick LIKE ? ";
+				sql += "OR ano_board_file LIKE ? ";
+				sql += "ORDER BY ano_board_num DESC";
+				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchKeyword+"%");
+				pstmt.setString(2, "%"+searchKeyword+"%");
+				pstmt.setString(3, "%"+searchKeyword+"%");
+				pstmt.setString(4, "%"+searchKeyword+"%");
 				
-			}else{ pstmt = con.prepareStatement(sql); }
+			}else {
+				sql += "ORDER BY ano_board_num DESC";
+				pstmt = con.prepareStatement(sql);
+			}
+			
+			
 			
 			rs = pstmt.executeQuery();
 			
@@ -343,5 +359,52 @@ public class AnonyBoardDAO extends DBconnection {
 	}//updateANBoard()
 
 
+	
+	
+	// [8. 계정별 작성한 익명사담글을 반환하는 메소드 (마이페이지 내가 작성한 글 - 익명사담글)]
+	// - getANBoardList 오버로딩(String을 사용할 수 없으므로 bean타입으로 매개변수 지정)
+	
+	public List<AnonyBoardBean> getANBoardList(AnonyBoardBean anbean){
+		List<AnonyBoardBean> myAnonyList = new ArrayList<AnonyBoardBean>();
+		
+		System.out.println("getANBoardList() 메소드 실행");
+		try {
+			getConnection();
+			sql = "SELECT * FROM anony_board "
+				+ "WHERE mem_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, anbean.getMem_email());
+			
+			rs = pstmt.executeQuery();
+			
+			// (해당 계정이 쓴)글이 있다면
+			while(rs.next()){
+				AnonyBoardBean anb = new AnonyBoardBean();
+				anb.setAno_board_num(rs.getInt("ano_board_num"));
+				anb.setMem_email(rs.getString("mem_email"));
+				anb.setAno_board_title(rs.getString("ano_board_title"));
+				anb.setAno_board_content(rs.getString("ano_board_content"));
+				anb.setAno_board_read(rs.getInt("ano_board_read"));
+				anb.setAno_board_ip(rs.getString("ano_board_ip"));
+				anb.setAno_board_date(rs.getTimestamp("ano_board_date"));
+				anb.setAno_board_nick(rs.getString("ano_board_nick"));
+				anb.setAno_board_file(rs.getString("ano_board_file"));
+				
+				System.out.println("dao에서 보여지는 anb"+anb);
+				myAnonyList.add(anb);
+			}//while 끝
+			
+			
+		} catch (Exception e) {
+			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		} finally { resourceClose(); }
+			
+		return myAnonyList;
+	}
+	
+	
+	
 		
 }

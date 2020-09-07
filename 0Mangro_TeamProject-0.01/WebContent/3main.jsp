@@ -74,6 +74,17 @@
 
 <script>
 	$(document).ready(function(){
+		
+		// 후기 top3 출력
+		var topReviewList = document.querySelectorAll(".course_body");
+		
+		if(topReviewList != null){
+			for(var i=0;i<topReviewList.length;i++){
+				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
+				reviewTop(obj);
+			}
+		} 
+		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
 		    items:1,
@@ -84,12 +95,15 @@
 		    autoplayTimeout:1000,
 		    autoplayHoverPause:true
 		});
+		
 		$('.play').on('click',function(){
 		    owl.trigger('play.owl.autoplay',[1000])
 		})
+		
 		$('.stop').on('click',function(){
 		    owl.trigger('stop.owl.autoplay')
 		})
+		
 	})
 	
 
@@ -230,6 +244,134 @@
         }
         document.all['myModal'].style.visibility = "hidden";
     }
+    
+    /* 팝업 끝  */
+    
+    // 후기Top3 
+    
+    function reviewTop(obj){
+    	
+    	var _data = '{"num":"'+obj+'"}';
+    	
+    	$.ajax({
+    		type : "post",
+    		url : "${pageContext.request.contextPath}/reviewTop",
+    		data : {data : _data},
+    		success:function(data,status){
+    			var json = JSON.parse(data);
+    			var acaName = json.acaName;
+    			var avgScore = json.avgScore;
+    			var rankNum = json.num;
+    			var revCnt = json.revCnt;
+    			var title1 = json.title1;
+    			var title2 = json.title2;
+    			
+    			console.log(data);
+    			reviewCnt_1
+    			avgScore_1
+    			document.getElementById("nameRank_"+rankNum).innerText = acaName;
+    			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
+    			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
+    			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
+    			document.getElementById("avgScore_"+rankNum).innerText = avgScore;
+    			
+    		},
+    		error:function(){
+    			alert("통신에러가 발생했습니다.");
+    		}
+    		
+    	});
+    	
+    }
+
+
+    
+    
+    
+    
+    $(function(){
+    
+	$(".home_search_button").click(function(){
+		
+		var research="AcademySearchList.aca?";
+		
+		var Mainsearch1=$("#add1 option:selected").val();
+		var Mainsearch2=$(".sel2 option:selected").val();
+        var Mainsearch3=$(".sel3 option:selected").val();
+        var Mainsearch5=$("#basic").val();
+		var mainsearch = $(".home_search_input").val();
+		
+		
+		research+="select5="+Mainsearch5+"&";
+		
+		if(Mainsearch1 != "s1" || Mainsearch2 != "s2" ||Mainsearch3 != "s3"||mainsearch !=""){
+		
+			
+		if(Mainsearch1 != "s1"){
+			
+			
+			research+="select1="+Mainsearch1+"&";
+			
+		}
+		if(Mainsearch2 != "s2"){
+			
+			research+="select2="+Mainsearch2+"&";
+			
+		}
+		if(Mainsearch3 != "s3"){
+			
+			research+="select3="+Mainsearch3+"&";
+			
+		}
+		
+		
+		if(mainsearch !=""){
+			
+			research+="mainsearch="+mainsearch+"&";
+			
+			
+		}
+		
+		
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		return;
+		}
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		
+	
+		
+	
+	})
+	
+    
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 </script>
 
@@ -285,8 +427,7 @@
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden" name="select4">
-												<input type="hidden" name="select5" value="basic">
+												<input type="hidden" name="select5" value="basic" id="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
 												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
@@ -455,26 +596,26 @@
 				
 				<!-- Course -->
 				<div class="col-lg-4 course_col">
-					<div class="course">
+					<div class="course_1">
 						<div class="course_image"><img src="images/academy/topaca1.jpg"></div>
-						<div class="course_body">
-							<h3 class="course_title"><a href="course.jsp">부산학원</a></h3>
+						<div class="course_body" id="topReview_1">
+							<h3 class="course_title"><a href="course.jsp" id="nameRank_1"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
-								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_1_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
+								<br><span id="Rank_1_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_1"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_1"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -486,24 +627,24 @@
 				<div class="col-lg-4 course_col">
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca2.jpg"></div>
-						<div class="course_body">
-							<h3 class="course_title"><a href="course.html">미래학원</a></h3>
+						<div class="course_body" id="topReview_2">
+							<h3 class="course_title"><a href="course.html" id="nameRank_2"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
-								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_2_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
+								<br><span id="Rank_2_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_2"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_2"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -515,29 +656,32 @@
 				<div class="col-lg-4 course_col">
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca3.jpg"></div>
-						<div class="course_body">
-							<h3 class="course_title"><a href="course.html">YMC어학원</a></h3>
+						<div class="course_body" id="topReview_3">
+							<h3 class="course_title"><a href="course.html" id="nameRank_3"></a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span>" 수업이 지루하지 않고 유익해요."</span> <br> 
+								<span id="Rank_3_title_1">" 수업이 지루하지 않고 유익해요."</span> <br> 
+								<span id="Rank_3_title_2">" 수업이 지루하지 않고 유익해요."</span>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span>79회</span>
+									리뷰수(후기수)<span id="reviewCnt_3"></span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span>5</span>
+									평균 별점 <span id="avgScore_3"></span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+			<%-- TOP3 끝--%>	
 
 			</div>
 			<div class="row">

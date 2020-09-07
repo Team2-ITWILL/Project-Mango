@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,9 +34,12 @@ public class AnoBoardFileDownAction implements Action {
 		// [anbean객체로 부터 해당 글의 파일명 얻기]
 		String filename = anbean.getAno_board_file();
 		
+		// [파일 이름 한글처리]
+		//filename = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+		
 		// [파일이 저장된 경로와 파일 이름을 붙이기]
 		String uploadFileName 
-			= request.getRealPath("/O_aca_regFiles") + 
+			= request.getRealPath("/O_anony_Files") + 
 			  "/" + filename;
 		
 		// [해당 파일 객체 생성하기]
@@ -50,15 +54,20 @@ public class AnoBoardFileDownAction implements Action {
 				long fileSize = fileForDown.length();
 				
 				// [content타입 및 헤어 세팅 후 파일 출력]
-				response.setContentType("application/x-msdownload");
+				response.setContentType("application/octet-stream");
 				response.setContentLength((int)fileSize);
 				String strClient = request.getHeader("User-agent");
 				
 				if(strClient.indexOf("MSID 5.5") != -1){
-					response.setHeader("Content-Disposition", "filename=" + filename +";");
+					response.setHeader("Content-Disposition","filename=" + filename +";");
+					//response.setHeader("Content-Disposition", "=?UTF-8?Q?"+"filename=" + filename +";");
+					//System.out.println("if절 Content-Disposition filename=  "+filename);
 					
 				}else{
-					response.setHeader("Content-Disposition", "attachment; filename="+filename+";");
+					response.setHeader("Content-Disposition", "attachment;filename="+filename+";");
+					//response.setHeader("Content-Disposition", "=?UTF-8?Q?" + "attachment;" + "inline;" + "filename=\" 
+										//+ URLEncoder.encode(filename, "UTF-8")   " + filename + ";");
+					//System.out.println("else절 attachment; filename= "+filename);
 				}
 				
 				response.setHeader("Content-Length", String.valueOf(fileSize));

@@ -86,6 +86,7 @@
 		
 	});
 	
+	// 평균 점수 받아와 출력
 	function getAvgScore(obj) {
 		
 		
@@ -97,7 +98,6 @@
 			data : {data : _data},
 			success:function(data,status){
 				var json = JSON.parse(data);
-				console.log(data);
 				var score = json.score;
 				var acaMainNum = json.acaMainNum;
 				document.getElementById("score_"+acaMainNum).innerText = score;
@@ -175,7 +175,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -252,7 +252,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=1"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -390,7 +390,7 @@
 					   <!-- << (첫페이지로 가기) -->
 					<c:if test="${count!=0}"> 
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=1">
+					  	<a class="page-link prev" href="LikedAcaListAction.laca?pageNum=1">
 					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
 					  	</a>
 					  </li>
@@ -405,14 +405,14 @@
 					  		<c:set var="pN" value="${startPage-pageBlock}"/>
 					  	</c:if>
 					  
-					  	<a class="page-link prev" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=${pN}">
+					  	<a class="page-link prev" href="LikedAcaListAction.laca?pageNum=${pN}">
 					  		<i class="fa fa-angle-left" aria-hidden="true"></i>
 					  	</a>	
 					  
 					  </li>
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=${i}">${i}</a></li>
+					  <li class="page-item"><a class="page-link" href="LikedAcaListAction.laca?pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
@@ -426,7 +426,7 @@
 					  	</c:if>
 					  
 					  <li class="page-item"><%--다음 페이지 --%>
-					  	<a class="page-link next" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=${pP}">
+					  	<a class="page-link next" href="LikedAcaListAction.laca?pageNum=${pP}">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 						</a>
 					  </li>
@@ -435,7 +435,7 @@
                     
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="LikedAcaListAction.laca?id_email=${id_email }&pageNum=${pageCount}">
+					  	<a class="page-link next" href="LikedAcaListAction.laca?pageNum=${pageCount}">
 						  	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 						</a>
 					  </li>

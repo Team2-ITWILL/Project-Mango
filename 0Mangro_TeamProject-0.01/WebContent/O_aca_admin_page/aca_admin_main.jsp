@@ -166,7 +166,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>aca_admin</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -233,15 +233,7 @@
                             </a>
                         </li>
                         
-                        
                                     
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_revise.jsp"
-                                aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
-                                <span class="hide-menu">내 정보</span>
-							</a>
-						</li>
-						
 						
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->

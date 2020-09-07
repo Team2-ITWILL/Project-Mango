@@ -92,7 +92,7 @@ public class CommentAnoBoardListAction implements Action {
 			singleComment.put("ano_comment_content", DB_ano_comment_content);
 			singleComment.put("mem_email", DB_mem_email);
 			
-			singleComment.put("ano_comment_date", DB_ano_comment_date.toString());
+			singleComment.put("ano_comment_date", DB_ano_comment_date.toString().substring(0,19));
 			singleComment.put("ano_comment_ip", DB_ano_comment_ip);
 			singleComment.put("ano_board_nick", DB_ano_board_nick);
 			

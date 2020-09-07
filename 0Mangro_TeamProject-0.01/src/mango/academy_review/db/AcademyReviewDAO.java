@@ -27,6 +27,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAcademyReviewCount()에서 예외발생");
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return result;
@@ -97,6 +99,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		return result;
 	} // getAvgReviewScore() 끝
 	
+	
 	// 학원 후기 작성
 	@Override
 	public void InsertAcademyReview(AcademyReviewBean ab) {
@@ -141,7 +144,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		
 		
 	} // InsertAcademyReview() 끝
-
+	
+	// 학원 후기 삭제
 	@Override
 	public int DeleteAcademyReview(int reviewNum) {
 		
@@ -163,7 +167,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		return 0;
 		
 	} // DeleteAcademyReview()끝
-
+	
+	// 후기 수정
 	@Override
 	public void UpdateAcademyReview(AcademyReviewBean ab) {
 
@@ -192,6 +197,130 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		}
 		
 	} //UpdateAcademyReview() 끝
+	
+	/* 메인 학원 후기 3개 반환 */
+	
+	// 학원 이름
+	public String getAcaNameTop(int rank){
+		
+		String acaName = ""; 
+		
+		try {
+			getConnection();
+			sql = "select aca_name from academy_review group by aca_main_num "
+					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rank);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				acaName = rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getAcaNameTop()에서 예외발생");	
+			e.printStackTrace();
+		}  finally {
+			resourceClose();
+		}
+		
+		
+		return acaName;
+	} // getAcaNameTop() 끝
+	
+	// 후기 갯수
+	public int getReviewCntTop(int rank){
+		
+		int count = 0; 
+		
+		try {
+			getConnection();
+			sql = "select count(*) from academy_review group by aca_main_num "
+					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rank);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getReviewCntTop()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return count;
+	} // getReviewCntTop() 끝
+	
+	// 후기 갯수
+	public double getAvgScoreTop(int rank){
+		
+		double score = 0.0; 
+		
+		try {
+			getConnection();
+			sql = "select avg(review_score) from academy_review group by aca_main_num "
+					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, rank);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				score = rs.getDouble(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getAvgScoreTop()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return score;
+	} // getAvgScoreTop() 끝
+	
+	// 제목 두개 받아오기
+	public List<String> getReviewTitle(String acaName){
+		
+		List<String> titleList = new ArrayList<String>();
+		
+		try {
+			getConnection();
+			sql = "select review_title from academy_review "
+					+ "where aca_name = ? order by review_score desc limit 0,2;";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acaName);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				String title = rs.getString(1);
+				System.out.println(title);
+				titleList.add(title);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getReviewTitle()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return titleList;
+	} // getReviewTitle() 끝
+	
+	
+	
+	/* 메인 학원 후기 3개 반환 끝 */
+	
 
 	
 } // AcademyReviewDAO 클래스 끝

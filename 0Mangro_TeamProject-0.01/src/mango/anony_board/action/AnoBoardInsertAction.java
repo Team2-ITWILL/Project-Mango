@@ -31,7 +31,7 @@ public class AnoBoardInsertAction implements Action {
 				
 				//new MultipartRequest(request, realPath, max,"UTF-8",new DefaultFileRenamePolicy());
 				
-				String realPath = request.getRealPath("/O_aca_regFiles");
+				String realPath = request.getRealPath("/O_anony_Files");
 				System.out.println(realPath);
 				
 				multi = new MultipartRequest

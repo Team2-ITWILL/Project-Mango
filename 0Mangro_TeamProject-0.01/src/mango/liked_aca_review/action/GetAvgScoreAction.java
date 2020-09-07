@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 import mango.academy_review.db.AcademyReviewDAO;
 
+// 학원 후기 평균 평점받아오기
 @WebServlet("/getAvgScore")
 public class GetAvgScoreAction extends HttpServlet{
 
@@ -45,7 +46,8 @@ public class GetAvgScoreAction extends HttpServlet{
 			int acaMainNum = Integer.parseInt((String)obj.get("acaMainNum"));
 			
 			AcademyReviewDAO rdao = new AcademyReviewDAO();
-
+			
+			// 소숫점 한자지로 받아옴
 			double avgScore = 
 					Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(acaMainNum)));
 

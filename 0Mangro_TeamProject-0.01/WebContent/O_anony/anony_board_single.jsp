@@ -14,7 +14,6 @@
 <%-- 제이쿼리 & js  --%>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-
 <%-- 링크목록 --%>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -36,14 +35,25 @@
 	    position: relative;
 	    z-index: 11;
 	}
+	
 	.title-btn:hover{cursor: pointer; color: #000;}
 	.boardremove:hover, .boardrevise:hover { color: #e95765; cursor:pointer;}
 	.boardrevise{ color: #000; margin-left:8px;}
 	.cmCount{color:#3094ff;}
 	.ifnotwriter{  margin-top: 20px; }	
 	.nickWidth { display: inline-block; width: 150px;}
-	#replyLev { margin-left: 30px; }
-}
+	#replyLev { margin-left: 50px; }
+
+	
+	.thumbnail_img{
+		background-color: #b1b1b1 !important;
+	    width: 500px !important;
+	    height: 100px !important;
+	    text-align: center !important;
+	    padding-top: 40px !important;
+	    margin-top: 100px !important;
+	    border: 5px dotted #dcdcdc !important;
+	}
 	
 </style>
 
@@ -113,12 +123,24 @@
 						<%-- 내용 --%>
 						<div class="comment_text">
 							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 ----%>
-							<c:choose>
-								<c:when test="${boardSingle.ano_board_file ne null}">
-									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
+							<c:if test="${boardSingle.ano_board_file ne null }">
+								
+								<c:choose>
+								
+								<c:when test="${fileType eq 'jpg' or fileType eq 'jpeg' or fileType eq 'png' or fileType eq 'gif' or fileType eq 'JPG' or fileType eq 'JPEG' or fileType eq 'PNG' or fileType eq 'GIF'}">
+									<p><img src="O_anony_Files/${boardSingle.ano_board_file}" width="300"></p>
 								</c:when>
-							</c:choose>
-							
+								
+								<c:otherwise>
+									<div class="thumbnail_img">
+										<span style="color:#fff;">이미지 미리보기를 지원하지 않는 형식의 파일입니다.</span>
+									</div>
+								
+								</c:otherwise>
+								
+								</c:choose>
+								
+							</c:if>
 							<p>${boardSingle.ano_board_content }</p> <br><br>
 							
 							
@@ -176,24 +198,23 @@
 
 //---[1] 실시간 댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
-	// [필요한 변수 선언 및 초기화] 
-	// - 댓글내용 textarea요소를 변수에 저장(대댓글, 수정form 아닌 최초로 댓글달때 form id값 'init_content')
-	//var init_content = document.getElementById("init_content"); 
 	
 	function add_comment(ano_board_num){
 		
-		// [1-1] 댓글 내용 여부 검증 & 로그인여부 처리
-		if($("#init_content").val() == ""){
-			alert("댓글 내용을 입력하세요.");
-			return;
-			
-		}else if( $("#session_memEmail").val() == ""){
+		// [댓글 내용 여부 검증 & 로그인여부 처리]
+		
+		if( $("#session_memEmail").val() == ""){
 			alert("로그인이 필요한 서비스 입니다.");
 			location.href="./MemberLogin.me";
 			return;
 		}
+		
+		if($("#init_content").val() == ""){
+			alert("댓글 내용을 입력하세요.");
+			return;
+		}
 
-		// [1-2] ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+		// [ajax를 통한 댓글 insert작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardInsertAction.cano",
@@ -220,10 +241,8 @@
 	 
 //---[2] 실시간 댓글수정(ajax) ----------------------------------------------------------------------------------------------------------------
 	 
-		// [2-2] ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
-
-	//var update_content = document.getElementById("update_content"); 
 	
+	// [ajax를 통한 댓글 update작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	function update_comment(ano_comment_num){		
 
 		// [4] 수정댓글 내용 여부 검증 & 로그인여부 처리
@@ -263,8 +282,8 @@
 	
 //---[3] 실시간 댓글삭제(ajax) ----------------------------------------------------------------------------------------------------------------
 	 
-	// [3-2] ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
 
+	// [ajax를 통한 댓글  delete작업 후 게시글의 댓글 전부를 비동기식으로 불러오기	]	
 	function delete_comment(ano_comment_num){		
 		
 	    $.ajax({
@@ -294,12 +313,9 @@
 	 
 //---[4] 실시간 대댓글달기(ajax) ----------------------------------------------------------------------------------------------------------------
 
-	// [필요한 변수 선언 및 초기화] 
-	// - 대댓글내용 textarea요소를 변수에 저장
-	//var reply_content = document.getElementById("reply_content"); 
 	
 	function reply_comment(ano_comment_num){
-		// [4] 대댓글 내용 여부 검증 & 로그인여부 처리
+		// [대댓글 내용 여부 검증 & 로그인여부 처리]
 		if( $("#reply_content").val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
@@ -312,7 +328,7 @@
 		
 		
 
-		// [4] ajax를 통한 대댓글 INSERT 작업 후 게시글의 댓글 전부를 비동기식으로 불러오기		
+		// [ajax를 통한 대댓글 INSERT 작업 후 게시글의 댓글 전부를 비동기식으로 불러오기]		
 	    $.ajax({
 	        type: "POST",
 	        url : "./CommentAnoBoardReplyAction.cano",
@@ -325,7 +341,7 @@
 	        		ano_re_seq:0 // 나중에 제값 넣어주기
 	        },
 	        success : function(data){
-	               alert("ajax로 대댓글 달기 성공");
+	               //alert("ajax로 대댓글 달기 성공");
 	               // 댓글 insert후 대댓글 내용 입력창 비워주기
 	               $("#reply_content").val("");
 	               // 대댓글 입력창 없애기
@@ -344,43 +360,15 @@
 	 
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	/**
-	 * 초기 페이지 로딩시 댓글 불러오기
-	 */
+//---[5] 실시간 댓글 전체목록 불러오기(ajax) ----------------------------------------------------------------------------------------------------------------
+// - 초기 페이지 로딩시 댓글 불러오기 메서드 getCommentList() 호출
+	
  	$(function(){
 	    getCommentList();
 	    
 	}); 
 
-	
-	
-	
-	
-	/**
-	 * 댓글 불러오기(Ajax)
-	 */
+	// [ajax를 통해 댓글 전부를 비동기식으로 불러오기]		
  	function getCommentList(){
 	    
 	    $.ajax({
@@ -406,7 +394,7 @@
 		        	
 		        	// [if문] - 대댓글인 경우
 		        	if(allComments[i].ano_re_lev > 0){
-			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start' id='replyLev' > ";
+			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start' id='replyLev' ><img src='images/etc/repArrow.png' width='50' style='margin-right:20px;'> ";
 		        	}else{
 			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start'> ";
 		        	}
@@ -432,11 +420,13 @@
 			        	commentsHTML +=   "onclick='delete_comment("+allComments[i].ano_comment_num+")' >";
 		        	}
 
-		        	
+		        	// [if문] - 대댓글에 댓글을 달기 방지
+		        	if(allComments[i].ano_re_lev == 0 ) {
 		        	// ▶ 대댓글 버튼
 		        	commentsHTML +=   "<img src='images/etc/reply.png' id='comm_reply' class='comm_icon' width='20' " ;
 		        	commentsHTML +=   "onclick='repCommentOpen("+allComments[i].ano_comment_num+")' >";
 		        	
+		        	}		        	
 		        	// ▶ 내용
 		        	commentsHTML +=   "<div class='comment_author'>" ;
 		        	commentsHTML +=   "<span>"+allComments[i].ano_comment_content+"</span>";
@@ -495,7 +485,7 @@
 	
 	
 	
-	// [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]
+//---[6] [수정버튼(연필아이콘)과 대댓글버튼(말풍선아이콘)이 공유하는 메소드]----------------------------------------------------------------------------------------------------------------
 	// - 클릭시 숨겨진 각각의 form창 open
 	function repCommentOpen(ano_comment_num) {
 		if( $("#session_memEmail").val() == ""){
@@ -516,7 +506,6 @@
 </script>
 
 <%-------------------------------------------------------- [스크립트 링크 영역]  --------------------------------------------------------------------------%>
-<!-- <script src="js/jquery-3.2.1.min.js"></script> -->
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/easing/easing.js"></script>

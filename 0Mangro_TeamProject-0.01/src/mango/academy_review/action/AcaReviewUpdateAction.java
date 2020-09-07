@@ -8,7 +8,7 @@ import mango.academy_review.db.AcademyReviewDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
 
-// 후기 작성
+// 후기 수정
 public class AcaReviewUpdateAction implements Action{
 
 	@Override

@@ -130,11 +130,20 @@ public class AnonyBoardFrontController extends HttpServlet{
 			action = new AnoBoardFileDownAction();
 			try {
 				forward = action.excute(request, response);
-				System.out.println("여기까지옴?");
 			} catch (Exception e){
 				System.out.println("AnonyBoardFrontController의 /AnoBoardFileDownAction.anob에서 예외");
 				e.printStackTrace();
 			}
+			
+		}else if(command.equals("/MyAnonyBoardListAction.anob")){
+			action = new MyAnonyBoardListAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e){
+				System.out.println("AnonyBoardFrontController의 /MyAnonyBoardListAction.anob에서 예외");
+				e.printStackTrace();
+			}
+			
 		}
 		
 		

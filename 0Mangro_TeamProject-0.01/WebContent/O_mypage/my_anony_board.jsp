@@ -131,7 +131,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -208,7 +208,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -227,7 +227,7 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
+                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            
@@ -320,32 +320,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="myAnonyList" items="myAnonyList">
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
+                                            <th scope="row">${myAnonyList.ano_board_num }</th>
+                                            <td>${myAnonyList.ano_board_title }</td>
+                                            <td>${myAnonyList.ano_board_content }</td>
+                                            <td>${myAnonyList.ano_board_read }</td>
+                                            <td>${myAnonyList.ano_board_read }</td>
+                                            <td>${myAnonyList.ano_board_file }</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-
-
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

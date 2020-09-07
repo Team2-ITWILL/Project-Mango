@@ -90,15 +90,15 @@ li.thirdKey {
 	}
 		
 
+
+	$(function(){
+		
 	var search1=null;
 	var search2=null;
 	var search3=null;
 	var search4=null;
 	var search5=null;
 	var mainsearch=null;
-
-	$(function(){
-		
 		
 // 		if(${pageNum < 0}|| ${pageNum>pageCount }){
 			
@@ -126,15 +126,15 @@ li.thirdKey {
 			$("#courses_search_select3").empty();
 			$("#courses_search_select4").empty();
 			
-			$("#courses_search_select3").append("<option value=''>읍/면/동</option>");
+			$("#courses_search_select3").append("<option value='s3'>읍/면/동</option>");
 			
 			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select2="<option option value=''>시/군/구</option>";
-				var select4="<option option value=''>카테고리</option>"
+				var select2="<option option value='s2'>시/군/구</option>";
+				var select4="<option option value='s4'>카테고리</option>"
 				$.each(data.address , function (index,item) {
 			
 					
@@ -171,14 +171,14 @@ li.thirdKey {
 			
 			$("#courses_search_select3").empty();
 			$("#courses_search_select4").empty();
-			$("#courses_search_select4").append("<option value=''>카테고리</option>");
+			$("#courses_search_select4").append("<option value='s4'>카테고리</option>");
 			
 			$.getJSON("getListSearchTwo.aca?search1="+search1+"&search2="+search2 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select3="<option value=''>읍/면/동</option>";
+				var select3="<option value='s3'>읍/면/동</option>";
 				
 				var select4="";
 				$.each(data.address , function (index,item) {
@@ -218,7 +218,7 @@ li.thirdKey {
 				console.log(data.address);
 				
 				
-				var select4="<option value=''>카테고리</option>";
+				var select4="<option value='s4'>카테고리</option>";
 				$.each(data.address , function (index,item) {
 					
 					select4+="<option value='"+item.search4+"'>"+item.search4+"</option>";
@@ -236,17 +236,90 @@ li.thirdKey {
 		// 	j_test(this);
 			search5=$("#courses_search_select5 option:selected").val();
 			
-			location.href="${Page}&select5="+search5;
+			location.href="${Page}select5="+search5;
 			
 			
 		
 		
 		});//change			
 	
-	});	//$(function)
+		
+		
+		
+		
+		$(".searchBtn").click(function(){
+			
 
+
+			var research="AcademySearchList.aca?";
+			
+  			search1=$("#courses_search_select1 option:selected").val();
+  			search2=$("#courses_search_select2 option:selected").val();
+	        search3=$("#courses_search_select3 option:selected").val();
+			search4=$("#courses_search_select4 option:selected").val();
+			search5=$("#courses_search_select5 option:selected").val();
+			mainsearch = $("#mainsearch").val();
+			
+			
+			research+="select5="+search5+"&";
+			
+			if(search1 != "s1" || search2 != "s2" ||search3 != "s3"||search4 != "s4"||mainsearch !=""){
+			
+				
+				
+			if(search1 != "s1"){
+				
+				
+				research+="select1="+search1+"&";
+				
+			}
+			if(search2 != "s2"){
+				
+				research+="select2="+search2+"&";
+				
+			}
+			if(search3 != "s3"){
+				
+				research+="select3="+search3+"&";
+				
+			}
+			if(search4 != "s4"){
+				
+				research+="select4="+search4+"&";
+				
+			}
+			
+			
+			if(mainsearch !=""){
+				
+				research+="mainsearch="+mainsearch+"&";
+				
+				
+			}
+			
+			
+			research= research.slice(0,-1);
+			
+			location.href=research;
+			
+			return;
+			}
+			research= research.slice(0,-1);
+			
+			location.href=research;
+			
+			
 		
 			
+		
+		})
+		
+		
+
+		
+		
+	});	//$(function)
+
 	
 	
 	
@@ -278,16 +351,16 @@ li.thirdKey {
 <!------------------------------------------ [  검색form  ] --------------------------------------------------------------->
 						<!-- 타자 검색영역 -->
 						<!-- 키워드선택 검색영역 -->     
-						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="get">
+						<form action="AcademySearchList.aca" id="courses_search_form" class="courses_search_form" method="get" >
 				
 							<div class="searchInput">
-								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기" name="mainsearch" id="mainsearch">
-								<button type="submit"class="courses_search_button ml-auto searchBtn">검색하기</button>
+								<input type="text" class="courses_search_input typingSearch" placeholder="검색하기"  id="mainsearch">
+								<button type="button"class="courses_search_button ml-auto searchBtn">검색하기</button>
 							</div>
 							
 							<div class="selectOption">
-								<select id="courses_search_select1" class="courses_search_select courses_search_input" name="select1">
-									<option value="">시/도</option> 
+								<select id="courses_search_select1" class="courses_search_select courses_search_input" >
+									<option value="s1" >시/도</option> 
 										<option value="서울특별시" >서울특별시</option>
 										<option value="부산광역시" >부산광역시</option>
 										<option value="대구광역시" >대구광역시</option>
@@ -306,20 +379,20 @@ li.thirdKey {
 										<option value="경상남도">경상남도</option>
 											<option value="제주특별자치도">제주특별자치도</option>		
 								</select>						
-								<select id="courses_search_select2" class="courses_search_select courses_search_input" name="select2">
-									<option value="">시/군/구</option>
+								<select id="courses_search_select2" class="courses_search_select courses_search_input" >
+									<option value="s2">시/군/구</option>
 								
 								</select>
-								<select id="courses_search_select3" class="courses_search_select courses_search_input" name="select3">
-									<option value="">읍/면/동</option>
+								<select id="courses_search_select3" class="courses_search_select courses_search_input" >
+									<option value="s3">읍/면/동</option>
 									
 								</select>
-								<select id="courses_search_select4" class="courses_search_select courses_search_input" name="select4">
-									<option value="">카테고리</option>
+								<select id="courses_search_select4" class="courses_search_select courses_search_input" >
+									<option value="s4">카테고리</option>
 									
 								</select>
 								
-							<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5">
+							<select id="courses_search_select5" class="courses_search_select courses_search_input" name="select5" >
 									<option value="basic">기본순</option>
 									<option value="like">좋아요 많은 순</option>
 									<option value="review">리뷰많은 순</option>
@@ -341,18 +414,18 @@ li.thirdKey {
 						<!-- <div class="sidebar_section_title">키워드 검색</div> -->
 						<div class="sidebar_tags">
 							<ul class="tags_list">
-								<li class="firstKey"><a href="#">교통이 편리한</a></li>
-								<li class="firstKey"><a href="#">스터디룸 있는</a></li>
-								<li class="firstKey"><a href="#">시설이 깨끗한</a></li>
-								<li class="secondKey"><a href="#">식당가 인근</a></li>
-								<li class="secondKey"><a href="#">청강 신청 가능한</a></li>
-								<li class="secondKey"><a href="#">기숙사가 있는</a></li>
+								<li class="firstKey"><a href="${PageTwo}keyword=traffic">교통이 편리한</a></li>
+								<li class="firstKey"><a href="${PageTwo}keyword=stdRoom">스터디룸 있는</a></li>
+								<li class="firstKey"><a href="${PageTwo}keyword=clean">시설이 깨끗한</a></li>
+								<li class="secondKey"><a href="${PageTwo}keyword=restaurant">식당가 인근</a></li>
+								<li class="secondKey"><a href="${PageTwo}keyword=audit">청강 신청 가능한</a></li>
+								<li class="secondKey"><a href="${PageTwo}keyword=room">기숙사가 있는</a></li>
 							</ul>
 							<ul class="tags_list">
-								<li class="thirdKey"><a href="#">중장기(6개월 이상)</a></li>
-								<li class="thirdKey"><a href="#">차량운행이 있는</a></li>
-								<li class="thirdKey"><a href="#">레벨테스트가 있는</a></li>
-								<li class="thirdKey"><a href="#">수능대비강의가 있는</a></li>
+								<li class="thirdKey"><a href="${PageTwo}keyword=long">중장기(6개월 이상)</a></li>
+								<li class="thirdKey"><a href="${PageTwo}keyword=car">차량운행이 있는</a></li>
+								<li class="thirdKey"><a href="${PageTwo}keyword=level">레벨테스트가 있는</a></li>
+								<li class="thirdKey"><a href="${PageTwo}keyword=sat">수능대비강의가 있는</a></li>
 							</ul>
 						</div>
 					</div>
@@ -378,7 +451,7 @@ li.thirdKey {
 												<div class="course_body" onclick="ToAcaContent(this, ${i.acaMainNum}, ${pageNum})">
 													<!-- 학원 사진 -->
 													<div class="aca_profile_div" style="display: inline-block;">
-														<img src="images/etc/default_mango.png" class="aca_profile_img">
+														<img src="images/etc/${i.memProfileImg}" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
 														<a href="./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}">
@@ -398,7 +471,7 @@ li.thirdKey {
 													<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 														<div class="course_info">
 															<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-															누적 청강수<span>79회</span>
+															누적 청강수<span>${i.add_audit}회</span>
 														</div>
 														<div class="course_info">
 															<i class="fa fa-star" aria-hidden="true"></i>
@@ -455,7 +528,7 @@ li.thirdKey {
 							 <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="${PageTwo}&pageNum=1">
+					  	<a class="page-link prev" href="${PageTwo}pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
@@ -471,7 +544,7 @@ li.thirdKey {
 					  		<c:set var="pN" value="${startPage-pageBlock}"/>
 					  	</c:if>
 					  
-					  	<a class="page-link prev" href="${PageTwo}&pageNum=${pN}">
+					  	<a class="page-link prev" href="${PageTwo}pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>	
 					  
@@ -480,7 +553,7 @@ li.thirdKey {
 					
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${PageTwo}&pageNum=${i}">${i}</a></li>
+					  <li class="page-item"><a class="page-link" href="${PageTwo}pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
@@ -494,7 +567,7 @@ li.thirdKey {
 					  	</c:if>
 					  
 					  <li class="page-item"><%--다음 페이지 --%>
-					  	<a class="page-link next" href="${PageTwo}&pageNum=${pP}">
+					  	<a class="page-link next" href="${PageTwo}pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
@@ -505,7 +578,7 @@ li.thirdKey {
                     
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="${PageTwo}&pageNum=${pageCount}">
+					  	<a class="page-link next" href="${PageTwo}pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>

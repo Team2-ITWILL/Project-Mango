@@ -13,7 +13,10 @@ import mango.academy_review.db.AcademyReviewBean;
 import mango.academy_review.db.AcademyReviewDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
+import mango.audit_management.db.AuditManagementBean;
+import mango.audit_management.db.AuditManagementDAO;
 
+// 학원 상세페이지 출력
 public class AcademyContentAction implements Action{
 
 	@Override
@@ -25,27 +28,37 @@ public class AcademyContentAction implements Action{
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
-		// 학원조아DAO
 		
 		// 학원후기DAO
 		AcademyReviewDAO rdao = new AcademyReviewDAO();
-		// 후기좋아요DAO
 		
 		// 학원키워드DAO
 		AcademyKeywordDAO akdao = new AcademyKeywordDAO();
 		
+		// 청강 과목 목록Bean,DAO
+		AuditManagementBean auditBean = new AuditManagementBean();
+		auditBean.setAcaNum(acaMainNum);
+		AuditManagementDAO auditDAO = new AuditManagementDAO();
 		
+		
+		
+		// 학원 상세내용
 		AcademyBean bean = dao.getAcademyContent(acaMainNum);
+		// 학원 후기갯수
 		int count = rdao.getAcademyReviewCount(acaMainNum);
+		
+		// 학원 키워드 목록
 		List<AcademyKeywordBean> keyList = null;
 		keyList = akdao.getAcademyKeyword(acaMainNum);
-		for(int i=0;i<keyList.size();i++){
-			
-		}
 		
+		// 평균점수 (소숫점 한자리)
 		double avgScore = 
 				Double.parseDouble(String.format("%.1f",rdao.getAvgReviewScore(acaMainNum)));
-
+		
+		// 청강목록받기
+		List<AuditManagementBean> auditList = null;
+		auditList = auditDAO.getListAuditMangement(auditBean);
+		
 		//  한 페이지에 4개 글 목록 반환
 		int pageSize = 4;
 		
@@ -62,6 +75,8 @@ public class AcademyContentAction implements Action{
 		int endRow=currentPage*pageSize;
 		List<AcademyReviewBean> reList = null;
 		
+		
+		// 학원 후기 목록 받아오기
 		if(count != 0){
 			reList = rdao.getAcademyReviewList(acaMainNum,startRow,pageSize);
 		}
@@ -91,6 +106,7 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("avgScore", avgScore);
 		request.setAttribute("iAvgScore", iAvgScore);
 		request.setAttribute("keyList", keyList);
+		request.setAttribute("auditList", auditList);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
