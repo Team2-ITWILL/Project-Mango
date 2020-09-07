@@ -41,6 +41,14 @@
 	    width: 60%;
 	}
 	.po_title { width: 100%; 	}
+	@media only screen and (max-width: 767px)
+	{.comments_write_button {
+			    bottom: 5px;
+    			width: 110px;}
+	 .comment_tail {margin-right: 0;}
+	 .po_title {width: 70%;}
+	}
+	
 </style>
 
 
