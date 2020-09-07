@@ -284,6 +284,95 @@
     	
     }
 
+
+    
+    
+    
+    
+    $(function(){
+    
+	$(".home_search_button").click(function(){
+		
+		var research="AcademySearchList.aca?";
+		
+		var Mainsearch1=$("#add1 option:selected").val();
+		var Mainsearch2=$(".sel2 option:selected").val();
+        var Mainsearch3=$(".sel3 option:selected").val();
+        var Mainsearch5=$("#basic").val();
+		var mainsearch = $(".home_search_input").val();
+		
+		
+		research+="select5="+Mainsearch5+"&";
+		
+		if(Mainsearch1 != "s1" || Mainsearch2 != "s2" ||Mainsearch3 != "s3"||mainsearch !=""){
+		
+			
+		if(Mainsearch1 != "s1"){
+			
+			
+			research+="select1="+Mainsearch1+"&";
+			
+		}
+		if(Mainsearch2 != "s2"){
+			
+			research+="select2="+Mainsearch2+"&";
+			
+		}
+		if(Mainsearch3 != "s3"){
+			
+			research+="select3="+Mainsearch3+"&";
+			
+		}
+		
+		
+		if(mainsearch !=""){
+			
+			research+="mainsearch="+mainsearch+"&";
+			
+			
+		}
+		
+		
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		return;
+		}
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		
+	
+		
+	
+	})
+	
+    
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </script>
 
 </head>
@@ -338,8 +427,7 @@
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden" name="select4">
-												<input type="hidden" name="select5" value="basic">
+												<input type="hidden" name="select5" value="basic" id="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
 												<select class="dropdown_item_select home_search_input" id="add1" name="select1">

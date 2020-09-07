@@ -18,6 +18,7 @@ import mango.member.db.MemberDAO;
 
 public class MemberUpdateAction implements Action{
 	
+	/* 회원 정보를 수정하는 Action 페이지 */
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -32,15 +33,10 @@ public class MemberUpdateAction implements Action{
 		String memEmail = multi.getParameter("memEmail"); // 이메일
 		String memPwd = multi.getParameter("memPwd"); // 기존 비밀번호
 		String newPw = multi.getParameter("newPw1"); // 변경할 비밀번호
+		
 //		String filename = multi.getFilesystemName("fileName"); // 서버에 실제로 업로드된 파일명
 //		String originFilename = multi.getOriginalFileName("fileName"); // 업로드한 파일의 원본명
 
-		System.out.println(memEmail + " / " + memPwd + " / " + newPw + " / " /* + filename + " / " + originFilename */ );
-//		System.out.println(memEmail + " / " + memPwd + " / " + newPw + " / " /* + filename + " / " + originFilename */ );
-
- /* --------------------------------------------------------------------------------------------------------- */	
-
-		/* 회원 정보 수정 */
 		MemberBean mb = new MemberBean();
 		mb.setMemName(memName);
 		mb.setMemEmail(memEmail);
