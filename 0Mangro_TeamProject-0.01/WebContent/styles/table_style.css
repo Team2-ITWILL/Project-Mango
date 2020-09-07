@@ -9,7 +9,7 @@
     font-weight: 900 !important;
     font-size: 0.9em;
     background-color: #000 !important;
-    border-color: #b3b4b5 !important;    	                 
+    border-color: #fff !important;    	                 
 }
 
 
@@ -22,12 +22,12 @@
 /* ----------------- 페이징 버튼 영역------------------------- */		
 .pagination { margin-left: 15px;}
 .pagination li a{
-	background-color: #000;
-	color: #fff;
+	background-color: #fff;
+	color: #000;
 }
   	
 .pagination li a:hover{
-	background-color: #6875e9;
+	background-color: #000;
 	color: #fff;
 }
   	
@@ -36,9 +36,17 @@
 }
 
 .page-item.active .page-link{
-	background-color: #6875e9 !important;
-	border: 2px solid #000 !important;
+	background-color: #000 !important;
+	border-color: #fff !important;
 }
+
+
+.active {
+	border:none !important;
+	
+}
+
+
 
 
 /* 테이블의 내용이 길게 나열될 때 말줄임표 표시되도록 하여 테이블 사이즈 뒤틀림  방지*/
