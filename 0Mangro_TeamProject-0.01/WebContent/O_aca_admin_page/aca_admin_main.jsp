@@ -157,15 +157,7 @@
                             </a>
                         </li>
                         
-                        
                                     
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_revise.jsp"
-                                aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
-                                <span class="hide-menu">내 정보</span>
-							</a>
-						</li>
-						
 						
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->

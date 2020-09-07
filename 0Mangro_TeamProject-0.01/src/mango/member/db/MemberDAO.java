@@ -340,14 +340,13 @@ public class MemberDAO extends DBconnection{
 	/* 모든 회원 조회 (회원 관리창) 기능 메서드  */
 	public ArrayList ListAll(int startRow ,int pageSize) {
 
-		ArrayList listAll = new ArrayList();
+		ArrayList memberlist = new ArrayList();
 		
 		try {
 			getConnection();
 			
 			sql = "SELECT * "
-				+ "FROM member m JOIN payment p "
-				+ "WHERE m.mem_email = p.mem_email "		
+				+ "FROM member "
 				+ "LIMIT ?, ?";
 			
 			pstmt = con.prepareStatement(sql);
@@ -358,23 +357,16 @@ public class MemberDAO extends DBconnection{
 			while(rs.next()){
 				
 				MemberBean mb = new MemberBean();
-				PaymentBean pb = new PaymentBean();
-				
 				mb.setMemEmail(rs.getString("mem_email"));
 				mb.setMemName(rs.getString("mem_name"));
 				mb.setMemAdmin(rs.getString("mem_admin"));
 				mb.setMemJoindate(rs.getString("mem_joindate"));
 				mb.setMemBaned(rs.getString("mem_baned"));
 				mb.setMemSeceded(rs.getString("mem_seceded"));
-				pb.setPmName(rs.getString("pm_name"));
-				pb.setPmStartDate(rs.getDate("pm_start_date"));
-				pb.setPmExpDate(rs.getDate("pm_exp_date"));
 			
-				listAll.add(mb);
-				listAll.add(pb);
+				memberlist.add(mb);
 			}
 
-			System.out.println(listAll.toString());
 			System.out.println("전체 회원 조회 완료 !!");
 			
 		} catch (Exception e) {
@@ -384,7 +376,7 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		}
 		
-		return listAll;
+		return memberlist;
 	} // 모든 회원 조회 / ListAll() 끝
 	
 	
