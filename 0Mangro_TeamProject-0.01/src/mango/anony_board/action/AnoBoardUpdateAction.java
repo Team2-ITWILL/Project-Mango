@@ -25,7 +25,7 @@ public class AnoBoardUpdateAction implements Action {
 		MultipartRequest multi = null;
 		
 		int sizeLimit = 1000*1024*1024;
-		String realPath = request.getRealPath("/O_aca_regFiles");
+		String realPath = request.getRealPath("/O_anony_Files");
 		System.out.println(realPath);
 		
 		multi = new MultipartRequest(

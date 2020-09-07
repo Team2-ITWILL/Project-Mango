@@ -83,11 +83,17 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 		try {
 			getConnection();
 			
-			sql="select pm_name,max(pm_Use_Num) from payment where mem_email=?";
+			sql="select pm_name,max(pm_Use_Num) from payment where mem_email=?"
+					+" and pm_Use_num=(select max(pm_Use_Num) " 
+					+		"		 	from payment"
+			         +      "  			where mem_email = ?) ";
 			
+					
+					
 			pstmt=con.prepareStatement(sql);
 			
 			pstmt.setString(1,pb.getMemEmail());
+			pstmt.setString(2,pb.getMemEmail());
 			
 			rs=pstmt.executeQuery();
 			
