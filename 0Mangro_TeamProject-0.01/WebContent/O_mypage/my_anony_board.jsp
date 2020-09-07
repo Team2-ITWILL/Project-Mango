@@ -320,32 +320,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="myAnonyList" items="myAnonyList">
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
+                                            <th scope="row">${myAnonyList.ano_board_num }</th>
+                                            <td>${myAnonyList.ano_board_title }</td>
+                                            <td>${myAnonyList.ano_board_content }</td>
+                                            <td>${myAnonyList.ano_board_read }</td>
+                                            <td>${myAnonyList.ano_board_read }</td>
+                                            <td>${myAnonyList.ano_board_file }</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-
-
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
