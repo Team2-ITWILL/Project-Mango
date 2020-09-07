@@ -103,9 +103,20 @@ public class AcademyRegisterAction implements Action{
 			out.println("</script>");
 			out.close();
 			return null;
-		}
-			
+		}else{
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('success');");
+			out.println("location.href='./4index.jsp'");
+			out.println("</script>");
+			out.close();
+			return null;
+		}	
+		
+		//=============아래 코드들은 AcademyRegisterApproveAction에서 수행======================
+		
 		//==========2. member 테이블 mem_admin 컬럼 값 변경=============================
+		/*
 		MemberDAO memDAO = new MemberDAO();
 		result = 0;
 		result = memDAO.changeAdmin(email);
@@ -118,9 +129,10 @@ public class AcademyRegisterAction implements Action{
 			out.close();
 			return null;
 		}	
+		*/
 		
-		
-		//=============3. academy 테이블 mem_email 컬럼 값 변경=================		
+		//=============3. academy 테이블 mem_email 컬럼 값 변경=================	
+		/*
 		AcademyBean acaVO = new AcademyBean();
 		acaVO.setMem_email(email);
 		acaVO.setAcaName(acaName);
@@ -145,7 +157,7 @@ public class AcademyRegisterAction implements Action{
 			out.close();
 			return null;
 		}	
-		
+		*/
 	}
 
 	

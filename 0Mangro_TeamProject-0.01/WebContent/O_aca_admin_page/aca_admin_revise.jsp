@@ -99,7 +99,16 @@
 
 	//웹문서를 불러온 후 실행되는 함수(재정의)
 	window.onload = function(){
+		var imgTag = document.querySelector(".rounded-circle");
+		var imgPath = '${profileImg}';
+		console.log(imgPath);
 		
+		if(imgPath == null || imgPath == ''){
+			imgTag.src = "./images/aca_profile/aca_image.jpg";
+		}else{
+			imgTag.src = './' + imgPath;
+		}
+	
 	}
 
 	$(document).ready(function(){
@@ -246,8 +255,16 @@
 					      <!-- <form class="academy_reviseFr" action="./AcademyReviseAction.aca" id="reviseForm" method="post" enctype="multipart/form-data"> -->
 					      <form class="academy_reviseFr" action="" method="post" enctype="multipart/form-data">
 						      
-		      					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->
-								  <img src="images/aca_profile/aca_image.jpg" alt="user" class="rounded-circle">
+						      <img src="" alt="user" class="rounded-circle">
+		      					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->								  
+								  <%-- <c:choose>
+								  	<c:when test="${profileImg eq null}">
+								  		<% $(".rounded-circle").src("images/aca_profile/aca_image.jpg"); %>
+								  	</c:when>
+								  	<c:when test="${profileImg ne null}">
+								  		<img src="./${profileImg}" alt="user" class="rounded-circle">
+								  	</c:when>
+								  </c:choose> --%>
 								  
 								  <!-- 학원 프로필사진 변경 -->
 							      <div class="js-form-message form-group">
@@ -265,7 +282,7 @@
 							      </div>
 							      
 							      <!-- 사진 멀티업로드(갤러리) -->
-							       <div class="js-form-message form-group">
+							      <%-- <div class="js-form-message form-group">
 							        	<label class="form-label" for="anony_file"><span class="profilespan">학원 갤러리</span></label>
 						              	<br>l						              	
 						              	
@@ -285,11 +302,9 @@
 						                	>
 						                	<input type="hidden" name="aca_gallaryImgs">
 							          		<button type="button" class="hideBtn">갤러리 사진 등록</button>
-						              	</div>		
-						              	
-						            									      						
+						              	</div>						            									      						
 							      </div>
-							      
+							       --%>
 							      
 							     
 		

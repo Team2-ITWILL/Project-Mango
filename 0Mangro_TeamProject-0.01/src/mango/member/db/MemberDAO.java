@@ -419,18 +419,31 @@ public class MemberDAO extends DBconnection{
 	
 	
 	//학원관리자 등록 시 admin값 변경하는 메서드
-	public int changeAdmin(String email){
+	public int changeAdmin(String email, int flag){
 		int result = 0;		
 		try {
 			getConnection();
 			
-			sql = "update member "
-					+ "set mem_admin = ? "
-					+ "where mem_email = ?";			
+			//flag == 0이면 관리자 등급으로 변경 승인 취소
+			if(flag == 0){
+				sql = "update member "
+						+ "set mem_admin = ? "
+						+ "where mem_email = ?";			
 
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, 1);
-			pstmt.setString(2, email);			
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, 0);
+				pstmt.setString(2, email);	
+				
+			//관리자 등급으로 변경 승인
+			}else{
+				sql = "update member "
+						+ "set mem_admin = ? "
+						+ "where mem_email = ?";			
+
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, 1);
+				pstmt.setString(2, email);	
+			}					
 			
 			result = pstmt.executeUpdate();	
 			
@@ -442,6 +455,53 @@ public class MemberDAO extends DBconnection{
 		}		
 		return result;		
 	}//changeAdmin()
+	
+	public int updateProfileImg(String imgPath, String email){
+		int result = 0;
+		try {
+			getConnection();
+			
+			sql = "update member "
+					+ "set mem_profileImg = ? "
+					+ "where mem_email = ?";			
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, imgPath);			
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();	
+			
+		} catch (Exception e) {
+			System.out.println("updateProfileImg()에서 예외 발생" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}		
+		return result;		
+	}//updateProfileImg()
+	
+	public String getProfileImg(String email){
+		String imgPath = null;
+		try {
+			getConnection();
+			
+			sql = "select mem_profileImg from member where mem_email = ?";	
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, email);			
+			rs = pstmt.executeQuery();	
+			
+			if(rs.next()){
+				imgPath = rs.getString("mem_profileImg");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getProfileImg()에서 예외 발생" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}		
+		return imgPath;		
+	}//getProfileImg()
 	
 	
 	

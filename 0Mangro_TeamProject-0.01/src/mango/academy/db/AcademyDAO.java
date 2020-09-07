@@ -2024,19 +2024,33 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 
 	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
 	@Override
-	public int changeAcademyEmail(AcademyBean vo) {
+	public int changeAcademyEmail(AcademyBean vo, int flag) {
 		int result = 0;
 		try {
 			getConnection();
 			
-			String query = "update academy set "					
-					+ " mem_email = ? "					
-					+ " where aca_name=?";			
-			
-			pstmt = con.prepareStatement(query);			
-			
-			pstmt.setString(1, vo.getMem_email());	
-			pstmt.setString(2, vo.getAcaName());	
+			//flag == 0이면 관리자 등급으로 변경 승인 취소
+			if(flag == 0){
+				sql = "update academy set "					
+						+ " mem_email = null "					
+						+ " where aca_name=?";			
+				
+				pstmt = con.prepareStatement(sql);					
+				
+				pstmt.setString(1, vo.getAcaName());	
+				
+			//관리자 등급으로 변경 승인
+			}else{
+				sql = "update academy set "					
+						+ " mem_email = ? "					
+						+ " where aca_name=?";			
+				
+				pstmt = con.prepareStatement(sql);			
+				
+				pstmt.setString(1, vo.getMem_email());	
+				pstmt.setString(2, vo.getAcaName());
+					
+			}					
 			
 			result = pstmt.executeUpdate();			
 			

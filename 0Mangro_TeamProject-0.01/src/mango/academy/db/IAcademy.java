@@ -61,7 +61,7 @@ public interface IAcademy {
 	public JSONArray getAcademyInfoBySearchToJSON(String acaName);
 	
 	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
-	public int changeAcademyEmail(AcademyBean vo);
+	public int changeAcademyEmail(AcademyBean vo, int flag);
 	
 
 }
