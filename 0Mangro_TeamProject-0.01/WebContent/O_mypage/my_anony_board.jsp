@@ -24,8 +24,17 @@
     <link href="styles/dist/css/style.min.css" rel="stylesheet">
     <link href="styles/mypage_additional.css" rel="stylesheet">
     <link href="styles/table_style.css" rel="stylesheet">
-  
+
+<style type="text/css">
+
+.prev, .next {
+    font-size: 1em;
+
+}
+
+</style>  
 </head>
+
 
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
@@ -295,7 +304,6 @@
 					                                            type="both"/>
                                             </td>
                                             
-                                            
                                         </tr>
                                     </c:forEach>
                                     </c:when>
@@ -314,58 +322,95 @@
                         </div>
                     </div>
                     
-                    <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
+ <%-------------------------------------------------- 페이징 영역  ------------------------------------------------------------------------%>
                     
                     <ul class="pagination">
                     
                     <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
                     
-                    <c:if test="${myAnonyListCount != 0}" />
-                    
-                    	<c:if test="${endPage > pageCount}">
-                    		${endpage = pageCount}
+                    <c:if test="${count > 0}">
+                    	<c:set var="endPage" value="${endPage}" />
+                    	<c:if test="${endPage gt pageCount}">
+                    		<c:set var="endPage" value="${pageCount}" />
                     	</c:if>
 
-					<%-- 첫페이지가 페이지블록보다 클 경우 -----------------------%>                    	
-                    	<c:if test="${startPage > pageBlock}">
-					<%-- [  <<  첫페이지 가기] .... --%>  
 					
+							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
+							
+							  <li class="page-item"> 
+							  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+							  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+							  	</a>
+							  </li>
+							  
+							<%-- [  <  이전페이지 가기    ] --%>  
+							
+							  <li class="page-item">
+							<%-- 블럭 첫페이지-페이지블록(하나의 블럭에 보여줄 페이지 수)가 0보다 작을 경우 즉, 더이상 전으로 이동할 페이지가 없을 경우 1페이지로----------------%>                    	
+								<c:choose>
+			                    	<c:when test="${startPage-pageBlock<=0}">
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:when>
+								  	<c:otherwise>
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage-pageBlock}">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:otherwise>
+								</c:choose>	  
+									  </li>
+							  
+					  
+							<%-- [1] [2] [3] .... --%>  
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							  	<c:choose>
+							  	 <c:when test="${currentPage == i}">
+								  	<li class="page-item  active">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:when>
+							  	 <c:otherwise>
+								  	<li class="page-item">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:otherwise>
+							  	 
+							  	</c:choose>
+							  </c:forEach>
+							  
+					  
+					<%-- [  >  다음페이지 가기] .... --%> 
 					
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					<%-- [  <  마지막페이지 가기] .... --%>  
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					  </c:if>
-					<%-- / 첫페이지가 페이지블록보다 클 경우 끝 --------------------%>  
-					  
-					<%-- [1] [2] [3] .... --%>  
-					  <li class="page-item"><a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum="></a></li>
-					  
-					  
-					<%-- 마지막페이지가 pageCount 보다 작은 경우 -----------------%>  
-					<%-- [  >  다음페이지 가기] .... --%>  
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-					  
+					<%-- 블록시작번호+하나의 블럭에 보여질 페이지수=전체 페이지수보다 큰 경우 즉, 더이상 뒤로 갈 페이지가 없는 경우 총페이지개수(마지막페이지) -----------------%>  
+							  <li class="page-item">
+								<c:choose>
+		                    		<c:when test="${startPage+pageBlock > pageCount}">
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:when>  
+									<c:otherwise>
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage+pageBlock}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:otherwise>
+								</c:choose>
+							  </li>
+							  
 					<%-- [  >>  마지막페이지 가기] .... --%>  
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-					<%-- /마지막페이지가 pageCount 보다 작은 경우 끝 -----------------%>  
+					<%-- 총페이지수(마지막페이지)대입 -----------------%>  
+						  <li class="page-item">
+						  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+							</a>
+						  </li>
+					  </c:if> 
+					<%-- 게시판에 글이 있는 경우 페이지 표시 끝 --%>
 					</ul>
                                         
  
