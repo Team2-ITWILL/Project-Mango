@@ -39,3 +39,22 @@
 	background-color: #6875e9 !important;
 	border: 2px solid #000 !important;
 }
+
+
+/* 테이블의 내용이 길게 나열될 때 말줄임표 표시되도록 하여 테이블 사이즈 뒤틀림  방지*/
+
+
+table {
+	text-align: center;
+	table-layout: fixed; 
+
+/*테이블 내에서 <td>의 넓이,높이를 고정.*/
+
+}
+table th, table td {
+	text-align: center;
+    width:100%; /* width값을 주어야 말줄임표 적용 */
+    overflow: hidden;
+    text-overflow:ellipsis; /*overflow: hidden; 속성과 같이 써줘야 말줄임 기능이 적용*/
+    white-space:nowrap;  /*<td>보다 내용이 길경우 줄바꿈 되는것을 막아준다.*/
+}
