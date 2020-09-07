@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,8 +18,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
-
-
     
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
     <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
@@ -26,46 +25,6 @@
     <link href="styles/mypage_additional.css" rel="stylesheet">
     <link href="styles/table_style.css" rel="stylesheet">
   
-  
-  <style type="text/css">
-  
-  .u-tagsinput .bootstrap-tagsinput::before {
-    content: "|";
-    display: inline-block;
-    width: 1px;
-    line-height: 1;
-    font-size: .625rem;
-    opacity: 0;
-    padding: .75rem 0;
-}
- 
- 
-.bootstrap-tagsinput {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    display: block;
-    padding: 4px 6px;
-    color: #555;
-    vertical-align: middle;
-    border-radius: 4px;
-    max-width: 100%;
-    line-height: 22px;
-    cursor: text;
-}
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0 6px;
-    margin: 0;
-    width: auto;
-    max-width: inherit;
-} 
-  
-  </style>  
-    
 </head>
 
 <body>
@@ -308,28 +267,47 @@
                                 <h6 class="card-subtitle">내가 작성한 익명사담방의 게시글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">글번호</th>
-                                            <th scope="col">제목</th>
-                                            <th scope="col">내용</th>
-                                            <th scope="col">댓글수</th>
-                                            <th scope="col">조회수</th>
+                                        <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
+                                            <th scope="col" style="width:100px;">글번호</th>
+                                            <th scope="col" >제목</th>
+                                            <th scope="col" >내용</th>
+                                            <th scope="col" style="width:100px;">댓글수</th>
+                                            <th scope="col" style="width:100px;">조회수</th>
                                             <th scope="col">작성일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="myAnonyList" items="myAnonyList">
+                                    <c:choose>
+                                    
+                                    <c:when test="${myAnonyListCount != 0 }">
+                                    <c:forEach var="myAnonyList" items="${myAnonyList}">
                                         <tr>
-                                            <th scope="row">${myAnonyList.ano_board_num }</th>
-                                            <td>${myAnonyList.ano_board_title }</td>
-                                            <td>${myAnonyList.ano_board_content }</td>
-                                            <td>${myAnonyList.ano_board_read }</td>
-                                            <td>${myAnonyList.ano_board_read }</td>
-                                            <td>${myAnonyList.ano_board_file }</td>
+                                            <th scope="row">${myAnonyList.ano_board_num}</th>
+                                            <td align="left">${myAnonyList.ano_board_title}</td>
+                                            <td align="left">${myAnonyList.ano_board_content}</td>
+                                            <td>${comments[myAnonyList.ano_board_num]}</td>
+                                            <td>${myAnonyList.ano_board_read}</td>
+                                            <td>
+	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
+					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
+					                                            type="both"/>
+                                            </td>
+                                            
+                                            
                                         </tr>
                                     </c:forEach>
+                                    </c:when>
+                                    
+                                    <c:otherwise>
+                                        <tr>
+                                            <th scope="row" colspan="6">작성한 익명사담글이 없습니다.</th>
+                                        </tr>
+                                    
+                                    </c:otherwise>
+                                    
+                                    </c:choose>
                                     </tbody>
                                 </table>
                             </div>
