@@ -131,7 +131,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -222,7 +222,7 @@
                                     
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_academy_review.jsp" class="sidebar-link">
+                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
                                 		<span class="hide-menu">학원후기</span>
                                 	</a>
                                 </li>            
@@ -312,43 +312,32 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">후기번호</th>
-                                            <th scope="col">학원 지정번호</th>
                                             <th scope="col">학원명</th>
                                             <th scope="col">한줄요약</th>
-                                            <th scope="col">장점</th>
-                                            <th scope="col">단점</th>
                                             <th scope="col">수강과목</th>
-                                            <th scope="col">총괄점수</th>
+                                            <th scope="col">평점</th>
                                             <th scope="col">작성일자</th>
-                                            <th scope="col">승인일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">503</th>
-                                            <td>1235456</td>
-                                            <td>망고학원</td>
-                                            <td>매일 망고를 줘서 좋아요.</td>
-                                            <td>수업을 재미있게 하네요.</td>
-                                            <td>배가고파요.오늘은 망고를 안줌.</td>
-                                            <td>에피타이저 베이킹</td>
-                                            <td>5</td>
-                                            <td>2020-08-20</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">503</th>
-                                            <td>1235456</td>
-                                            <td>망고학원</td>
-                                            <td>매일 망고를 줘서 좋아요.</td>
-                                            <td>수업을 재미있게 하네요.</td>
-                                            <td>배가고파요.오늘은 망고를 안줌.</td>
-                                            <td>에피타이저 베이킹</td>
-                                            <td>5</td>
-                                            <td>2020-08-20</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-
+                                    	<c:if test="${count!=0}"> 
+                                    	<c:forEach var="rBean" items="${revList}">
+                                    		<tr onclick="location.href='./AcademyContentAction.aca?acaMainNum=${rBean.acaMainNum}&pageNum=1'">
+	                                            <td scope="row">${rBean.reviewNum}</td>
+	                                            <td>${rBean.acaName}</td>
+	                                            <td>${rBean.reviewTitle}</td>
+	                                            <td>${rBean.reviewSubject}</td>
+	                                            <td>${rBean.reviewScore}</td>
+	                                            <td>${rBean.reviewDate}</td>
+	                                        </tr>
+                                    	</c:forEach>
+                                    	</c:if>
+                                        <c:if test="${count==0}"> 
+                                    		<tr>
+                                    			<td colspan="6">작성하신 후기가 없습니다.</td>
+                                    		</tr>
+                                    	</c:if>
+                                    	
                                     </tbody>
                                 </table>
                             </div>
