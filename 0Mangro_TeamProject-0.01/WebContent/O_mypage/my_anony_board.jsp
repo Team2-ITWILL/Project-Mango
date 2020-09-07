@@ -317,35 +317,55 @@
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     
                     <ul class="pagination">
-                    <!-- << (첫페이지로 가기) -->
+                    
+                    <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
+                    
+                    <c:if test="${myAnonyListCount != 0}" />
+                    
+                    	<c:if test="${endPage > pageCount}">
+                    		${endpage = pageCount}
+                    	</c:if>
+
+					<%-- 첫페이지가 페이지블록보다 클 경우 -----------------------%>                    	
+                    	<c:if test="${startPage > pageBlock}">
+					<%-- [  <<  첫페이지 가기] .... --%>  
+					
+					
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
+					  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
 					  
-                    <!-- < (이전페이지 가기)-->
+					<%-- [  <  마지막페이지 가기] .... --%>  
 					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
+					  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
+					  </c:if>
+					<%-- / 첫페이지가 페이지블록보다 클 경우 끝 --------------------%>  
+					  
+					<%-- [1] [2] [3] .... --%>  
+					  <li class="page-item"><a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum="></a></li>
+					  
+					  
+					<%-- 마지막페이지가 pageCount 보다 작은 경우 -----------------%>  
+					<%-- [  >  다음페이지 가기] .... --%>  
 					  <li class="page-item">
 					  	<a class="page-link next" href="#">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
-                    <!-- >> (마지막페이지 가기)-->
+					  
+					<%-- [  >>  마지막페이지 가기] .... --%>  
 					  <li class="page-item">
 					  	<a class="page-link next" href="#">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+					<%-- /마지막페이지가 pageCount 보다 작은 경우 끝 -----------------%>  
 					</ul>
                                         
  
