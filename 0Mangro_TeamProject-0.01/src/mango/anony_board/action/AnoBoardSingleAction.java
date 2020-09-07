@@ -36,9 +36,21 @@ public class AnoBoardSingleAction implements Action {
 		
 		System.out.println(boardSingle);
 		
+		String fileName = boardSingle.getAno_board_file();
+		
+		// 첨부파일이 null값일 경우 "" 처리하여 nullpointer예외 방지
+		if(fileName == null) {
+			fileName = "";
+		}
+		
+		
+		// 첨부된 파일의 타입을 substring() 함수로 추출
+		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
+		
+		
 		// request영역에 boardSingle로 담아 뷰페이지 anony_board_single.jsp로 전송
 		request.setAttribute("boardSingle", boardSingle);
-		
+		request.setAttribute("fileType", fileType);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

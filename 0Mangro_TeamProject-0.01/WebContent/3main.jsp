@@ -75,7 +75,8 @@
 <script>
 	$(document).ready(function(){
 		
-		// 후기 top3 출력
+
+		/* // 후기 top3 출력
 		var topReviewList = document.querySelectorAll(".course_body");
 		
 		if(topReviewList != null){
@@ -83,7 +84,8 @@
 				var obj= (topReviewList[i].id.substr(topReviewList[i].id.indexOf("_")+1));
 				reviewTop(obj);
 			}
-		} 
+		} */
+
 		
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
@@ -127,14 +129,14 @@
 			$(".sel2").empty();
 			$(".sel3").empty();
 			
-			$(".sel3").append("<option value=''>읍/면/동</option>");
+			$(".sel3").append("<option value='s3'>읍/면/동</option>");
 			
 			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select2="<option option value=''>시/군/구</option>";
+				var select2="<option option value='s2'>시/군/구</option>";
 				$.each(data.address , function (index,item) {
 			
 					
@@ -168,7 +170,7 @@
 				console.log(data.address);
 				
 				
-				var select3="<option value=''>읍/면/동</option>";
+				var select3="<option value='s3'>읍/면/동</option>";
 				
 				$.each(data.address , function (index,item) {
 					
@@ -248,8 +250,9 @@
     /* 팝업 끝  */
     
     // 후기Top3 
+    // 임시 주석처리
     
-    function reviewTop(obj){
+/*     function reviewTop(obj){
     	
     	var _data = '{"num":"'+obj+'"}';
     	
@@ -258,22 +261,8 @@
     		url : "${pageContext.request.contextPath}/reviewTop",
     		data : {data : _data},
     		success:function(data,status){
-    			var json = JSON.parse(data);
-    			var acaName = json.acaName;
-    			var avgScore = json.avgScore;
-    			var rankNum = json.num;
-    			var revCnt = json.revCnt;
-    			var title1 = json.title1;
-    			var title2 = json.title2;
-    			
     			console.log(data);
-    			reviewCnt_1
-    			avgScore_1
-    			document.getElementById("nameRank_"+rankNum).innerText = acaName;
-    			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
-    			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
-    			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
-    			document.getElementById("avgScore_"+rankNum).innerText = avgScore;
+    			alert(data);
     			
     		},
     		error:function(){
@@ -282,8 +271,93 @@
     		
     	});
     	
-    }
+    } */
 
+    
+    
+    
+    
+    
+	$(".home_search_button").click(function(){
+		
+		var research="AcademySearchList.aca?";
+		
+		var Mainsearch1=$("#add1 option:selected").val();
+		var Mainsearch2=$(".sel2 option:selected").val();
+        var Mainsearch3=$(".sel3 option:selected").val();
+		var mainsearch = $(".home_search_input").val();
+		
+		
+		research+="select5="+search5+"&";
+		
+		if(search1 != "s1" || search2 != "s2" ||search3 != "s3"||mainsearch !=""){
+		
+			
+		if(search1 != "s1"){
+			
+			
+			research+="select1="+Mainsearch1+"&";
+			
+		}
+		if(search2 != "s2"){
+			
+			research+="select2="+Mainsearch2+"&";
+			
+		}
+		if(search3 != "s3"){
+			
+			research+="select3="+Mainsearch3+"&";
+			
+		}
+		
+		
+		if(mainsearch !=""){
+			
+			research+="mainsearch="+mainsearch+"&";
+			
+			
+		}
+		
+		
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		return;
+		}
+		research= research.slice(0,-1);
+		
+		location.href=research;
+		
+		
+	
+		
+	
+	})
+	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
 
 </head>
@@ -338,12 +412,11 @@
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
-												<input type="hidden" name="select4">
 												<input type="hidden" name="select5" value="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
-												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
-													<option value="">시/도</option>
+												<select class="dropdown_item_select home_search_input" id="add1" >
+													<option value="s1">시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
 													<option value="대구광역시">대구광역시</option>
@@ -362,16 +435,16 @@
 													<option value="경상남도">경상남도</option>
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
-												<select class="dropdown_item_select home_search_input sel2"  name="select2">
-													<option value="">시/군/구</option>
+												<select class="dropdown_item_select home_search_input sel2"  >
+													<option value="s2">시/군/구</option>
 													
 												</select>
-												<select class="dropdown_item_select home_search_input sel3"  name="select3">
-													<option value="">읍/면/동</option>
+												<select class="dropdown_item_select home_search_input sel3"  >
+													<option value="s3">읍/면/동</option>
 												
 												</select>
 											</div>
-											<button type="submit" class="home_search_button">search</button>
+											<button type="button" class="home_search_button">search</button>
 										</form>
 									</div>
 								</div>
@@ -511,23 +584,23 @@
 					<div class="course_1">
 						<div class="course_image"><img src="images/academy/topaca1.jpg"></div>
 						<div class="course_body" id="topReview_1">
-							<h3 class="course_title"><a href="course.jsp" id="nameRank_1"></a></h3>
+							<h3 class="course_title"><a href="course.jsp">부산학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_1_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_1_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
+								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_1"></span>
+									리뷰수(후기수)<span id="reviewCnt_1">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_1"></span>
+									평균 별점 <span id="avgScore_1">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -540,23 +613,23 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca2.jpg"></div>
 						<div class="course_body" id="topReview_2">
-							<h3 class="course_title"><a href="course.html" id="nameRank_2"></a></h3>
+							<h3 class="course_title"><a href="course.html">미래학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_2_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_2_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span>" 수업이 지루하지 않고 유익해요."</span> <br> <%-- 장점 --%>
+								<span>" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_2"></span>
+									리뷰수(후기수)<span id="reviewCnt_2">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_2"></span>
+									평균 별점 <span id="avgScore_2">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>
@@ -569,23 +642,22 @@
 					<div class="course">
 						<div class="course_image"><img src="images/academy/topaca3.jpg"></div>
 						<div class="course_body" id="topReview_3">
-							<h3 class="course_title"><a href="course.html" id="nameRank_3"></a></h3>
+							<h3 class="course_title"><a href="course.html">YMC어학원</a></h3>
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_3_title_1">" 수업이 지루하지 않고 유익해요."</span> <br> 
-								<span id="Rank_3_title_2">" 수업이 지루하지 않고 유익해요."</span>
+								<span>" 수업이 지루하지 않고 유익해요."</span> <br> 
 							</div>
 						</div>
 						<div class="course_footer">
 							<div class="course_footer_content d-flex flex-row align-items-center justify-content-start">
 								<div class="course_info">
 									<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-									리뷰수(후기수)<span id="reviewCnt_3"></span>
+									리뷰수(후기수)<span id="reviewCnt_3">79회</span>
 								</div>
 								<div class="course_info">
 									<i class="fa fa-star" aria-hidden="true"></i>
-									평균 별점 <span id="avgScore_3"></span>
+									평균 별점 <span id="avgScore_3">5</span>
 								</div>
 								<div class="course_price ml-auto"></div>
 							</div>

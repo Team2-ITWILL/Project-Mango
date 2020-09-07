@@ -35,14 +35,25 @@
 	    position: relative;
 	    z-index: 11;
 	}
+	
 	.title-btn:hover{cursor: pointer; color: #000;}
 	.boardremove:hover, .boardrevise:hover { color: #e95765; cursor:pointer;}
 	.boardrevise{ color: #000; margin-left:8px;}
 	.cmCount{color:#3094ff;}
 	.ifnotwriter{  margin-top: 20px; }	
 	.nickWidth { display: inline-block; width: 150px;}
-	#replyLev { margin-left: 30px; }
-}
+	#replyLev { margin-left: 50px; }
+
+	
+	.thumbnail_img{
+		background-color: #b1b1b1 !important;
+	    width: 500px !important;
+	    height: 100px !important;
+	    text-align: center !important;
+	    padding-top: 40px !important;
+	    margin-top: 100px !important;
+	    border: 5px dotted #dcdcdc !important;
+	}
 	
 </style>
 
@@ -112,12 +123,24 @@
 						<%-- 내용 --%>
 						<div class="comment_text">
 							<%-- 첨부파일이 있는 경우 이미지 표시를 위해 ----%>
-							<c:choose>
-								<c:when test="${boardSingle.ano_board_file ne null}">
+							<c:if test="${boardSingle.ano_board_file ne null }">
+								
+								<c:choose>
+								
+								<c:when test="${fileType eq 'jpg' or fileType eq 'jpeg' or fileType eq 'png' or fileType eq 'gif' or fileType eq 'JPG' or fileType eq 'JPEG' or fileType eq 'PNG' or fileType eq 'GIF'}">
 									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
 								</c:when>
-							</c:choose>
-							
+								
+								<c:otherwise>
+									<div class="thumbnail_img">
+										<span style="color:#fff;">이미지 미리보기를 지원하지 않는 형식의 파일입니다.</span>
+									</div>
+								
+								</c:otherwise>
+								
+								</c:choose>
+								
+							</c:if>
 							<p>${boardSingle.ano_board_content }</p> <br><br>
 							
 							
@@ -179,13 +202,15 @@
 	function add_comment(ano_board_num){
 		
 		// [댓글 내용 여부 검증 & 로그인여부 처리]
-		if($("#init_content").val() == ""){
-			alert("댓글 내용을 입력하세요.");
-			return;
-			
-		}else if( $("#session_memEmail").val() == ""){
+		
+		if( $("#session_memEmail").val() == ""){
 			alert("로그인이 필요한 서비스 입니다.");
 			location.href="./MemberLogin.me";
+			return;
+		}
+		
+		if($("#init_content").val() == ""){
+			alert("댓글 내용을 입력하세요.");
 			return;
 		}
 
@@ -316,7 +341,7 @@
 	        		ano_re_seq:0 // 나중에 제값 넣어주기
 	        },
 	        success : function(data){
-	               alert("ajax로 대댓글 달기 성공");
+	               //alert("ajax로 대댓글 달기 성공");
 	               // 댓글 insert후 대댓글 내용 입력창 비워주기
 	               $("#reply_content").val("");
 	               // 대댓글 입력창 없애기
@@ -369,7 +394,7 @@
 		        	
 		        	// [if문] - 대댓글인 경우
 		        	if(allComments[i].ano_re_lev > 0){
-			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start' id='replyLev' > ";
+			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start' id='replyLev' ><img src='images/etc/repArrow.png' width='50' style='margin-right:20px;'> ";
 		        	}else{
 			        	commentsHTML +=  "<div class='comment_item d-flex flex-row align-items-start jutify-content-start'> ";
 		        	}
@@ -395,11 +420,13 @@
 			        	commentsHTML +=   "onclick='delete_comment("+allComments[i].ano_comment_num+")' >";
 		        	}
 
-		        	
+		        	// [if문] - 대댓글에 댓글을 달기 방지
+		        	if(allComments[i].ano_re_lev == 0 ) {
 		        	// ▶ 대댓글 버튼
 		        	commentsHTML +=   "<img src='images/etc/reply.png' id='comm_reply' class='comm_icon' width='20' " ;
 		        	commentsHTML +=   "onclick='repCommentOpen("+allComments[i].ano_comment_num+")' >";
 		        	
+		        	}		        	
 		        	// ▶ 내용
 		        	commentsHTML +=   "<div class='comment_author'>" ;
 		        	commentsHTML +=   "<span>"+allComments[i].ano_comment_content+"</span>";
