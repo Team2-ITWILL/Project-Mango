@@ -66,3 +66,8 @@ table th, table td {
     text-overflow:ellipsis; /*overflow: hidden; 속성과 같이 써줘야 말줄임 기능이 적용*/
     white-space:nowrap;  /*<td>보다 내용이 길경우 줄바꿈 되는것을 막아준다.*/
 }
+
+.thead-light tr th {
+	border-right : 1px solid #fff;
+}
+

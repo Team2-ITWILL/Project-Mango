@@ -21,7 +21,7 @@
 
 <!------------------------------- [스타일 시트]------------------------------------------------------------------>
 <style type="text/css">
-	.files input {
+	.dragArea input {
 	    outline: 5px dashed #f5f5f5;
 	    outline-offset: -10px;
 	    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
@@ -32,12 +32,12 @@
 	    width: 100% !important;
 	    color:#fff;
 	}
-	.files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
+	.dragArea input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
 	    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
 	    transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
 	 }
-	.files{ position:relative}
-	.files:after {  pointer-events: none;
+	.dragArea{ position:relative}
+	.dragArea:after {  pointer-events: none;
 	    position: absolute;
 	    top: 60px;
 	    left: 0;
@@ -53,7 +53,7 @@
 	}
 	.color input{ background-color:#f0f8ff;}
 	
-	.files:before {
+	.dragArea:before {
 	    position: absolute;
 	    bottom: 10px;
 	    left: 0;  pointer-events: none;
@@ -111,11 +111,13 @@
 				       							 
 					         <%-- 5.파일 ---%>
 							        	<label class="form-label" for="anony_file">파일업로드</label>
-						              	<div class="form-group files">
-						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf" 
-						                		   id="anony_file" 
-						                		   onchange="fileUP(this)">
-							          		<button type="button" class="hideBtn" onchange="changeValue(this);">첨부파일</button>
+						              	<div class="form-group dragArea" id="dragArea">
+						                	<input type="file" name="ano_board_file" class="form-control color file" 
+						                		   accept="image/jpg, image/jpeg, image/gif, image/png, image/bmp" 
+						                		   id="anony_file" onchange="changeValue(obj)">
+							          		<button type="button" class="hideBtn" style="z-index: 99;" onclick="hideBtnClick();">
+							          			첨부파일
+							          		</button>
 							         
 
 						              	</div>
@@ -137,11 +139,12 @@
 
 
 	// [hideBtn을 클릭했을 떄 input type='file' 클릭된 효과 ]
-	$('.hideBtn').click(function (e) {
-		$('.file').click();
-	});
+	function hideBtnClick() {
+		$('#anony_file').click();
+		
+	}
 	
-	
+ 	// 변경된 값 감지 후 alert
 	function changeValue(obj){
 	
 	    alert(obj.value);
@@ -149,58 +152,43 @@
 	} 
 
 	
-	//---- 드래그
-	$('.files')
-	.on('dragover', dragOver)
-	.on('dragleave', dragOver)
-	.on('drop', uploadFiles);	
+	//---- 클래스명이 dragArea인 영역에 drag&drop이벤트 발생 시 
+	//     실행될 사용자 정의 함수를 바인딩 
 	
 	
+	$('.dragArea')
+	.on('dragover', dragOver) // dragover이벤트시 dragFile()메소드 실행
+	.on('dragleave', dragOver);
+	 // dragover이벤트시 dragFile()메소드 실행
+	 // drop(파일을 드래그 해서 놓기)이벤트시 fileUP()메소드 실행	 
+	
+	// dragover와 dragleave 이벤트를 하나의 function()에 묶기
+	// dragOver함수 중 이벤트가 drop일 경우 드래그된 첨부파일이 자동으로 file로 바인딩
 	function dragOver(e) {
-		e.stopPropagation(); // 
-		e.preventDefault(); // 파일을 브라우저에 드래그 했을 시 자동으로 첨부파일을 실행하는 동작방지			
+		e.stopPropagation();  
+		e.preventDefault(); 			
 
-		if (e.type == 'dragover') {
-			//e.target : 이벤트가 발생한 div태그
+		// 발생한 이벤트의 종류 : dragover
+		if (e.type == "dragover") {
+			// 이벤트의 타겟(input type='file' 태그)
 			$(e.target).css({
-				'background-color' : 'gray',
-				'outline-offset' : '-20px'
+				"background-color" : "aliceblue",
+				"outline-offset" : "-20px"
 			});
-		
-			//if()
+			//console.log(e.target.id);
+			//alert(e.target.id +"드래그!");	
+			
+			//console.log(e.target.id);
+			//alert(e.target +"드래그!");	
+			
 		
 		} else {
-			$(e.target).css({
-				'background-color' : 'white',
-				'outline-offset' : '-10px'
-			});
-		} 
-	}
-	
-	
-	 
-	var uploadedFile = document.getElementById("anony_file").value;
-	
-	
-	function fileUP(file) {
-		// fileUP메소드가 실행되면 dragOver메소드가 실행?
-		dragOver(e);
-		
-		if(uploadedFile != "") {
-			alert("파일 첨부는 1개만 가능합니다. 이전에 첨부된 파일이 지워집니다.");
-		}else {
-			uploadedFile = e.originalEvent.dataTransfer.files;
+			$(e.target).removeAttr("style");
+			//alert("드랍되었음"+e.target.value);
 		}
-		
-		
-	}	
+	}// dragOver
+
 	
-	
-	
-	
-	
-	
-		
 	// [제목, 내용 입력여부 및 각 30자, 500자가 넘은 상태로 글쓰기 버튼 클릭 시 작성한 제목을 일정 문자열 개수만 남기고 지우는 함수]
 	function submitCheck() {
 		// 남길  제목 문자열 30자
@@ -236,18 +224,42 @@
 			return;
 		}
 		
-		if(uploadedFile != "") {
-			alert(uploadedFile);
-		}
 		
+		
+		// [업로드 파일 검증]
+		
+		// - 업로드 된 파일명
+ 		var anony_file = document.getElementById("anony_file").value;	
+		
+		// - 업로드 된 파일의 확장자를 찾기위해 "."의 다음 인덱스를 찾기
+	 	var dotIndex = document.getElementById("anony_file").value.indexOf(".")+1; // 자르기 용도
+	 	
+		// - 파일확장자를 소문자로 저장
+	 	var fileType = anony_file.substring(dotIndex).toLowerCase();
+	 	var fileTypeArr = new Array('jpg', 'gif', 'png', 'jpeg', 'bmp');
+			
+		//var uploadedFiles = e.originalEvent.dataTransfer.files;
+			
+			// 업로드 하려는 파일이 있을  때(1개만 허용)
+			if(anony_file.length > 0) {
+				
+				// 업로드 할 파일이 이미지 확장자 배열안에 없는 확장자를 가졌다면
+				//  (즉, 허용된 이미지 파일이 아니라면)
+				if(fileTypeArr.indexOf(fileType) == -1 ) {
+					alert("1개 이내의 이미지 파일(jpg, jpeg, gif, png, bmp)만 업로드 가능합니다.");
+					anony_file = "";
+					return;
+				}
+					
+			}	 	
+		
+
+		
+		// 모든조건 충족시 form submit 
 		writeAnoFR.submit();
 		
-		
-	}
-	
-	
 
-	
+	}// submitCheck()	
 	
 </script>
 

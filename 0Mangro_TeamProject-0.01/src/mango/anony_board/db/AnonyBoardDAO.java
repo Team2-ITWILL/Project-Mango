@@ -199,6 +199,21 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_ip(rs.getString("ano_board_ip"));
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
+
+				if(rs.getString("ano_board_reported")!= null){
+					anb.setAno_board_reported(rs.getString("ano_board_reported"));
+				}else{anb.setAno_board_reported("");}
+				
+				if(rs.getString("ano_board_reporter")!= null){
+					anb.setAno_board_reporter(rs.getString("ano_board_reporter"));
+				}else{anb.setAno_board_reporter("");}
+				
+				if(rs.getString("ano_board_reason")!= null){
+					anb.setAno_board_reason(rs.getString("ano_board_reason"));
+				}else{anb.setAno_board_reason("");}
+				
+				
+				
 				
 			}// if
 			
