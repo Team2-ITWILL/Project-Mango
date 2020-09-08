@@ -1288,3 +1288,36 @@ label {margin-bottom: 15px !important;}
 }
 
 
+/* 신고하기 모달*/
+
+.reportH1 {
+	font-family: 'Noto Sans KR', sans-serif !important;
+	font-weight: 700 !important;
+	color: #6b6c6c !important;	
+	
+	
+}
+
+	.modal-content {
+	width: 700px !important;
+    height: 800px !important;
+	}
+	
+	.reportTBarea {
+	    border: 1px solid #e9ecef;
+	    padding: 50px;
+	    margin-top: 8%;
+	    margin-bottom: 8%;
+	}
+	
+	.boldSpan { font-weight: 700;}
+	table .modalSpan { 
+		margin-right: 70px !important;
+	}
+
+	table label { 
+		margin-left: 70px !important;
+	
+	}
+
+	#hiddenInput {width: 220%; padding:10px !important;margin-top:10px;}

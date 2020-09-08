@@ -55,6 +55,19 @@
 	    border: 5px dotted #dcdcdc !important;
 	}
 	
+/* 	.modal-content {
+	width: 700px !important;
+    height: 700px !important;
+	}
+	
+	.reportTBarea {
+	    border: 1px solid #e9ecef;
+	    padding: 50px;
+	    margin-top: 8%;
+	    margin-bottom: 8%;
+	}
+	
+	.boldSpan { font-weight: 700;} */
 </style>
 
 
@@ -143,11 +156,94 @@
 							</c:if>
 							<p>${boardSingle.ano_board_content }</p> <br><br>
 							
+							<input type="hidden" value="${id_email }" id="hidden_email"> 
 							
-							<span class="report_comment" onclick="alert('신고할 수 없습니다.');">신고하기</span> <br><br>
+							<span id="reportBtn" class="report_comment" data-toggle="modal" onclick="openReport()">신고하기</span> <br><br>
 						</div>
+<%-------------------------------------------------------- [▼ 신고하기 모달창 영역 ]  --------------------------------------------------------------------------%>
+
+					
+        <div class="modal fade" id="modal_report" role="dialog" aria-labelledby="introHeader" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog" style="width: auto; display: table;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title reportH1">게시글 신고하기</h1>
+                    </div>
+                    <div class="modal-body">
+                        <span class="modalSpan boldSpan">신고는 반대의견을 표시하는 기능이 아닙니다.</span> <br>
+                        <span class="modalSpan" >신고 대신 반대 의견이나 [댓글]을 적어보시는 것은 어떨까요?</span><br>
+                        <div class="reportTBarea">
+                        	<table>
+								<tr>
+									<td>
+										<label for="rea1" id="reason1">
+											<input type="radio" name="reason4report" id="rea1" checked>
+											<span class="modalSpan">영리목적/홍보성</span>
+										</label>
+									</td>
+									<td>
+										<label for="rea2" id="reason2">
+											<input type="radio" name="reason4report" id="rea2">
+											<span class="modalSpan">불법정보</span>
+										</label>
+									</td>
+								</tr>                        	
+								<tr>
+									<td>
+										<label for="rea3" id="reason3">
+											<input type="radio" name="reason4report" id="rea3">
+											<span class="modalSpan">음란성/선정성</span>
+										</label>
+									</td>
+									<td>
+										<label for="rea4" id="reason4">
+											<input type="radio" name="reason4report" id="rea4">
+											<span class="modalSpan">욕설/인신공격</span>
+										</label>
+									</td>
+								</tr>                        	
+								<tr>
+									<td>
+										<label for="rea5" id="reason5">
+											<input type="radio" name="reason4report" id="rea5">
+											<span class="modalSpan">개인정보 노출</span>
+										</label>
+									</td>
+									<td>
+										<label for="rea6" id="reason2">
+											<input type="radio" name="reason4report" id="rea6">
+											<span class="modalSpan">반복게시(도배)</span>
+										</label>
+									</td>
+								</tr>                        	
+								<tr>
+									<td colspan="2">
+										<label for="rea7" id="reason7">
+											<input type="radio" name="reason4report" id="rea7">
+											<span class="modalSpan">기타</span> <br>
+											<textarea id="hiddenInput" placeholder="100자 이내로 입력해주세요." readonly></textarea>
+										</label>
+									</td>
+								</tr>                        	
+                        	</table>
+                        </div>
+                        
+                        <span class="modalSpan">신고가 진행중인 글은 운영규정 및 Mango운영진의 판단에 따라 삭제될 수 있으며, </span> <br>
+                        <span class="modalSpan">운영규정에 위배되는 글을 게시하여 신고된 회원은 계정정지 조치가 취해집니다.</span> <br>
+                        <span class="modalSpan">신고에 부적합한 글을 지속적으로 신고하는 회원에게는 제한 조치가 취해질 수 있습니다.</span>
+                        
+						                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">창닫기</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">신고하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 						
-						
+<%-------------------------------------------------------- [▲ 신고하기 모달창 영역 ]  --------------------------------------------------------------------------%>
 						<%-- 첨부파일 다운을 위해 클릭하는 영역 --%>
 							<c:choose>
 								<c:when test="${boardSingle.ano_board_file ne null}">
@@ -502,6 +598,43 @@
 	}
 
 
+//----------[신고하기]---------------------------------------------------------------------------------------------------------------------------
+
+	// [1] 모달창 열기 함수
+
+	// 세션영역의 아이디 값을 변수에 저장 
+	var loginSession = document.getElementById("hidden_email").value;
+	
+	function openReport() {
+	// 미 로그인 시
+		if(loginSession == ""){
+			alert("로그인 후에 이용가능한 서비스입니다.");
+			location.href="./MemberLogin.me";
+			return;
+			
+	// 로그인시 '신고하기'버튼에 모달창이 열리는 클래스 속성 부여
+		}else {document.getElementById("reportBtn").setAttribute("data-target", "#modal_report");}
+		
+	}//openReport()
+
+	
+	// 기타 열리면 input태그
+	
+	var radioBtn = document.getElementsByName("reason4report");
+	var etcLabel = document.getElementById("reason7");
+	var etcInput = document.getElementById("rea7");
+	var hiddenInput = document.getElementById("hiddenInput");
+	var etc = document.getElementsByName("reason4report")[6]; 
+
+
+	if(document.activeElement == hiddenInput) {
+		alert("인풋 액티브");
+	}
+	
+	
+
+	
+	
 
 </script>
 

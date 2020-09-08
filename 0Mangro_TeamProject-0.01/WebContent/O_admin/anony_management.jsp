@@ -3,92 +3,79 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <!------------------------------------------ [ 메타데이터 ] --------------------------------------------------------------->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 <!------------------------------------------ [ 제이쿼리 ] --------------------------------------------------------------->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
-    
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
-    <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="styles/dist/css/style.min.css" rel="stylesheet">
-    <link href="styles/mypage_additional.css" rel="stylesheet">
-    <link href="styles/table_style.css" rel="stylesheet">
-
+<link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+<link href="styles/dist/css/style.min.css" rel="stylesheet">
+<link href="styles/mypage_additional.css" rel="stylesheet">
+<link href="styles/table_style.css" rel="stylesheet">
 <style type="text/css">
 
-.prev, .next {
-    font-size: 1em;
-
+.prev, .next {font-size: 1em;}
+.thead-light tr th {border-right : 1px solid #f5f5f5;}
+.board_title, .board_content {text-align: left;padding-left: 20px !important;}
+.ban_thisAccount, .dropReport{
+	border: 1px solid #000;
+	height: 50px;
+	padding-top: 10%;
+	font-size: 1.1em;
+	/* background-color: #000; */
+	color: #000;
+	border-radius: 10px;
+	font-weight: 600;
+	
+	
 }
-
-.thead-light tr th {
-	border-right : 1px solid #f5f5f5;
-}
-
-
-.board_title, .board_content {
-	text-align: left;
-	padding-left: 20px !important;
+.ban_thisAccount:hover, .dropReport:hover{
+	background-color: #000;
+	color: #fff;
+	font-weight: 700;
 }
 
 </style>  
 </head>
 
-
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-<!------------------------------------------ [ 중앙영역 ] --------------------------------------------------------------->
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
+<!------------------------------------------ [ 탑바 ] --------------------------------------------------------------->
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
     
     
-    <!--     ==============================================================
-        Topbar header - style you can find in pages.scss
-        ============================================================== -->
         <header class="topbar" data-navbarbg="skin6">
             <nav class="navbar top-navbar navbar-expand-md">
                 <div class="navbar-header" data-logobg="skin6">
                     <!-- This is for the sidebar toggle which is visible on mobile only -->
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                             class="ti-menu ti-close"></i></a>
-                    <!-- ==============================================================
-                    Logo
-                    ============================================================== -->
+                            
+<!------------------------------------------ [ 로고 ] --------------------------------------------------------------->
                     <div class="navbar-brand">
                         <!-- Logo icon -->
                             <span class="logo-text">
                             
-                                <h1 class="mypagelogo">마이페이지</h1>
+                                <h1 class="mypagelogo">관리자 메뉴</h1>
                             </span>
                     </div>
-                    <!-- ==============================================================
-                    End Logo
-                    ==============================================================
-                    ==============================================================
-                    Toggle which is visible on mobile only
-                    ============================================================== -->
+                    
+<!------------------------------------------ [ 토글바 ] --------------------------------------------------------------->
                     <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
                         data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
@@ -96,56 +83,23 @@
                 </div>
 <!------------------------------------------ [ 'USER  님, 안녕하세요' 영역 ] --------------------------------------------------------------->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent">
-<!--                     ==============================================================
-                    Right side toggle and nav items
-                    ============================================================== -->
                     <ul class="navbar-nav float-right">
 
-<!--                         ==============================================================
-                        User profile and search
-                        ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
-                                        class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
-                                        class="svg-icon"></i></span>
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
+                                        class="text-dark">관리자1</span> 
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
-                                        Profile</a></div>
-                            </div>
+
                         </li>
-<!--                         ==============================================================
-                        User profile and search
-                        ============================================================== -->
                     </ul>
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
+<!------------------------------------------ [ 사이드바 ] --------------------------------------------------------------->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -161,109 +115,73 @@
                         <li class="list-divider"></li> <!-- 구분선 -->
                         
                         <li class="nav-small-cap">
-                        	<span class="hide-menu divide">설정 및 관리</span>
-                        	<span class="rounded p-1 font-footnote border text-primary">일반인</span>
+                        	<span class="hide-menu divide">데이터 관리</span>
+                        	<span class="rounded p-1 font-footnote border text-primary">관리자</span>
                         	
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" href="./Management.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
-                                <span class="hide-menu">멤버십 결제</span>
+                                <span class="hide-menu">결제 관리</span>
                             </a>
                         </li>
-                        
-                        
-                                    
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
-                                aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
-                                    class="hide-menu">내 정보</span></a></li>
+						
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="./registerGetList.areg"
+                                aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
+                                <span class="hide-menu">등록 요청 학원관리</span></a>
+						</li>
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
                         <li class="list-divider"></li> <!-- 구분선 -->
                         
-                        <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
+                        <li class="nav-small-cap"><span class="hide-menu divide" >고객 관리</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
-                                aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
-                                    class="hide-menu">좋아요 한 학원 목록</span>
+                        	<a class="sidebar-link sidebar-link" href="./MemberManagementAction.me"
+                                aria-expanded="false"><i data-feather="users" class="feather-icon"></i>
+                                <span class="hide-menu">회원관리</span>
                             </a>
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="#"
-                                aria-expanded="false"><i data-feather="edit" class="feather-icon"></i><span
-                                    class="hide-menu">내가 작성한 글</span>
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	   aria-expanded="false" >
+                        	
+                        	<i data-feather="edit" class="feather-icon"></i><span
+                                    class="hide-menu">문의답변관리</span>
 							</a>
                                     
-                            <ul aria-expanded="false" class="collapse first-level base-level-line">
-                                <li class="sidebar-item">
-                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
-                                		<span class="hide-menu">학원후기</span>
-                                	</a>
-                                </li>            
-                                <li class="sidebar-item">
-                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
-                                		<span class="hide-menu">익명사담글</span>
-                                	</a>
-                                </li>            
-                                <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_qna_board.jsp" class="sidebar-link">
-                                		<span class="hide-menu">문의게시글</span>
-                                	</a>
-                                </li>            
-                        	</ul>
-                                    
 						</li>
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_audit_list.jsp"
-                                aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
-                                <span class="hide-menu">청강신청 현황</span>
-                            </a>
-						</li>
-                                    
+						                                  
                         
                         <li class="list-divider"></li> <!-- 구분선 -->
-                        <li class="nav-small-cap"><span class="hide-menu divide">계정관련</span></li>
+                        <li class="nav-small-cap"><span class="hide-menu divide">계정 관리</span></li>
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
-                                aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
-                                <span class="hide-menu">로그아웃</span>
+                        	<a class="sidebar-link sidebar-link" href="./AdminAnonyReportedListAction.anob"
+                                aria-expanded="false"><i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                                <span class="hide-menu">회원 신고</span>
                             </a>
 						</li>
 
-                        <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link"
-                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
-                                <i data-feather="box" class="feather-icon"></i>
-                                <span class="hide-menu">회원탈퇴</span>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
         
         
         
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
+        
+ <!----------------------------------[ Page wrapper]---------------------------------------------------------->
+        
         <div class="page-wrapper">
         
-        
-        
-            
- <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 시작 ]---------------------------------------------------------->
+ <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳)  Container fluid]---------------------------------------------------------->
             
             <!-- ============================================================== -->
             <!-- Container fluid  -->
@@ -272,10 +190,9 @@
  
            <div class="container-fluid">
            
-                <div class="row"> <!-- 표시하고자 하는 데이터가 row 안에 있어야 함. 삭제x -->
  
- <!----------------------------------[ 테이블]---------------------------------------------------------->
 
+<%---------------------------------------------------------- 테이블 --------------------------------------------------------------%>
 
                     
                     <!-- (일반회원) 익명 사담글 목록 -->
@@ -289,16 +206,18 @@
                                 <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
                                         <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
-                                            <th scope="col" style="width:5%;">글 번호</th>
-                                            <th scope="col" style="width:11%;">제목</th>
-                                            <th scope="col" style="width:11%;">내용</th>
-                                            <th scope="col" style="width:14%;">닉네임</th>
-                                            <th scope="col" style="width:5%;">댓글수</th>
-                                            <th scope="col" style="width:5%;">조회수</th>
+                                            <th scope="col" style="width:8%;">글 번호</th>
+                                            <!-- <th scope="col" style="width:11%;">제목</th> -->
+                                            <!-- <th scope="col" style="width:11%;">내용</th> -->
+                                            <th scope="col" style="width:14%;">계정</th>
+                                            <th scope="col" style="width:8%;">댓글수</th>
+                                            <th scope="col" style="width:8%;">조회수</th>
                                             <th scope="col" style="width:10%;">첨부파일</th>
-                                            <th scope="col" style="width:11%;">신고여부</th>
-                                            <th scope="col" style="width:11%;">신고사유</th>
                                             <th scope="col" style="width:13%;">작성일자</th>
+                                            <th scope="col" style="width:11%;">신고일자</th>
+                                            <th scope="col" style="width:11%;">신고사유</th>
+                                            <th scope="col" style="width:11%;">신고계정</th>
+                                            <th scope="col" colspan="2" style="width:22%;">처리</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,20 +227,36 @@
                                     <c:forEach var="myAnonyList" items="${myAnonyList}">
                                         <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
                                             <th scope="row">${myAnonyList.ano_board_num}</th>
-                                            <td class="board_title">${myAnonyList.ano_board_title}</td>
-                                            <td class="board_content">${myAnonyList.ano_board_content}</td>
-                                            <td >${myAnonyList.ano_board_nick}</td>
+                                           <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
+                                            <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
+                                            <td >${myAnonyList.mem_email}</td>
                                             <td>${comments[myAnonyList.ano_board_num]}</td>
                                             <td>${myAnonyList.ano_board_read}</td>
                                             <td>${myAnonyList.ano_board_file}</td>
-                                            <td>${myAnonyList.ano_board_reported}</td>
-                                            <td>${myAnonyList.ano_board_reason}</td>
                                             <td>
 	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
 					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
 					                                            type="both"/>
                                             </td>
-
+                                            <td>${myAnonyList.ano_board_reported}</td>
+                                            <td>${myAnonyList.ano_board_reason}</td>
+                                            <td>${myAnonyList.ano_board_reporter}</td>
+                                            
+                                        
+                                        <c:choose>
+                                         <c:when test="${myAnonyList.ano_board_reported ne ''}" >
+                                            <td>
+       	                                    	<div class="ban_thisAccount" id="ban" onclick="buttonFunc('ban',event)">계정정지</div>
+                                            </td>
+                                            <td>
+                                            	<div class="dropReport" id="drop" onclick="buttonFunc('drop',event)">신고삭제</div>
+                                            </td>
+                                         </c:when>
+                                         <c:otherwise>
+                                         	<td></td><td></td>
+                                         </c:otherwise>
+                                        </c:choose>    
+										    
                                             
                                         </tr>
                                     </c:forEach>
@@ -434,15 +369,16 @@
                                         
  
  
-   
 
 
-           
+
+
+
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
-                 </div> <!-- row (해당 태그 이하는 삭제 x )-->     
            
                 
             </div> <!-- container-fluid -->
+
 
 
         </div> <!-- page-wrapper -->
@@ -450,18 +386,70 @@
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
     </div> <!-- End Wrapper -->
-       <!-- ============================================================== -->
+    <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
     
-<!----------------------------------------[자바스크립트 영역]------------------------------------------------------------------->    
- 
+
+
+
+	<!-- Partners -->
+<!-- 임시저장
+	<div class="partners">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="partners_slider_container">
+						<div class="owl-carousel owl-theme partners_slider">
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_1.png" alt=""></div>
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_2.png" alt=""></div>
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_3.png" alt=""></div>
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_4.png" alt=""></div>
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_5.png" alt=""></div>
+							Partner Item
+							<div class="owl-item partner_item"><img src="images/partner_6.png" alt=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ -->
+
+
+
+<script type="text/javascript">
+
+	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
+
+	function buttonFunc(act ,event) {
+		if(act == 'ban'){
+		    event.stopPropagation();
+		    alert("계정정지");
+		    
+		}else if(act == 'drop') {
+		    event.stopPropagation();
+		    alert("신고취소");
+			
+		}
+	}
+	
+	
+</script>
+
+    
+    
+    
+<!----------------------------------------[자바스크립트 영역------------------------------------------------------------------->    
     <script src="styles/assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="styles/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
-    <script src="styles/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
     <script src="styles/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="styles/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
@@ -474,11 +462,15 @@
     <script src="styles/dist/js/custom.min.js"></script>
     <!--This page JavaScript -->
     <script src="styles/assets/libs/moment/min/moment.min.js"></script>
-    <script src="styles/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="styles/dist/js/pages/calendar/cal-init.js"></script>
     
+    <script src="styles/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="styles/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="styles/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="styles/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     
-    
+    <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
+    <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
 
     
 </body>
