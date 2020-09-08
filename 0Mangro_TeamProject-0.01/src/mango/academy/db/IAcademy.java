@@ -63,5 +63,8 @@ public interface IAcademy {
 	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
 	public int changeAcademyEmail(AcademyBean vo, int flag);
 	
+	//학원 이름 찾아오는 메서드
+	public String getAcaName(String email);
+	
 
 }

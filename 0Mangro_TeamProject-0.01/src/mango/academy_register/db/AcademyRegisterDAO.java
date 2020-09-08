@@ -186,4 +186,6 @@ public class AcademyRegisterDAO extends DBconnection{
 		}		
 		return result;
 	}
+	
+	
 }

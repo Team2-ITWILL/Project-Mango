@@ -262,10 +262,8 @@
 						<!-- 청강신청현황 버튼 클릭 시 AuditList 가져오는 서블릿 페이지 실행 -->
                         <li class="sidebar-item"> 
                         <!-- href="4index.jsp?center=O_aca_admin_page/aca_audit_list.jsp" -->
-                        	<a class="sidebar-link sidebar-link"
-                        	 
-                        		href="./ListAction.adrq"   
-                        		                     	
+                        	<a class="sidebar-link sidebar-link"                        	 
+                        		href="./ListAction.adrq"                           		                     	
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>
