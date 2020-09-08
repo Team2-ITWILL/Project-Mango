@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="mango.member.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <!-- <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css"> -->
@@ -34,7 +33,6 @@
 <script type="text/javascript">
 
 //<--------------------------- 회원가입 필수 입력란 확인 ------------------------->
-	
 	$(function check() {
 		
 		$("#join").submit(function() {
@@ -52,6 +50,7 @@
 				$("#id_email").focus();
 				return false;
 			}
+			
 			
 			// 비밀번호
 			if($("#id_password1").val() == ""){
@@ -74,11 +73,13 @@
 				return false;
 			}
 			
+			
 			// 인증 버튼 클릭여부 확인
 			if(flag != true) {
 		        alert("이메일 인증을 해주세요.");
 				return false;
 			}
+			
 			
 			// 정확한 인증번호 입력여부 확인
 			if( $("#fromIframe").val() != "success" ){
@@ -87,6 +88,9 @@
 				return false;
 			}
 			
+			
+			
+			
 		}); // submit() 끝	
 			
 	}); // check() 끝
@@ -94,7 +98,7 @@
 	
 	
 	
-//<--------------------------- 이메일 인증 번호 전송  ----------------------------->	
+//<--------------------------- 이메일 인증 번호 전송  ------------------------->	
 	
 	var flag = false;
 	function emailCheck(){
@@ -109,45 +113,7 @@
 		
 	}
 	
-//<--------------------------- 이메일 인증 번호 전송  ----------------------------->	
-
-
-
-//<--------------------------- 아이디 중복 확인  ----------------------------->	
-
-	function duplCheck(){
-		
-		$.ajax({
-				type: "post",
-				url: "./MemberIDcheckAction.me",
-				data: {id_email:$("#id_email").val()},
-				dataType: "text",
-				success: function(data, textStatus){
-					
-					console.log("@@@data : " + data + " / " + textStatus)
-					
-					if(data == 1){
-						$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
-						$("#idcheckF").removeAttr("style","display:none;");
-					
-					}else if(data == 0){
-						$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
-						$("#id_email").attr("readonly", "readonly");
-						$("#idcheckT").removeAttr("style","display:none;");
-					
-					} // if문 끝
-				}, //success 끝
-				
-				error: function(data, datastatus){
-					console.log("에러 : "+ data + datastatus);
-				} // error 끝
-			
-		}); // $.ajax 끝
-		
-	} // duplCheck() 끝
-
-//<--------------------------- 아이디 중복 확인  ----------------------------->	
-
+//<--------------------------- 이메일 인증 번호 전송  ------------------------->	
 </script>
 
 
@@ -220,14 +186,9 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일 
 						        </label>
-						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" onkeydown="duplCheck()">
+						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" > 
 						        <button type="button" class="btn btn-primary right-btn" onclick="emailCheck()">전송</button>
-						        	<span style="display: none;" id="idcheckT">
-						        		사용 가능한 이메일입니다.
-						        	</span>
-						        	<span style="display: none;" id="idcheckF">
-						        		이미 가입한 회원입니다.
-						        	</span>
+						        
 						        	<span style="display: none;" id="authEmailSpan">
 						        		잠시 후 인증번호창이 활성화되면 <br>
 						        		입력한 메일로 전송된 인증번호를 입력하세요.
