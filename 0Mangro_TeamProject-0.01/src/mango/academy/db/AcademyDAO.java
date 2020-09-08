@@ -1755,7 +1755,30 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		return result;
 	}	
 	
-	
+	//학원 이름 찾아오는 메서드
+	public String getAcaName(String email){		
+		String acaName = null;
+		try {
+			getConnection();
+			
+			String sql = "select * from academy "
+					+ "where mem_email = ? ";
+					//+ "and mem_admin is not null";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);				
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				acaName = rs.getString("aca_name");				
+			
+		} catch (Exception e) {
+			System.out.println("getAcaName()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return acaName;
+	}
 	
 	
 } // AcademyDAO 끝	
