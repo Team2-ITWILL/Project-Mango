@@ -20,13 +20,6 @@
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
   
-<script>
-	window.onload = function(){
-		
-	
-		
-	}
-</script>    
 </head>
 
 <body>
