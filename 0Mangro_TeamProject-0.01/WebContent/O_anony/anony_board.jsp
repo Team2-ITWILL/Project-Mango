@@ -34,6 +34,20 @@
 	.comments_title {display: inline-block; padding-top:100px;}
 	.exstboard_title {padding-top:0;}
 	.span-title{ font-size: 1.2em; font-weight: 700;	}
+	.prevent_overflow_content {
+		overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    width: 60%;
+	}
+	.po_title { width: 100%; 	}
+	@media only screen and (max-width: 767px)
+	{.comments_write_button {
+			    bottom: 5px;
+    			width: 110px;}
+	 .comment_tail {margin-right: 0;}
+	 .po_title {width: 70%;}
+	}
 	
 </style>
 
@@ -122,7 +136,7 @@
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
 												
 										<%------ 글제목 ----%>
-												<p style="padding-top: 10px; color:#000 !important;">
+												<p style="padding-top: 10px; color:#000 !important;" class="prevent_overflow po_title">
 													<span class="span-title">${anbList.ano_board_title}</span>
 												</p>
 												
@@ -132,7 +146,7 @@
 										
 										<%------ 글내용 ----%>
 										<div class="comment_text">
-											<p>${anbList.ano_board_content}</p>
+											<p class="prevent_overflow_content">${anbList.ano_board_content}</p>
 										</div>
 										
 										

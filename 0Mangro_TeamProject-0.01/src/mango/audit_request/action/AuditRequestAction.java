@@ -34,10 +34,13 @@ public class AuditRequestAction implements Action{
 				 //★★★★audit_management 테이블의 subject를 fk로 등록하였기 때문에 
 				 //과목명이 반드시 일치해야한다!!!	
 				 request.getParameter("audit_subject"),	
+				 
 				 //청강신청일 : 언제 듣고 싶은지
-				 LocalDate.parse(request.getParameter("audit_wish_date")),	
+				 LocalDate.parse(request.getParameter("audit_wish_date")),
+				 
 				 //청강신청일 : 신청 당일 날짜
 				 LocalDate.parse(request.getParameter("audit_request_date")),
+				 
 				 //청강승인일자 : 기본값 NULL
 				 null			 
 				 );

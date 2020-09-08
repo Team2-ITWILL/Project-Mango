@@ -11,7 +11,7 @@ $(function () {
                 ['Direct Sales', 25],
                 ['Referral Sales', 15],
                 ['Afilliate Sales', 10],
-                ['Indirect Sales', 15]
+                ['Indirect Sales', 15]                
             ],
 
             type: 'donut',

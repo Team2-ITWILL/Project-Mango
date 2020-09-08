@@ -27,13 +27,15 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAcademyReviewCount()에서 예외발생");
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return result;
 	} // getAcademyReviewCount() 끝
 
 	
-	// 학원후기 목록반환
+	// 학원후기 목록반환 (학원 상세보기)
 	@Override
 	public List<AcademyReviewBean> getAcademyReviewList(int acaMainNum, int startRow,int pageSize) {
 		List<AcademyReviewBean> reviewList = new ArrayList<AcademyReviewBean>();
@@ -219,24 +221,53 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAcaNameTop()에서 예외발생");	
 			e.printStackTrace();
+		}  finally {
+			resourceClose();
 		}
 		
 		
 		return acaName;
 	} // getAcaNameTop() 끝
 	
+	// 학원 번호
+	public int getAcaMainNumTop(String acaName){
+		
+		int acaMainNum = 0; 
+		
+		try {
+			getConnection();
+			sql = "select aca_main_num from academy_review where aca_name = ? limit 1;";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acaName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				acaMainNum = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getAcaMainNumTop()에서 예외발생");	
+			e.printStackTrace();
+		}  finally {
+			resourceClose();
+		}
+		
+		
+		return acaMainNum;
+	} // getAcaNameTop() 끝
+	
 	// 후기 갯수
-	public int getReviewCntTop(int rank){
+	public int getReviewCntTop(String acaName){
 		
 		int count = 0; 
 		
 		try {
 			getConnection();
-			sql = "select count(*) from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			sql = "select count(*) from academy_review where aca_name = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rank);
+			pstmt.setString(1, acaName);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -246,6 +277,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getReviewCntTop()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		
@@ -253,17 +286,16 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getReviewCntTop() 끝
 	
 	// 후기 갯수
-	public double getAvgScoreTop(int rank){
+	public double getAvgScoreTop(int acaMainNum){
 		
 		double score = 0.0; 
 		
 		try {
 			getConnection();
-			sql = "select avg(review_score) from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			sql = "select avg(review_score) from academy_review group by aca_main_num having aca_main_num=?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rank);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -273,6 +305,8 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		} catch (Exception e) {
 			System.out.println("getAvgScoreTop()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		
@@ -295,22 +329,86 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			
 			while(rs.next()){
 				String title = rs.getString(1);
-				System.out.println(title);
 				titleList.add(title);
 			}
 			
 		} catch (Exception e) {
 			System.out.println("getReviewTitle()에서 예외발생");	
 			e.printStackTrace();
+		} finally {
+			resourceClose();
 		}
 		
 		return titleList;
 	} // getReviewTitle() 끝
 	
-	
-	
 	/* 메인 학원 후기 3개 반환 끝 */
 	
+	// 학원후기 목록반환(내가 쓴 후기목록)
+	public List<AcademyReviewBean> getAcademyReviewList(String mem_email, int startRow,int pageSize) {
+		List<AcademyReviewBean> reviewList = new ArrayList<AcademyReviewBean>();
+		
+		try {
+			getConnection();
+			sql = "select * from academy_review where mem_email = ? order by review_num desc limit ?,?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mem_email);
+			pstmt.setInt(2, startRow-1);
+			pstmt.setInt(3, pageSize);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				AcademyReviewBean arBean = new AcademyReviewBean();
+				arBean.setReviewNum(rs.getInt(1));
+				arBean.setAcaMainNum(rs.getInt(2));
+				arBean.setAcaName(rs.getString(3));
+				arBean.setReviewTitle(rs.getString(4));
+				arBean.setReviewGood(rs.getString(5));
+				arBean.setReviewBad(rs.getString(6));
+				arBean.setReviewSubject(rs.getString(7));
+				arBean.setReviewScore(rs.getInt(8));
+				arBean.setMemEmail(rs.getString(9));
+				arBean.setReviewDate( rs.getString(10).substring(0, 10));
+				reviewList.add(arBean);
+			}
+		} catch (Exception e) {
+			System.out.println("getAcademyReviewList()에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		return reviewList;
+	} // getAcademyReviewList() 끝
+	
+	// 후기 평점별 갯수
+	public int getReviewScoreCnt(int acaMainNum, int score){
+		
+		int count = 0; 
+		
+		try {
+			getConnection();
+			sql = "select count(*) from academy_review where aca_main_num = ? and review_score=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, acaMainNum);
+			pstmt.setInt(2, score);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getReviewScoreCnt()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return count;
+	} // getReviewScoreCnt() 끝
 
 	
 } // AcademyReviewDAO 클래스 끝

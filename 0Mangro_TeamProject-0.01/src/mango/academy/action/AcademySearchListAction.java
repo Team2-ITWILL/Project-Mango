@@ -29,6 +29,7 @@ public class AcademySearchListAction implements Action {
 		String select3=request.getParameter("select3");
 		String select4=request.getParameter("select4");  
 		String select5=request.getParameter("select5");
+		String keyword=request.getParameter("keyword");
 		
 		
 		String Page="AcademySearchList.aca?";
@@ -87,7 +88,7 @@ public class AcademySearchListAction implements Action {
 			PageTwo+="mainsearch="+mainsearch+"&";
 		}
 		
-		if(select5==null){//문단
+		if(select5==null){//정렬순
 			
 			System.out.println("이값은 널입니다6");
 		
@@ -97,18 +98,34 @@ public class AcademySearchListAction implements Action {
 			
 		}
 	
+	
+		
 	}//if문
 		
+		AcademyDAO adao =new AcademyDAO();
+		int count;
+		String pageNum=request.getParameter("pageNum");		
+		if(keyword==null){
+			System.out.println("이값은 널입니다7");
+
+		
+			 count=adao.getAcademyCount(Formsearch);
+			
+		
+		
+		
+		
+		}else{	//키워드 검색이 있을시에
+			
+			
+			Formsearch.put("key", keyword);
+			count=adao.getAcademyCount(Formsearch);
+			
+		}
 		
 		
 		
 		System.out.println(Page);
-		
-		
-		AcademyDAO adao =new AcademyDAO();
-		
-		
-		int count=adao.getAcademyCount(Formsearch);
 	
 		System.out.println("Count 수 : "+count);
 		
@@ -116,7 +133,6 @@ public class AcademySearchListAction implements Action {
 		List<AcademyBean> searchList =null;
 		
 		
-		String pageNum=request.getParameter("pageNum");
 
 		
 		int pageSize=15;
@@ -138,11 +154,15 @@ public class AcademySearchListAction implements Action {
 		
 		System.out.println("시작페이지" +startRow);
 		
-		if(count != 0){
+		if(count != 0 && keyword ==null){
 			
 			searchList =adao.getSearchListAcademy(Formsearch, startRow, pageSize);
 			
 	
+		}else if(count != 0 && keyword != null){//키워드가 있을시에
+			
+			searchList =adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			
 		}
 	
 		

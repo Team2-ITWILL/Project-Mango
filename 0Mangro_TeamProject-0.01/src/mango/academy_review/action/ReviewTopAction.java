@@ -48,23 +48,21 @@ public class ReviewTopAction extends HttpServlet{
 			AcademyReviewDAO dao = new AcademyReviewDAO();
 			
 			int rank = Integer.parseInt((String)obj.get("num"))-1;
-			System.out.println(rank);
 			// 학원이름
 			String acaName = dao.getAcaNameTop(rank);
-			System.out.println(acaName);
+			
+			// 학원번호
+			int acaMainNum = dao.getAcaMainNumTop(acaName);
+			
 			// 후기갯수
-			int revCnt = dao.getReviewCntTop(rank);
-			System.out.println("후기갯수:"+revCnt);
+			int revCnt = dao.getReviewCntTop(acaName);
 			// 평균평점
 			double avgScore = 
-					Double.parseDouble(String.format("%.1f",dao.getAvgScoreTop(rank)));
-			System.out.println("이까지4");
-			System.out.println(avgScore);
+					Double.parseDouble(String.format("%.1f",dao.getAvgScoreTop(acaMainNum)));
 			List<String> titleList = dao.getReviewTitle(acaName);
-			System.out.println(titleList.get(0));
-			System.out.println(titleList.get(1));
 			
 			obj.put("acaName", acaName);
+			obj.put("acaMainNum", acaMainNum);
 			obj.put("revCnt", revCnt);
 			obj.put("avgScore", avgScore);
 			obj.put("title1", titleList.get(0));

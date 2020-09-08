@@ -20,6 +20,48 @@
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
   
+<!------------------------------------[사용자 정의 함수]------------------------------ -->
+<script type="text/javascript">		
+		function approveReg(regEmail, acaName, flag){
+			
+			// create form tag
+			var regForm = document.createElement('form');
+			regForm.action = "./regChangeApproval.areg";
+			regForm.method = "get";
+			
+			// create input Tag
+			var input1 = document.createElement('input');
+			var input2 = document.createElement('input');
+			var input3 = document.createElement('input');
+			
+			// set attribute
+			input1.setAttribute('type', 'hidden');
+			input1.setAttribute('name', 'acaName');
+			input1.setAttribute('value', acaName);
+			
+			input2.setAttribute('type', 'hidden');
+			input2.setAttribute('name', 'flag');
+			input2.setAttribute('value', flag);
+			
+			input3.setAttribute('type', 'hidden');
+			input3.setAttribute('name', 'regEmail');
+			input3.setAttribute('value', regEmail);
+						
+			// append input to Form
+			regForm.appendChild(input1);
+			regForm.appendChild(input2);
+			regForm.appendChild(input3);
+			
+			// append form to body
+			document.body.appendChild(regForm);
+			
+			console.log(regForm);
+			
+			// submit form
+			regForm.submit();				
+			
+		}	
+</script>
     
 </head>
 
@@ -104,7 +146,8 @@
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
+                        		href="./registerGetList.areg"
                                 aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -170,7 +213,6 @@
 
 <%---------------------------------------------------------- 테이블 --------------------------------------------------------------%>
 
-                    
                     <%--- (일반회원)내가 작성한 문의글 --%>
                     <div class="col-12">
                         <div class="card">
@@ -190,41 +232,34 @@
                                             <th scope="col">대표자신분증 파일</th>
                                             <th scope="col">신청일</th>
                                             <th scope="col">승인일</th>
-                                        </tr>
-                                        
+                                        </tr>                                        
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-02</td>
+                                    <c:forEach var="vo" items="${registerList}">
+                                    	<!-- 승인,취소를 구분할 값 -->
+                                    	<c:set var="flag" value="0" />
+                                    	<c:choose>                                    		
+                                    		<c:when test="${vo.confirmDate eq null}">
+                                    			<!-- confirmDate가 null이면 승인 -->
+                                    			${flag = 1}
+                                    		</c:when>                                    		
+                                    		<c:when test="${vo.confirmDate ne null}">
+                                    			<!-- confirmDate가 값이 있으면 승인 취소 -->
+                                    			${flag = 0}
+                                    		</c:when>
+                                    	</c:choose>
+                                    	<!-- 학원관리자 등록을 요청한 사용자의 이메일, 학원명, confirmDate flag를 전달 -->
+                                        <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${flag}')">
+                                            <th scope="row">${vo.memEmail}</th>
+                                            <td>${vo.acaName}</td>
+                                            <td>${vo.memAddrZip}</td>
+                                            <td>${vo.memAddrDoro}</td>
+                                            <td>${vo.fNameCompany}</td>
+                                            <td>${vo.fNameOwner}</td>
+                                            <td>${vo.registerDate}</td>
+                                            <td>${vo.confirmDate}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
-                                            <td>2020-09-01</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">naver@daum.com</th>
-                                            <td>망고 학원</td>
-                                            <td>45506</td>
-                                            <td>부산광역시 부산진구 망고대로306</td>
-                                            <td>saupza.pdf</td>
-                                            <td>daepyoja.pdf</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-02</td>
-                                        </tr>
-
+                                    </c:forEach>                                         
                                     </tbody>
                                 </table>
                             </div>
@@ -323,7 +358,6 @@
 		</div>
 	</div>
  -->
-
 
 
 

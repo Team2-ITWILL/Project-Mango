@@ -64,6 +64,12 @@
     max-width: inherit;
 } 
   
+.pagination{
+	margin: 10px;
+	margin-left: 40%;
+}
+
+  
   </style>  
     
 </head>
@@ -131,7 +137,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email }</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -222,12 +228,12 @@
                                     
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_academy_review.jsp" class="sidebar-link">
+                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
                                 		<span class="hide-menu">학원후기</span>
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
+                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            
@@ -312,43 +318,32 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">후기번호</th>
-                                            <th scope="col">학원 지정번호</th>
                                             <th scope="col">학원명</th>
                                             <th scope="col">한줄요약</th>
-                                            <th scope="col">장점</th>
-                                            <th scope="col">단점</th>
                                             <th scope="col">수강과목</th>
-                                            <th scope="col">총괄점수</th>
+                                            <th scope="col">평점</th>
                                             <th scope="col">작성일자</th>
-                                            <th scope="col">승인일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">503</th>
-                                            <td>1235456</td>
-                                            <td>망고학원</td>
-                                            <td>매일 망고를 줘서 좋아요.</td>
-                                            <td>수업을 재미있게 하네요.</td>
-                                            <td>배가고파요.오늘은 망고를 안줌.</td>
-                                            <td>에피타이저 베이킹</td>
-                                            <td>5</td>
-                                            <td>2020-08-20</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">503</th>
-                                            <td>1235456</td>
-                                            <td>망고학원</td>
-                                            <td>매일 망고를 줘서 좋아요.</td>
-                                            <td>수업을 재미있게 하네요.</td>
-                                            <td>배가고파요.오늘은 망고를 안줌.</td>
-                                            <td>에피타이저 베이킹</td>
-                                            <td>5</td>
-                                            <td>2020-08-20</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-
+                                    	<c:if test="${count!=0}"> 
+                                    	<c:forEach var="rBean" items="${revList}">
+                                    		<tr onclick="location.href='./AcademyContentAction.aca?acaMainNum=${rBean.acaMainNum}&pageNum=1'">
+	                                            <td scope="row">${rBean.reviewNum}</td>
+	                                            <td>${rBean.acaName}</td>
+	                                            <td>${rBean.reviewTitle}</td>
+	                                            <td>${rBean.reviewSubject}</td>
+	                                            <td>${rBean.reviewScore}</td>
+	                                            <td>${rBean.reviewDate}</td>
+	                                        </tr>
+                                    	</c:forEach>
+                                    	</c:if>
+                                        <c:if test="${count==0}"> 
+                                    		<tr>
+                                    			<td colspan="6">작성하신 후기가 없습니다.</td>
+                                    		</tr>
+                                    	</c:if>
+                                    	
                                     </tbody>
                                 </table>
                             </div>
@@ -356,37 +351,64 @@
                     </div>
 
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
-                    <ul class="pagination">
+                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
+					   <!-- << (첫페이지로 가기) -->
+					<c:if test="${count!=0}"> 
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+					  	<a class="page-link prev" href="myReviewListAction.arev?pageNum=1">
+					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
 					  	</a>
 					  </li>
 					  
-                    <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
+                    <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+					  	<c:if test="${startPage-pageBlock<=0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="myReviewListAction.arev?pageNum=${pN}">
+					  		<i class="fa fa-angle-left" aria-hidden="true"></i>
+					  	</a>	
+					  
+					  </li>
+					
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="myReviewListAction.arev?pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<=pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="myReviewListAction.arev?pageNum=${pP}">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
 						</a>
 					  </li>
+                    
+                    
+                    
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+					  	<a class="page-link next" href="myReviewListAction.arev?pageNum=${pageCount}">
+						  	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 						</a>
 					  </li>
+					</c:if>		
 					</ul>
+                    
+
 
  
    

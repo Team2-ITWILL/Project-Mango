@@ -266,12 +266,12 @@
                                     
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_academy_review.jsp" class="sidebar-link">
+                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
                                 		<span class="hide-menu">학원후기</span>
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
+                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            

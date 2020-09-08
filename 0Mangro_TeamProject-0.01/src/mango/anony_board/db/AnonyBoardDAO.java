@@ -364,17 +364,20 @@ public class AnonyBoardDAO extends DBconnection {
 	// [8. 계정별 작성한 익명사담글을 반환하는 메소드 (마이페이지 내가 작성한 글 - 익명사담글)]
 	// - getANBoardList 오버로딩(String을 사용할 수 없으므로 bean타입으로 매개변수 지정)
 	
-	public List<AnonyBoardBean> getANBoardList(AnonyBoardBean anbean){
+	public List<AnonyBoardBean> getANBoardList(int startRow, int eachPageSize, AnonyBoardBean anbean){
 		List<AnonyBoardBean> myAnonyList = new ArrayList<AnonyBoardBean>();
 		
 		System.out.println("getANBoardList() 메소드 실행");
 		try {
 			getConnection();
 			sql = "SELECT * FROM anony_board "
-				+ "WHERE mem_email = ?";
+				+ "WHERE mem_email = ?" 
+				+ "ORDER BY ano_board_num DESC, ano_board_date DESC limit ?,?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, anbean.getMem_email());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, eachPageSize);
 			
 			rs = pstmt.executeQuery();
 			
@@ -391,20 +394,65 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
+				// nullable 데이터 null값일 경우 처리
+				if(rs.getString("ano_board_reported")!= null){
+					anb.setAno_board_reported(rs.getString("ano_board_reported"));
+				}else{anb.setAno_board_reported("");}
+				
+				if(rs.getString("ano_board_reporter")!= null){
+					anb.setAno_board_reporter(rs.getString("ano_board_reporter"));
+				}else{anb.setAno_board_reporter("");}
+				
+				if(rs.getString("ano_board_reason")!= null){
+					anb.setAno_board_reason(rs.getString("ano_board_reason"));
+				}else{anb.setAno_board_reason("");}
+				
+				
 				System.out.println("dao에서 보여지는 anb"+anb);
 				myAnonyList.add(anb);
 			}//while 끝
+			
+			System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
 			
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
 			e.printStackTrace();
 		} finally { resourceClose(); }
-			
 		return myAnonyList;
 	}
 	
 	
+
+	// [9. 계정별 작성한 익명사담글의 개수 반환하는 메소드 (마이페이지 내가 작성한 글 - 익명사담글)]
+	// - getAnonyBoardCount 오버로딩(String을 사용할 수 없으므로 bean타입으로 매개변수 지정)
+	public int getAnonyBoardCount(AnonyBoardBean anbean){
+		int count = 0;
+		
+		try {
+			getConnection();
+			sql = "SELECT count(*) FROM anony_board "
+				+ "WHERE mem_email=?";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, anbean.getMem_email());
+			
+			rs = pstmt.executeQuery();
+			
+			// 게시판에 글이 0개 이상이라면 개수를 count에 담기
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}//if
+			
+			
+		}catch(Exception e){
+			System.out.println("getAnonyBoardCount(AnonyBoardBean anbean)메소드 쿼리에서 예외 발생 : "+ e);				
+			
+		}finally {resourceClose();}
+		
+		return count;
+		
+	}//getAnonyBoardCount()
 	
 		
 }

@@ -17,6 +17,7 @@ import mango.action.ActionForward;
 import mango.liked_aca_review.db.LikedAcaReviewBean;
 import mango.liked_aca_review.db.LikedAcaReviewDAO;
 
+// 후기삭제 (ajax)
 @WebServlet("/acaReviewDelete")
 public class DeleteAcaReviewAction extends HttpServlet{
 
@@ -52,6 +53,7 @@ public class DeleteAcaReviewAction extends HttpServlet{
 			
 			AcademyReviewDAO dao = new AcademyReviewDAO();
 
+			// 삭제 성공시 1반환, 실패시 0 반환
 			int check = dao.DeleteAcademyReview(revNum);
 			
 			obj.put("check", check);

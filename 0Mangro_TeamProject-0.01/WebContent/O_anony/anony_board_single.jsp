@@ -128,7 +128,7 @@
 								<c:choose>
 								
 								<c:when test="${fileType eq 'jpg' or fileType eq 'jpeg' or fileType eq 'png' or fileType eq 'gif' or fileType eq 'JPG' or fileType eq 'JPEG' or fileType eq 'PNG' or fileType eq 'GIF'}">
-									<p><img src="O_aca_regFiles/${boardSingle.ano_board_file}" width="300"></p>
+									<p><img src="O_anony_Files/${boardSingle.ano_board_file}" width="300"></p>
 								</c:when>
 								
 								<c:otherwise>

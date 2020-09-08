@@ -62,7 +62,34 @@ public class AcademyRegisterFrontController extends HttpServlet{
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}	
-		}				
+		}else if(command.equals("/registerSearch.areg")) {			
+			
+			try {
+				action = new Academy_Register_SearchAca_Action();				
+				forward = action.excute(request, response);			
+		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}	
+		}else if(command.equals("/registerGetList.areg")) {			
+			
+			try {
+				action = new AcademyRegisterGetListAction();		
+				forward = action.excute(request, response);			
+		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}	
+		}else if(command.equals("/regChangeApproval.areg")) {			
+			
+			try {
+				action = new AcademyRegisterApproveAction();
+				forward = action.excute(request, response);			
+		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}	
+		}							
 		
 		
 		

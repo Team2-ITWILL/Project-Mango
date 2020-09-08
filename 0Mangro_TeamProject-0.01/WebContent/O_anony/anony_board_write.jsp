@@ -82,10 +82,10 @@
 						<h4 class="section_title">익명사담방 글쓰기</h4>
 							<br>
 <!-------------------------------------------------------- [글쓰기 영역 (form)] ----------------------------------------------------------->
-					      <form action="./AnoBoardInsertAction.anob"  class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
+					      <form action="./AnoBoardInsertAction.anob" name="writeAnoFR" class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" method="post" enctype="multipart/form-data">
 					      
 					         <%-- 1.세션에 있는 멤버email계정  ---%>
-					        <input type="hidden" class="form-control" name="mem_email" id="anony_title" value="${id_email}">
+					        <input type="hidden" class="form-control" name="mem_email" id="anony_email" value="${id_email}">
       
 						      <div class="js-form-message form-group">
 							        <div class="form-group mb-8">
@@ -100,14 +100,13 @@
 							        <div class="form-group mb-8">
 					         <%-- 3.제목 ---%>
 								        <label class="form-label" for="anony_title">제목</label>
-								        <input type="text" class="form-control" name="ano_board_title" id="anony_title" placeholder="제목을 입력해 주세요."> 
+								        <input type="text" class="form-control" name="ano_board_title" id="anony_title" placeholder="제목을 입력해 주세요.(30자 이내)" > 
 								    </div>
 								    
 					         <%-- 4.본문 ---%>
 							        <div class="form-group mb-8">
 							        	<label class="form-label" for="anony_content">본문</label>
-										<textarea name="ano_board_content" class="form-control" placeholder="내용을 입력해주세요." data-msg="내용을 입력해주세요." 
-										rows="10" required id="id_text"></textarea>
+										<textarea name="ano_board_content" class="form-control" id="anony_content" placeholder="내용을 입력해주세요." rows="10" id="id_text"></textarea>
 		       						</div>
 				       							 
 					         <%-- 5.파일 ---%>
@@ -120,7 +119,7 @@
 						              	</div>
 		       							 
 							        <div class="textwriteBtn">
-							          <button type="submit" class="btn btn-write" onclick="alert(document.getElementById('anony_file').value);">글쓰기</button>
+							          <button type="button" class="btn btn-write" onclick="submitCheck();">글쓰기</button>
 							        </div>
 						      </div>
 					      </form>
@@ -147,6 +146,57 @@
 	
 	} 
 
+		
+	// [제목, 내용 입력여부 및 각 30자, 500자가 넘은 상태로 글쓰기 버튼 클릭 시 작성한 제목을 일정 문자열 개수만 남기고 지우는 함수]
+	function submitCheck() {
+		// 남길  제목 문자열 30자
+		var titleLimit = document.getElementById("anony_title").value.substring(0,30);
+		// 남길  제목 문자열 30자
+		var contentLimit = document.getElementById("anony_content").value.substring(0,500);
+		
+		
+		// [제목 30자 이상 삭제]
+		if(document.getElementById("anony_title").value.length <= 0 ){
+			alert("제목을 입력해 주세요.");
+			document.getElementById("anony_title").focus();
+			return;
+		}
+		
+		if(document.getElementById("anony_title").value.length > 30){
+			alert("제목은 30자 이하로 작성해 주세요.");
+			document.getElementById("anony_title").value = titleLimit;
+			return;
+			
+		}
+		
+		// [내용 500자 이상 삭제]
+		if(document.getElementById("anony_content").value.length <= 0 ){
+			alert("내용을 입력해 주세요.");
+			document.getElementById("anony_content").focus();
+			return;
+		}
+		
+		if(document.getElementById("anony_content").value.length > 500) {
+			alert("내용은 500자 이하로 작성해 주세요.");
+			document.getElementById("anony_content").value = contentLimit;
+			return;
+		}
+		
+		
+		writeAnoFR.submit();
+		
+		
+	}
+	
+	
+
+	//------------------------------------------------------------------------------------------------------------------
+	
+ 
+	
+	
+	
+	
 </script>
 
 

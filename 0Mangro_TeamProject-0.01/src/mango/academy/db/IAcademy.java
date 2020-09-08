@@ -55,5 +55,16 @@ public interface IAcademy {
 	//학원관리자 회원정보 가져오기(오버로딩)
 	public AcademyBean getAcademyContent(String email);
 	
+	//학원에 대한정보를 갖고오는 메서드(이름으로 검색) -> List
+	public List<AcademyBean> getAcademyInfoBySearchToList(String acaName);
+	//학원에 대한정보를 갖고오는 메서드(이름으로 검색) -> JSON Array
+	public JSONArray getAcademyInfoBySearchToJSON(String acaName);
+	
+	//학원관리자 등록 시 mem_email 컬럼 값에 매칭시키는 메서드
+	public int changeAcademyEmail(AcademyBean vo, int flag);
+	
+	//학원 이름 찾아오는 메서드
+	public String getAcaName(String email);
+	
 
 }

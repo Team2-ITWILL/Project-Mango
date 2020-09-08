@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 import mango.liked_academy.db.LikedAcademyBean;
 import mango.liked_academy.db.LikedAcademyDAO;
 
+// 좋아요 누른 학원인지 확인
 @WebServlet("/checkLikedAca")
 public class CheckLikedAca extends HttpServlet{
 

@@ -14,10 +14,10 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		try {
 			getConnection();
 			String sql = "select * from audit_request "
-					+ "where mem_email=?";
+					+ "where aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, aab.getMemEmail());
+			pstmt.setInt(1, aab.getAcaNum());
 			
 			rs = pstmt.executeQuery();		
 			
@@ -64,6 +64,55 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 			String sql = "select * from audit_request";
 			
 			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();		
+			
+			AuditRequestBean bean = null;			
+			
+			while(rs.next()){
+				
+				java.time.LocalDate confirmDate = null;				
+				if(rs.getDate(8) != null)
+					confirmDate = rs.getDate(8).toLocalDate();
+				else
+					confirmDate = null;
+				
+				bean = new AuditRequestBean(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getDate(6).toLocalDate(),
+						rs.getDate(7).toLocalDate(),						
+						confirmDate
+						
+						);
+				list.add(bean);
+			}
+		
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally{
+			resourceClose();
+		}	
+		return list;	
+	}	
+	
+	
+
+	@Override
+	public List<AuditRequestBean> getAllAuditListApproved(int aca_main_num) {
+		List<AuditRequestBean> list = new ArrayList<AuditRequestBean>();
+		try {
+			getConnection();
+			String sql = "select * "
+					+ "from audit_request "
+					+ "where aca_main_num = ? "
+					+ "and audit_confirm_date is not null";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, aca_main_num);
 			
 			rs = pstmt.executeQuery();		
 			
@@ -238,18 +287,31 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 	}
 
 	@Override
-	public int getAuditCount() {
+	public int getAuditCount(int acaNum, String email) {
 		int count = 0;
 		try {
 			getConnection();
-			String sql = "select count(*) from audit_request";			
-			pstmt = con.prepareStatement(sql);	
+			
+			String admin = "admin@mango.com";
+			//1. 사이트 관리자일 경우(admin@mango.com) 모든 청강신청현황 출력
+			if(email.equals(admin)){
+				sql = "select count(*) from audit_request";	
+				pstmt = con.prepareStatement(sql);					
+			//2. 일반 학원관리자일 경우 자기 학원의 청강신청현황 출력			   
+			}else{
+				sql = "select count(*) from audit_request where aca_main_num = ?";	
+				pstmt = con.prepareStatement(sql);	
+				pstmt.setInt(1, acaNum);
+			}		
+			
 			rs = pstmt.executeQuery();
 			
 			rs.next();
 			
 			//누적청강수
 			count = rs.getInt(1);			
+			System.out.println("acaNum : " + acaNum);
+			System.out.println("getAuditCount : " + count);
 			
 		} catch (Exception e) {
 			System.out.println("getAuditCount()에서 예외 발생");
@@ -261,18 +323,33 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 	}
 
 	@Override
-	public int getAuditCountApproval() {
+	public int getAuditCountApproval(int acaNum, String email) {
 		int count = 0;
 		try {
 			getConnection();
-			String sql = "select count(*) from audit_request "
-					+ "where audit_confirm_date is not null";			
-			pstmt = con.prepareStatement(sql);	
-			rs = pstmt.executeQuery();
 			
-			rs.next();			
+			String admin = "admin@mango.com";
+			//1. 사이트 관리자일 경우(admin@mango.com) 모든 청강신청현황 출력
+			if(email.equals(admin)){
+				sql = "select count(*) from audit_request "
+						+ "where audit_confirm_date is not null ";						
+				pstmt = con.prepareStatement(sql);		
+				
+			//2. 일반 학원관리자일 경우 자기 학원의 청강신청현황 출력			   
+			}else{
+				sql = "select count(*) from audit_request "
+						+ "where audit_confirm_date is not null "
+						+ "and aca_main_num = ?";		
+				pstmt = con.prepareStatement(sql);	
+				pstmt.setInt(1, acaNum);
+			}		
+					
+			rs = pstmt.executeQuery();			
+			rs.next();						
+			count = rs.getInt(1);	
 			
-			count = rs.getInt(1);			
+			System.out.println("acaNum : " + acaNum);
+			System.out.println("getAuditCountApproval : " + count);
 			
 		} catch (Exception e) {
 			System.out.println("getAuditCountApproval()에서 예외 발생");
@@ -284,13 +361,18 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 	}
 
 	@Override
-	public int getAuditCountOfSubject(String subject) {
+	public int getAuditCountOfSubject(String subject/*, String aca_name*/) {
 		int count = 0;
 		try {
 			getConnection();
-			String sql = "select count(*) from audit_request where audit_wish_subject=?";			
+			String sql = "select count(*) from audit_request "
+					+ "where audit_wish_subject = ? ";
+					//+ "and aca_name = ? ";			
 			pstmt = con.prepareStatement(sql);	
+			
 			pstmt.setString(1, subject);
+			//pstmt.setString(2, aca_name);
+			
 			rs = pstmt.executeQuery();
 			
 			rs.next();			

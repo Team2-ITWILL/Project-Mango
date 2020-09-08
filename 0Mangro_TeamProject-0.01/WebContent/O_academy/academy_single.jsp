@@ -153,6 +153,10 @@
 	margin-left: 28%;
 }
 
+li small {
+	margin-left: 5px;
+}
+
 #mapReport{
 	margin-top: 60px;
 }
@@ -479,86 +483,12 @@
 						<!-- Course Tabs -->
 						<div class="course_tabs_container">
 							<div class="tabs d-flex flex-row align-items-center justify-content-start">
-								<div class="tab">학원 상세정보</div>
 								<div class="tab">청강목록</div>
 								<div class="tab active">후기보기</div>
 							</div>
 							
 							<div class="tab_panels">
 
-								<!-- Description -->
-								<div class="tab_panel">
-								
-								<!-- 등록되지 않은 학원일 경우 -->
-									<div class="tab_panel_title">이 학원의 관리자이신가요?</div>
-									<div class="tab_panel_content">
-										<div class="tab_panel_text">
-											<p>학원 관리자 등록을 통해 학원페이지를 관리하실 수 있습니다</p>
-										</div>
-									<div class="tab_panel_registerBtn"
-										 onclick="location.href='4index.jsp?center=academy/academy_register.jsp'">등록하기</div>
-										
-										
- 										<div class="tab_panel_section">
-											<div class="tab_panel_subtitle">당 사이트의 소유권</div>
-											<ul class="tab_panel_bullets">
-												<li>당 사이트가 제공하는 서비스, 그에 필요한 소프트웨어, 이미지, 마크, 로고, 디자인, 서비스명칭, 정보 및 상표 등과 관련된 지적재산권 및 기타 권리는 당 사이트에 소유권이 있습니다.</li>
-												<li>이용자는 당 사이트가 명시적으로 승인한 경우를 제외하고는 전항의 소정의 각 재산에 대한 전부 또는 일부의 수정, 대여, 대출, 판매, 배포, 제작, 양도, 재라이센스, 담보권 설정 행위, 상업적 이용 행위를 할 수 없으며, 제3자로 하여금 이와 같은 행위를 하도록 허락할 수 없습니다.</li>
-											</ul>
-										</div>
-										 
-										 
-										<!-- FAQ -->
- 										<div class="tab_panel_faq">
-											<div class="tab_panel_title">정보 이용 약관</div>
-
-											정보 제공 및 홍보물 게재
-											<div class="accordions">
-												
-												<div class="elements_accordions">
-
-													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>게시물의 내용에 대한 권리</div></div>
-														<div class="accordion_panel">
-															<p>
-															이용자가 게시한 게시물의 내용에 대한 권리는 해당 게시물을 등록한 이용자에게 있습니다.
-															</p>
-														</div>
-													</div>
-
-													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center active"><div>사전 통지 없이 게시물이 삭제되는 경우</div></div>
-														<div class="accordion_panel">
-															<p>당 사이트는 게시된 내용을 사전 통지 없이 편집, 이동할 수 있는 권리를 보유하며, 다음의 경우 사전 통지 없이 삭제할 수 있습니다.</p>
-															
-																<ul class="tab_panel_bullets">
-																<li>욕설·특정인에 대한 비방 등 인권침해 소지가 있는 경우</li>
-																<li>성인 게시물 등 공공질서 및 미풍양속에 위반되는 내용인 경우</li>
-																<li>악의적으로 허위사실을 유포한 경우</li>
-																<li>제3자의 저작권 등 기타 권리를 침해하는 내용인 경우</li>
-																<li>상업적 목적이 있는 경우</li>
-																<li>동일한 내용의 반복 게시</li>
-																<li>게시자가 자신이 등록한 게시물의 삭제를 요구한 경우</li>
-																<li>기타 홈페이지의 정상적인 운영을 저해하는 표현 또는 내용</li>
-																</ul>
-																
-														</div>
-													</div>
-
-													<div class="accordion_container">
-														<div class="accordion d-flex flex-row align-items-center"><div>게시물이 타인의 저작권을 침해할 경우</div></div>
-														<div class="accordion_panel">
-															<p>이용자의 게시물이 타인의 저작권을 침해함으로써 발생하는 민, 형사상의 책임은 전적으로 해당 게시물을 등록한 이용자가 부담하여야 합니다.</p>
-														</div>
-													</div>
-
-
-												</div>
-
-											</div> 
-										</div>
-									</div>
-								</div>
 
 								<%-- 청강 가능 과목탭(audit_management 테이블의 데이터 활용) --%>
 								<div class="tab_panel tab_panel_2">
@@ -604,7 +534,6 @@
 
 								<!-- Reviews -->
 								<div class="tab_panel tab_panel_3 active">
-									<div class="tab_panel_title">후기 보기</div>
 
 									<!-- Rating -->
 									<div class="review_rating_container">
@@ -617,11 +546,29 @@
 										</div>
 										<div class="review_rating_bars">
 											<ul>
-												<li><span>5 Star</span><div class="review_rating_bar"><div style="width:90%;"></div></div></li>
-												<li><span>4 Star</span><div class="review_rating_bar"><div style="width:75%;"></div></div></li>
-												<li><span>3 Star</span><div class="review_rating_bar"><div style="width:32%;"></div></div></li>
-												<li><span>2 Star</span><div class="review_rating_bar"><div style="width:10%;"></div></div></li>
-												<li><span>1 Star</span><div class="review_rating_bar"><div style="width:3%;"></div></div></li>
+												<li>
+												<span>5 Star</span><small>(${scoreCntList[4]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[4]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>4 Star</span><small>(${scoreCntList[3]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[3]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>3 Star</span><small>(${scoreCntList[2]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[2]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>2 Star</span><small>(${scoreCntList[1]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[1]}%;">
+												</div></div></li>
+												<li>
+												<span>1 Star</span><small>(${scoreCntList[0]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[0]}%;">
+												</div></div></li>
 											</ul>
 										</div>
 									</div>
@@ -639,6 +586,7 @@
 										 <c:if test="${id_email eq null || id_eamil eq ''}">
 									<div class="add_comment_text">후기 작성은 <a href="4index.jsp?center=O_member/member_sign_in.jsp">로그인</a> 후 가능합니다.</div>
 									</c:if>
+									</div>
 							</c:if>				
 									<!-- Comments -->
 									<div class="comments_container">

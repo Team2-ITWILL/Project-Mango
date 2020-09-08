@@ -84,6 +84,10 @@
 </head>
 
 <body>
+<%----------------------------JSTL 변수 설정----------------------------%>
+<%-- <c:set var="email" value="${email}"/> --%>
+
+<%-------------------------------------------------------------------%>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -146,7 +150,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>aca_admin</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -231,7 +235,8 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >학원관리</span></li>
                         
                         <li class="sidebar-item"> 
-                       	 	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_aca_admin_page/aca_admin_revise.jsp"
+                       	 	<a class="sidebar-link sidebar-link" 
+                       	 		href="./AcademyGetAdminInfo.aca"
                            		aria-expanded="false">
                                 <i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">학원 정보</span>
@@ -240,7 +245,7 @@
                                     
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                        		href="./4index.jsp?center=O_aca_admin_page/aca_audit_manage.jsp"       
+                        		href="./auditGetInfo.adma"            
                                 aria-expanded="false"><i data-feather="edit" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 가능일 등록 </span>
 							</a>

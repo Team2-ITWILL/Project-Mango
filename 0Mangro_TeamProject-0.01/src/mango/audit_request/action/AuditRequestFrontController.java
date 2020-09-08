@@ -82,8 +82,16 @@ public class AuditRequestFrontController extends HttpServlet {
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}		
-		}
+		}else if(command.equals("/AuditInfoToCalendar.adrq")){
+			try {
+				action = new AuditRequestToCalendarAction();				
+				
+				forward = action.excute(request, response);			
 		
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}		
+		}
 		
 		
 		

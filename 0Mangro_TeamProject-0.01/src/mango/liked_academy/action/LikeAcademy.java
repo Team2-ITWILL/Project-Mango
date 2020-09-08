@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 import mango.liked_academy.db.LikedAcademyBean;
 import mango.liked_academy.db.LikedAcademyDAO;
 
+// 학원 좋아요 클릭
 @WebServlet("/likeAcademy")
 public class LikeAcademy extends HttpServlet{
 	
@@ -56,10 +57,12 @@ public class LikeAcademy extends HttpServlet{
 			
 			// 좋아요 눌러져있으면
 			if(check == 1){
+				// 좋아요 취소
 				dao.unlikeAca(bean);
 				result = 0;
 			// 좋아요 눌러져있지 않으면
 			}else if(check == 0){
+				// 좋아요
 				dao.likeAca(bean);
 				result = 1;
 			}

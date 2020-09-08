@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,56 +18,23 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
-
-
     
 <!------------------------------------------ [ CSS ] --------------------------------------------------------------->
     <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
     <link href="styles/dist/css/style.min.css" rel="stylesheet">
     <link href="styles/mypage_additional.css" rel="stylesheet">
     <link href="styles/table_style.css" rel="stylesheet">
-  
-  
-  <style type="text/css">
-  
-  .u-tagsinput .bootstrap-tagsinput::before {
-    content: "|";
-    display: inline-block;
-    width: 1px;
-    line-height: 1;
-    font-size: .625rem;
-    opacity: 0;
-    padding: .75rem 0;
+
+<style type="text/css">
+
+.prev, .next {
+    font-size: 1em;
+
 }
- 
- 
-.bootstrap-tagsinput {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    display: block;
-    padding: 4px 6px;
-    color: #555;
-    vertical-align: middle;
-    border-radius: 4px;
-    max-width: 100%;
-    line-height: 22px;
-    cursor: text;
-}
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    padding: 0 6px;
-    margin: 0;
-    width: auto;
-    max-width: inherit;
-} 
-  
-  </style>  
-    
+
+</style>  
 </head>
+
 
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
@@ -222,7 +190,7 @@
                                     
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_academy_review.jsp" class="sidebar-link">
+                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
                                 		<span class="hide-menu">학원후기</span>
                                 	</a>
                                 </li>            
@@ -308,82 +276,141 @@
                                 <h6 class="card-subtitle">내가 작성한 익명사담방의 게시글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">글번호</th>
-                                            <th scope="col">제목</th>
-                                            <th scope="col">내용</th>
-                                            <th scope="col">댓글수</th>
-                                            <th scope="col">조회수</th>
+                                        <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
+                                            <th scope="col" style="width:100px;">글번호</th>
+                                            <th scope="col" >제목</th>
+                                            <th scope="col" >내용</th>
+                                            <th scope="col" style="width:100px;">댓글수</th>
+                                            <th scope="col" style="width:100px;">조회수</th>
                                             <th scope="col">작성일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
+                                    <c:choose>
+                                    
+                                    <c:when test="${myAnonyListCount != 0 }">
+                                    <c:forEach var="myAnonyList" items="${myAnonyList}">
+                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
+                                            <th scope="row">${myAnonyList.ano_board_num}</th>
+                                            <td align="left">${myAnonyList.ano_board_title}</td>
+                                            <td align="left">${myAnonyList.ano_board_content}</td>
+                                            <td>${comments[myAnonyList.ano_board_num]}</td>
+                                            <td>${myAnonyList.ano_board_read}</td>
+                                            <td>
+	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
+					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
+					                                            type="both"/>
+                                            </td>
+                                            
                                         </tr>
+                                    </c:forEach>
+                                    </c:when>
+                                    
+                                    <c:otherwise>
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
+                                            <th scope="row" colspan="6">작성한 익명사담글이 없습니다.</th>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>다들 충분히 잘 하고 있어. 좋은 일이 있을거야.</td>
-                                            <td>만약 오늘 힘든 일이 있었더라도 내일은 다르길 바라</td>
-                                            <td>15</td>
-                                            <td>101</td>
-                                            <td>2020-08-20</td>
-                                        </tr>
-
-
+                                    
+                                    </c:otherwise>
+                                    
+                                    </c:choose>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
+ <%-------------------------------------------------- 페이징 영역  ------------------------------------------------------------------------%>
                     
                     <ul class="pagination">
-                    <!-- << (첫페이지로 가기) -->
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
+                    
+                    <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
+                    
+                    <c:if test="${count > 0}">
+                    	<c:set var="endPage" value="${endPage}" />
+                    	<c:if test="${endPage gt pageCount}">
+                    		<c:set var="endPage" value="${pageCount}" />
+                    	</c:if>
+
+					
+							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
+							
+							  <li class="page-item"> 
+							  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+							  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+							  	</a>
+							  </li>
+							  
+							<%-- [  <  이전페이지 가기    ] --%>  
+							
+							  <li class="page-item">
+							<%-- 블럭 첫페이지-페이지블록(하나의 블럭에 보여줄 페이지 수)가 0보다 작을 경우 즉, 더이상 전으로 이동할 페이지가 없을 경우 1페이지로----------------%>                    	
+								<c:choose>
+			                    	<c:when test="${startPage-pageBlock<=0}">
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:when>
+								  	<c:otherwise>
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage-pageBlock}">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:otherwise>
+								</c:choose>	  
+									  </li>
+							  
 					  
-                    <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
+							<%-- [1] [2] [3] .... --%>  
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							  	<c:choose>
+							  	 <c:when test="${currentPage == i}">
+								  	<li class="page-item  active">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:when>
+							  	 <c:otherwise>
+								  	<li class="page-item">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:otherwise>
+							  	 
+							  	</c:choose>
+							  </c:forEach>
+							  
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-                    <!-- >> (마지막페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
+					<%-- [  >  다음페이지 가기] .... --%> 
+					
+					<%-- 블록시작번호+하나의 블럭에 보여질 페이지수=전체 페이지수보다 큰 경우 즉, 더이상 뒤로 갈 페이지가 없는 경우 총페이지개수(마지막페이지) -----------------%>  
+							  <li class="page-item">
+								<c:choose>
+		                    		<c:when test="${startPage+pageBlock > pageCount}">
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:when>  
+									<c:otherwise>
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage+pageBlock}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:otherwise>
+								</c:choose>
+							  </li>
+							  
+					<%-- [  >>  마지막페이지 가기] .... --%>  
+					<%-- 총페이지수(마지막페이지)대입 -----------------%>  
+						  <li class="page-item">
+						  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+							</a>
+						  </li>
+					  </c:if> 
+					<%-- 게시판에 글이 있는 경우 페이지 표시 끝 --%>
 					</ul>
                                         
  
@@ -431,10 +458,6 @@
     <script src="styles/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="styles/dist/js/pages/calendar/cal-init.js"></script>
     
-    
-    <!-- 테이블 관련 js  -->
-    <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
     
     
 

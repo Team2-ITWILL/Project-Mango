@@ -34,7 +34,24 @@ public class AcademyRegisterBean {
 	private LocalDate registerDate;
 
 	// 승인일
-	private LocalDate confirmDate;
+	private LocalDate confirmDate;	
+
+	public AcademyRegisterBean() { }
+	public AcademyRegisterBean(String memEmail, String acaName, String memAddrZip, String memAddrDoro,
+			String fNameCompany, String fSizeCompany, String fSizeOwner, String fNameOwner, LocalDate registerDate,
+			LocalDate confirmDate) {
+		super();
+		this.memEmail = memEmail;
+		this.acaName = acaName;
+		this.memAddrZip = memAddrZip;
+		this.memAddrDoro = memAddrDoro;
+		this.fNameCompany = fNameCompany;
+		this.fSizeCompany = fSizeCompany;
+		this.fSizeOwner = fSizeOwner;
+		this.fNameOwner = fNameOwner;
+		this.registerDate = registerDate;
+		this.confirmDate = confirmDate;
+	}
 
 	public String getMemEmail() {
 		return memEmail;
