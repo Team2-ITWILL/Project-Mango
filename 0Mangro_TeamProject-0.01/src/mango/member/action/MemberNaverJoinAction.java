@@ -24,16 +24,22 @@ public class MemberNaverJoinAction implements Action{
 		result = mdao.insertnaverMember(mb);
 		
 		if(result == false){
-			System.out.println("회원가입 실패 !!");
+			response.setContentType("text/html; charset=UTF-8");
+			
+			PrintWriter out = response.getWriter(); // getWriter() 호출하면 PrintWriter객체 얻을 수 있음
+			out.print("<script>");
+			out.print("alert('회원가입 중 오류가 발생하였습니다.');");
+			out.print("location.href='/4index.jsp'");
+			out.print("</script>");
+			
 			return null;
-		
 		}else{
 			response.setContentType("text/html; charset=UTF-8");
 			
 			PrintWriter out = response.getWriter(); // getWriter() 호출하면 PrintWriter객체 얻을 수 있음
 			out.print("<script>");
 			out.print("alert('회원가입이 완료되었습니다.');");
-			out.print("location.href='/4index.jsp'");
+			out.print("location.href='./MemberLogin.me'");
 			out.print("</script>");
 //			return null;
 		}

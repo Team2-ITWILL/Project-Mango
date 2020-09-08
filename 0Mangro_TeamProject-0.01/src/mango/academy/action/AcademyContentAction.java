@@ -1,9 +1,6 @@
 package mango.academy.action;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +16,6 @@ import mango.action.ActionForward;
 import mango.audit_management.db.AuditManagementBean;
 import mango.audit_management.db.AuditManagementDAO;
 
-// 학원 상세페이지 출력
 public class AcademyContentAction implements Action{
 
 	@Override
@@ -49,10 +45,11 @@ public class AcademyContentAction implements Action{
 		AcademyBean bean = dao.getAcademyContent(acaMainNum);
 		// 학원 후기갯수
 		int count = rdao.getAcademyReviewCount(acaMainNum);
-		
-		// 학원 키워드 목록
 		List<AcademyKeywordBean> keyList = null;
 		keyList = akdao.getAcademyKeyword(acaMainNum);
+		for(int i=0;i<keyList.size();i++){
+			
+		}
 		
 		// 평균점수 (소숫점 한자리)
 		double avgScore = 
@@ -79,7 +76,6 @@ public class AcademyContentAction implements Action{
 		List<AcademyReviewBean> reList = null;
 		
 		
-		// 학원 후기 목록 받아오기
 		if(count != 0){
 			reList = rdao.getAcademyReviewList(acaMainNum,startRow,pageSize);
 		}
@@ -97,13 +93,6 @@ public class AcademyContentAction implements Action{
 			endPage = pageCount;
 		}
 		int iAvgScore = (int)avgScore;
-		List<Integer> scorePerList = new ArrayList<Integer>();
-		List<Integer> scoreCntList = new ArrayList<Integer>();
-		for(int i=1;i<6;i++){
-			scorePerList.add(rdao.getReviewScoreCnt(acaMainNum, i)*100/count );
-			scoreCntList.add(rdao.getReviewScoreCnt(acaMainNum, i));
-		}
-		
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
@@ -117,9 +106,6 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("iAvgScore", iAvgScore);
 		request.setAttribute("keyList", keyList);
 		request.setAttribute("auditList", auditList);
-		request.setAttribute("scorePerList", scorePerList);
-		request.setAttribute("scoreCntList", scoreCntList);
-		
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
