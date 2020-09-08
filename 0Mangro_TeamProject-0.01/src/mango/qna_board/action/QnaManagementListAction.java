@@ -27,13 +27,12 @@ public class QnaManagementListAction implements Action {
 		
 	    System.out.println("QnaManagementListAction 실행");
 
+	    
 	    QnaBoardDAO qdao = new QnaBoardDAO();
-	    
-	    int count = qdao.getQnaManagementCount();
-	    
 	    List<QnaBoardBean> qnaboardList = null;
 	    
 		
+	    int count = qdao.getQnaManagementCount();
 	    int pageSize = 10;
 	    String pageNum = request.getParameter("pageNum");
 	    
@@ -41,9 +40,10 @@ public class QnaManagementListAction implements Action {
 	    if (pageNum == null) {
 	      pageNum = "1";
 	    }
-
+	    
+	 
 	    int currentPage = Integer.parseInt(pageNum);
-	    int startRow = (currentPage-1)*pageSize+1;
+	    int startRow = (currentPage-1)*pageSize;
 	    int endRow = currentPage * pageSize;
 
 	    if (count != 0) {
@@ -51,16 +51,15 @@ public class QnaManagementListAction implements Action {
 	    }
 
 	    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
-	    int pageBlock = 5;
-	    int startPage = ((currentPage-1)/pageBlock) * pageBlock + 1;
+	    int pageBlock = 3;
+		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
 
-	    int endPage = startPage + pageBlock-1;
+		int endPage =startPage+pageBlock-1;
 
 	    if (endPage > pageCount) {
 	      endPage = pageCount;
 	    }	    
 	    
-
 
 	    request.setAttribute("count", Integer.valueOf(count));
 	    request.setAttribute("pageNum", pageNum);
@@ -74,7 +73,9 @@ public class QnaManagementListAction implements Action {
 	    ActionForward forward = new ActionForward();
 	    forward.setRedirect(false);
 	    forward.setPath("./4index.jsp?center=O_admin/qna_management.jsp");
-
+	    
+	    System.out.println(startPage);
+	    System.out.println(endPage);
 		return forward;
 	}
 

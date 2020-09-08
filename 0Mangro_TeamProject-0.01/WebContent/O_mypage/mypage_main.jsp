@@ -69,6 +69,7 @@
                                 <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
+                                        <input type = "hidden" value = "${id_email}" name = "email">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"

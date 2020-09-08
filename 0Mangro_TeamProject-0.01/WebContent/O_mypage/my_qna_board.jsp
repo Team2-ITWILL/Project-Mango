@@ -84,7 +84,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -264,6 +264,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">내가 작성한 문의글</h4>
+                                <input type = "hidden" name = "email" value="${sessionScope.id_email}">
                                 <h6 class="card-subtitle">작성한 문의게시글이 최근순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
