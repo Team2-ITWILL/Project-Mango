@@ -258,9 +258,24 @@ public class MemberFrontController extends HttpServlet {
 			
 /* ---------------------------------- 회원관리 끝  ---------------------------------- */	
 		
+		
+			
+/* ---------------------------------- 아이디 중복 체크 시작  ---------------------------------- */	
+		
+	}else if(command.equals("/MemberIDcheckAction.me")){
+		
+		action = new MemberIDcheckAction();
+		
+		try {
+			forward = action.excute(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("MemberIDcheckAction.me : "+ e);
 		}
-		
-		
+	
+/* ---------------------------------- 아이디 중복 체크 시작  ---------------------------------- */	
+	
+	}		
 		
 		
 		
