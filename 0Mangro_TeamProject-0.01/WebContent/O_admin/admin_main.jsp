@@ -20,7 +20,13 @@
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
   
-    
+<script>
+	window.onload = function(){
+		
+	
+		
+	}
+</script>    
 </head>
 
 <body>
@@ -278,6 +284,7 @@
                             <div class="card-body">
                                 <h4 class="card-title"><span>회원 현황</span></h4>
                                 <div id="campaign-v2" class="mt-2" style="height:283px; width:100%;"></div>
+                                <!-- <div id="campaign-v2" class="ct-chart" style="height:283px; width:100%;"></div> -->
                                 <ul class="list-style-none mb-0">
                                 <%-- 회원현황 --%>
                                 
@@ -659,7 +666,11 @@
     <script src="styles/assets/libs/chartist/dist/chartist.min.js"></script>
     <script src="styles/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     
-    <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
+    <!-- 관리자메뉴 chartist 라이브러리 설정 파일 : 일반파일, 축약파일(min.js) 중 택일 -->
+    <script src="styles/dist/js/pages/dashboards/dashboard_Mango.js"></script>   
+    <!-- <script src="styles/dist/js/pages/dashboards/dashboard1.js"></script> -->   
+    <!-- <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>  -->   
+    
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
 

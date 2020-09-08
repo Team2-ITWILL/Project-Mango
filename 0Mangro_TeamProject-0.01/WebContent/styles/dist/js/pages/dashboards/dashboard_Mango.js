@@ -7,11 +7,11 @@ $(function () {
     var chart1 = c3.generate({
         bindto: '#campaign-v2',
         data: {
-            columns: [
-                ['Direct Sales', 25],
-                ['Referral Sales', 15],
-                ['Afilliate Sales', 10],
-                ['Indirect Sales', 15]                
+            columns: [               
+                ['일반 회원', 25],
+                ['학원 회원', 15],
+                ['탈퇴 회원', 10],
+                ['Indirect Sales', 15]
             ],
 
             type: 'donut',
