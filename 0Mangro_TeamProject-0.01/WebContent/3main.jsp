@@ -272,9 +272,8 @@
     			document.getElementById("nameRank_"+rankNum).setAttribute('href','AcademyContentAction.aca?acaMainNum='+acaMainNum+'&pageNum=1')
     			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
     			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
-    			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
+    			document.getElementById("reviewCnt_"+rankNum).innerHTML = " "+revCnt+"개";
     			document.getElementById("avgScore_"+rankNum).innerText = avgScore;
-    			
     		},
     		error:function(){
     			alert("통신에러가 발생했습니다.");
@@ -603,8 +602,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_1_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_1_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_1_title_1"></span> <%-- 장점 --%>
+								<br><span id="Rank_1_title_2"></span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
@@ -632,8 +631,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_2_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_2_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_2_title_1"></span> <%-- 장점 --%>
+								<br><span id="Rank_2_title_2"></span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
@@ -661,8 +660,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_3_title_1">" 수업이 지루하지 않고 유익해요."</span> <br> 
-								<span id="Rank_3_title_2">" 수업이 지루하지 않고 유익해요."</span>
+								<span id="Rank_3_title_1"></span> <br> 
+								<span id="Rank_3_title_2"></span>
 							</div>
 						</div>
 						<div class="course_footer">
