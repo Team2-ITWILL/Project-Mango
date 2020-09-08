@@ -305,6 +305,7 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
+	
 	/* 비밀번호 찾기 기능 메서드 */
 	public MemberBean findPw(String email) {
 	
@@ -408,6 +409,37 @@ public class MemberDAO extends DBconnection{
 		}
 		return count;
 	} // 회원 관리 페이징 / getMGCount() 끝
+
+
+
+
+	/* 아이디 중복 체크 메서드 */
+	public int idCheck(String email) {
+		
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "SELECT mem_email FROM member WHERE mem_email = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}
+
+			System.out.println("아이디 중복 체크 완료 !!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> idCheck()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return check;
+	} // 아이디 중복 체크 / idCheck() 끝
 	
 	
 	
