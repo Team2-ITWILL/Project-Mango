@@ -34,7 +34,7 @@ public class MyQnaListAction implements Action {
 		
 	    int pageSize = 10;
 	    String pageNum = request.getParameter("pageNum");
-	    int count = qdao.getMYQnaCount(email);
+	    //int count = qdao.getMYQnaCount(email);
 	    
 	    
 
@@ -47,30 +47,30 @@ public class MyQnaListAction implements Action {
 	    int startRow = (currentPage-1)*pageSize;
 	    int endRow = currentPage * pageSize;
 
-	    if (count != 0) {
-	      qnaboardList = qdao.getMyQnaList(startRow, pageSize, email);
-	    }
-
-	    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
-	    int pageBlock = 3;
-		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
-
-		int endPage = startPage+pageBlock-1;
-
-	    if (endPage > pageCount) {
-	      endPage = pageCount;
-	    }	    
-	    
-
-	    request.setAttribute("count", Integer.valueOf(count));
-	    request.setAttribute("count", Integer.valueOf(count));
-	    request.setAttribute("pageNum", pageNum);
-	    request.setAttribute("pageCount", Integer.valueOf(pageCount));
-	    request.setAttribute("pageBlock", Integer.valueOf(pageBlock));
-	    request.setAttribute("startPage", Integer.valueOf(startPage));
-	    request.setAttribute("endPage", Integer.valueOf(endPage));
-	    // 모든 고객센터 글 가져옴
-	    request.setAttribute("qnaboardList", qnaboardList);
+//	    if (count != 0) {
+//	      //qnaboardList = qdao.getMyQnaList(startRow, pageSize, email);
+//	    }
+//
+//	    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
+//	    int pageBlock = 3;
+//		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
+//
+//		int endPage = startPage+pageBlock-1;
+//
+//	    if (endPage > pageCount) {
+//	      endPage = pageCount;
+//	    }	    
+//	    
+//
+//	    request.setAttribute("count", Integer.valueOf(count));
+//	    request.setAttribute("count", Integer.valueOf(count));
+//	    request.setAttribute("pageNum", pageNum);
+//	    request.setAttribute("pageCount", Integer.valueOf(pageCount));
+//	    request.setAttribute("pageBlock", Integer.valueOf(pageBlock));
+//	    request.setAttribute("startPage", Integer.valueOf(startPage));
+//	    request.setAttribute("endPage", Integer.valueOf(endPage));
+//	    // 모든 고객센터 글 가져옴
+//	    request.setAttribute("qnaboardList", qnaboardList);
 	    
 		
 		
