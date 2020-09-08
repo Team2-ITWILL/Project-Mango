@@ -112,8 +112,10 @@
 					         <%-- 5.파일 ---%>
 							        	<label class="form-label" for="anony_file">파일업로드</label>
 						              	<div class="form-group files">
-						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf"  id="anony_file" multiple="">
-							          		<button type="button" class="hideBtn" onchange="changeValue(this)">첨부파일</button>
+						                	<input type="file" name="ano_board_file" class="form-control color file" accept="image/*,.pdf" 
+						                		   id="anony_file" 
+						                		   onchange="fileUP(this)">
+							          		<button type="button" class="hideBtn" onchange="changeValue(this);">첨부파일</button>
 							         
 
 						              	</div>
@@ -133,12 +135,12 @@
 
 <script type="text/javascript">
 
-	// [input type='file' 버튼 숨기기]
-	$(function () {
-		$('.hideBtn').click(function (e) {
-			$('.file').click();
-		});
+
+	// [hideBtn을 클릭했을 떄 input type='file' 클릭된 효과 ]
+	$('.hideBtn').click(function (e) {
+		$('.file').click();
 	});
+	
 	
 	function changeValue(obj){
 	
@@ -146,6 +148,58 @@
 	
 	} 
 
+	
+	//---- 드래그
+	$('.files')
+	.on('dragover', dragOver)
+	.on('dragleave', dragOver)
+	.on('drop', uploadFiles);	
+	
+	
+	function dragOver(e) {
+		e.stopPropagation(); // 
+		e.preventDefault(); // 파일을 브라우저에 드래그 했을 시 자동으로 첨부파일을 실행하는 동작방지			
+
+		if (e.type == 'dragover') {
+			//e.target : 이벤트가 발생한 div태그
+			$(e.target).css({
+				'background-color' : 'gray',
+				'outline-offset' : '-20px'
+			});
+		
+			//if()
+		
+		} else {
+			$(e.target).css({
+				'background-color' : 'white',
+				'outline-offset' : '-10px'
+			});
+		} 
+	}
+	
+	
+	 
+	var uploadedFile = document.getElementById("anony_file").value;
+	
+	
+	function fileUP(file) {
+		// fileUP메소드가 실행되면 dragOver메소드가 실행?
+		dragOver(e);
+		
+		if(uploadedFile != "") {
+			alert("파일 첨부는 1개만 가능합니다. 이전에 첨부된 파일이 지워집니다.");
+		}else {
+			uploadedFile = e.originalEvent.dataTransfer.files;
+		}
+		
+		
+	}	
+	
+	
+	
+	
+	
+	
 		
 	// [제목, 내용 입력여부 및 각 30자, 500자가 넘은 상태로 글쓰기 버튼 클릭 시 작성한 제목을 일정 문자열 개수만 남기고 지우는 함수]
 	function submitCheck() {
@@ -182,6 +236,9 @@
 			return;
 		}
 		
+		if(uploadedFile != "") {
+			alert(uploadedFile);
+		}
 		
 		writeAnoFR.submit();
 		
@@ -190,11 +247,6 @@
 	
 	
 
-	//------------------------------------------------------------------------------------------------------------------
-	
- 
-	
-	
 	
 	
 </script>
