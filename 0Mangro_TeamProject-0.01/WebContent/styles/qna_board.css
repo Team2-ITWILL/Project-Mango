@@ -428,7 +428,6 @@ a{
 }
 a:HOVER, a:VISITED, a:ACTIVE{ 
 	text-decoration: none;
-	color: #000;
 }
 
 a.pg_current{

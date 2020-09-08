@@ -69,11 +69,9 @@ div
 .qnaIco i{display:inline-block !important;}
 a:HOVER{
 	text-decoration: none;
-	color: #000;
 }
 a:VISITED {
 	text-decoration: none;
-	color: #000;
 }
 #container {
 	width:75%;

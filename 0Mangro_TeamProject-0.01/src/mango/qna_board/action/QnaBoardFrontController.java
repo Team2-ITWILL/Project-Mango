@@ -174,9 +174,40 @@ public class QnaBoardFrontController extends HttpServlet{
       } catch (Exception e) {
         e.printStackTrace();
       }
+      
+    } else if (command.equals("/QnaManagement.qna")){
+    	
+    	action = new QnaManagementListAction();
+    	
+        try {
+      	  
+      	  forward = action.excute(request, response);
+      	  
+        } catch (Exception e) {
+          
+      	  e.printStackTrace();
+        }
+        
+        
+    }  else if (command.equals("/MyQnaList.qna")){
+    	
+    	action = new MyQnaListAction();
+    	
+        try {
+      	  
+      	  forward = action.excute(request, response);
+      	  
+        } catch (Exception e) {
+          
+      	  e.printStackTrace();
+        }
+        
+
     }
+    
 
-
+    
+    
     if (forward != null){
     	
       if (forward.isRedirect()){

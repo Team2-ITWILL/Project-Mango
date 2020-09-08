@@ -835,19 +835,24 @@
 
 			<div class="counter_form">
 				<div class="row fill_height">
-					<div class="col fill_height">   
-						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="#">
+					<div class="col fill_height"> 
+					  
+						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="./SendMail" method="post">
 							<div class="counter_form_title">등록 상담 문의하기</div>
-							<input type="text" class="counter_input" placeholder="성함" required="required">
-							<input type="tel" class="counter_input" placeholder="연락처" required="required">
+							
+							<input type="text" class="counter_input" name = "counter_name" placeholder="성함" required="required">
+							<input type="text" class="counter_input" name = "counter_tel" placeholder="연락처" required="required">
+							
 							<select name="counter_select" id="counter_select" class="counter_input counter_options">
 								<option>신청인</option>
 								<option>원장 선생님</option>
 								<option>학원 관리자님</option>
 								<option>개원을 준비중인 분</option>
 							</select>
-							<textarea class="counter_input counter_text_input" placeholder="전화상담 가능시간 및 내용" required="required"></textarea>
+							
+							<textarea name = "counter_content" class="counter_input counter_text_input" placeholder="전화상담 가능시간 및 내용" required="required"></textarea>
 							<button type="submit" class="counter_form_button">상담접수</button>
+							
 						</form>
 					</div>
 				</div>
