@@ -114,7 +114,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >고객 관리</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/member_management.jsp"
+                        	<a class="sidebar-link sidebar-link" href="./MemberManagementAction.me"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">회원관리</span>
                             </a>

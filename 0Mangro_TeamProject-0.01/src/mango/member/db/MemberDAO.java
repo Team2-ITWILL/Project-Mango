@@ -18,7 +18,7 @@ public class MemberDAO extends DBconnection{
 			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, mem_joindate)"
 					+ " VALUES (?,?,?, now())";
 			
-			// [참고] pm_use_num : 사용회자 / 무료 체험도 1번 횟수로 적용
+			// [참고] pm_use_num : 사용회차 / 무료 체험도 1번 횟수로 적용
 			//       pm_name : 이용권 이름 / 가입 무제한 이용권 (3일)
 
 			pstmt = con.prepareStatement(sql);
@@ -410,6 +410,8 @@ public class MemberDAO extends DBconnection{
 	} // 회원 관리 페이징 / getMGCount() 끝
 	
 	
+	
+	
 	//학원관리자 등록 시 admin값 변경하는 메서드
 	public int changeAdmin(String email, int flag){
 		int result = 0;		
@@ -498,7 +500,32 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
-	
-	
+	/* 아이디 중복 체크 메서드 */
+	public int idCheck(String email) {
+		
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "SELECT mem_email FROM member WHERE mem_email = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}
+
+			System.out.println("아이디 중복 체크 완료 !!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> idCheck()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return check;
+	} // 아이디 중복 체크 / idCheck() 끝
 	
 }
