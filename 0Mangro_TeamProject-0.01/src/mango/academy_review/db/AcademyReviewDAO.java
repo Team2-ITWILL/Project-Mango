@@ -230,17 +230,16 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getAcaNameTop() 끝
 	
 	// 학원 번호
-	public int getAcaMainNumTop(int rank){
+	public int getAcaMainNumTop(String acaName){
 		
 		int acaMainNum = 0; 
 		
 		try {
 			getConnection();
-			sql = "select aca_main_num from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			sql = "select aca_main_num from academy_review where aca_name = ? limit 1;";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rank);
+			pstmt.setString(1, acaName);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -259,17 +258,16 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getAcaNameTop() 끝
 	
 	// 후기 갯수
-	public int getReviewCntTop(int rank){
+	public int getReviewCntTop(String acaName){
 		
 		int count = 0; 
 		
 		try {
 			getConnection();
-			sql = "select count(*) from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			sql = "select count(*) from academy_review where aca_name = ?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rank);
+			pstmt.setString(1, acaName);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -288,17 +286,16 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 	} // getReviewCntTop() 끝
 	
 	// 후기 갯수
-	public double getAvgScoreTop(int rank){
+	public double getAvgScoreTop(int acaMainNum){
 		
 		double score = 0.0; 
 		
 		try {
 			getConnection();
-			sql = "select avg(review_score) from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+			sql = "select avg(review_score) from academy_review group by aca_main_num having aca_main_num=?";
 			
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, rank);
+			pstmt.setInt(1, acaMainNum);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
@@ -332,7 +329,6 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 			
 			while(rs.next()){
 				String title = rs.getString(1);
-				System.out.println(title);
 				titleList.add(title);
 			}
 			
@@ -385,6 +381,34 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		return reviewList;
 	} // getAcademyReviewList() 끝
 	
+	// 후기 평점별 갯수
+	public int getReviewScoreCnt(int acaMainNum, int score){
+		
+		int count = 0; 
+		
+		try {
+			getConnection();
+			sql = "select count(*) from academy_review where aca_main_num = ? and review_score=?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, acaMainNum);
+			pstmt.setInt(2, score);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getReviewScoreCnt()에서 예외발생");	
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return count;
+	} // getReviewScoreCnt() 끝
 
 	
 } // AcademyReviewDAO 클래스 끝

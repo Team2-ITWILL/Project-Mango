@@ -153,6 +153,10 @@
 	margin-left: 28%;
 }
 
+li small {
+	margin-left: 5px;
+}
+
 #mapReport{
 	margin-top: 60px;
 }
@@ -542,11 +546,29 @@
 										</div>
 										<div class="review_rating_bars">
 											<ul>
-												<li><span>5 Star</span><div class="review_rating_bar"><div style="width:90%;"></div></div></li>
-												<li><span>4 Star</span><div class="review_rating_bar"><div style="width:75%;"></div></div></li>
-												<li><span>3 Star</span><div class="review_rating_bar"><div style="width:32%;"></div></div></li>
-												<li><span>2 Star</span><div class="review_rating_bar"><div style="width:10%;"></div></div></li>
-												<li><span>1 Star</span><div class="review_rating_bar"><div style="width:3%;"></div></div></li>
+												<li>
+												<span>5 Star</span><small>(${scoreCntList[4]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[4]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>4 Star</span><small>(${scoreCntList[3]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[3]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>3 Star</span><small>(${scoreCntList[2]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[2]}%;">
+												</div></div>
+												</li>
+												<li>
+												<span>2 Star</span><small>(${scoreCntList[1]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[1]}%;">
+												</div></div></li>
+												<li>
+												<span>1 Star</span><small>(${scoreCntList[0]}개)</small><div class="review_rating_bar">
+												<div style="width:${scorePerList[0]}%;">
+												</div></div></li>
 											</ul>
 										</div>
 									</div>
