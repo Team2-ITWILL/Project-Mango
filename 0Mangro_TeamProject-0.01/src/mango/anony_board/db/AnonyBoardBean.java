@@ -31,30 +31,16 @@ public class AnonyBoardBean{
 	// 이미지 파일
 	private String ano_board_file;
 	
+	// 신고여부
+	private String ano_board_reported;
+	
+	// 신고자
+	private String ano_board_reporter;
+	
+	// 신고사유
+	private String ano_board_reason;
 	
 	
-	
-	
-	// 생성자
-
-	public AnonyBoardBean(){}
-
-
-	public AnonyBoardBean(int ano_board_num, String mem_email, String ano_board_title, String ano_board_content,
-			int ano_board_read, Timestamp ano_board_date, String ano_board_ip, String ano_board_nick,
-			String ano_board_file) {
-		super();
-		this.ano_board_num = ano_board_num;
-		this.mem_email = mem_email;
-		this.ano_board_title = ano_board_title;
-		this.ano_board_content = ano_board_content;
-		this.ano_board_read = ano_board_read;
-		this.ano_board_date = ano_board_date;
-		this.ano_board_ip = ano_board_ip;
-		this.ano_board_nick = ano_board_nick;
-		this.ano_board_file = ano_board_file;
-	}
-
 
 
 	// setter/getter
@@ -145,19 +131,50 @@ public class AnonyBoardBean{
 		this.ano_board_file = ano_board_file;
 	}
 
+	public String getAno_board_reported() {
+		return ano_board_reported;
+	}
+	
+	
+	public void setAno_board_reported(String ano_board_reported) {
+		this.ano_board_reported = ano_board_reported;
+	}
+	
+	
+	public String getAno_board_reporter() {
+		return ano_board_reporter;
+	}
+
+
 	
 	
 	
 	// toString() 메소드
+
+	public void setAno_board_reporter(String ano_board_reporter) {
+		this.ano_board_reporter = ano_board_reporter;
+	}
+
+
+	public String getAno_board_reason() {
+		return ano_board_reason;
+	}
+
+
+	public void setAno_board_reason(String ano_board_reason) {
+		this.ano_board_reason = ano_board_reason;
+	}
+
 
 	@Override
 	public String toString() {
 		return "AnonyBoardBean [ano_board_num=" + ano_board_num + ", mem_email=" + mem_email + ", ano_board_title="
 				+ ano_board_title + ", ano_board_content=" + ano_board_content + ", ano_board_read=" + ano_board_read
 				+ ", ano_board_date=" + ano_board_date + ", ano_board_ip=" + ano_board_ip + ", ano_board_nick="
-				+ ano_board_nick + ", ano_board_file=" + ano_board_file + "]";
+				+ ano_board_nick + ", ano_board_file=" + ano_board_file + ", ano_board_reported=" + ano_board_reported
+				+ ", ano_board_reporter=" + ano_board_reporter + ", ano_board_reason=" + ano_board_reason + "]";
 	}
-
+	
 
 	
 	
