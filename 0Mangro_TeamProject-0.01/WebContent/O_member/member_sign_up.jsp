@@ -131,11 +131,13 @@
 					
 					if(data == 1){
 						$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
+//						$("#idcheckF").val().css("color", "#a64bf4");
 						$("#idcheckF").removeAttr("style","display:none;");
 					
 					}else if(data == 0){
 						$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
-						$("#id_email").attr("readonly", "readonly");
+//						$("#idcheckT").val().css("color", "#a64bf4");
+//						$("#id_email").attr("readonly", "readonly");
 						$("#idcheckT").removeAttr("style","display:none;");
 					
 					} // if문 끝
@@ -222,15 +224,15 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일 
 						        </label>
-						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" onkeyup="duplCheck()"> 
+						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" onkeypress="duplCheck()"> 
 						        <button type="button" class="btn btn-primary right-btn" onclick="emailCheck()">전송</button>
 						        
-						        	<span style="display: none;" id="idcheckT">
-						        		사용 가능한 이메일입니다.
+					  	        	<span style="display: none;" id="idcheckT">
+						        		 사용 가능한 이메일입니다.
 						        	</span>
 						        	<span style="display: none;" id="idcheckF">
-						        		이미 가입한 회원입니다.
-						        	</span>
+						        		 이미 가입한 회원입니다.
+						        	</span> 
 						        	<span style="display: none;" id="authEmailSpan">
 						        		잠시 후 인증번호창이 활성화되면 <br>
 						        		입력한 메일로 전송된 인증번호를 입력하세요.
