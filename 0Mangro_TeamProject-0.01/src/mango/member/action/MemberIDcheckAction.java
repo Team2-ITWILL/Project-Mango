@@ -31,4 +31,5 @@ public class MemberIDcheckAction implements Action{
 //		forward.setPath("./MemberJoin.me");
 		return null;
 	} // excute() 끝
+	
 }

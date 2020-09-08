@@ -31,8 +31,8 @@ public class MemberNaverJoinAction implements Action{
 			out.print("alert('회원가입 중 오류가 발생하였습니다.');");
 			out.print("location.href='/4index.jsp'");
 			out.print("</script>");
+			
 			return null;
-		
 		}else{
 			response.setContentType("text/html; charset=UTF-8");
 			

@@ -305,6 +305,7 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
+	
 	/* 비밀번호 찾기 기능 메서드 */
 	public MemberBean findPw(String email) {
 	
@@ -410,90 +411,126 @@ public class MemberDAO extends DBconnection{
 	} // 회원 관리 페이징 / getMGCount() 끝
 	
 	
+	
+	
 	//학원관리자 등록 시 admin값 변경하는 메서드
-	public int changeAdmin(String email, int flag){
-		int result = 0;		
-		try {
-			getConnection();
-			
-			//flag == 0이면 관리자 등급으로 변경 승인 취소
-			if(flag == 0){
-				sql = "update member "
-						+ "set mem_admin = ? "
-						+ "where mem_email = ?";			
-
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, 0);
-				pstmt.setString(2, email);	
+		public int changeAdmin(String email, int flag){
+			int result = 0;		
+			try {
+				getConnection();
 				
-			//관리자 등급으로 변경 승인
-			}else{
+				//flag == 0이면 관리자 등급으로 변경 승인 취소
+				if(flag == 0){
+					sql = "update member "
+							+ "set mem_admin = ? "
+							+ "where mem_email = ?";			
+
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, 0);
+					pstmt.setString(2, email);	
+					
+				//관리자 등급으로 변경 승인
+				}else{
+					sql = "update member "
+							+ "set mem_admin = ? "
+							+ "where mem_email = ?";			
+
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, 1);
+					pstmt.setString(2, email);	
+				}					
+				
+				result = pstmt.executeUpdate();	
+				
+			} catch (Exception e) {
+				System.out.println("changeAdmin()에서 예외 발생" + e);
+				e.printStackTrace();
+			} finally {
+				resourceClose();
+			}		
+			return result;		
+		}//changeAdmin()
+		
+		public int updateProfileImg(String imgPath, String email){
+			int result = 0;
+			try {
+				getConnection();
+				
 				sql = "update member "
-						+ "set mem_admin = ? "
+						+ "set mem_profileImg = ? "
 						+ "where mem_email = ?";			
 
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, 1);
-				pstmt.setString(2, email);	
-			}					
-			
-			result = pstmt.executeUpdate();	
-			
-		} catch (Exception e) {
-			System.out.println("changeAdmin()에서 예외 발생" + e);
-			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}		
-		return result;		
-	}//changeAdmin()
-	
-	public int updateProfileImg(String imgPath, String email){
-		int result = 0;
-		try {
-			getConnection();
-			
-			sql = "update member "
-					+ "set mem_profileImg = ? "
-					+ "where mem_email = ?";			
+				pstmt.setString(1, imgPath);			
+				pstmt.setString(2, email);
+				
+				result = pstmt.executeUpdate();	
+				
+			} catch (Exception e) {
+				System.out.println("updateProfileImg()에서 예외 발생" + e);
+				e.printStackTrace();
+			} finally {
+				resourceClose();
+			}		
+			return result;		
+		}//updateProfileImg()
+		
+		public String getProfileImg(String email){
+			String imgPath = null;
+			try {
+				getConnection();
+				
+				sql = "select mem_profileImg from member where mem_email = ?";	
+				pstmt = con.prepareStatement(sql);			
+				pstmt.setString(1, email);			
+				rs = pstmt.executeQuery();	
+				
+				if(rs.next()){
+					imgPath = rs.getString("mem_profileImg");
+				}
+				
+			} catch (Exception e) {
+				System.out.println("getProfileImg()에서 예외 발생" + e);
+				e.printStackTrace();
+			} finally {
+				resourceClose();
+			}		
+			return imgPath;		
+		}//getProfileImg()
 
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, imgPath);			
-			pstmt.setString(2, email);
-			
-			result = pstmt.executeUpdate();	
-			
-		} catch (Exception e) {
-			System.out.println("updateProfileImg()에서 예외 발생" + e);
-			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}		
-		return result;		
-	}//updateProfileImg()
-	
-	public String getProfileImg(String email){
-		String imgPath = null;
+		
+		
+
+	/* 아이디 중복 체크 메서드 */
+	public int idCheck(String email) {
+		
+		int check = 0;
+		
 		try {
 			getConnection();
 			
-			sql = "select mem_profileImg from member where mem_email = ?";	
-			pstmt = con.prepareStatement(sql);			
-			pstmt.setString(1, email);			
-			rs = pstmt.executeQuery();	
+			sql = "SELECT mem_email FROM member WHERE mem_email = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
-				imgPath = rs.getString("mem_profileImg");
+				check = 1;
 			}
+
+			System.out.println("아이디 중복 체크 완료 !!");
 			
 		} catch (Exception e) {
-			System.out.println("getProfileImg()에서 예외 발생" + e);
 			e.printStackTrace();
+			System.out.println("--> idCheck()에서 SQL구문 오류 : " + e);
 		} finally {
 			resourceClose();
-		}		
-		return imgPath;		
-	}//getProfileImg()
+		}
+		return check;
+	} // 아이디 중복 체크 / idCheck() 끝
+	
+	
+	
 	
 	
 	

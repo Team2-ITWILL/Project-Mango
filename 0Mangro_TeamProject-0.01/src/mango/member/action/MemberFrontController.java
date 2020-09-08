@@ -39,6 +39,7 @@ public class MemberFrontController extends HttpServlet {
 		
 		
 		
+		
 /* ---------------------------------- 일반 회원가입 시작 ---------------------------------- */		
 		
 		if(command.equals("/MemberJoin.me")){
@@ -93,9 +94,6 @@ public class MemberFrontController extends HttpServlet {
 			}
 			
 /* ---------------------------------- 회원가입 메일 인증번호 전송 끝 ---------------------------------- */		
-
-			
-			
 			
 			
 			
