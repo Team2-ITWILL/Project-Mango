@@ -122,7 +122,7 @@
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	<a class="sidebar-link sidebar-link" href="./QnaManagement.qna" 
                         	   aria-expanded="false" >
                         	
                         	<i data-feather="edit" class="feather-icon"></i><span

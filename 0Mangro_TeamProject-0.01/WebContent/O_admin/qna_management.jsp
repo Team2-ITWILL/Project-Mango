@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="mango.qna_board.db.QnaBoardBean"%>
+<%@page import="mango.qna_board.db.QnaBoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -22,6 +25,70 @@
   
     
 </head>
+
+
+
+<script type="text/javascript">
+
+
+	$(document).ready(function(){
+		
+		
+		var boardnum = $(".board_num");
+		// boardnum.length -> board_num의 수만큼 반복
+		
+		
+		for(var i = 0; i < boardnum.length; i++){
+			check_rewrite(boardnum.eq(i).val());
+		}
+		
+		
+	});
+	
+	
+	
+		
+	function check_rewrite(boardnum){
+		
+		var _data = '{"boardnum":"'+boardnum+'"}';
+		
+		$.ajax({
+			
+			type: "post",
+			url: "./QnaReWriteAction",
+			data: {"data": _data},
+	
+			success: function(data, textStatus){
+				
+	            var jsonInfo = JSON.parse(data);
+	            var check = jsonInfo.check;
+				var boardnum = jsonInfo.boardnum;
+				
+				document.getElementById("recheck_"+boardnum).innerText = check;
+				
+			}, 
+			
+			error: function(data, textStatus){
+				
+				alert("에러 발생"+ data + textStatus);
+				console.log(data);
+				
+			} // error 끝
+			
+		});
+	}
+		
+		
+
+
+
+
+</script>
+
+
+
+
+
 
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
@@ -122,7 +189,7 @@
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	<a class="sidebar-link sidebar-link" href="./QnaManagement.qna" 
                         	   aria-expanded="false" >
                         	
                         	<i data-feather="edit" class="feather-icon"></i><span
@@ -186,53 +253,51 @@
                                             <th scope="col">작성자</th>
                                             <th scope="col">제목</th>
                                             <th scope="col">비밀번호</th>
-                                            <th scope="col">비밀글 여부</th>
                                             <th scope="col">내용</th>
                                             <th scope="col">조회수</th>
                                             <th scope="col">아이피</th>
                                             <th scope="col">작성일</th>
-                                            <th scope="col">답변일</th>  <%-- 답변이 있으면 답변일을 불러오기 --%>
+                                            <th scope="col">답변 여부</th>  <%-- 답변이 있으면 답변일을 불러오기 --%>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>user1@naver.com</td>
-                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
-                                            <td>123120</td>
-                                            <td>Y</td>
-                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
-                                            <td>11</td>
-                                            <td>128.478.452.101</td>
-                                            <td>2020-09-01</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>user1@naver.com</td>
-                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
-                                            <td>123120</td>
-                                            <td>Y</td>
-                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
-                                            <td>11</td>
-                                            <td>128.478.452.101</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-02</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>제가 작성한 학원 후기가 허위사실 기재에 해당하는지 여부가 궁금합니다.</td>
-                                            <td>123120</td>
-                                            <td>Y</td>
-                                            <td>안녕하세요~ 제가 학원 후기를 썼는데...............</td>
-                                            <td>11</td>
-                                            <td>128.478.452.101</td>
-                                            <td>2020-09-01</td>
-                                            <td>2020-09-02</td>
-                                        </tr>
+										<c:if test="${count != 0}">
+												
+												
+			                                    <c:forEach var = "qnaboardList" items="${qnaboardList}">
+				                                  
+				                                  <c:if test="${qnaboardList.qna_re_lev eq 0}">
+				                                  
+				                                  <tr id = "qnarewrite" onclick="location.href='./QnaBoardContent.qna?qna_board_num=${qnaboardList.qna_board_num}&pageNum=${pageNum}'">
+				                                  		<input type = "hidden" class = "board_num" value = "${qnaboardList.qna_board_num}">
+					                                  	<th scope="row">${qnaboardList.qna_board_num}</th>
+					                                    <td>${qnaboardList.mem_email}</td>
+					                                    <td>${qnaboardList.qna_board_title}</td>
+					                                    <td>${qnaboardList.qna_board_pwd}</td>
+					                                    <td>${qnaboardList.qna_board_content}</td>
+					                                    <td>${qnaboardList.qna_board_read}</td>
+					                                    <td>${qnaboardList.qna_board_ip}</td>
+					                                    <td>${qnaboardList.qna_board_date}</td>
+			                                     		<td id="recheck_${qnaboardList.qna_board_num}" class = "check"></td>
+				                         		 	 </tr>
+			                                      </c:if>	
+			                                      
+			                                    </c:forEach>
+			                                     
 
+		                                  </c:if>
+													
+													
+													
+														                                            
+				                           <c:if test="${count == 0}">
+				                           		<tr>
+				                           			<td>문의글이 없습니다.</td>
+				                           		</tr>
+				                           </c:if>
                                     </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -243,36 +308,35 @@
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-                    <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-                    <!-- >> (마지막페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-					</ul>                    
-                 
+						  <li class="page-item"> 
+						  	<a class="page-link prev" href="#">
+						  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+						  	</a>
+						  </li>
+						  
+	                    <!-- < (이전페이지 가기)-->
+						  <li class="page-item active">
+						  	<a class="page-link prev" href="#">
+						  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+						  	</a>
+						  </li>
+						  
+						  <li class="page-item"><a class="page-link" href="#">1</a></li>
+						  <li class="page-item"><a class="page-link" href="#">2</a></li>
+						  <li class="page-item"><a class="page-link" href="#">3</a></li>
+	                    <!-- > (다음페이지 가기)-->
+						  <li class="page-item">
+						  	<a class="page-link next" href="#">
+							  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+							</a>
+						  </li>
+	                    <!-- >> (마지막페이지 가기)-->
+						  <li class="page-item">
+						  	<a class="page-link next" href="#">
+							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+							</a>
+						  </li>
+						</ul>                    
                     
 
 
