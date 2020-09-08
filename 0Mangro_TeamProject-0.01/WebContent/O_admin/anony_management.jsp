@@ -217,8 +217,7 @@
                                             <th scope="col" style="width:11%;">신고일자</th>
                                             <th scope="col" style="width:11%;">신고사유</th>
                                             <th scope="col" style="width:11%;">신고계정</th>
-                                            <th scope="col" style="width:11%;">계정정지</th>
-                                            <th scope="col" style="width:11%;">신고삭제</th>
+                                            <th scope="col" colspan="2" style="width:22%;">처리</th>
                                         </tr>
                                     </thead>
                                     <tbody>
