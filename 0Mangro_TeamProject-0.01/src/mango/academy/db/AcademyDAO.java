@@ -372,7 +372,6 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		try {
 			getConnection();
-			
 		
 			
 			//검색창에만 입력했을시에
@@ -665,7 +664,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				getConnection();
 				
 				
-				String like="select a.* ,ifnull(r.avgscore,0) avgscore , ifnull(m.mem_profileImg,'default_mango.png') profileimg  ,ifnull(k.acalike , 0) acalike "
+				String like="select a.* ,ifnull(r.avgscore,0) avgscore , ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg  ,ifnull(k.acalike , 0) acalike "
 						+" from academy a left join (select aca_main_num,avg(review_score) avgscore "
 						+" from academy_review "
 						+ " group by aca_main_num ) r"
@@ -676,7 +675,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 															+ " from member "
 															+ " group by mem_email) m on a.mem_email = m.mem_email ";
 				
-				String review ="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'default_mango.png') profileimg ,ifnull(r.count,0) count "
+				String review ="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg ,ifnull(r.count,0) count "
 						+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore "
 						+" from academy_review"
 						+ " group by aca_main_num) r"
@@ -685,7 +684,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						+ " from member "
 						+ " group by mem_email) m on a.mem_email = m.mem_email ";
 				
-				String rating="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'default_mango.png') profileimg "
+				String rating="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg "
 						+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
 						  +" from academy_review"
 						  + " group by aca_main_num ) r" 
@@ -694,7 +693,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						  + " from member "
 						  + " group by mem_email) m on a.mem_email = m.mem_email ";	
 				
-				String basic="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(m.mem_profileImg,'default_mango.png') profileimg"
+				String basic="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg"
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore "
 		 					+" from academy_review "
 		 					+ " group by aca_main_num ) r "
@@ -770,10 +769,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				
 				where=" where a.aca_name like ? " 
 						+" and a.aca_search_addr1 = ? ";
-
-
-						
-						
+				
 				if(s5.equals("like")){//좋아요 많은순
 							
 							
@@ -1779,6 +1775,1245 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}		
 		return acaName;
 	}
+	
+	
+	
+	
+	
+	
+
+	//키워드로 검색한 학원 갯수 갖고오기
+	public int getAcademyKeywordCount(HashMap<String, Object> formsearch) {
+		
+		int count=0;
+		
+		
+		
+		try {
+			getConnection();
+		
+			String where="select count(*) "
+					+ "   from academy a join ( select aca_main_num , aca_keyword "
+ 												 +"					from academy_keyword "
+                                                 +                  "  where aca_keyword =? "
+                                                 + " group by aca_main_num)k "
+					+ " on a.aca_main_num = k.aca_main_num " ;
+			
+			
+			//검색창에만 입력했을시에
+		if(formsearch.get("main")!=null&&formsearch.get("s1")==null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+			
+			sql = where	
+					+" where a.aca_name like ? " 
+					+" or a.aca_search_addr1 like ? " 
+					+" or a.aca_search_addr2 like ? " 
+					+" or a.aca_search_addr3 like ? "
+					+" or a.aca_category1 like ? ";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(4,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(5,'%'+(String)formsearch.get("main")+'%');
+			
+			
+			rs=pstmt.executeQuery();
+			
+		
+		}
+
+//		//검색 창 입력 O , 광역시도 선택 O , 카테고리 선택 X
+		else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+		
+			
+			sql=   where                     
+					+" where aca_name like ? " 
+					+" and aca_search_addr1 = ? ";
+					
+					pstmt=con.prepareStatement(sql);
+					
+					pstmt.setString(1,(String)formsearch.get("key"));
+					pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+					pstmt.setString(3,(String)formsearch.get("s1"));
+					
+					
+					rs=pstmt.executeQuery();	
+			
+		}
+		//검색 창 입력 O , 광역시도 선택 O , 카테고리 선택 O
+		else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			sql=where                           
+					+" where aca_name like ? " 
+					+" and aca_search_addr1 = ? "
+					+" and aca_category1 = ? ";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,(String)formsearch.get("s1"));
+			pstmt.setString(4,(String)formsearch.get("s4"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}
+//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 O
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			sql=where
+					+ "where aca_search_addr1 = ? "
+					+" and aca_category1 = ? ";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s4"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}
+//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 X
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+			
+			sql=where
+					+" where aca_search_addr1 = ? ";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}//여기까지 광역시도 처리
+//		//검색 창 입력 O , 광역시도 선택 O,지역구 O , 카테고리 선택 O
+		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			sql=where                           
+					+" where aca_name like ? " 
+					+" and aca_search_addr1 =? " 
+					+" and aca_search_addr2 =? " 
+					+" and aca_category1 =? ";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,(String)formsearch.get("s1"));
+			pstmt.setString(4,(String)formsearch.get("s2"));
+			pstmt.setString(5,(String)formsearch.get("s4"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}//
+//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 O	
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			sql=where                           
+					+"  where aca_search_addr1 =? " 
+					+" and aca_search_addr2 =? " 
+					+" and aca_category1 =? ";
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s2"));
+			pstmt.setString(4,(String)formsearch.get("s4"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}//
+//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 X	
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+			
+			sql=where                          
+					+" where aca_search_addr1 =? " 
+					+" and aca_search_addr2 =? "; 
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s2"));
+			
+			
+			rs=pstmt.executeQuery();	
+			
+		}//
+//		//전체 검색 창 입력 O , 광역시도 선택 O,지역구 O ,읍면동 O , 카테고리 선택 O	
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
+		
+		sql=where	+" where aca_name like ? " 
+				+" and aca_search_addr1 = ? " 
+				+" and aca_search_addr2 = ? " 
+				+" and aca_search_addr3 = ? " 
+				+" and aca_category1 = ? ";
+		pstmt=con.prepareStatement(sql);
+		
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(3,(String)formsearch.get("s1"));
+		pstmt.setString(4,(String)formsearch.get("s2"));
+		pstmt.setString(5,(String)formsearch.get("s3"));
+		pstmt.setString(6,(String)formsearch.get("s4"));
+		
+		System.out.println("확인");
+		rs=pstmt.executeQuery();	
+		
+	}//
+     // 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 O			
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
+		
+		sql=where			
+				+" where aca_search_addr1 =? " 
+				+" and aca_search_addr2 =? " 
+				+" and aca_search_addr3 =? " 
+				+" and aca_category1 =? ";
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		pstmt.setString(5,(String)formsearch.get("s4"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+	}//		
+		// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		sql=where                         
+				+" where aca_search_addr1 =? " 
+				+" and aca_search_addr2 =? " 
+				+" and aca_search_addr3 =? "; 
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+	}		
+		// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		sql=where
+				+ " where aca_name like ? "                           
+				+" and aca_search_addr1 =? " 
+				+" and aca_search_addr2 =? " 
+				+" and aca_search_addr3 =? "; 
+		pstmt=con.prepareStatement(sql);
+		
+
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(3,(String)formsearch.get("s1"));
+		pstmt.setString(4,(String)formsearch.get("s2"));
+		pstmt.setString(5,(String)formsearch.get("s3"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+	}		
+	else{//그냥 키워드만 눌렀을 경우
+		
+		sql+=where ;                          
+				 
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1,(String)formsearch.get("key"));
+		
+		
+		rs=pstmt.executeQuery();	
+		
+		
+	}
+		
+			
+			
+		
+		
+		
+		
+		if(rs.next()){//카운트 갖고오기
+			
+			count=rs.getInt(1);
+			
+			return count;
+		}
+		
+			
+	
+		
+		}catch (Exception e) {
+			System.out.println("getAcademyKeywordCount(HashMap)에서 예외 발생"+e);
+		}finally {
+			resourceClose();
+		}	
+		
+		
+		
+		
+		
+		
+		
+	 return count;
+		
+		
+	}//getAcademyCount
+
+	public List<AcademyBean> getSearchKeywordListAcademy(HashMap<String, Object> formsearch, int StartRow, int pageSize) {
+	
+		
+		List<AcademyBean> list = new ArrayList();
+		try {
+			
+			getConnection();
+			
+			
+			String like="select a.* ,ifnull(r.avgscore,0) avgscore , ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg  ,ifnull(k.acalike , 0) acalike "
+					+" from academy a left join (select aca_main_num,avg(review_score) avgscore "
+					+" from academy_review "
+					+ " group by aca_main_num ) r"
+								+" on a.aca_main_num=r.aca_main_num left join (select aca_main_num , count(*) acalike "
+																			+ 	" from liked_academy "
+											+ 		" group by aca_main_num ) k on a.aca_main_num = k.aca_main_num "                      
+														+" left join (select mem_email,mem_profileImg "
+														+ " from member "
+														+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
+ 												 +"	from academy_keyword "
+                                                 +   "  where aca_keyword =? "
+                                                 + " group by aca_main_num)k "
+					+ " on a.aca_main_num = k.aca_main_num " ;
+			
+			String review ="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg ,ifnull(r.count,0) count "
+					+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore "
+					+" from academy_review"
+					+ " group by aca_main_num) r"
+					+" on a.aca_main_num=r.aca_main_num "
+					+" left join (select mem_email,mem_profileImg "
+					+ " from member "
+					+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
+ 												 +"	from academy_keyword "
+                                                 +   "  where aca_keyword =? "
+                                                 + " group by aca_main_num)k "
+					+ " on a.aca_main_num = k.aca_main_num " ;
+			
+			String rating="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg "
+					+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
+					  +" from academy_review"
+					  + " group by aca_main_num ) r" 
+					  +" on a.aca_main_num=r.aca_main_num "
+					  +" left join (select mem_email,mem_profileImg "
+					  + " from member "
+					  + " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
+ 												 +"	from academy_keyword "
+                                                 +   "  where aca_keyword =? "
+                                                 + " group by aca_main_num)k "
+					+ " on a.aca_main_num = k.aca_main_num " ;	
+			
+			String basic="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg"
+					 +" from academy a left join (select aca_main_num,avg(review_score) avgscore "
+	 					+" from academy_review "
+	 					+ " group by aca_main_num ) r "
+	 					+" on a.aca_main_num=r.aca_main_num "   
+						+" left join (select mem_email,mem_profileImg "
+						+ " from member "
+						+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
+ 												 +"	from academy_keyword "
+                                                 +   "  where aca_keyword =? "
+                                                 + " group by aca_main_num)k "
+					+ " on a.aca_main_num = k.aca_main_num " ;
+			
+			String where="";
+			
+			
+			String s5= (String)formsearch.get("s5");
+			
+			//검색창에만 입력했을시에
+		if(formsearch.get("main")!=null&&formsearch.get("s1")==null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null ){
+			
+			
+			
+			where=" where a.aca_name like ? " 
+					+" or a.aca_search_addr1 like ? " 
+					+" or a.aca_search_addr2 like ? " 
+					+" or a.aca_search_addr3 like ? "
+					+" or a.aca_category1 like ? ";
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql=like+where	
+						+ " order by acalike desc "
+						+ " limit ? , ?";
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				sql=review
+						+ where	
+						+ " order by count desc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql=rating								
+						+where
+						+ " order by  avgscore desc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				sql=basic
+				+ where
+				+ " limit ? , ? ";
+			}
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(4,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(5,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(6,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setInt(7,StartRow);
+			pstmt.setInt(8,pageSize);
+			
+			
+			rs=pstmt.executeQuery();
+			
+		
+		}
+
+//		//검색 창 입력 O , 광역시도 선택 O , 카테고리 선택 X
+		else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+		
+			
+			where=" where a.aca_name like ? " 
+					+" and a.aca_search_addr1 = ? ";
+			
+			if(s5.equals("like")){//좋아요 많은순
+						
+						
+						sql=like
+								+where
+								+ " order by acalike desc,a.aca_main_num asc "
+								+ " limit ? , ?";
+						
+						
+						
+						
+					}else if(s5.equals("review")){//리뷰 후기 많은순
+						
+						
+						
+						sql=review
+								+where
+								+ " order by count desc,a.aca_main_num asc "
+								+ " limit ? , ?";
+						
+						
+					}else if(s5.equals("rating")){//평점 높은순 
+						
+						
+						sql=rating
+								+where
+								+ " order by  avgscore desc,a.aca_main_num asc "
+								+ " limit ? , ? ";
+						
+					}else if(s5.equals("basic")){//기본
+			
+						sql=basic
+								+where
+								+ " limit ? , ?";
+					}
+			
+					pstmt=con.prepareStatement(sql);
+					
+					
+					pstmt.setString(1,(String)formsearch.get("key"));
+					pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+					pstmt.setString(3,(String)formsearch.get("s1"));
+					pstmt.setInt(4,StartRow);
+					pstmt.setInt(5,pageSize);
+					
+					
+					rs=pstmt.executeQuery();	
+			
+		}
+		//검색 창 입력 O , 광역시도 선택 O , 카테고리 선택 O
+		else if(formsearch.get("main")!=null&&formsearch.get("s1")!=null&&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			where=" where a.aca_name like ? " 
+					+" and a.aca_search_addr1 = ? "
+					+" and a.aca_category1 = ? ";
+			
+				if(s5.equals("like")){//좋아요 많은순
+						
+						
+						sql=like+where
+								+ " order by acalike desc,a.aca_main_num asc "
+								+ " limit ? , ?";
+						
+						
+						
+						
+					}else if(s5.equals("review")){//리뷰 후기 많은순
+						
+						
+						
+						sql=review
+								+where
+								+ " order by count desc,a.aca_main_num asc "
+								+ " limit ? , ?";
+						
+						
+					}else if(s5.equals("rating")){//평점 높은순 
+						
+						
+						sql=rating
+								+where
+								+ " order by  avgscore desc,a.aca_main_num asc "
+								+ " limit ? , ? ";
+						
+					}else if(s5.equals("basic")){//기본
+						
+						
+						sql=basic
+								+where
+								 + " limit ? , ?";
+						
+		
+					}
+			
+
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,(String)formsearch.get("s1"));
+			pstmt.setString(4,(String)formsearch.get("s4"));
+			pstmt.setInt(5,StartRow);
+			pstmt.setInt(6,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
+		}
+//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 O
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			where=" where a.aca_search_addr1 = ? "
+					+" and a.aca_category1 = ? ";
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql=like
+					+where
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql=review
+						+where
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql=rating
+						+where
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				
+				
+				sql=basic 					
+						+where
+						 + " limit ? , ?";
+				
+
+			}
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s4"));
+			pstmt.setInt(4,StartRow);
+			pstmt.setInt(5,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
+		}
+//		//검색 창 입력 X , 광역시도 선택 O , 카테고리 선택 X
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")==null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+			
+			
+			
+			where=" where a.aca_search_addr1 = ? ";
+			
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+				sql=like                     
+						+where
+						+ " order by acalike desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+				
+				
+			}else if(s5.equals("review")){//리뷰 후기 많은순
+				
+				
+				
+				sql=review             
+						+where
+						+ " order by count desc,a.aca_main_num asc "
+						+ " limit ? , ?";
+				
+				
+			}else if(s5.equals("rating")){//평점 높은순 
+				
+				
+				sql=rating                     
+						+where
+						+ " order by  avgscore desc,a.aca_main_num asc "
+						+ " limit ? , ? ";
+				
+			}else if(s5.equals("basic")){//기본
+				sql=basic            
+						+where
+						 + " limit ? , ?";
+			}
+			
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setInt(3,StartRow);
+			pstmt.setInt(4,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
+		}//여기까지 광역시도 처리
+//		//검색 창 입력 O , 광역시도 선택 O,지역구 O , 카테고리 선택 O
+		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			where=" where a.aca_name like ? " 
+					+" and a.aca_search_addr1 =? " 
+					+" and a.aca_search_addr2 =? " 
+					+" and a.aca_category1 =? ";
+			
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                   
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                  
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                 
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+		}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic                 
+					+where
+					 + " limit ? , ?";
+			
+
+		}
+		
+			
+			
+			
+			
+			
+			pstmt=con.prepareStatement(sql);
+			
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+			pstmt.setString(3,(String)formsearch.get("s1"));
+			pstmt.setString(4,(String)formsearch.get("s2"));
+			pstmt.setString(5,(String)formsearch.get("s4"));
+			pstmt.setInt(6,StartRow);
+			pstmt.setInt(7,pageSize);
+			    
+			rs=pstmt.executeQuery();	
+			
+		}//
+//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 O	
+		else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
+			
+			
+			
+			where=" where a.aca_search_addr1 =? " 
+					+" and a.aca_search_addr2 =? " 
+					+" and a.aca_category1 =? ";
+			
+			
+			if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                    
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                 
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+		}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic                
+					+where
+					 + " limit ? , ?";
+			
+
+		}
+		
+			
+			
+			
+			
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1,(String)formsearch.get("key"));
+			pstmt.setString(2,(String)formsearch.get("s1"));
+			pstmt.setString(3,(String)formsearch.get("s2"));
+			pstmt.setString(4,(String)formsearch.get("s4"));
+			pstmt.setInt(5,StartRow);
+			pstmt.setInt(6,pageSize);
+			
+			rs=pstmt.executeQuery();	
+			
+		}//
+//		//검색 창 입력 X , 광역시도 선택 O,지역구 O , 카테고리 선택 X	
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+			
+		where=" where a.aca_search_addr1 =? " 
+				+" and a.aca_search_addr2 =? ";
+			if(s5.equals("like")){//좋아요 많은순
+				
+				
+			sql=like                    
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                    
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+			}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic                    
+					+where
+					 + " limit ? , ?";
+			
+
+			}
+			
+			
+		
+				pstmt=con.prepareStatement(sql);
+				
+				pstmt.setString(1,(String)formsearch.get("key"));
+				pstmt.setString(2,(String)formsearch.get("s1"));
+				pstmt.setString(3,(String)formsearch.get("s2"));
+				pstmt.setInt(4,StartRow);
+				pstmt.setInt(5,pageSize);
+				
+			rs=pstmt.executeQuery();	
+			
+		}//
+	//검색 창 입력 O , 광역시도 선택 O,지역구 O , 카테고리 선택 X	
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")==null){
+		
+		where=" where a.aca_name like ?"
+				+ "and a.aca_search_addr1 =? " 
+				+" and a.aca_search_addr2 =? ";
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                    
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                    
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+		}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic                    
+					+where
+					+ " limit ? , ?";
+			
+			
+		}
+		
+		
+		
+		pstmt=con.prepareStatement(sql);
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(3,(String)formsearch.get("s1"));
+		pstmt.setString(4,(String)formsearch.get("s2"));
+		pstmt.setInt(5,StartRow);
+		pstmt.setInt(6,pageSize);
+		
+		rs=pstmt.executeQuery();	
+		
+	}//
+//		//전체 검색 창 입력 O , 광역시도 선택 O,지역구 O ,읍면동 O , 카테고리 선택 O	
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
+		
+		
+		where=" where a.aca_name like ? " 
+				+" and a.aca_search_addr1 = ? " 
+				+" and a.aca_search_addr2 = ? " 
+				+" and a.aca_search_addr3 = ? " 
+				+" and a.aca_category1 = ? ";
+		
+		
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                    
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                    
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                     
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+			}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic	 					
+					+where
+					 + " limit ? , ?";
+			
+
+			}
+		
+		
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(3,(String)formsearch.get("s1"));
+		pstmt.setString(4,(String)formsearch.get("s2"));
+		pstmt.setString(5,(String)formsearch.get("s3"));
+		pstmt.setString(6,(String)formsearch.get("s4"));
+		pstmt.setInt(7,StartRow);
+		pstmt.setInt(8,pageSize);
+		
+		System.out.println("확인");
+		rs=pstmt.executeQuery();	
+		
+	}//
+     // 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 O			
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")!=null){
+		
+		
+		where=" where a.aca_search_addr1 =? " 
+				+" and a.aca_search_addr2 =? " 
+				+" and a.aca_search_addr3 =? "     
+				+" and a.aca_category1 =? ";
+		
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                      
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                    
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+			}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic  
+					+where
+					 + " limit ? , ?";
+			
+
+			}
+		
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		pstmt.setString(5,(String)formsearch.get("s4"));
+		pstmt.setInt(6,StartRow);
+		pstmt.setInt(7,pageSize);
+		
+		rs=pstmt.executeQuery();	
+		
+	}//		
+		// 검색 창 입력 X , 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X			
+	else if(formsearch.get("main")==null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		where=" where a.aca_search_addr1 =? " 
+				+" and a.aca_search_addr2 =? " 
+				+" and a.aca_search_addr3 =? ";
+		
+			if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                   
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                 
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+			}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic 
+					+where
+					 + " limit ? , ?";
+			
+
+			}
+		
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,(String)formsearch.get("s1"));
+		pstmt.setString(3,(String)formsearch.get("s2"));
+		pstmt.setString(4,(String)formsearch.get("s3"));
+		pstmt.setInt(5,StartRow);
+		pstmt.setInt(6,pageSize);
+		
+		rs=pstmt.executeQuery();	
+		
+	}		// 검색 창 입력 O, 광역시도 선택 O,지역구 O ,읍면동O , 카테고리 선택 X	
+	else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")!=null&&formsearch.get("s4")==null){
+		
+		
+		
+		where=" where aca_name like ? "
+				+" and a.aca_search_addr1 =? " 
+				+" and a.aca_search_addr2 =? " 
+				+" and a.aca_search_addr3 =? ";
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                    
+					+where
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review                      
+					+where
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                    
+					+where
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+		}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic   
+					+where
+					+ " limit ? , ?";
+			
+			
+		}
+			
+		
+		pstmt=con.prepareStatement(sql);
+
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setString(2,'%'+(String)formsearch.get("main")+'%');
+		pstmt.setString(3,(String)formsearch.get("s1"));
+		pstmt.setString(4,(String)formsearch.get("s2"));
+		pstmt.setString(5,(String)formsearch.get("s3"));
+		pstmt.setInt(6,StartRow);
+		pstmt.setInt(7,pageSize);
+		
+		rs=pstmt.executeQuery();	
+		
+	}		
+	else{//그냥 검색하기 만 눌렀을 경우
+		
+		
+		if(s5.equals("like")){//좋아요 많은순
+			
+			
+			sql=like                      
+					+ " order by acalike desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+			
+			
+		}else if(s5.equals("review")){//리뷰 후기 많은순
+			
+			
+			
+			sql=review              
+					+ " order by count desc,a.aca_main_num asc "
+					+ " limit ? , ?";
+			
+			
+		}else if(s5.equals("rating")){//평점 높은순 
+			
+			
+			sql=rating                		
+					+ " order by  avgscore desc,a.aca_main_num asc "
+					+ " limit ? , ? ";
+			
+			}else if(s5.equals("basic")){//기본
+			
+			
+			sql=basic
+					 + " limit ? , ?";
+			
+
+			}
+				 
+		pstmt=con.prepareStatement(sql);
+		
+		pstmt.setString(1,(String)formsearch.get("key"));
+		pstmt.setInt(2,StartRow);
+		pstmt.setInt(3,pageSize);
+		
+		
+		rs=pstmt.executeQuery();	
+		
+		
+	}
+		
+		while(rs.next()){
+			AcademyBean bean = new AcademyBean(	
+					rs.getInt(1), rs.getString(2), rs.getString(3), 
+					rs.getString(4), rs.getString(5), rs.getString(6),
+					rs.getString(7), rs.getString(8), rs.getString(9), 
+					rs.getString(10), rs.getString(11), //acaCategory
+					rs.getString(12), rs.getString(13), rs.getString(14), //address
+					rs.getString(15),	//mem_email						
+					rs.getDouble(19),   //reviewScore
+					rs.getInt(17),rs.getString(20)
+					);			
+			
+			list.add(bean);				
+		}			
+	
+		
+		
+		
+	}catch (Exception e) {
+		System.out.println("getSearchKeywordListAcademy(HashMap)에서 예외 발생"+e);
+	
+	}finally {
+		resourceClose();
+	}	
+	
+	
+	
+	
+	return list;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	}
+	
+	
 	
 	
 } // AcademyDAO 끝	
