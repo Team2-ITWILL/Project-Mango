@@ -37,7 +37,7 @@ public class AcademyRegisterApproveAction implements Action{
 		//==========1. academy_register에서 승인(confirm_date 변경)
 		AcademyRegisterDAO arDAO = new AcademyRegisterDAO();
 		result = 0;
-//		result = arDAO.changeConfirmDate(regEmail, flag);
+		result = arDAO.changeConfirmDate(regEmail, flag);
 		if(result == 0){
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
