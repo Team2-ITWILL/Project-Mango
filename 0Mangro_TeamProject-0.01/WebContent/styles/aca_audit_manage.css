@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+
+*{
+	font-family:'Noto Sans KR', sans-serif;
+
+}
+
+input.inputaudit{
+	padding: 6px;
+	
+}
+.section_title_container.text-center{
+	border-radius: 20px;
+	border: 1px solid #dad7d7 !important;
+}
+.section_title_container{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+h4.section_title{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.tb_audit{
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 1rem;
+	background-color: transparent;
+}
+
+.tb_audit td, .tb_audit th{
+	padding: 1rem;
+	text-align: center;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.btn-primary1{
+	color: #fff !important;
+	background-color:#000 !important;
+	border-color: #6610f2 !important;
+	cursor: pointer !important;
+	width: 550px;
+	margin: auto;
+	margin-left: 0;
+	margin-top: 40px;
+	margin-bottom: 40.1px;
+}
+
+.btn-primary1:HOVER {
+	background-color: #6610f2;
+}
+input.inputaudit.readonly{
+	background-color: ivory;
+}

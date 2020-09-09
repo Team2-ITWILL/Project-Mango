@@ -7,9 +7,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Mango project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="styles/academy_audit.css">
+<link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
+<link rel="stylesheet" type="text/css" href="styles/aca_audit_manage.css">
+
+
 
 <!-- jQuery UI CSS파일  -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
+<link rel="stylesheet"  href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
 
 <!-- jQuery 기본 js파일 -->
 <!-- jquery js와 UI버전이 같아야 datepicker가 정상적으로 작동한다!! -->
@@ -48,48 +59,64 @@
 
 </head>
 <body>	
+
+
 	
 	<!---------------[가져온 회원정보(from AcademyGetInfoAction.java)]------- -->
 	<c:set var="vo" value="${academyBean}" />
 	
 	<!---------------[테이블]---------------------------------------------------------->
-	<div class="col-12">
-		<div class="card">
+	<div class="container">
+	
+		<div class="section_title_container text-center">
+		
 			<div class="card-body">
-				<h4 class="card-title">청강신청 가능일 등록</h4>
+				<h4 class="section_title">청강신청 가능일 등록</h4>
 				<h6 class="card-subtitle"></h6>
 			</div>
+			
+			
 			<div class="table-responsive">
+			
 				<form id="info" action="./auditInfoRegister.adma" method="get">
-					<table class="table">
+				
+					<table class="tb_audit">
+					
 						<tr>
 							<td>학원지정번호</td>
-							<td><input type="text" name="acaNum" value="${vo.acaMainNum}" readonly></td>
+							<td><input type="text" name="acaNum" value="${vo.acaMainNum}" readonly class="inputaudit readonly"></td>
 						</tr>
+						
 						<tr>
 							<td>학원명</td>
-							<td><input type="text" name="acaName" value="${vo.acaName}" readonly></td>
+							<td><input type="text" name="acaName" value="${vo.acaName}" readonly class="inputaudit readonly"></td>
 						</tr>
+						
 						<tr>
 
 							<td>청강가능과목</td>
-							<td><input type="text" name="auditAvailSubj"></td>
+							<td><input type="text" name="auditAvailSubj" class="inputaudit"></td>
 						</tr>
+						
 						<tr>
 							<td>청강가능일시</td>
-							<td><input type="text" name="auditAvailDate" id="auditAvailDate"></td>
+							<td><input type="text" name="auditAvailDate" id="auditAvailDate" class="inputaudit"></td>
 						</tr>
 						<tr>
 							<td>해당 수업지속시간</td>
-							<td><input type="text" name="auditLastTime"></td>
+							<td><input type="text" name="auditLastTime" class="inputaudit"></td>
 						</tr>
+						
 						<tr>
 							<td>청강 가능 인원</td>
-							<td><input type="text" name="auditAblemem"></td>
+							<td><input type="text" name="auditAblemem" class="inputaudit"></td>
 						</tr>
+						
 					</table>
-					<input type="submit" class="btn btn-primary" value="전송">
+					
+					<input type="submit" class="btn btn-primary1" value="청강신청 가능일 등록">
 				</form>
+				
 			</div>
 		</div>
 	</div>

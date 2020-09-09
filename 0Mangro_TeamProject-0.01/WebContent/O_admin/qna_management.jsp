@@ -164,14 +164,14 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="./Management.pay"
+                        	<a class="sidebar-link" href="4index.jsp?center=O_admin/payment_management.jsp"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">결제 관리</span>
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="./registerGetList.areg"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
                                 aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -182,7 +182,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >고객 관리</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="./MemberManagementAction.me"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/member_management.jsp"
                                 aria-expanded="false"><i data-feather="users" class="feather-icon"></i>
                                 <span class="hide-menu">회원관리</span>
                             </a>
@@ -260,7 +260,14 @@
                                             <th scope="col">답변 여부</th>  <%-- 답변이 있으면 답변일을 불러오기 --%>
                                         </tr>
                                     </thead>
-                                    
+                                    																								                                            
+					                   <c:if test="${count eq 0}">
+					                  		<td></td><td></td><td></td>
+					                  		<td>문의글이 없습니다.</td>
+					                  		<td></td><td></td><td></td>
+					                   </c:if>
+					                   
+					                   
                                     <tbody>
 										<c:if test="${count != 0}">
 												
@@ -289,13 +296,6 @@
 		                                  </c:if>
 													
 													
-													
-														                                            
-				                           <c:if test="${count == 0}">
-				                           		<tr>
-				                           			<td>문의글이 없습니다.</td>
-				                           		</tr>
-				                           </c:if>
                                     </tbody>
                                     
                                 </table>
@@ -308,36 +308,61 @@
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
-						  <li class="page-item"> 
-						  	<a class="page-link prev" href="#">
-						  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-						  	</a>
-						  </li>
-						  
-	                    <!-- < (이전페이지 가기)-->
-						  <li class="page-item active">
-						  	<a class="page-link prev" href="#">
-						  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-						  	</a>
-						  </li>
-						  
-						  <li class="page-item"><a class="page-link" href="#">1</a></li>
-						  <li class="page-item"><a class="page-link" href="#">2</a></li>
-						  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                    <!-- > (다음페이지 가기)-->
-						  <li class="page-item">
-						  	<a class="page-link next" href="#">
-							  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-							</a>
-						  </li>
-	                    <!-- >> (마지막페이지 가기)-->
-						  <li class="page-item">
-						  	<a class="page-link next" href="#">
-							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-							</a>
-						  </li>
-						</ul>                    
+					  <li class="page-item"> 
+					  	<a class="page-link prev" href="QnaManagement.qna?pageNum=1">
+					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+					  	</a>
+					  </li>
+					 
+					<c:if test="${count!=0}">   
+                    <!-- < (이전페이지 가기)-->
+					     <!-- < (이전페이지 가기) 설정-->
+					  <li class="page-item active">
+					  	<c:if test="${startPage-pageBlock<0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="QnaManagement.qna?&pageNum=${pN}">
+					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+					  	</a>	
+					  </li>
+					  
+					  
+					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  	<li class="page-item"><a class="page-link" href="QnaManagement.qna?&pageNum=${i}">${i}</a></li>
+					 </c:forEach>	
+		
+					  
+					  
+					  
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="QnaManagement.qna?&pageNum=${pP}">
+						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+						</a>
+					  </li>
                     
+                    <!-- >> (마지막페이지 가기)-->
+					  <li class="page-item">
+					  	<a class="page-link next" href="QnaManagement.qna?&pageNum=${pageCount}">
+						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+						</a>
+					  </li>
+					  
+					  </c:if>
+					</ul>                       
 
 
 
