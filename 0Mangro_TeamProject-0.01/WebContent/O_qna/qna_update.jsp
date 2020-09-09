@@ -54,9 +54,20 @@
 	        <input type="password" name = "qna_board_pwd" id="wr_password" class="frm_input required" placeholder="비밀번호">
 	    	
 	    		    	
-	    	<input type = "radio" name = "qna_notice" value = "0" checked="checked"> 노 공지사항
-			<input type = "radio" name = "qna_notice" value = "1"> 공지사항으로 설정
-	    	
+	    	<!-- 관리자인 경우만 공지사항으로 설정할 수 있는 라디오 버튼이 나타남 -->
+	    	<c:choose>
+		    	<c:when test="${id_email eq 'admin' || id_email eq 'admin@mango.com'}">
+			    	<div class = "frm_input required">
+				    	<input type = "radio" name = "qna_notice" value = "0" checked="checked" style="display: none;">
+						<input type = "radio" name = "qna_notice" value = "1" style="font-family: 'Noto Sans KR', 'sans-serif'">  공지사항으로 설정
+			    	</div>
+		    	</c:when>
+		    	
+		    	<c:otherwise>
+				    	<input type = "hidden" name = "qna_notice" value = "0" checked="checked" style="display: none;">
+						<input type = "hidden" name = "qna_notice" value = "1" style="font-family: 'Noto Sans KR', 'sans-serif'">
+			    </c:otherwise>
+	    	</c:choose>
 	  	</div>
 	
 	
@@ -102,25 +113,6 @@
 	    </div>
 	
 	
-	
-		<div class="bo_w_info"><b>관련링크</b><span>(유투브 공유링크를 삽입하시면 글보기 페이지에 유투브 영상이 출력됩니다.)</span></div>
-	        <div class="bo_w_link write_div">
-	        <label for="wr_link1"><i class="fa fa-link" aria-hidden="true"></i><span class="sound_only"> 링크  #1</span></label>
-	        <input type="text" name="wr_link1" value="" id="wr_link1" class="frm_input full_input" size="50" placeholder="링크를 입력해 주세요.">
-	    </div>
-	        <div class="bo_w_link write_div">
-	        <label for="wr_link2"><i class="fa fa-link" aria-hidden="true"></i><span class="sound_only"> 링크  #2</span></label>
-	        <input type="text" name="wr_link2" value="" id="wr_link2" class="frm_input full_input" size="50" placeholder="링크를 입력해 주세요.">
-	    </div>
-	    
-	    
-	    
-	    <div class="bo_w_flie write_div">
-	        <div class="file_wr write_div">
-	            <label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #1</span></label>
-	            <input type="file" name="bf_file[]" id="bf_file_1" title="파일첨부 1 : 용량 1,048,576 바이트 이하만 업로드 가능" class="frm_file ">
-	        </div>       
-	    </div>
     	<!-- write box (e) -->
 		
 		
@@ -138,7 +130,7 @@
         </div>
  		<!-- recaptcha api(e) -->   
  		
- 		
+ 		 
 	    <div class="btn_confirm write_div">
 	        <a href="./board.php?bo_table=qna" class="btn_cancel btn">취소</a>
 	        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">
