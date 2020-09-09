@@ -32,12 +32,10 @@ public class AdminAnonyReportedListAction implements Action {
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		AnonyBoardBean anBean = new AnonyBoardBean();
 		
-		// [메소드 사용에 필요한 bean객체에 값 세팅]
-		//anBean.setMem_email();
 		
 		// [페이징 처리를 위한 값 세팅]--------------------------------------------------------------------------
 		
-		// [my_anony_board.jsp로부터 클릭한 페이지번호 받아오기]
+		// [anony_management.jsp로부터 클릭한 페이지번호 받아오기]
 		String clickedPageNum = request.getParameter("clickedPageNum");
 		
 		// [신고글의 총 개수]
@@ -86,8 +84,8 @@ public class AdminAnonyReportedListAction implements Action {
 		//----------------------------------------------------------------------------------------------
 		
 		// 해당 계정이 작성한 익명글 목록을 반환하는 메소드 사용
-		List<AnonyBoardBean> myAnonyList = new ArrayList<AnonyBoardBean>();
-		myAnonyList = andao.getANBoardList(startRow,eachPageSize,anBean); 
+		List<AnonyBoardBean> reportedAnonyList = new ArrayList<AnonyBoardBean>();
+		reportedAnonyList = andao.getANBoardList(startRow,eachPageSize,anBean); 
 			
 		//System.out.println("action페이지에서 보는 mem_email"+mem_email);
 		// 댓글의 총 개수를 반환하는 메소드 사용
@@ -97,19 +95,18 @@ public class AdminAnonyReportedListAction implements Action {
 		Map<Integer,Integer> comments = new HashMap();
 		
 		// 글의 개수만큼 반복해서 댓글개수 List에 해당 글의 댓글개수 데이터를 담기
-		for(int i=0; i<myAnonyList.size(); i++){
-			comments.put(myAnonyList.get(i).getAno_board_num(), commDAO.getCountANBComments(myAnonyList.get(i).getAno_board_num()));
-			System.out.println("put("+myAnonyList.get(i).getAno_board_num()+","+commDAO.getCountANBComments(myAnonyList.get(i).getAno_board_num())+")");
+		// getCountANBComments(전체 글 목록 중 i번째 글번호) : 해당 게시글의 댓글개수를 반환하는 메소드
+		
+		for(int i=0; i<reportedAnonyList.size(); i++){
+			comments.put(reportedAnonyList.get(i).getAno_board_num(), 
+						 commDAO.getCountANBComments(reportedAnonyList.get(i).getAno_board_num())
+					);
 		}
 				
 	
-		int anboardCount = andao.getAnonyBoardCount(anBean);
 		
 		// 글 List를 request영역에 저장
-		request.setAttribute("myAnonyList", myAnonyList);
-		
-		//System.out.println("myAnonyList 내가 쓴 글리스트 ! "+myAnonyList);
-		//System.out.println("myAnonyListCount내가 쓴 글갯수 ! "+anboardCount);
+		request.setAttribute("reportedAnonyList", reportedAnonyList);
 		
 		// 댓글 개수 정보를 (글번호, 댓글수) HashMap 데이터형태로 request영역에 저장
 		request.setAttribute("comments", comments);

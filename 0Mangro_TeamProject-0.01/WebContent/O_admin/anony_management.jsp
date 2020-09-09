@@ -30,8 +30,7 @@
 	border: 1px solid #000;
 	height: 50px;
 	padding-top: 10%;
-	font-size: 1.1em;
-	/* background-color: #000; */
+	font-size: 1em;
 	color: #000;
 	border-radius: 10px;
 	font-weight: 600;
@@ -229,27 +228,27 @@
                                     <c:choose>
                                     
                                     <c:when test="${count != 0 }">
-                                    <c:forEach var="myAnonyList" items="${myAnonyList}">
-                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
-                                            <th scope="row">${myAnonyList.ano_board_num}</th>
+                                    <c:forEach var="reportedAnonyList" items="${reportedAnonyList}">
+                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${reportedAnonyList.ano_board_num}'">
+                                            <th scope="row" id="ano_board_num">${reportedAnonyList.ano_board_num}</th>
                                            <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
-                                            <td >${myAnonyList.mem_email}</td>
-                                            <td>${comments[myAnonyList.ano_board_num]}</td>
-                                            <td>${myAnonyList.ano_board_read}</td>
-                                            <td>${myAnonyList.ano_board_file}</td>
+                                            <td id="mem_email">${reportedAnonyList.mem_email}</td>
+                                            <td>${comments[reportedAnonyList.ano_board_num]}</td>
+                                            <td>${reportedAnonyList.ano_board_read}</td>
+                                            <td>${reportedAnonyList.ano_board_file}</td>
                                             <td>
-	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
+	                                            <fmt:formatDate value="${reportedAnonyList.ano_board_date}" 
 					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
 					                                            type="both"/>
                                             </td>
-                                            <td>${myAnonyList.ano_board_reported}</td>
-                                            <td>${myAnonyList.ano_board_reason}</td>
-                                            <td>${myAnonyList.ano_board_reporter}</td>
+                                            <td>${reportedAnonyList.ano_board_reported}</td>
+                                            <td>${reportedAnonyList.ano_board_reason}</td>
+                                            <td>${reportedAnonyList.ano_board_reporter}</td>
                                             
                                         
                                         <c:choose>
-                                         <c:when test="${myAnonyList.ano_board_reported ne ''}" >
+                                         <c:when test="${reportedAnonyList.ano_board_reported ne ''}" >
                                             <td>
        	                                    	<div class="ban_thisAccount" id="ban" onclick="buttonFunc('ban',event)">계정정지</div>
                                             </td>
@@ -379,7 +378,6 @@
 
 
 
-
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
            
                 
@@ -402,51 +400,57 @@
 
 
 
-	<!-- Partners -->
-<!-- 임시저장
-	<div class="partners">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="partners_slider_container">
-						<div class="owl-carousel owl-theme partners_slider">
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_1.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_2.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_3.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_4.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_5.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_6.png" alt=""></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
- -->
-
-
 
 <script type="text/javascript">
 
 	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
 
-	function buttonFunc(act ,event) {
-		if(act == 'ban'){
-		    event.stopPropagation();
-		    alert("계정정지");
+	var urlAddr = "";
+	function buttonFunc(act , event) {
 		    
-		}else if(act == 'drop') {
-		    event.stopPropagation();
-		    alert("신고취소");
+		if(act == 'ban'){
+			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
+			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=1'";
 			
-		}
+		}else if(act == 'drop'){ 
+			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
+			
+			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=2'";
+		}	
+		
+		
+	
+	
+	
+	    $.ajax({
+	        type: "POST",
+	        url : "./AdminAnonyHandleReportedAction.anob?procNum=1",
+	        dataType : "text",
+	        data: { 
+	        		mem_email : document.getElementById("mem_email"), 
+	        		ano_board_num : document.getElementById("ano_board_num") 
+	        },
+	        success : function(data){
+	            alert(data);
+	        	if(data == 1) {
+	               alert("회원 계정정지 성공!");
+	        		
+	        	}else {
+	               alert("쿼리실수!");
+	        		
+	        	}
+	        	
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
+		
+		
 	}
+		
 	
 	
 </script>
@@ -473,8 +477,7 @@
     <script src="styles/assets/extra-libs/c3/c3.min.js"></script>
     <script src="styles/assets/libs/chartist/dist/chartist.min.js"></script>
     <script src="styles/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    
-    <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
+  	<script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
 

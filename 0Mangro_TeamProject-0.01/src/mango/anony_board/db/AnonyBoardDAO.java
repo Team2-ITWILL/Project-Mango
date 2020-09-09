@@ -533,12 +533,6 @@ public class AnonyBoardDAO extends DBconnection {
 			}// if 문		
 							
 			
-//			getConnection();
-//			sql = "SELECT count(*) FROM anony_board "
-//				+ "WHERE mem_email=?";
-//				
-//				pstmt = con.prepareStatement(sql);
-//				pstmt.setString(1, anbean.getMem_email());
 //			
 			rs = pstmt.executeQuery();
 			
@@ -554,6 +548,98 @@ public class AnonyBoardDAO extends DBconnection {
 		}finally {resourceClose();}
 		
 		return count;
+		
+	}//getAnonyBoardCount()
+	
+	
+	
+	// [10. 신고 접수메소드 (anony_board테이블 update) ]
+	public int reportANBoard(AnonyBoardBean anbean){
+		
+		int check = 0;
+
+		try {
+				
+				sql = "UPDATE anony_board "
+					+ "SET ano_board_reported = now(), "
+					+ "    ano_board_reporter = ? , "
+					+ "    ano_board_reason = ? " 
+					+ "WHERE ano_board_num = ? ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, anbean.getAno_board_reporter());
+				pstmt.setString(2, anbean.getAno_board_reason());
+				pstmt.setInt(3, anbean.getAno_board_num());
+			
+			// 쿼리 실행
+			pstmt.executeUpdate();
+			
+			// 성공
+			
+			
+		}catch(Exception e){
+			System.out.println("reportANBoard()메소드에서 예외 발생 : "+ e);				
+		
+		}finally { resourceClose();}
+		
+		
+		return check;
+		
+	}//getAnonyBoardCount()
+	
+	
+	
+	
+	// [11. 신고 글 처리 메소드 (member테이블 update) ]
+	public int handleReportedANBoard(AnonyBoardBean anbean, int procNum){
+		int check = 0;
+		
+		// procNum = 1 (계정정지) / 2 (신고취소)
+		try {
+			
+			// 계정정지
+			if(procNum == 1) {
+				
+				sql = "UPDATE member "
+						+ "SET "
+						+ "mem_baned = now() "
+						+ "WHERE mem_email = ? ";
+				
+				sql += "DELETE FROM anony_board "
+						+  "WHERE ano_board_num = ? ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, anbean.getMem_email());
+				pstmt.setInt(2, anbean.getAno_board_num());
+				
+				// 신고취소	
+			}else {
+				
+				sql = "UPDATE anony_board "
+						+ "SET ano_board_reported is null, "
+						+ "    ano_board_reporter is null, "
+						+ "    ano_board_reason is null " 
+						+ "WHERE ano_board_num = ? ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, anbean.getAno_board_num());
+			}
+			
+			// 쿼리 실행
+			pstmt.executeUpdate();
+			
+			// 성공
+			check = 1;
+			
+			System.out.println("회원 계정 정지 완료!"+check);
+			
+		}catch(Exception e){
+			System.out.println("handleReportedANBoard()메소드에서 예외 발생 : "+ e);				
+			
+		}finally { resourceClose();}
+		
+		return check;
+		
 		
 	}//getAnonyBoardCount()
 	
