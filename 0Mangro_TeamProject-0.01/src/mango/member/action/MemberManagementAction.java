@@ -54,7 +54,7 @@ public class MemberManagementAction implements Action {
 		int pageBlock = 5;
 		
 		// 한 화면에 보여줄 시작페이지 구하기 
-		int startPage = ((currentPage-1) / pageBlock ) * pageBlock + 1;
+		int startPage = ((currentPage - 1) / pageBlock ) * pageBlock + 1;
 		
 		// 한 화면에 보여줄 끝페이지 구하기
 		int endPage = startPage + pageBlock - 1;
@@ -72,6 +72,7 @@ public class MemberManagementAction implements Action {
 		request.setAttribute("pageBlock", pageBlock); // 보여줄 페이지 수
 		request.setAttribute("startPage", startPage); // 스타트 페이지수
 		request.setAttribute("endPage", endPage); // 마지막 페이지 수
+		request.setAttribute("currentPage", currentPage); // 현재 페이지 수
 		request.setAttribute("Page","MemberManagementAction.me?");
 
 		forward.setRedirect(false);
