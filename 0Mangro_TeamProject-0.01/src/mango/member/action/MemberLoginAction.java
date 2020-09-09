@@ -67,7 +67,22 @@ public class MemberLoginAction implements Action{
 			out.print("</script>");
 			
 			return null;
+		
+		}else if(check == -3){ // 정지당한 아이디일 경우
+			
+			response.setContentType("text/html; charset=UTF-8"); 
+			
+			PrintWriter out = response.getWriter();
+			out.print("<script>");
+			out.print("window.alert('정지된 계정입니다. 담당자에게 문의하세요.');");
+			out.print("history.go(-1);");
+			out.print("</script>");
+			
+			return null;
 		}
+		
+		
+		
 		
 		// 멤버십 여부 (O,X)
 		String membership = pdao.checkPayment(id_email);

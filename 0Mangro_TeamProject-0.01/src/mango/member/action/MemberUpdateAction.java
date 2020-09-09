@@ -71,6 +71,7 @@ public class MemberUpdateAction implements Action{
 		
 		MemberDAO mdao = new MemberDAO();
 		String profileImg = mdao.getProfileImg(email);
+		
 		request.setAttribute("profileImg", profileImg);
 
 		

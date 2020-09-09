@@ -115,10 +115,13 @@ public class MemberDAO extends DBconnection{
 				// 비밀번호가 일치할 때
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
 						
-					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null) 
-					|| !(rs.getString("mem_baned") == null) ){ 
+					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null)){ 
 						check = -2;
+					
+					// 정지일자 컬럼에 데이터가 존재할 때 로그인 불가	
+					}else if(!(rs.getString("mem_baned") == null)){	
+						check = -3;
 						
 					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
 					}else if((rs.getString("mem_seceded") == null) 
@@ -166,12 +169,15 @@ public class MemberDAO extends DBconnection{
 				if(rs.getString("mem_email").equals(mb.getMemPwd()) 
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
-					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 존재할 때 로그인 불가
-					if(!(rs.getString("mem_seceded") == null)
-					|| !(rs.getString("mem_baned") == null)){ 
+					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
+					if(!(rs.getString("mem_seceded") == null)){ 
 						check = -2;
+					
+					// 정지일자 컬럼에 데이터가 존재할 때 로그인 불가	
+					}else if(!(rs.getString("mem_baned") == null)){	
+						check = -3;
 						
-						// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
+					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
 					}else if((rs.getString("mem_seceded") == null) 
 						  && (rs.getString("mem_baned") == null)){
 						check = 1;
@@ -201,14 +207,15 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
+			
 			sql = "SELECT * FROM member WHERE mem_email = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
 			rs = pstmt.executeQuery();
+			
 			if(rs.next()){
 				
 				if(rs.getString("mem_pwd").equals(mb.getMemPwd())){
-					check = 1;
 					
 					sql = "UPDATE member "
 						+ "SET mem_seceded = now() "
@@ -216,10 +223,12 @@ public class MemberDAO extends DBconnection{
 					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, mb.getMemEmail());
 					pstmt.executeUpdate();
+
+					check = 1;
 				}else{
 					check = 0;
 				}
-				
+
 			}else{
 				check = 0;
 			}
@@ -412,7 +421,7 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
-	//학원관리자 등록 시 admin값 변경하는 메서드
+	// 학원관리자 등록 시 admin값 변경하는 메서드
 	public int changeAdmin(String email, int flag){
 		int result = 0;		
 		try {
@@ -450,6 +459,9 @@ public class MemberDAO extends DBconnection{
 		return result;		
 	}//changeAdmin()
 	
+	
+	
+	
 	public int updateProfileImg(String imgPath, String email){
 		int result = 0;
 		try {
@@ -472,7 +484,10 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		}		
 		return result;		
-	}//updateProfileImg()
+	} // updateProfileImg()
+	
+	
+	
 	
 	public String getProfileImg(String email){
 		String imgPath = null;
@@ -495,7 +510,7 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		}		
 		return imgPath;		
-	}//getProfileImg()
+	} // getProfileImg()
 	
 	
 	

@@ -43,6 +43,21 @@
 
 
 <body>
+
+<% 	
+// <------------------ 회원정보 가져오기 ----------------------->	
+	MemberDAO mdao = new MemberDAO();
+	String email = (String)session.getAttribute("id_email");
+	String name = mdao.selectMember(email);
+// <------------------ 회원정보 가져오기 ----------------------->	
+
+
+
+//<------------------ 프로필 가져오기 ---------------------->
+	String profileImg1 = mdao.getProfileImg(email);
+//<------------------ 프로필 가져오기 ---------------------->
+%>
+
 <script type="text/javascript">
 // <----------------- 회원 정보 수정 필수 입력 -------------------->
 	$(function update_chk(){
@@ -87,7 +102,7 @@
 	
 // <----------------- 회원 정보 프로필 수정  --------------------->
 	
-	window.onload = function(){
+/* 	window.onload = function(){
 	
 	var imgTag = document.querySelector(".rounded-circle");
 	var imgPath = '${profileImg}';
@@ -100,7 +115,7 @@
 		}
 
 	}
-	
+	 */
 	
 	
 	/* 변경하기 버튼 파일 선택 버튼으로 변경 */
@@ -181,13 +196,6 @@
 // <----------------- 회원 정보 프로필 수정 ---------------------->
 </script>
 
-<% 	
-// <------------------ 회원정보 가져오기 ----------------------->	
-	String email = (String)session.getAttribute("id_email");
-	MemberDAO mdao = new MemberDAO();
-	String name = mdao.selectMember(email);
-// <------------------ 회원정보 가져오기 ----------------------->	
-%>
 
 
 
@@ -205,7 +213,7 @@
 			      <form class="member_reFr" action="./MemberUpdateAction.me" method="post" enctype="multipart/form-data" id="update_chk" onsubmit="update_chk()">
 				      
       					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->
-						  <img src="${profileImg}" alt="user" class="rounded-circle" >
+						  <img src="<%=profileImg1%>" alt="user" class="rounded-circle" >
 						  
 					      <div class="js-form-message form-group">
 							        	<label class="form-label" for="anony_file"><span>프로필사진</span></label>
