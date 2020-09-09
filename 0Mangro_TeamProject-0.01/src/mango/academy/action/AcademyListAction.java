@@ -23,6 +23,10 @@ public class AcademyListAction implements Action{
 		
 		HttpSession session=request.getSession();
 		
+
+		String PageTwo="AcademySearchList.aca?";
+		String PageKeyword="AcademySearchList.aca?";
+		
 	/*	HashMap<String,Object> Formsearch  = new HashMap<String,Object>(); 
 		
 		
@@ -75,28 +79,44 @@ public class AcademyListAction implements Action{
 		HashMap<String,Object> Formsearch  = new HashMap<String,Object>();
 		
 		String select5=request.getParameter("select5");
+		String keyword=request.getParameter("keyword");
+		
 		if(select5 ==null){//main검색어
 			
 				select5="basic";
+				
 		
 		}
 		
 		
 		Formsearch.put("s5",select5);
-
+		
+		PageTwo+="select5="+select5+"&";
+		PageKeyword+="select5="+select5+"&";
 		
 		AcademyDAO adao =new AcademyDAO();
+		int count;
+		String pageNum=request.getParameter("pageNum");		
+	
 		
-		
-		int count=adao.getAcademyCount(Formsearch);
-		//int count=adao.getAcademyCount();
-		
-		
-		
-		
-		
-		String pageNum=request.getParameter("pageNum");
+		if(keyword==null){
+			System.out.println("이값은 널입니다7");
 
+		
+			 count=adao.getAcademyCount(Formsearch);
+			
+		
+		
+		
+		
+		}else{	//키워드 검색이 있을시에
+			
+			
+			Formsearch.put("key", keyword);
+			count=adao.getAcademyKeywordCount(Formsearch);
+			PageTwo+="keyword="+keyword+"&";
+			
+		}
 		
 		
 		
@@ -123,12 +143,22 @@ public class AcademyListAction implements Action{
 		System.out.println("시작페이지" +startRow);  
 		
 		
-		if(count != 0){
+		if(count != 0 && keyword ==null){
 			
-			Academylist = adao.getSearchListAcademy(Formsearch, startRow, pageSize);
-			//Academylist = adao.AllAcademyList(startRow, pageSize);
+			Academylist =adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			
 	
+		}else if(count != 0 && keyword != null){//키워드가 있을시에
+			
+			Academylist =adao.getSearchKeywordListAcademy(Formsearch, startRow, pageSize);
+			
 		}
+		
+		
+		
+		
+		
+		
 		//전체페이지수 구하기
 		int pageCount = count/pageSize+(count%pageSize==0?0:1);
 		
@@ -159,7 +189,9 @@ public class AcademyListAction implements Action{
 		request.setAttribute("startPage", startPage);//스타트페이지수
 		request.setAttribute("endPage", endPage);//마지막 페이지수
 		request.setAttribute("Page","AcademyList.aca?");
-		request.setAttribute("PageTwo","AcademyList.aca?select5="+select5+"&");//페이지명
+		request.setAttribute("PageTwo",PageTwo);//페이지명
+		request.setAttribute("PageKeyword",PageKeyword);//페이지명
+		
 		forward.setRedirect(false);
 		forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
 		

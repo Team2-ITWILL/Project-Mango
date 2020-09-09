@@ -28,12 +28,13 @@ public class AcademySearchListAction implements Action {
 		String select2=request.getParameter("select2");
 		String select3=request.getParameter("select3");
 		String select4=request.getParameter("select4");  
-		String select5=request.getParameter("select5");
-		String keyword=request.getParameter("keyword");
+		String select5=request.getParameter("select5");//정렬순
+		String keyword=request.getParameter("keyword");//키워드
 		
 		
 		String Page="AcademySearchList.aca?";
 		String PageTwo="AcademySearchList.aca?";
+		String PageKeyword="AcademySearchList.aca?";
 		
 		if(select1 != null || select2 != null ||select3 != null ||select4 != null||mainsearch !=null ||select5!=null){
 		if(select1==null){//광역시도
@@ -46,6 +47,7 @@ public class AcademySearchListAction implements Action {
 			
 			Page+="select1="+select1+"&";
 			PageTwo+="select1="+select1+"&";
+			PageKeyword+="select1="+select1+"&";
 		
 		}
 		
@@ -56,6 +58,7 @@ public class AcademySearchListAction implements Action {
 			Formsearch.put("s2",select2);
 			Page+="select2="+select2+"&";
 			PageTwo+="select2="+select2+"&";
+			PageKeyword+="select2="+select2+"&";
 		
 		
 		}
@@ -67,6 +70,7 @@ public class AcademySearchListAction implements Action {
 			Formsearch.put("s3",select3);
 			Page+="select3="+select3+"&";
 			PageTwo+="select3="+select3+"&";
+			PageKeyword+="select3="+select3+"&";
 		}
 		
 		if(select4==null){//카테고리
@@ -76,6 +80,7 @@ public class AcademySearchListAction implements Action {
 			Formsearch.put("s4",select4);
 			Page+="select4="+select4+"&";
 			PageTwo+="select4="+select4+"&";
+			PageKeyword+="select4="+select4+"&";
 		}
 		
 		if(mainsearch==null){//main검색어
@@ -86,6 +91,7 @@ public class AcademySearchListAction implements Action {
 			Formsearch.put("main",mainsearch);
 			Page+="mainsearch="+mainsearch+"&";
 			PageTwo+="mainsearch="+mainsearch+"&";
+			PageKeyword+="mainsearch="+mainsearch+"&";
 		}
 		
 		if(select5==null){//정렬순
@@ -95,6 +101,7 @@ public class AcademySearchListAction implements Action {
 		}else{  
 			Formsearch.put("s5",select5);
 			PageTwo+="select5="+select5+"&";
+			PageKeyword+="select5="+select5+"&";
 			
 		}
 	
@@ -119,7 +126,9 @@ public class AcademySearchListAction implements Action {
 			
 			
 			Formsearch.put("key", keyword);
-			count=adao.getAcademyCount(Formsearch);
+			count=adao.getAcademyKeywordCount(Formsearch);
+			PageTwo+="keyword="+keyword+"&";
+			Page+="keyword="+keyword+"&";
 			
 		}
 		
@@ -161,7 +170,7 @@ public class AcademySearchListAction implements Action {
 	
 		}else if(count != 0 && keyword != null){//키워드가 있을시에
 			
-			searchList =adao.getSearchListAcademy(Formsearch, startRow, pageSize);
+			searchList =adao.getSearchKeywordListAcademy(Formsearch, startRow, pageSize);
 			
 		}
 	
@@ -197,6 +206,7 @@ public class AcademySearchListAction implements Action {
 				//request.setAttribute("Page","AcademySearchList.aca?select1="+select1+ "&select2="+select2+ "&select3="+select3+ "&select4="+select4+"&mainsearch="+ mainsearch);//페이지명
 				request.setAttribute("Page",Page);//페이지명
 				request.setAttribute("PageTwo",PageTwo);//페이지명
+				request.setAttribute("PageKeyword",PageKeyword);//페이지명
 				
 				forward.setRedirect(false);
 				forward.setPath("4index.jsp?center=O_academy/academy_list.jsp");
