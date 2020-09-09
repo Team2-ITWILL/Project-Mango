@@ -1,7 +1,7 @@
 package mango.member.db;
 import java.util.ArrayList;
 import java.util.List;
-
+​
 import mango.connection.db.DBconnection;
 import mango.payment.db.PaymentBean;
 public class MemberDAO extends DBconnection{
@@ -20,7 +20,7 @@ public class MemberDAO extends DBconnection{
 			
 			// [참고] pm_use_num : 사용회차 / 무료 체험도 1번 횟수로 적용
 			//       pm_name : 이용권 이름 / 가입 무제한 이용권 (3일)
-
+​
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
 			pstmt.setString(2, mb.getMemName());
@@ -38,7 +38,7 @@ public class MemberDAO extends DBconnection{
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, mb.getMemEmail());
 				pstmt.executeUpdate();
-
+​
 				return true;
 			}
 			
@@ -333,13 +333,13 @@ public class MemberDAO extends DBconnection{
 		}
 		return mb;
 	} // 비밀번호 찾기  / findPw() 끝
-
-
-
-
+​
+​
+​
+​
 	/* 모든 회원 조회 (회원 관리창) 기능 메서드  */
 	public ArrayList ListAll(int startRow ,int pageSize) {
-
+​
 		ArrayList memberlist = new ArrayList();
 		
 		try {
@@ -366,7 +366,7 @@ public class MemberDAO extends DBconnection{
 			
 				memberlist.add(mb);
 			}
-
+​
 			System.out.println("전체 회원 조회 완료 !!");
 			
 		} catch (Exception e) {
@@ -389,7 +389,7 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
-
+​
 			sql = "SELECT COUNT(*) FROM member";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -423,7 +423,7 @@ public class MemberDAO extends DBconnection{
 				sql = "update member "
 						+ "set mem_admin = ? "
 						+ "where mem_email = ?";			
-
+​
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, 0);
 				pstmt.setString(2, email);	
@@ -433,7 +433,7 @@ public class MemberDAO extends DBconnection{
 				sql = "update member "
 						+ "set mem_admin = ? "
 						+ "where mem_email = ?";			
-
+​
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, 1);
 				pstmt.setString(2, email);	
@@ -458,7 +458,7 @@ public class MemberDAO extends DBconnection{
 			sql = "update member "
 					+ "set mem_profileImg = ? "
 					+ "where mem_email = ?";			
-
+​
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, imgPath);			
 			pstmt.setString(2, email);
@@ -516,7 +516,7 @@ public class MemberDAO extends DBconnection{
 			if(rs.next()){
 				check = 1;
 			}
-
+​
 			System.out.println("아이디 중복 체크 완료 !!");
 			
 		} catch (Exception e) {

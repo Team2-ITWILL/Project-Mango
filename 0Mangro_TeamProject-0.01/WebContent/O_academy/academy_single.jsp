@@ -23,7 +23,7 @@
 <link rel="stylesheet" type="text/css" href="styles/academy_single.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
 <link href="styles/table_style.css" rel="stylesheet">
-<%------------------------------------------------- 스타일 영역 ----------------------------------------------------------%>
+
 
 <style type="text/css">
 	.cheongang {
@@ -153,6 +153,12 @@
 	margin-left: 28%;
 }
 
+.aca_profile_img {
+	margin-top : 22px;
+	border-radius: 70%;
+    overflow: hidden;
+}
+
 li small {
 	margin-left: 5px;
 }
@@ -168,51 +174,8 @@ li small {
     }
 }
 
-
-
-/* pc화면일 때  */
-
-.course_container {width: 150%;} 
-
-.floatR { float: right;}
-
-.sidebar {float: right;}
-
-.course_price	{font-size: 18px;}
-
-.prev, .next { font-size: 1.2em;}
-
-/* 반응형 */
-@media (max-width: 768px) {
-
-.course_container {width: 100%;} 
-	
-.floatR { float: right;}
-	
-.sidebar {
-	    float: none;
-	    width: 100%;
-	    padding-top: 60px;
-	    border: none !important;
-	    margin: 0;
-	    margin-bottom: 30px;
-	    border: 1px solid #f5f5;
-	    padding-left: 30px;
-	    padding-right: 30px;
-}
-	
-.sidebar_section_title { font-size: 2em;text-align: center;background-color: #fff3ac;}
-.course_price {font-size: 1.6em;background-color: #6610f224;font-weight: 500;text-align: center;}
-	
-.feature_list {margin-left: 100px;}
-.course_info_title, .course_info_text {width: 300px;}
-.aca_profile_img {margin-left: 110%;}
-.course_title{display: inline-block;}
-}
-
 </style>
 
-<%------------------------------------------------- 스크립트 영역 ----------------------------------------------------------%>
 
 	<script type="text/javascript">
 		
@@ -238,7 +201,7 @@ li small {
 			var keyword = document.querySelector(".feature_title").getElementsByTagName("span")[0].textContent;
 			console.log(keyword);
 			if(keyword != null){
-				document.querySelector(".quote1").innerText = " " + keyword + " 학원";
+				document.querySelector(".course_price").innerText = keyword + " 학원";
 			}
 		}
 		
@@ -466,130 +429,6 @@ li small {
 
 	<div class="course">
 		<div class="container">
-		
-		<!-------------------------------------------[ 학원 대표 키워드 ]-------------------------------------------------------------->
-				<!-- Course Sidebar -->
-				
-			<c:if test="${empty keyList}">
-			</c:if>
-			<c:if test="${not empty keyList}">
-				<div class="col-lg-4 floatR">
-					<div class="sidebar">
-						
-						<!-- Feature -->
-						<div class="sidebar_section">
-						
-							<div class="sidebar_section_title">학원을 대표하는 키워드</div>
-							<div class="sidebar_feature">
-								<div class="course_price">
-									<i class='fa fa-quote-left quote1' aria-hidden='true'></i>&nbsp; 
-									<i class='fa fa-quote-right quote2' aria-hidden='true'></i></div>
-
-								<!-- Features -->
-								<div class="feature_list">
-				<c:forEach var="keywordVO" items="${keyList}">
-									
-						<c:choose>
-						
-							
-							<c:when test="${keywordVO.acakeyword eq 'traffic'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-subway" aria-hidden="true"></i>
-											<span>교통이 편리한</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'long'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-clock-o" aria-hidden="true"></i>
-											<span>중장기(6개월)</span>
-										</div>
-									</div>
-							</c:when>
-							
-							
-							<c:when test="${keywordVO.acakeyword eq 'clean'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
-											<span>시설이 깨끗한</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'audit'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
-											<span>청강신청이 가능한</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'stdRoom'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
-											<span>스터디룸이 있는</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'restaurant'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
-											<span>식당가 인근</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'room'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
-											<span>기숙사 있는</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'car'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-bus" aria-hidden="true"></i>
-											<span>학원 차량 운행이 있는</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'level'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-file-text-o" aria-hidden="true"></i>
-											<span>레벨 테스트가 있는</span>
-										</div>
-									</div>
-							</c:when>
-							
-							<c:when test="${keywordVO.acakeyword eq 'sat'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
-										<div class="feature_title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
-											<span>수능 대비 강의가 있는</span>
-										</div>
-									</div>
-							</c:when>
-							
-										
-						</c:choose>
-						
-					</c:forEach>
-					
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> <%-- col-lg-4 --%>
-			
-		</c:if>
-				
-
-		
-		
-		
 			<div class="row">
 
 				<!-- Course -->
@@ -598,7 +437,12 @@ li small {
 					<div class="course_container">
 					
 						<div class="aca_profile_div" style="display: inline-block;">
-							<img src="images/etc/default_mango.png" class="aca_profile_img" width="50">
+							<c:if test="${regImg eq '' || regImg eq null}">
+								<img src="images/etc/default_mango.png" class="aca_profile_img" width="50">
+							</c:if>
+							<c:if test="${regImg ne '' && regImg ne null}">
+								<img src="${pageContext.request.contextPath}/${regImg}" class="aca_profile_img" width="50">
+							</c:if>
 						</div>					
 						<div class="course_title">${academyBean.acaName }</div> 
 						<div class="aca_like_button" id="likeAcademy">
@@ -940,15 +784,129 @@ li small {
 					   
                     
 						</div> <!-- 전체 탭 마지막 태그-->
-
-
-
+					</div>
+				</div>
+<!-------------------------------------------[ 학원 대표 키워드 ]-------------------------------------------------------------->
+				<!-- Course Sidebar -->
+				
+			<c:if test="${empty keyList}">
+			</c:if>
+			<c:if test="${not empty keyList}">
+				<div class="col-lg-4">
+					<div class="sidebar">
 						
-				</div> <%-- row --%>
+						<!-- Feature -->
+						<div class="sidebar_section">
 						
-			</div> <%-- container --%>
-		</div> <%-- container --%>
+							<div class="sidebar_section_title">학원을 대표하는 키워드</div>
+							<div class="sidebar_feature">
+								<div class="course_price" style="font-size: 20px;"></div>
+
+								<!-- Features -->
+								<div class="feature_list">
+				<c:forEach var="keywordVO" items="${keyList}">
+									
+						<c:choose>
+						
+							
+							<c:when test="${keywordVO.acakeyword eq 'traffic'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-subway" aria-hidden="true"></i>
+											<span>교통이 편리한</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'long'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-clock-o" aria-hidden="true"></i>
+											<span>중장기(6개월)</span>
+										</div>
+									</div>
+							</c:when>
+							
+							
+							<c:when test="${keywordVO.acakeyword eq 'clean'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
+											<span>시설이 깨끗한</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'audit'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
+											<span>청강신청이 가능한</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'stdRoom'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
+											<span>스터디룸이 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'restaurant'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
+											<span>식당가 인근</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'room'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
+											<span>기숙사 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'car'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-bus" aria-hidden="true"></i>
+											<span>학원 차량 운행이 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'level'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+											<span>레벨 테스트가 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+							<c:when test="${keywordVO.acakeyword eq 'sat'}">
+								<div class="feature d-flex flex-row align-items-center justify-content-start">
+										<div class="feature_title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+											<span>수능 대비 강의가 있는</span>
+										</div>
+									</div>
+							</c:when>
+							
+										
+						</c:choose>
+						
+					</c:forEach>
+					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			
+	</c:if>
+	
+					</div>
+				</div>
+				
+		</div>					
 								
 										
 	<script type="text/javascript"

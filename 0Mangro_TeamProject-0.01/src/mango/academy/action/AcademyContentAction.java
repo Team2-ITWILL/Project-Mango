@@ -12,12 +12,14 @@ import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
 import mango.academy_keyword.db.AcademyKeywordBean;
 import mango.academy_keyword.db.AcademyKeywordDAO;
+import mango.academy_register.db.AcademyRegisterDAO;
 import mango.academy_review.db.AcademyReviewBean;
 import mango.academy_review.db.AcademyReviewDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
 import mango.audit_management.db.AuditManagementBean;
 import mango.audit_management.db.AuditManagementDAO;
+import mango.member.db.MemberDAO;
 
 // 학원 상세페이지 출력
 public class AcademyContentAction implements Action{
@@ -43,16 +45,27 @@ public class AcademyContentAction implements Action{
 		auditBean.setAcaNum(acaMainNum);
 		AuditManagementDAO auditDAO = new AuditManagementDAO();
 		
+		// 등록요청 DAO
+		AcademyRegisterDAO regDAO = new AcademyRegisterDAO();
+		
+		// 회원 DAO (학원등록 사진)
+		MemberDAO memDAO = new MemberDAO();
 		
 		
 		// 학원 상세내용
 		AcademyBean bean = dao.getAcademyContent(acaMainNum);
+		String acaName = bean.getAcaName();
 		// 학원 후기갯수
 		int count = rdao.getAcademyReviewCount(acaMainNum);
 		
 		// 학원 키워드 목록
 		List<AcademyKeywordBean> keyList = null;
 		keyList = akdao.getAcademyKeyword(acaMainNum);
+		
+		// 학원 사진
+		String regEmail = regDAO.getRegisterEmail(acaName);
+		String regImg = memDAO.getProfileImg(regEmail);
+		System.out.println(regImg);
 		
 		// 평균점수 (소숫점 한자리)
 		double avgScore = 
@@ -99,8 +112,11 @@ public class AcademyContentAction implements Action{
 		int iAvgScore = (int)avgScore;
 		List<Integer> scorePerList = new ArrayList<Integer>();
 		List<Integer> scoreCntList = new ArrayList<Integer>();
+		
+		// 학원 평점별 비중,갯수 
 		for(int i=1;i<6;i++){
-			scorePerList.add(rdao.getReviewScoreCnt(acaMainNum, i)*100/count );
+			if(count!=0)scorePerList.add(rdao.getReviewScoreCnt(acaMainNum, i)*100/count );
+			if(count==0)scorePerList.add(rdao.getReviewScoreCnt(acaMainNum, i)*100);
 			scoreCntList.add(rdao.getReviewScoreCnt(acaMainNum, i));
 		}
 		
@@ -119,6 +135,7 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("auditList", auditList);
 		request.setAttribute("scorePerList", scorePerList);
 		request.setAttribute("scoreCntList", scoreCntList);
+		request.setAttribute("regImg", regImg);
 		
 		
 		ActionForward forward = new ActionForward();
