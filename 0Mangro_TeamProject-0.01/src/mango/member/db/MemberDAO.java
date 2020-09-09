@@ -1,7 +1,7 @@
 package mango.member.db;
 import java.util.ArrayList;
 import java.util.List;
-
+​
 import mango.connection.db.DBconnection;
 import mango.payment.db.PaymentBean;
 public class MemberDAO extends DBconnection{
@@ -18,9 +18,9 @@ public class MemberDAO extends DBconnection{
 			sql = "INSERT INTO member (mem_email, mem_name, mem_pwd, mem_joindate)"
 					+ " VALUES (?,?,?, now())";
 			
-			// [참고] pm_use_num : 사용회자 / 무료 체험도 1번 횟수로 적용
+			// [참고] pm_use_num : 사용회차 / 무료 체험도 1번 횟수로 적용
 			//       pm_name : 이용권 이름 / 가입 무제한 이용권 (3일)
-
+​
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, mb.getMemEmail());
 			pstmt.setString(2, mb.getMemName());
@@ -38,7 +38,7 @@ public class MemberDAO extends DBconnection{
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, mb.getMemEmail());
 				pstmt.executeUpdate();
-
+​
 				return true;
 			}
 			
@@ -333,13 +333,13 @@ public class MemberDAO extends DBconnection{
 		}
 		return mb;
 	} // 비밀번호 찾기  / findPw() 끝
-
-
-
-
+​
+​
+​
+​
 	/* 모든 회원 조회 (회원 관리창) 기능 메서드  */
 	public ArrayList ListAll(int startRow ,int pageSize) {
-
+​
 		ArrayList memberlist = new ArrayList();
 		
 		try {
@@ -366,7 +366,7 @@ public class MemberDAO extends DBconnection{
 			
 				memberlist.add(mb);
 			}
-
+​
 			System.out.println("전체 회원 조회 완료 !!");
 			
 		} catch (Exception e) {
@@ -389,7 +389,7 @@ public class MemberDAO extends DBconnection{
 		
 		try {
 			getConnection();
-
+​
 			sql = "SELECT COUNT(*) FROM member";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -410,38 +410,122 @@ public class MemberDAO extends DBconnection{
 	} // 회원 관리 페이징 / getMGCount() 끝
 	
 	
-	// 사진파일 정보 조회메서드
-	public String getProfileImg(String mem_email){
-		
-		String img = "";
-		
+	
+	
+	//학원관리자 등록 시 admin값 변경하는 메서드
+	public int changeAdmin(String email, int flag){
+		int result = 0;		
 		try {
 			getConnection();
-			sql ="select mem_profileImg from member where mem_email = ?";
 			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, mem_email);
-			rs = pstmt.executeQuery();
+			//flag == 0이면 관리자 등급으로 변경 승인 취소
+			if(flag == 0){
+				sql = "update member "
+						+ "set mem_admin = ? "
+						+ "where mem_email = ?";			
+​
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, 0);
+				pstmt.setString(2, email);	
+				
+			//관리자 등급으로 변경 승인
+			}else{
+				sql = "update member "
+						+ "set mem_admin = ? "
+						+ "where mem_email = ?";			
+​
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, 1);
+				pstmt.setString(2, email);	
+			}					
 			
-			if(rs.next()){
-				img = rs.getString(1);
-			}
+			result = pstmt.executeUpdate();	
 			
 		} catch (Exception e) {
-			System.out.println("--> getProfileImg()에서 SQL구문 오류 : " + e);
+			System.out.println("changeAdmin()에서 예외 발생" + e);
 			e.printStackTrace();
 		} finally {
 			resourceClose();
-		}
+		}		
+		return result;		
+	}//changeAdmin()
+	
+	public int updateProfileImg(String imgPath, String email){
+		int result = 0;
+		try {
+			getConnection();
+			
+			sql = "update member "
+					+ "set mem_profileImg = ? "
+					+ "where mem_email = ?";			
+​
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, imgPath);			
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();	
+			
+		} catch (Exception e) {
+			System.out.println("updateProfileImg()에서 예외 발생" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}		
+		return result;		
+	}//updateProfileImg()
+	
+	public String getProfileImg(String email){
+		String imgPath = null;
+		try {
+			getConnection();
+			
+			sql = "select mem_profileImg from member where mem_email = ?";	
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, email);			
+			rs = pstmt.executeQuery();	
+			
+			if(rs.next()){
+				imgPath = rs.getString("mem_profileImg");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getProfileImg()에서 예외 발생" + e);
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}		
+		return imgPath;		
+	}//getProfileImg()
+	
+	
+	
+	
+	/* 아이디 중복 체크 메서드 */
+	public int idCheck(String email) {
 		
-		return img;
-	} // getProfileImg() 끝
-	
-	
-	
-	
-	
-	
-	
+		int check = 0;
+		
+		try {
+			getConnection();
+			
+			sql = "SELECT mem_email FROM member WHERE mem_email = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}
+​
+			System.out.println("아이디 중복 체크 완료 !!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> idCheck()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return check;
+	} // 아이디 중복 체크 / idCheck() 끝
 	
 }
