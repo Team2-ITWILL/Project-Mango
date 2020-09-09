@@ -125,7 +125,7 @@
 		submitBtn.onclick = function(){				
 			
 			var form = document.querySelector(".member_reFr");			
-			form.action = "./MemberProfileModifyAction.me";				
+			form.action = "./MemberUpdateAction.me";				
 			form.submit();	
 		} 		
 		
@@ -163,7 +163,7 @@
 		$.ajax({
 				data : formData,
 				type : "POST",
-				url : "./MemberProfileModifyAction.me",
+				url : "./MemberUpdateAction.me",
 				contentType : false,
 				processData : false,
 				enctype : 'multipart/form-data',
