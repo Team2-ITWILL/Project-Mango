@@ -210,7 +210,7 @@ li.thirdKey {
 		
 			console.log(search3);
 			
-			
+			  
 			$("#courses_search_select4").empty();
 			
 			$.getJSON("getListSearchThr.aca?search1="+search1+"&search2="+search2+"&search3="+search3 ,  function(data){
