@@ -88,7 +88,6 @@ public class AuditRequestAction implements Action{
 			}
 		}
 		
-		System.out.println("ㅇㅇㅇㅇ");
 		
 		//--------------과목 중복신청 확인---------------------
 		//한 사람당 동일한 과목 중복 신청 불가

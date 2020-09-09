@@ -17,6 +17,11 @@
 <link rel="stylesheet" type="text/css" href="styles/form_basic_page.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
 
+<!-- 키워드 선택 css -->
+<link rel="stylesheet" type="text/css" href="styles/academy_list.css">
+<link rel="stylesheet" type="text/css" href="styles/academy_list_responsive.css">
+<link href="styles/table_style.css" rel="stylesheet">
+
 <!------------------------------- [스타일 시트]------------------------------------------------------------------>
 <style type="text/css">
 	.files input {
@@ -94,6 +99,20 @@
     height: 300px;
     background-color: gray;
 }
+
+li.firstKey {
+    background-color: #66b5dd !important;
+
+}
+li.secondKey {
+	background-color: #ff0080 !important;
+	
+}
+
+li.thirdKey { 
+	background-color: #6f42c1 !important;
+}
+
 </style>
 
 
@@ -147,7 +166,8 @@
 									        	   <!-- list="searchList"  -->
 									         	   	   
 									        <br>
-									        <input type="button" class="btn btn-write" onclick="" value="학원 찾기" id="search_aca_btn" list="searchList"><br> 
+									        <input type="button" class="btn btn-write" onclick="" value="학원 찾기" id="search_aca_btn">
+									        <br> 
 											
 											
 								   </div>
@@ -177,6 +197,30 @@
 								        <label class="form-label" for="anony_pwd"><span>학원 이름</span></label>
 								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원" required> 
 								    </div>
+								    
+								   	<div class="sidebar_section">
+								   	
+									<!-- <div class="sidebar_section_title">키워드 검색</div> -->
+									<div class="sidebar_tags">
+										<ul class="tags_list">
+											<li class="firstKey traffic">교통이 편리한</li>
+											<li class="firstKey stdRoom">스터디룸 있는</li>
+											<li class="firstKey clean">시설이 깨끗한</li>
+											<li class="secondKey restaurant">식당가 인근</li>
+											<li class="secondKey audit">청강 신청 가능한</li>
+											<li class="secondKey room">기숙사가 있는</li>
+										</ul>
+										<ul class="tags_list">
+											<li class="thirdKey long">중장기(6개월 이상)</li>
+											<li class="thirdKey car">차량운행이 있는</li>
+											<li class="thirdKey level">레벨테스트가 있는</li>
+											<li class="thirdKey sat">수능대비강의가 있는</li>
+										</ul>
+									</div>
+								</div>
+								<!-- 선택한 keyword -->
+								<input type="hidden" name="keyword">
+
 								    
 <%---------------------[사진첨부 가이드]-----------------------------------------------------------------------------------------------%>
 									<div class="mb-5 mt-2">
@@ -279,6 +323,46 @@
 
 
 <!------------------------------------------------------- [스크립트 영역] -------------------------------------------->
+<script src="./styles/dist/js/sidebarmenu.js"></script>
+
+<script>
+var key = document.querySelector("input[name='keyword']");
+var li = document.querySelectorAll(".tags_list li");	
+console.log(li);
+
+//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
+//for(var i in li){		(X)
+for(var i=0; i<li.length; i++){	
+	
+	//addEventListenr 위에 코드를 쓰니까 작동함
+	//밑에서는 event로 값을 받아서 구현해야될듯?
+	//console.log(li[i].getAttribute("class"));
+	//console.log(li[i].className);
+	
+	var attr = li[i].getAttribute("class");
+	var idx = attr.indexOf('firstKey');
+	var lengthOfStr = attr.length;
+	//var lastidx = attr.lastIndexOf('y');
+	console.log(attr);
+	console.log(idx);
+	//console.log(lastidx);
+	//console.log(idx + 2);
+	console.log('length : ' + lengthOfStr)
+	
+	li[i].addEventListener("click", function(event){
+		
+		
+		//'firstKey'를 탐색했을 때 문자열이 존재한다면
+		if(idx != -1){
+			key.value = attr.substr(idx + 2, lengthOfStr);
+			console.log('length : ' + lengthOfStr)
+			console.log('key.value : ' + key.value);
+			
+		} 
+	});
+}
+	
+</script>
 
 </body>
 </html>

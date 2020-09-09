@@ -24,22 +24,17 @@ public class MemberUpdateAction implements Action{
 		
 		request.setCharacterEncoding("UTF-8");
 		
+		String email = (String)request.getSession().getAttribute("id_email"); // 이메일
 		String realFolder = request.getServletContext().getRealPath("/");
-		
-		int max = 1000 * 1024 * 1024; 
+		int max = 10 * 1024 * 1024; 
 		MultipartRequest multi = new MultipartRequest(request, realFolder, max, "UTF-8", new DefaultFileRenamePolicy()); 
-		
 		String memName = multi.getParameter("memName"); // 이름
-		String memEmail = multi.getParameter("memEmail"); // 이메일
 		String memPwd = multi.getParameter("memPwd"); // 기존 비밀번호
 		String newPw = multi.getParameter("newPw1"); // 변경할 비밀번호
 		
-//		String filename = multi.getFilesystemName("fileName"); // 서버에 실제로 업로드된 파일명
-//		String originFilename = multi.getOriginalFileName("fileName"); // 업로드한 파일의 원본명
-
 		MemberBean mb = new MemberBean();
 		mb.setMemName(memName);
-		mb.setMemEmail(memEmail);
+		mb.setMemEmail(email);
 		mb.setMemPwd(memPwd);
 		
 		MemberDAO mdao = new MemberDAO();
@@ -58,6 +53,7 @@ public class MemberUpdateAction implements Action{
 			out.print("</script>");
 			
 			return null;
+			
 		}else{
 			response.setContentType("text/html; charset=utf-8");
 			
