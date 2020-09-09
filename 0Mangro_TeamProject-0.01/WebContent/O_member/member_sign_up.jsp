@@ -32,6 +32,7 @@
 <script type="text/javascript">
 
 //<--------------------------- 회원가입 필수 입력란 확인 ------------------------->
+	
 	$(function check() {
 		
 		$("#join").submit(function() {
@@ -50,6 +51,12 @@
 				return false;
 			}
 			
+			// 이메일 형식 유효성체크
+/* 			if($("#id_email").val() == "@"){
+				alert("이메일 형식에 맞게 입력하세요.");
+				$("#id_email").focus();
+				return false;
+			} */
 			
 			// 비밀번호
 			if($("#id_password1").val() == ""){
@@ -72,13 +79,11 @@
 				return false;
 			}
 			
-			
 			// 인증 버튼 클릭여부 확인
 			if(flag != true) {
 		        alert("이메일 인증을 해주세요.");
 				return false;
 			}
-			
 			
 			// 정확한 인증번호 입력여부 확인
 			if( $("#fromIframe").val() != "success" ){
@@ -87,12 +92,10 @@
 				return false;
 			}
 			
-			
-			
-			
 		}); // submit() 끝	
 			
 	}); // check() 끝
+	
 //<--------------------------- 회원가입 필수 입력란 확인 끝 ------------------------->
 	
 	
@@ -116,9 +119,17 @@
 
 
 
+//<--------------------------- 이메일 중복검사시 span태그를 지워주는 메소드  ----------------------------->	
+
+	function clearCorrectTag() {
+			$("#idcheckT").attr("style","display:none;");
+			$("#idcheckF").attr("style","display:none;");
+		
+	}//clearCorrectTag() 
+
 //<--------------------------- 아이디 중복 확인  ----------------------------->	
 
-	function duplCheck(){
+	function duplCheck(event){
 		
 		$.ajax({
 				type: "post",
@@ -129,18 +140,41 @@
 					
 					console.log("@@@data : " + data + " / " + textStatus)
 					
+					// 1. 중복검사 결과 이미 가입된 계정일 때
 					if(data == 1){
-						$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
-//						$("#idcheckF").val().css("color", "#a64bf4");
-						$("#idcheckF").removeAttr("style","display:none;");
+						
+						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+						if($("#id_email").val() == 0){
+							clearCorrectTag();
+							
+						// 이메일 input에 입력값이 있지만 기존에 입력된 idcheckT지우고 idcheckF만 표시되게하기
+						}else if($("#idcheckT").val().length != 0){	
+							clearCorrectTag();
+							$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
+							//$("#idcheckF").val().css("color", "#a64bf4");
+							$("#idcheckF").removeAttr("style","display:none;"); }
 					
-					}else if(data == 0){
-						$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
-//						$("#idcheckT").val().css("color", "#a64bf4");
-//						$("#id_email").attr("readonly", "readonly");
-						$("#idcheckT").removeAttr("style","display:none;");
+					// 2. 중복검사 결과 중복이 아닐 때
+					}else{
+						
+						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+						if($("#id_email").val() == 0){
+							clearCorrectTag();
+						}else{
+							// 중복된 이메일 계정을 입력 후 새로 입력하는 과정에서 backspace를 사용했을 때
+							// 기존에 입력된 idcheckT와 backspace를 감지하고 새로 추가된 idcheckF가 일시적으로 공존되는걸
+							// 방지하기 위해 clearCorrectTag()메소드 호출
+							clearCorrectTag();
+							$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
+							//$("#idcheckT").val().css("color", "#a64bf4");
+							//$("#id_email").attr("readonly", "readonly");
+							$("#idcheckT").removeAttr("style","display:none;");
+						
+						} // 안쪽 if문 끝
 					
-					} // if문 끝
+					} // 바깥 if문 끝
+					// 초기화
+					
 				}, //success 끝
 				
 				error: function(data, datastatus){
@@ -148,7 +182,6 @@
 				} // error 끝
 			
 		}); // $.ajax 끝
-		
 	} // duplCheck() 끝
 
 //<--------------------------- 아이디 중복 확인  ----------------------------->	
@@ -174,7 +207,7 @@
 	  
 	  
 	  <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  --------------------------------------------------------> 
-					  <div id="naverIdLogin">네이버로 가입하기</div> <br>
+					  <div id="naverIdLogin">네이버로 로그인하기</div> <br>
 	  <!-------------------------------------------- 네이버 아이디로 로그인 버튼 노출 영역  -------------------------------------------------------->
 					
 					
@@ -224,7 +257,7 @@
 					      <div class="js-form-message form-group">
 						        <label class="form-label" for="id_email">이메일 
 						        </label>
-						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" onkeypress="duplCheck()"> 
+						        <input type="email" class="form-control" name="id_email" id="id_email" placeholder="이메일" onkeyup="duplCheck(event)"> 
 						        <button type="button" class="btn btn-primary right-btn" onclick="emailCheck()">전송</button>
 						        
 					  	        	<span style="display: none;" id="idcheckT">
