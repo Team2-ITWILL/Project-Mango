@@ -20,7 +20,7 @@
 
 
 <!-- jQuery UI CSS파일  -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
+<link rel="stylesheet"  href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
 
 <!-- jQuery 기본 js파일 -->
 <!-- jquery js와 UI버전이 같아야 datepicker가 정상적으로 작동한다!! -->

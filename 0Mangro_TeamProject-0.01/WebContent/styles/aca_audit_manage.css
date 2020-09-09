@@ -2,6 +2,7 @@
 
 *{
 	font-family:'Noto Sans KR', sans-serif;
+
 }
 
 input.inputaudit{
@@ -43,7 +44,7 @@ h4.section_title{
 	margin: auto;
 	margin-left: 0;
 	margin-top: 40px;
-	margin-bottom: 40px;
+	margin-bottom: 40.1px;
 }
 
 .btn-primary1:HOVER {

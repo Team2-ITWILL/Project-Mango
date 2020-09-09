@@ -130,7 +130,7 @@
         </div>
  		<!-- recaptcha api(e) -->   
  		
- 		
+ 		 
 	    <div class="btn_confirm write_div">
 	        <a href="./board.php?bo_table=qna" class="btn_cancel btn">취소</a>
 	        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">

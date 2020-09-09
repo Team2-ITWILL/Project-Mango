@@ -76,7 +76,7 @@ int qna_re_seq =Integer.parseInt(request.getParameter("qna_re_seq"));
 				    	<input type = "hidden" name = "qna_notice" value = "0" checked="checked" style="display: none;">
 						<input type = "hidden" name = "qna_notice" value = "1" style="font-family: 'Noto Sans KR', 'sans-serif'">
 			    </c:otherwise>
-	    	</c:choose>
+	    	</c:choose> 
 	  	</div>
 	
 	
