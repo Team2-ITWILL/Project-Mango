@@ -1,3 +1,4 @@
+
 package mango.member.action;
 
 import java.io.PrintWriter;
@@ -69,4 +70,5 @@ public class MemberProfileModifyAction implements Action{
 		return forward;
 	} // excute 끝
 	
+
 }

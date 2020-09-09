@@ -45,8 +45,8 @@ public class AcademyRegisterGetListAction implements Action{
 		
 		//=================학원관리자 신청 리스트 가져오기================
 		AcademyRegisterDAO arDAO = new AcademyRegisterDAO();
-//		List<AcademyRegisterBean> list = arDAO.getAllRegisterList(email);
-//		request.setAttribute("registerList", list);
+		List<AcademyRegisterBean> list = arDAO.getAllRegisterList(email);
+		request.setAttribute("registerList", list);
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

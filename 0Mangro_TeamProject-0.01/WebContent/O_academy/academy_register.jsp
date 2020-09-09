@@ -202,19 +202,21 @@ li.thirdKey {
 								   	
 									<!-- <div class="sidebar_section_title">키워드 검색</div> -->
 									<div class="sidebar_tags">
-										<ul class="tags_list">
-											<li class="firstKey traffic">교통이 편리한</li>
-											<li class="firstKey stdRoom">스터디룸 있는</li>
-											<li class="firstKey clean">시설이 깨끗한</li>
-											<li class="secondKey restaurant">식당가 인근</li>
-											<li class="secondKey audit">청강 신청 가능한</li>
-											<li class="secondKey room">기숙사가 있는</li>
+										<ul class="tags_list first">
+											<li class="firstKey traffic" onclick="selectKey(this)">교통이 편리한</li>
+											<li class="firstKey stdRoom" onclick="selectKey(this)">스터디룸 있는</li>
+											<li class="firstKey clean" onclick="selectKey(this)">시설이 깨끗한</li>
 										</ul>
-										<ul class="tags_list">
-											<li class="thirdKey long">중장기(6개월 이상)</li>
-											<li class="thirdKey car">차량운행이 있는</li>
-											<li class="thirdKey level">레벨테스트가 있는</li>
-											<li class="thirdKey sat">수능대비강의가 있는</li>
+										<ul class="tags_list second">	
+											<li class="secondKey restaurant" onclick="selectKey(this)">식당가 인근</li>
+											<li class="secondKey audit" onclick="selectKey(this)">청강 신청 가능한</li>
+											<li class="secondKey room" onclick="selectKey(this)">기숙사가 있는</li>
+										</ul>
+										<ul class="tags_list third">
+											<li class="thirdKey long" onclick="selectKey(this)">중장기(6개월 이상)</li>
+											<li class="thirdKey car" onclick="selectKey(this)">차량운행이 있는</li>
+											<li class="thirdKey level" onclick="selectKey(this)">레벨테스트가 있는</li>
+											<li class="thirdKey sat" onclick="selectKey(this)">수능대비강의가 있는</li>
 										</ul>
 									</div>
 								</div>
@@ -326,41 +328,85 @@ li.thirdKey {
 <script src="./styles/dist/js/sidebarmenu.js"></script>
 
 <script>
-var key = document.querySelector("input[name='keyword']");
-var li = document.querySelectorAll(".tags_list li");	
-console.log(li);
 
-//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
-//for(var i in li){		(X)
-for(var i=0; i<li.length; i++){	
+function selectKey(selectedTag){
+	console.log(selectedTag);
 	
-	//addEventListenr 위에 코드를 쓰니까 작동함
-	//밑에서는 event로 값을 받아서 구현해야될듯?
-	//console.log(li[i].getAttribute("class"));
-	//console.log(li[i].className);
+	//클래스 속성명
+	var attr = selectedTag.getAttribute("class");
 	
-	var attr = li[i].getAttribute("class");
-	var idx = attr.indexOf('firstKey');
-	var lengthOfStr = attr.length;
-	//var lastidx = attr.lastIndexOf('y');
-	console.log(attr);
-	console.log(idx);
-	//console.log(lastidx);
-	//console.log(idx + 2);
-	console.log('length : ' + lengthOfStr)
+	//끝점으로부터 처음 만나는 문자열의 위치
+	//var idx = attr.lastIndexOf("firstKey");
+	var idx = attr.lastIndexOf("y");		
 	
-	li[i].addEventListener("click", function(event){
+	//클래스 속성명 중 ~~key 이후의 속성명을 반환받아 keyword(input tag)에 저장
+	var keyword = document.querySelector("input[name='keyword']");
+	keyword.value = attr.substr(idx + 2); 
+	
+	
+	//console.log('idx : ' + idx);
+	console.log('keyword.value : ' + keyword.value);
+	
+	selectedTag.addEventListener("click", function(event){		
 		
+		//속성명 첫 글자(first, second, third 구분)
+		//var firstIdx = attr.substr(0);
+		//console.log(firstIdx);
 		
+		console.log('attr : ' + attr);
+		console.log(attr.indexOf("firstKey"));
 		//'firstKey'를 탐색했을 때 문자열이 존재한다면
-		if(idx != -1){
-			key.value = attr.substr(idx + 2, lengthOfStr);
-			console.log('length : ' + lengthOfStr)
-			console.log('key.value : ' + key.value);
+		if(attr.indexOf("firstKey") != -1){
+			alert("firstKey");
 			
 		} 
 	});
 }
+
+/* $(function(){
+	
+
+	var keyword = document.querySelector("input[name='keyword']");
+	var li = document.querySelectorAll(".tags_list li");	
+	console.log(li);
+
+
+	//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
+	//for(var i in li){		(X)
+	for(var i=0; i<li.length; i++){		
+		
+		//클래스 속성명
+		var attr = li[i].getAttribute("class");
+		//console.log(li[i].className);
+		
+		//끝점으로부터 처음 만나는 문자열의 위치
+		//var idx = attr.lastIndexOf("firstKey");
+		var idx = attr.lastIndexOf("y");	
+		
+		//클래스 속성명 중 ~~key 이후의 속성명을 반환받아 keyword(input tag)에 저장
+		keyword.value = attr.substr(idx + 2); 
+		
+		
+		//console.log('idx : ' + idx);
+		console.log('keyword.value : ' + keyword.value);
+		
+		li[i].addEventListener("click", function(event){		
+			
+			//속성명 첫 글자(first, second, third 구분)
+			//var firstIdx = attr.substr(0);
+			//console.log(firstIdx);
+			
+			console.log('attr : ' + attr);
+			console.log(attr.indexOf("firstKey"));
+			//'firstKey'를 탐색했을 때 문자열이 존재한다면
+			if(attr.indexOf("firstKey") != -1){
+				//alert("firstKey");
+				
+			} 
+		});
+	}
+}); */
+
 	
 </script>
 
