@@ -51,6 +51,7 @@ public class AcademyRegisterDAO extends DBconnection{
 		return result;
 	}
 	
+	// 등록요청이 존재하는지 확인
 	public int CheckDataExists(String id){
 		
 		int result = 0;
@@ -78,6 +79,7 @@ public class AcademyRegisterDAO extends DBconnection{
 		return result;
 	}
 	
+	// 관리자인지 확인하는 메서드
 	public int CheckAdminUser(String id){
 		
 		int result = 0;
@@ -105,17 +107,45 @@ public class AcademyRegisterDAO extends DBconnection{
 			resourceClose();
 		}		
 		return result;
-	}
+	} // CheckAdminUser() 끝
+	
+	public String getRegisterEmail(String acaName){
+		
+		String mem_email = "0";
+		
+		try {
+			getConnection();
+			sql ="select mem_email from academy_register where aca_name =?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acaName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				mem_email = rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("getRegisterEmail()에서 예외 발생");
+			e.printStackTrace();
+		} finally {
+			resourceClose();
+		}
+		
+		
+		return mem_email;
+		
+	} // getRegisterEmail() 끝
 	
 	public List<AcademyRegisterBean> getAllRegisterList(String id){
 		List<AcademyRegisterBean> list = new ArrayList<AcademyRegisterBean>();
 		try {
 			getConnection();
-			
+
 			String sql = "select * from academy_register";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+
 			while(rs.next()){
 				//LocalDate이 NULL이면 에러가 발생하기 때문에 미리 처리
 				LocalDate register_date = null;
@@ -124,7 +154,7 @@ public class AcademyRegisterDAO extends DBconnection{
 					register_date = rs.getDate("register_date").toLocalDate();
 				if(rs.getDate("confirm_date") != null)		
 					confirm_date = rs.getDate("confirm_date").toLocalDate();				
-				
+
 				AcademyRegisterBean vo 
 				 = new AcademyRegisterBean
 					(
@@ -139,10 +169,10 @@ public class AcademyRegisterDAO extends DBconnection{
 						register_date,
 						confirm_date													
 					);				
-				
+
 				list.add(vo);
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("getRegisterList()에서 예외 발생");
 			e.printStackTrace();
@@ -151,13 +181,13 @@ public class AcademyRegisterDAO extends DBconnection{
 		}		
 		return list;
 	}
-	
+
 	public int changeConfirmDate(String id, int flag){
-		
+
 		int result = 0;
 		try {
 			getConnection();
-			
+
 			String sql = null;
 			//승인
 			if(flag == 1){
@@ -166,7 +196,7 @@ public class AcademyRegisterDAO extends DBconnection{
 					+ "where mem_email = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);	
-				
+
 			//승인 취소
 			}else{
 				sql = "update academy_register "
@@ -175,9 +205,9 @@ public class AcademyRegisterDAO extends DBconnection{
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);					
 			}			
-						
+
 			result = pstmt.executeUpdate();				
-			
+
 		} catch (Exception e) {
 			System.out.println("changeConfirmDate()에서 예외 발생");
 			e.printStackTrace();
@@ -185,7 +215,7 @@ public class AcademyRegisterDAO extends DBconnection{
 			resourceClose();
 		}		
 		return result;
-	}
+	}	
 	
 	
-}
+} // AcademyRegisterDAO클래스 끝

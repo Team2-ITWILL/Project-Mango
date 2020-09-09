@@ -2,6 +2,7 @@ package mango.member.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,25 +25,65 @@ public class MemberUpdateAction implements Action{
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String realFolder = request.getServletContext().getRealPath("/");
+		String email = (String)request.getSession().getAttribute("id_email"); // 이메일
+		String realFolder = request.getServletContext().getRealPath("/O_member_regFiles/upload/images/");
 		
-		int max = 1000 * 1024 * 1024; 
+		int max = 10 * 1024 * 1024; 
+		
 		MultipartRequest multi = new MultipartRequest(request, realFolder, max, "UTF-8", new DefaultFileRenamePolicy()); 
-		
 		String memName = multi.getParameter("memName"); // 이름
-		String memEmail = multi.getParameter("memEmail"); // 이메일
 		String memPwd = multi.getParameter("memPwd"); // 기존 비밀번호
 		String newPw = multi.getParameter("newPw1"); // 변경할 비밀번호
+		 
 		
-//		String filename = multi.getFilesystemName("fileName"); // 서버에 실제로 업로드된 파일명
-//		String originFilename = multi.getOriginalFileName("fileName"); // 업로드한 파일의 원본명
+		
+		
+/* ------------------------- 학원 프로필 이미지 변경 -------------------------  */
+	
+		Enumeration e = multi.getFileNames();
 
-		MemberBean mb = new MemberBean();
-		mb.setMemName(memName);
-		mb.setMemEmail(memEmail);
-		mb.setMemPwd(memPwd);
+		while(e.hasMoreElements()){		
+			
+	 		String filename = (String)e.nextElement();	 		 		
+	 		String org_file_name = "O_member_regFiles/upload/images/" + multi.getOriginalFileName(filename);
+	 		String stored_file_name = "O_member_regFiles/upload/images/" + multi.getFilesystemName(filename);
+	 		 		
+	  		System.out.println("org_file_name : " + org_file_name); 			
+	  		System.out.println("org_file_name : " + stored_file_name); 			
+	  		
+	  			MemberDAO mDAO = new MemberDAO();
+	  			int result = mDAO.updateProfileImg(stored_file_name, email);
+	  			if(result == 0){
+	  				PrintWriter out = response.getWriter();
+	  				out.println("<script>");
+	  				out.println("alert('이미지 변경 중 오류가 발생하였습니다. 담당자에게 문의하세요.');");		
+	  				out.println("location.href='./MemberUpdate.me'");
+	  				out.println("</script>");
+	  				out.close();
+	  			}	  			
+	  		
+		} // while() 끝
+		
+		
+		
+		
+/* ------------------------- 프로필 이미지 가져오기 -------------------------  */
 		
 		MemberDAO mdao = new MemberDAO();
+		String profileImg = mdao.getProfileImg(email);
+		
+		request.setAttribute("profileImg", profileImg);
+
+		
+		
+		
+/* ------------------------- 회원 정보 수정 메서드 -------------------------  */
+		
+		MemberBean mb = new MemberBean();
+		mb.setMemName(memName);
+		mb.setMemEmail(email);
+		mb.setMemPwd(memPwd);
+		
 		boolean result = mdao.updateMember(mb, newPw);
 		
 		if(result == true){
@@ -58,6 +99,7 @@ public class MemberUpdateAction implements Action{
 			out.print("</script>");
 			
 			return null;
+			
 		}else{
 			response.setContentType("text/html; charset=utf-8");
 			
@@ -67,9 +109,16 @@ public class MemberUpdateAction implements Action{
 			out.print("history.back(-1);");
 			out.print("</script>");
 			
-			return null;
 		}
+
 		
+		
+		
+		ActionForward forward = new ActionForward();
+		forward.setRedirect(false);
+		forward.setPath("./MemberUpdate.me");
+		
+		return forward;
 	} // excute() 끝
 	
 }

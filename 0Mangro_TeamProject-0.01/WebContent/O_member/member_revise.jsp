@@ -1,7 +1,7 @@
 <%@page import="mango.member.db.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="mango.member.db.*"%> 
+<%@ page import="mango.member.db.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,6 +16,9 @@
 <link rel="stylesheet" type="text/css" href="styles/member_revise.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
 
+<!------------------------------------------ [ 제이쿼리 ] --------------------------------------------------------------->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
 
 <style type="text/css">
 	input {height: 50px;}
@@ -26,22 +29,34 @@
 
 
 </head>
-
 <%
-   // <------------------ 로그인 세션 값 여부 ---------------------->
-		String id=(String)session.getAttribute("id");
-	
-		//세션값이 없으면  로그인 페이지로 이동 ./MemberLogin.me
-		if(id == null){
-		   response.sendRedirect("./MemberLogin.me");
-		}
-   // <------------------ 로그인 세션 값 여부 ---------------------->
+// <------------------ 로그인 세션 값 여부 ---------------------->
+	String id = (String)session.getAttribute("id_email");
+
+	//세션값이 없으면  로그인 페이지로 이동 ./MemberLogin.me
+	if(id == null){
+	   response.sendRedirect("./MemberLogin.me");
+	}
+// <------------------ 로그인 세션 값 여부 ---------------------->
+%>
+<body>
+<% 	
+// <------------------ 회원정보 가져오기 ----------------------->	
+	MemberDAO mdao = new MemberDAO();
+	String email = (String)session.getAttribute("id_email");
+	String name = mdao.selectMember(email);
+// <------------------ 회원정보 가져오기 ----------------------->	
+
+
+
+//<------------------ 프로필 가져오기 ---------------------->
+	String profileImg1 = mdao.getProfileImg(email);
+//<------------------ 프로필 가져오기 ---------------------->
 %>
 
-
-<body>
 <script type="text/javascript">
-	<!----------------- 회원 정보 수정 필수 입력 -------------------->
+// <----------------- 회원 정보 수정 필수 입력 -------------------->
+
 	$(function update_chk(){
 		
 		$("#update_chk").submit(function(){
@@ -78,16 +93,106 @@
 			
 		}); // submit() 끝
 	}); // update_chk() 끝
+// <----------------- 회원 정보 수정 필수 입력 -------------------->
 	
+	
+	
+// <----------------- 회원 정보 프로필 수정  --------------------->
+	
+/* 	window.onload = function(){
+	
+	var imgTag = document.querySelector(".rounded-circle");
+	var imgPath = '${profileImg}';
+	console.log(imgPath);
+	
+		if(imgPath == null || imgPath == ''){
+			imgTag.src = "./images/user_profile/jadu_prifile.jpg";
+		}else{
+			imgTag.src = './' + imgPath;
+		}
+
+	}
+	 */
+	
+	
+	/* 변경하기 버튼 파일 선택 버튼으로 변경 */
+	$(document).ready(function(){
+		var hideBtn = document.querySelector(".rounded-circle");
+		var fileBtn = document.querySelector("#file_img");
+		var submitBtn = document.querySelector(".hideBtn");
+		
+		hideBtn.onclick = function(){
+			fileBtn.click();		
+		}
+		
+		fileBtn.onchange = function(){
+			setThumbnail(this);
+			
+			var fileInfo = fileBtn.files[0];
+			console.log(fileBtn);
+			console.log(fileBtn.name);
+			console.log(fileInfo);
+		}			
+		
+		submitBtn.onclick = function(){				
+			
+			var form = document.querySelector(".member_reFr");			
+			form.action = "./MemberUpdateAction.me";				
+			form.submit();	
+		} 		
+		
+	}); // .ready() 끝
+
+	
+	
+	/* 사진 선택 시 미리보기 */
+ 	function setThumbnail(fileBtn){
+
+		var fileInfo = fileBtn.files[0];
+		var reader = new FileReader();			
+		
+		reader.onload = function(){
+			document.querySelector(".rounded-circle").src = reader.result;
+		}
+		
+		if(fileInfo){
+			reader.readAsDataURL(fileInfo);
+		}	
+	
+	} // setThumbnail() 끝
+	
+	
+	
+	/* 사진 업로드 */
+	function uploadFile(fileTag, filePath) {
+
+		var formData = new FormData();
+		formData.append("file", fileTag.files[0]);
+
+		console.log('fileTag.files[0] : ' + fileTag.files[0]);
+		console.log('fileTag : ' + fileTag);
+
+		$.ajax({
+				data : formData,
+				type : "POST",
+				url : "./MemberUpdateAction.me",
+				contentType : false,
+				processData : false,
+				enctype : 'multipart/form-data',
+				success : function(data) {
+					filePath.value = data;
+					
+					// 확인용 출력문
+					console.log(filePath.value);							
+					console.log('data : ' + data);
+				}
+		}); // $.ajax 끝
+		
+	} // uploadFile() 끝 
+
+// <----------------- 회원 정보 프로필 수정 ---------------------->
 </script>
 
-<% 	
-// <------------------ 회원정보 가져오기 ----------------------->	
-	String email = (String)session.getAttribute("id_email");
-	MemberDAO mdao = new MemberDAO();
-	String name = mdao.selectMember(email);
-// <------------------ 회원정보 가져오기 ----------------------->	
-%>
 
 
 
@@ -105,13 +210,19 @@
 			      <form class="member_reFr" action="./MemberUpdateAction.me" method="post" enctype="multipart/form-data" id="update_chk" onsubmit="update_chk()">
 				      
       					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->
-						  <img src="images/user_profile/jadu_prifile.jpg" alt="user" class="rounded-circle">
+						  <img src="<%=profileImg1%>" alt="user" class="rounded-circle" >
 						  
 					      <div class="js-form-message form-group">
 							        	<label class="form-label" for="anony_file"><span>프로필사진</span></label>
 						              	<div class="form-group files">
-						                	<input type="file" class="form-control color file"  multiple="">
-							          		<button type="button" class="hideBtn" onchange="changeValue(this)">사진변경하기</button>
+						                	<input type="file" 
+						                		   class="form-control color file" 
+						                		   id="file_img" 
+						                		   name="file_img" 
+						                		   multiple=""
+						                	>
+						                	<input type="hidden" name="mem_profileImg">
+							          		<button type="button" class="hideBtn">사진변경하기</button>
 						              	</div>								
 					      </div>
 

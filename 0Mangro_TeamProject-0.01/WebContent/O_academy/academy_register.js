@@ -89,9 +89,11 @@ window.onload = function(){
 				//datalist가 들어갈 input 태그
 				var aca_search_result = document.querySelector("input[name='aca_search_result']");
 				
-				//재검색을 위하여 input태그의 기존 검색결과 삭제
+				//datalist 초기화
 				searchList.innerHTML = "";
+				//재검색을 위하여 input태그의 기존 검색결과 삭제
 				aca_search_result.value = "";
+				aca_search_result.removeAttribute('list');
 				
 				//data : JSONArray
 				//학원 명이 여러 개 검색될 경우 처리 -> datalist
@@ -118,12 +120,50 @@ window.onload = function(){
 							aca_name.value = data[i].aca_name;	
 						}								
 					}
-				});
+				}); //aca_search_result.addEventListener
+				
+				
+			} //ajax:success
+		}); //ajax
+	}); //search_Btn.addEventListener		
+	
+	
+	//=======================키워드 선택==========================
+	
+//	https://jsdev.kr/t/document-queryselectorall-addeventlistener/5170/2
+//	document.querySelectorAll 에서는 addEventListener가 왜 안될까요?
+//	document.getElementById는 단일 DOM 객체를 가져오지만, 
+//	document.querySelectorAll은 NodeCollection을 가져오기 때문입니다.
+//	또한 NodeCollection은 숫자 인덱스를 가지고 있고 length property를 가지고 있지만, 
+//	배열은 아니므로 forEach등의 Iterator Function을 호출할 수 없습니다.
+	
+	/*var key = document.querySelector("input[name='keyword']");
+	var li = document.querySelectorAll(".tags_list li");	
+	console.log(li);
+	
+	//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
+	//for(var i in li){		(X)
+	for(var i=0; i<li.length; i++){	
+		
+		li[i].addEventListener("click", function(event){
+			
+			var idx;			
+			console.log(li[i].className);
+			console.log(li[i].getAttribute("class"));
+			
+			//'firstKey'를 탐색했을 때 문자열이 존재한다면
+			if((idx = li[i].getAttribute('class').indexOf('firstKey')) != -1){
+				console.log(idx);
+				console.log(idx+1);
+				console.log(idx+2);
 				
 			}
 		});
-	});	
-}
+	}
+		*/
+	
+	
+} //window.onload()
 
 //////////////////////////////////////////////////////////////
 // [input type='file' 버튼 숨기기] -> hideBtn 뒤에 가려짐
