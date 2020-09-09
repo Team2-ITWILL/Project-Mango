@@ -89,6 +89,7 @@ public class MyAnonyBoardListAction implements Action {
 			// 해당 계정이 작성한 익명글 목록을 반환하는 메소드 사용
 			List<AnonyBoardBean> myAnonyList = new ArrayList<AnonyBoardBean>();
 			myAnonyList = andao.getANBoardList(startRow,eachPageSize,anBean); 
+			System.out.println("마이페이지 작업위해 dao에 넘긴 회원정보값"+anBean.getMem_email());
 				
 			//System.out.println("action페이지에서 보는 mem_email"+mem_email);
 			// 댓글의 총 개수를 반환하는 메소드 사용
@@ -102,14 +103,15 @@ public class MyAnonyBoardListAction implements Action {
 				comments.put(myAnonyList.get(i).getAno_board_num(), commDAO.getCountANBComments(myAnonyList.get(i).getAno_board_num()));
 				System.out.println("put("+myAnonyList.get(i).getAno_board_num()+","+commDAO.getCountANBComments(myAnonyList.get(i).getAno_board_num())+")");
 			}
-					
+			
+			int anboardCount = andao.getAnonyBoardCount(anBean);
 		
 			// 글 List를 request영역에 저장
 			request.setAttribute("myAnonyList", myAnonyList);
-			request.setAttribute("myAnonyListCount", myAnonyList.size());
+			request.setAttribute("anboardCount", anboardCount);
 			
 			System.out.println("myAnonyList 내가 쓴 글리스트 ! "+myAnonyList);
-			System.out.println("myAnonyListCount내가 쓴 글갯수 ! "+myAnonyList.size());
+			System.out.println("myAnonyListCount내가 쓴 글갯수 ! "+anboardCount);
 			
 			// 댓글 개수 정보를 (글번호, 댓글수) HashMap 데이터형태로 request영역에 저장
 			request.setAttribute("comments", comments);

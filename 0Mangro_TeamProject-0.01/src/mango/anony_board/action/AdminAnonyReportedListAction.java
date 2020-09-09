@@ -33,14 +33,14 @@ public class AdminAnonyReportedListAction implements Action {
 		AnonyBoardBean anBean = new AnonyBoardBean();
 		
 		// [메소드 사용에 필요한 bean객체에 값 세팅]
-		anBean.setMem_email(mem_email);
+		//anBean.setMem_email();
 		
 		// [페이징 처리를 위한 값 세팅]--------------------------------------------------------------------------
 		
 		// [my_anony_board.jsp로부터 클릭한 페이지번호 받아오기]
 		String clickedPageNum = request.getParameter("clickedPageNum");
 		
-		// [해당 계정이 쓴 글의 총 개수]
+		// [신고글의 총 개수]
 		int count = andao.getAnonyBoardCount(anBean);
 		request.setAttribute("count", count);
 		
@@ -103,12 +103,13 @@ public class AdminAnonyReportedListAction implements Action {
 		}
 				
 	
+		int anboardCount = andao.getAnonyBoardCount(anBean);
+		
 		// 글 List를 request영역에 저장
 		request.setAttribute("myAnonyList", myAnonyList);
-		request.setAttribute("myAnonyListCount", myAnonyList.size());
 		
-		System.out.println("myAnonyList 내가 쓴 글리스트 ! "+myAnonyList);
-		System.out.println("myAnonyListCount내가 쓴 글갯수 ! "+myAnonyList.size());
+		//System.out.println("myAnonyList 내가 쓴 글리스트 ! "+myAnonyList);
+		//System.out.println("myAnonyListCount내가 쓴 글갯수 ! "+anboardCount);
 		
 		// 댓글 개수 정보를 (글번호, 댓글수) HashMap 데이터형태로 request영역에 저장
 		request.setAttribute("comments", comments);
