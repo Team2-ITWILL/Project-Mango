@@ -262,20 +262,37 @@ public class MemberFrontController extends HttpServlet {
 			
 /* ---------------------------------- 아이디 중복 체크 시작  ---------------------------------- */	
 		
-	}else if(command.equals("/MemberIDcheckAction.me")){
+		}else if(command.equals("/MemberIDcheckAction.me")){
+			
+			action = new MemberIDcheckAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("MemberIDcheckAction.me : "+ e);
+			}
+	
+/* ---------------------------------- 아이디 중복 체크 끝  ---------------------------------- */	
 		
-		action = new MemberIDcheckAction();
 		
-		try {
-			forward = action.excute(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("MemberIDcheckAction.me : "+ e);
+		
+/* ---------------------------------- 회원 정보 프로필 사진 수정 시작  ---------------------------------- */	
+	
+		}else if(command.equals("/MemberProfileModifyAction.me")){
+			
+			action = new MemberProfileModifyAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("MemberProfileModifyAction.me : " + e);
+			}
+		
+/* ---------------------------------- 회원 정보 프로필 사진 수정  ---------------------------------- */	
+	
 		}
-	
-/* ---------------------------------- 아이디 중복 체크 시작  ---------------------------------- */	
-	
-	}		
 		
 		
 		

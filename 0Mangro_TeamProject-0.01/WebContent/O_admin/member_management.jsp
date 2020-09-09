@@ -221,36 +221,57 @@
                     </div>
                     
 
-                    
+<%-------------------------------------------------- 페이징 영역  ------------------------------------------------------------------------%>
+
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
+                    
+                    <c:if test="${count > 0}">
+                    	<c:set var="endPage" value="${endPage}" />
+                    	<c:if test="${endPage gt pageCount}">
+                    		<c:set var="endPage" value="${pageCount}" />
+                    	</c:if>
+                    
+                    
                     <!-- << (첫페이지로 가기) -->
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
+					  <li class="page-item" > 
+					  	<a class="page-link prev" href="./MemberManagementAction.me?&pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
 					  
 					  
-					<c:if test="${count != 0}">   
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					   <c:if test="${startPage - pageBlock < 0}">
-					   		<c:set var="pN" value="1"/>
-					   </c:if>
-
-					   <c:if test="${startPage - pageBlock > 0}">
-					  		<c:set var="pN" value="${startPage - pageBlock}"/>
-					   </c:if>	
-
-					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
+					  <li class="page-item">
+					   <c:choose>
+	                    	<c:when test="${startPage - pageBlock <= 0}">
+							  	<a class="page-link prev" href="./MemberManagementAction.me?&pageNum=1">
+							  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+							  	</a>
+						  	</c:when>
+						  	<c:otherwise>
+							  	<a class="page-link prev" href="./MemberManagementAction.me?&pageNum=${startPage-pageBlock}">
+							  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+							  	</a>
+						  	</c:otherwise>
+						</c:choose>	
 					  </li>
 					  
-					  
-					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					<!-- 현재 페이지 -->
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<c:choose>
+							  	 <c:when test="${currentPage == i}">
+								  	<li class="page-item  active">
+						  				<a class="page-link" href="${Page}&pageNum=${i}">${i}</a>
+								  	</li>
+							  	 </c:when>
+							  	 <c:otherwise>
+								  	<li class="page-item">
+						  			<li class="page-item">
+						  				<a class="page-link" href="${Page}&pageNum=${i}">${i}</a>
+								  	</li>
+							  	 </c:otherwise>
+						</c:choose>
 					</c:forEach>
 					  
                     
