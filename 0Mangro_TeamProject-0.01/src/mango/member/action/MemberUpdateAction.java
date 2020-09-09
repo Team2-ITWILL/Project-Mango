@@ -34,7 +34,7 @@ public class MemberUpdateAction implements Action{
 		String memName = multi.getParameter("memName"); // 이름
 		String memPwd = multi.getParameter("memPwd"); // 기존 비밀번호
 		String newPw = multi.getParameter("newPw1"); // 변경할 비밀번호
-		
+		 
 		
 		
 		
@@ -71,6 +71,7 @@ public class MemberUpdateAction implements Action{
 		
 		MemberDAO mdao = new MemberDAO();
 		String profileImg = mdao.getProfileImg(email);
+		
 		request.setAttribute("profileImg", profileImg);
 
 		
