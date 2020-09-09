@@ -616,7 +616,6 @@ public class QnaBoardDAO extends DBconnection{
   // 답변 목록을 출력할 때 사용
   public List<QnaBoardBean> SearchReWriteList(int num){
 	  
-    
 	List<QnaBoardBean> qnaBoardList = new ArrayList();
 	
     
@@ -719,6 +718,230 @@ public class QnaBoardDAO extends DBconnection{
 	    return check;
 	  
 	  } // DeleteQnaBoard 끝
+  
+  
+  
+  
+  
+  //////////////////////////// 관리자 메뉴의 문의 답변 관리를 위한 메서드들 ////////////////////////////////////////
+  
+  
+  
+  
+  
+  
+  // 문의글의 개수를 출력하는 메서드
+  public int getQnaManagementCount(){
+	  
+	  int count = 0;
+	  
+	  
+	  
+	  try{
+		  
+		  getConnection();
+		  
+
+		  sql = "select count(*) from qna_board where qna_notice = 0 And qna_re_lev = 0";
+		  pstmt = con.prepareStatement(sql);
+		  rs = pstmt.executeQuery();
+		  
+		  if(rs.next()){
+			  count = rs.getInt(1);
+		  }
+		  
+	  } catch(Exception e) {
+		
+		  System.out.println("getQnaManagementCount() 에서 오류 " + e);
+	  
+	  } finally {
+		  
+		resourceClose();
+
+	  }
+	    
+	    
+	  return count;
+	  
+	  
+  } // getQnaManagementCount 끝
+  
+  
+  
+
+  
+  
+  
+  
+  // 관리자 페이지에서 현재 고객센터에 존재하는 문의글의 리스트를 출력하는 메서드
+  public List<QnaBoardBean> getQnaManagementList(int startRow, int pageSize){
+	  
+    
+	List<QnaBoardBean> qnaBoardList = new ArrayList();
+    
+	
+    try{
+    	
+    	
+      getConnection();
+      
+      sql = "select * from qna_board where qna_notice = 0 order by qna_re_ref desc, qna_re_seq asc limit ?, ?";
+      pstmt = con.prepareStatement(sql);
+      pstmt.setInt(1, startRow);
+      pstmt.setInt(2, pageSize);
+      rs =  pstmt.executeQuery();
+      
+
+      while (rs.next()){
+    	  
+    	  
+        QnaBoardBean qbean = new QnaBoardBean();
+
+        qbean.setQna_board_num(rs.getInt("qna_board_num"));
+        qbean.setMem_email(rs.getString("mem_email"));
+        qbean.setQna_board_pwd(rs.getString("qna_board_pwd"));
+        qbean.setQna_board_title(rs.getString("qna_board_title"));
+        qbean.setQna_board_content(rs.getString("qna_board_content"));
+        qbean.setQna_board_read(rs.getInt("qna_board_read"));
+        qbean.setQna_board_date(rs.getTimestamp("qna_board_date"));
+        qbean.setQna_board_ip(rs.getString("qna_board_ip"));
+        qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
+        qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
+        qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+        qbean.setQna_notice(rs.getString("qna_notice"));
+
+        qnaBoardList.add(qbean);
+        
+      }
+
+      
+    } catch (Exception e) {
+    	
+      System.out.println("getQnaManagementList()에서 오류" + e);
+      
+    } finally{
+    	
+      resourceClose();
+    
+    }
+
+    return qnaBoardList;
+  
+    
+  } // getQnaManagementList 끝
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /////////////////////////////// MYPage에서 내가 쓴 목록 출력////////////////////////////////////////////// 
+  // 내가 쓴 문의글의 개수 출력
+  public int getMYQnaCount(String id_email){
+	  
+	  int count = 0;
+	  
+	  
+	  
+	  try{
+		  
+		  getConnection();
+		  
+
+		  sql = "select count(*) from qna_board where qna_notice = 0 And qna_re_lev = 0 And mem_email = ?";
+		  pstmt = con.prepareStatement(sql);
+		  pstmt.setString(1, id_email);
+		  rs = pstmt.executeQuery();
+		  
+		  if(rs.next()){
+			  count = rs.getInt(1);
+		  }
+		  
+		  
+	  } catch(Exception e) {
+		
+		  System.out.println("getMYQnaCount() 에서 오류 " + e);
+	  
+	  } finally {
+		  
+		resourceClose();
+
+	  }
+	    
+	    
+	  return count;
+	  
+	  
+ } // getMYQnaCount 끝
+  
+  
+  
+  
+  
+  
+  public List<QnaBoardBean> getMyQnaList(int startRow, int pageSize, String mem_email){
+	  
+	    
+	List<QnaBoardBean> qnaBoardList = new ArrayList();
+    
+	
+    try{
+    	
+    	
+      getConnection();
+      
+      sql = "select * from qna_board where mem_email = ? AND qna_notice = 0  order by qna_re_ref desc, qna_re_seq asc limit ?, ?";
+      pstmt = con.prepareStatement(sql);
+      pstmt.setString(1, mem_email);
+      pstmt.setInt(2, startRow);
+      pstmt.setInt(3, pageSize);
+      rs =  pstmt.executeQuery();
+      
+
+      while (rs.next()){
+    	  
+    	  
+        QnaBoardBean qbean = new QnaBoardBean();
+
+        qbean.setQna_board_num(rs.getInt("qna_board_num"));
+        qbean.setMem_email(rs.getString("mem_email"));
+        qbean.setQna_board_pwd(rs.getString("qna_board_pwd"));
+        qbean.setQna_board_title(rs.getString("qna_board_title"));
+        qbean.setQna_board_content(rs.getString("qna_board_content"));
+        qbean.setQna_board_read(rs.getInt("qna_board_read"));
+        qbean.setQna_board_date(rs.getTimestamp("qna_board_date"));
+        qbean.setQna_board_ip(rs.getString("qna_board_ip"));
+        qbean.setQna_re_lev(rs.getInt("qna_re_lev"));
+        qbean.setQna_re_ref(rs.getInt("qna_re_ref"));
+        qbean.setQna_re_seq(rs.getInt("qna_re_seq"));
+        qbean.setQna_notice(rs.getString("qna_notice"));
+
+        qnaBoardList.add(qbean);
+        
+      }
+
+      
+    } catch (Exception e) {
+    	
+      System.out.println("getMyQnaList()에서 오류" + e);
+      
+    } finally{
+    	
+      resourceClose();
+    
+    }
+
+    return qnaBoardList;
+  
+    
+  } // getMyQnaList 끝
+  
+  
+  
+  
   
   
   

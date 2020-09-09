@@ -19,7 +19,8 @@ public class QnaBoardListAction implements Action {
 
     QnaBoardDAO qbao = new QnaBoardDAO();
     List<QnaBoardBean> qnaboardList = null;
-
+    
+    
     int count = qbao.getQnaBoardCount();
     int pageSize = 10;
     String pageNum = request.getParameter("pageNum");

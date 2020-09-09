@@ -20,13 +20,6 @@
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
   
-<script>
-	window.onload = function(){
-		
-	
-		
-	}
-</script>    
 </head>
 
 <body>
@@ -129,7 +122,7 @@
 						</li>
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/qna_management.jsp" 
+                        	<a class="sidebar-link sidebar-link" href="./QnaManagement.qna" 
                         	   aria-expanded="false" >
                         	
                         	<i data-feather="edit" class="feather-icon"></i><span
@@ -144,7 +137,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/blacklist_management.jsp"
+                        	<a class="sidebar-link sidebar-link" href="./AdminAnonyReportedListAction.anob"
                                 aria-expanded="false"><i class="fa fa-thumb-tack" aria-hidden="true"></i>
                                 <span class="hide-menu">회원 신고</span>
                             </a>

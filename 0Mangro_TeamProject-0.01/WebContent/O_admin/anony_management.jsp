@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,8 +21,30 @@
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
-  
-    
+<style type="text/css">
+
+.prev, .next {font-size: 1em;}
+.thead-light tr th {border-right : 1px solid #f5f5f5;}
+.board_title, .board_content {text-align: left;padding-left: 20px !important;}
+.ban_thisAccount, .dropReport{
+	border: 1px solid #000;
+	height: 50px;
+	padding-top: 10%;
+	font-size: 1.1em;
+	/* background-color: #000; */
+	color: #000;
+	border-radius: 10px;
+	font-weight: 600;
+	
+	
+}
+.ban_thisAccount:hover, .dropReport:hover{
+	background-color: #000;
+	color: #fff;
+	font-weight: 700;
+}
+
+</style>  
 </head>
 
 <body>
@@ -46,6 +70,7 @@
                     <div class="navbar-brand">
                         <!-- Logo icon -->
                             <span class="logo-text">
+                            
                                 <h1 class="mypagelogo">관리자 메뉴</h1>
                             </span>
                     </div>
@@ -96,14 +121,14 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_admin/payment_management.jsp"
+                        	<a class="sidebar-link" href="./Management.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">결제 관리</span>
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="./registerGetList.areg"
                                 aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -170,136 +195,180 @@
 <%---------------------------------------------------------- 테이블 --------------------------------------------------------------%>
 
                     
-                    <%--- (일반회원)내가 작성한 문의글 --%>
+                    <!-- (일반회원) 익명 사담글 목록 -->
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">서비스 결제 현황</h4>
-                                <h6 class="card-subtitle">서비스 결제 현황이 무료회원 포함 최신순으로 표시됩니다.</h6>
+                                <h4 class="card-title">내가 작성한 익명사담글</h4>
+                                <h6 class="card-subtitle">내가 작성한 익명사담방의 게시글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">결제계정</th>
-                                            <th scope="col">사용회차</th>
-                                            <th scope="col">서비스명</th>
-                                            <th scope="col">시작일</th>
-                                            <th scope="col">만료일</th>
-                                            <th scope="col">유효여부</th>
+                                        <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
+                                            <th scope="col" style="width:8%;">글 번호</th>
+                                            <!-- <th scope="col" style="width:11%;">제목</th> -->
+                                            <!-- <th scope="col" style="width:11%;">내용</th> -->
+                                            <th scope="col" style="width:14%;">계정</th>
+                                            <th scope="col" style="width:8%;">댓글수</th>
+                                            <th scope="col" style="width:8%;">조회수</th>
+                                            <th scope="col" style="width:10%;">첨부파일</th>
+                                            <th scope="col" style="width:13%;">작성일자</th>
+                                            <th scope="col" style="width:11%;">신고일자</th>
+                                            <th scope="col" style="width:11%;">신고사유</th>
+                                            <th scope="col" style="width:11%;">신고계정</th>
+                                            <th scope="col" colspan="2" style="width:22%;">처리</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <c:choose>
                                     
-                                 <c:if test="${count >0}">   
-                                 
-                                 <c:forEach  var="i" items="${PayMentlist}">
-                                        <tr>
-                                            <th scope="row">${i.memEmail}</th>
-                                            <td>${i.pmUseNum}</td>
-                                            <td>${i.pmName}</td>
-                                            <td>${i.pmStartDate}</td>
-                                            <td>${i.pmExpDate}</td>
-                                            <td>${i.pmCheck}</td>
-                                        </tr>
-                                 </c:forEach>       
+                                    <c:when test="${myAnonyListCount != 0 }">
+                                    <c:forEach var="myAnonyList" items="${myAnonyList}">
+                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
+                                            <th scope="row">${myAnonyList.ano_board_num}</th>
+                                           <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
+                                            <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
+                                            <td >${myAnonyList.mem_email}</td>
+                                            <td>${comments[myAnonyList.ano_board_num]}</td>
+                                            <td>${myAnonyList.ano_board_read}</td>
+                                            <td>${myAnonyList.ano_board_file}</td>
+                                            <td>
+	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
+					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
+					                                            type="both"/>
+                                            </td>
+                                            <td>${myAnonyList.ano_board_reported}</td>
+                                            <td>${myAnonyList.ano_board_reason}</td>
+                                            <td>${myAnonyList.ano_board_reporter}</td>
+                                            
                                         
-                                </c:if>
+                                        <c:choose>
+                                         <c:when test="${myAnonyList.ano_board_reported ne ''}" >
+                                            <td>
+       	                                    	<div class="ban_thisAccount" id="ban" onclick="buttonFunc('ban',event)">계정정지</div>
+                                            </td>
+                                            <td>
+                                            	<div class="dropReport" id="drop" onclick="buttonFunc('drop',event)">신고삭제</div>
+                                            </td>
+                                         </c:when>
+                                         <c:otherwise>
+                                         	<td></td><td></td>
+                                         </c:otherwise>
+                                        </c:choose>    
+										    
+                                            
+                                        </tr>
+                                    </c:forEach>
+                                    </c:when>
                                     
-                                 <c:if test="${count==0}">   
-                                 
+                                    <c:otherwise>
                                         <tr>
-                                            <th scope="row" colspan="5">이용권을 사용하고 있는 회원목록이 없습니다</th>
+                                            <th scope="row" colspan="6">작성한 익명사담글이 없습니다.</th>
                                         </tr>
-                                        
-                                </c:if>
-                                
-                                
-                                
-                                 
+                                    
+                                    </c:otherwise>
+                                    
+                                    </c:choose>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                     
-
+ <%-------------------------------------------------- 페이징 영역  ------------------------------------------------------------------------%>
                     
-                    <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
-                    <!-- << (첫페이지로 가기) -->
-					  <li class="page-item"> 
-					  	<a class="page-link prev" href="${Page}&pageNum=1">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					 
-					<c:if test="${count!=0}">   
-                    <!-- < (이전페이지 가기)-->
-					     <!-- < (이전페이지 가기) 설정-->
-					  <li class="page-item active">
-					  	<c:if test="${startPage-pageBlock<0}">
-					  		<c:set var="pN" value="1"/>
-					  	</c:if>
-					  	
-					  	<c:if test="${startPage-pageBlock>0}">
-					  		<c:set var="pN" value="${startPage-pageBlock}"/>
-					  	</c:if>
-					  
-					  	<a class="page-link prev" href="${Page}&pageNum=${pN}">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>	
-					  </li>
-					  
-					  
-					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
-					 
-					</c:forEach>	
-		
-					  
-					  
-					  
-					  <!-- 끝 페이지 앞으로가기 설정 -->
-					   	<c:if test="${startPage+pageBlock>pageCount}">
-					  		<c:set var="pP" value="${pageCount}"/>
-					  	</c:if>
-					  	
-					  	<c:if test="${startPage+pageBlock<pageCount}">
-					  		<c:set var="pP" value="${startPage+pageBlock}"/>
-					  	</c:if>
-					  
-					  <li class="page-item"><%--다음 페이지 --%>
-					  	<a class="page-link next" href="${Page}&pageNum=${pP}">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
                     
-                    <!-- >> (마지막페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="${Page}&pageNum=${pageCount}">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
-						</a>
-					  </li>
-					  
-					  </c:if>
-					</ul>                    
-                 
+                    <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
                     
+                    <c:if test="${count > 0}">
+                    	<c:set var="endPage" value="${endPage}" />
+                    	<c:if test="${endPage gt pageCount}">
+                    		<c:set var="endPage" value="${pageCount}" />
+                    	</c:if>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+					
+							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
+							
+							  <li class="page-item"> 
+							  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+							  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+							  	</a>
+							  </li>
+							  
+							<%-- [  <  이전페이지 가기    ] --%>  
+							
+							  <li class="page-item">
+							<%-- 블럭 첫페이지-페이지블록(하나의 블럭에 보여줄 페이지 수)가 0보다 작을 경우 즉, 더이상 전으로 이동할 페이지가 없을 경우 1페이지로----------------%>                    	
+								<c:choose>
+			                    	<c:when test="${startPage-pageBlock<=0}">
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:when>
+								  	<c:otherwise>
+									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage-pageBlock}">
+									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
+									  	</a>
+								  	</c:otherwise>
+								</c:choose>	  
+									  </li>
+							  
+					  
+							<%-- [1] [2] [3] .... --%>  
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							  	<c:choose>
+							  	 <c:when test="${currentPage == i}">
+								  	<li class="page-item  active">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:when>
+							  	 <c:otherwise>
+								  	<li class="page-item">
+								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+								  			${i}
+								  		</a>
+								  	</li>
+							  	 </c:otherwise>
+							  	 
+							  	</c:choose>
+							  </c:forEach>
+							  
+					  
+					<%-- [  >  다음페이지 가기] .... --%> 
+					
+					<%-- 블록시작번호+하나의 블럭에 보여질 페이지수=전체 페이지수보다 큰 경우 즉, 더이상 뒤로 갈 페이지가 없는 경우 총페이지개수(마지막페이지) -----------------%>  
+							  <li class="page-item">
+								<c:choose>
+		                    		<c:when test="${startPage+pageBlock > pageCount}">
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:when>  
+									<c:otherwise>
+									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage+pageBlock}">
+										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+										</a>
+									</c:otherwise>
+								</c:choose>
+							  </li>
+							  
+					<%-- [  >>  마지막페이지 가기] .... --%>  
+					<%-- 총페이지수(마지막페이지)대입 -----------------%>  
+						  <li class="page-item">
+						  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+							</a>
+						  </li>
+					  </c:if> 
+					<%-- 게시판에 글이 있는 경우 페이지 표시 끝 --%>
+					</ul>
+                                        
+ 
+ 
 
 
 
@@ -357,7 +426,24 @@
 
 
 
+<script type="text/javascript">
 
+	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
+
+	function buttonFunc(act ,event) {
+		if(act == 'ban'){
+		    event.stopPropagation();
+		    alert("계정정지");
+		    
+		}else if(act == 'drop') {
+		    event.stopPropagation();
+		    alert("신고취소");
+			
+		}
+	}
+	
+	
+</script>
 
     
     

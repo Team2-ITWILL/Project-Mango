@@ -19,7 +19,69 @@
   
   
     
-</head>
+</head>   
+
+
+
+
+
+<script type="text/javascript">
+
+
+	$(document).ready(function(){
+		
+		
+		var boardnum = $(".board_num");
+		// boardnum.length -> board_num의 수만큼 반복
+		
+		
+		for(var i = 0; i < boardnum.length; i++){
+			check_rewrite(boardnum.eq(i).val());
+		}
+		
+		
+	});
+	
+	
+	
+		
+	function check_rewrite(boardnum){
+		
+		var _data = '{"boardnum":"'+boardnum+'"}';
+		
+		$.ajax({
+			
+			type: "post",
+			url: "./QnaReWriteAction",
+			data: {"data": _data},
+	
+			success: function(data, textStatus){
+				
+	            var jsonInfo = JSON.parse(data);
+	            var check = jsonInfo.check;
+				var boardnum = jsonInfo.boardnum;
+				
+				document.getElementById("recheck_"+boardnum).innerText = check;
+				
+			}, 
+			
+			error: function(data, textStatus){
+				
+				alert("에러 발생"+ data + textStatus);
+				console.log(data);
+				
+			} // error 끝
+			
+		});
+	}
+		
+		
+
+
+
+
+</script>
+
 
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
@@ -84,7 +146,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${id_email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -161,7 +223,7 @@
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
+                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -180,12 +242,12 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
+                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_qna_board.jsp" class="sidebar-link">
+                                	<a href="./MyQnaList.qna" class="sidebar-link">
                                 		<span class="hide-menu">문의게시글</span>
                                 	</a>
                                 </li>            
@@ -275,39 +337,49 @@
                                             <th scope="col">제목</th>
                                             <th scope="col">내용</th>
                                             <th scope="col">조회수</th>
-                                            <th scope="col">댓글수</th>
                                             <th scope="col">작성일자</th>
+                                            <th scope="col">답변여부</th>
                                         </tr>
                                     </thead>
+                                    
+                                    
+																								                                            
+					                   <c:if test="${count eq 0}">
+					                  		<td></td><td></td><td></td>
+					                  		<td>문의글이 없습니다.</td>
+					                  		<td></td><td></td><td></td>
+					                   </c:if>
+                                    
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>user1@naver.com</td>
-                                            <td>멤버십 결제 환불 언제 되나요?</td>
-                                            <td>3일전에 결제했다가 바로취소했는데 아직 환불이 안됐네요.</td>
-                                            <td>10</td>
-                                            <td>1</td>
-                                            <td>2020-08-21</td>
-                                        </tr>
-
+                                    
+                                    
+                                    	<c:if test="${count != 0}">
+                                    		
+                                    		
+                                    		<c:forEach var = "qnaboardList" items="${qnaboardList}">
+				                                  
+				                    			<c:if test="${qnaboardList.qna_re_lev eq 0}">
+				                                  
+			                                        <tr id = "qnarewrite" onclick="location.href='./QnaBoardContent.qna?qna_board_num=${qnaboardList.qna_board_num}&pageNum=${pageNum}'">
+			                                        	<input type = "hidden" class = "board_num" value = "${qnaboardList.qna_board_num}">
+			                                            <th scope="row">${qnaboardList.qna_board_num}</th>
+			                                            <td>${qnaboardList.mem_email}</td>
+			                                            <td>${qnaboardList.qna_board_title}</td>
+			                                            <td>${qnaboardList.qna_board_content}</td>
+			                                            <td>${qnaboardList.qna_board_read}</td>
+			                                            <td>${qnaboardList.qna_board_date}</td>
+			                                            
+			                                     		<td id="recheck_${qnaboardList.qna_board_num}" class = "check"></td>
+			                                        </tr>
+		                                        
+		                                        </c:if>
+		                                        
+		                                        											
+                                        	</c:forEach>
+                                        	
+										</c:if>
+										
+										
                                     </tbody>
                                 </table>
                             </div>
@@ -320,34 +392,60 @@
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
+					  	<a class="page-link prev" href="MyQnaList.qna?mem_email=${id_email}&pageNum=1">
 					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
 					  </li>
-					  
+					 
+					<c:if test="${count!=0}">   
                     <!-- < (이전페이지 가기)-->
+					     <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
+					  	<c:if test="${startPage-pageBlock<0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="MyQnaList.qna?mem_email=${id_email}&pageNum=${pN}">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
+					  	</a>	
 					  </li>
 					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
-					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  
+					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  	<li class="page-item"><a class="page-link" href="MyQnaList.qna?mem_email=${id_email}&pageNum=${i}">${i}</a></li>
+					 </c:forEach>	
+		
+					  
+					  
+					  
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="MyQnaList.qna?&mem_email=${id_email}&pageNum=${pP}">
 						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
+                    
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
+					  	<a class="page-link next" href="MyQnaList.qna?&mem_email=${id_email}&pageNum=${pageCount}">
 						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 						</a>
 					  </li>
-					</ul>                    
+					  
+					  </c:if>
+					</ul>                               
                  
                     
 

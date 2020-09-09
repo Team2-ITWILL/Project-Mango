@@ -272,9 +272,8 @@
     			document.getElementById("nameRank_"+rankNum).setAttribute('href','AcademyContentAction.aca?acaMainNum='+acaMainNum+'&pageNum=1')
     			document.getElementById("Rank_"+rankNum+"_title_1").innerText = title1;
     			document.getElementById("Rank_"+rankNum+"_title_2").innerText = title2;
-    			document.getElementById("reviewCnt_"+rankNum).innerText = " "+revCnt+"개";
+    			document.getElementById("reviewCnt_"+rankNum).innerHTML = " "+revCnt+"개";
     			document.getElementById("avgScore_"+rankNum).innerText = avgScore;
-    			
     		},
     		error:function(){
     			alert("통신에러가 발생했습니다.");
@@ -603,8 +602,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_1_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_1_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_1_title_1"></span> <%-- 장점 --%>
+								<br><span id="Rank_1_title_2"></span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
@@ -632,8 +631,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_2_title_1">" 수업이 지루하지 않고 유익해요."</span> <%-- 장점 --%>
-								<br><span id="Rank_2_title_2">" 산에 있어요 학원이... "</span>   <%-- 단점 --%>
+								<span id="Rank_2_title_1"></span> <%-- 장점 --%>
+								<br><span id="Rank_2_title_2"></span>   <%-- 단점 --%>
 							</div>
 						</div>
 						<div class="course_footer">
@@ -661,8 +660,8 @@
 							<div class="course_text">
 							<%-- 후기 한줄요약 노출 (" 쌍따옴표 안에 데이터넣기  ")  --%>
 							<%-- 너무 길어서 줄바꿈 표시되면 그냥 ... 으로 표시되게 하기 --%>
-								<span id="Rank_3_title_1">" 수업이 지루하지 않고 유익해요."</span> <br> 
-								<span id="Rank_3_title_2">" 수업이 지루하지 않고 유익해요."</span>
+								<span id="Rank_3_title_1"></span> <br> 
+								<span id="Rank_3_title_2"></span>
 							</div>
 						</div>
 						<div class="course_footer">
@@ -836,19 +835,24 @@
 
 			<div class="counter_form">
 				<div class="row fill_height">
-					<div class="col fill_height">   
-						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="#">
+					<div class="col fill_height"> 
+					  
+						<form class="counter_form_content d-flex flex-column align-items-center justify-content-center" action="./SendMail" method="post">
 							<div class="counter_form_title">등록 상담 문의하기</div>
-							<input type="text" class="counter_input" placeholder="성함" required="required">
-							<input type="tel" class="counter_input" placeholder="연락처" required="required">
+							
+							<input type="text" class="counter_input" name = "counter_name" placeholder="성함" required="required">
+							<input type="text" class="counter_input" name = "counter_tel" placeholder="연락처" required="required">
+							
 							<select name="counter_select" id="counter_select" class="counter_input counter_options">
 								<option>신청인</option>
 								<option>원장 선생님</option>
 								<option>학원 관리자님</option>
 								<option>개원을 준비중인 분</option>
 							</select>
-							<textarea class="counter_input counter_text_input" placeholder="전화상담 가능시간 및 내용" required="required"></textarea>
+							
+							<textarea name = "counter_content" class="counter_input counter_text_input" placeholder="전화상담 가능시간 및 내용" required="required"></textarea>
 							<button type="submit" class="counter_form_button">상담접수</button>
+							
 						</form>
 					</div>
 				</div>

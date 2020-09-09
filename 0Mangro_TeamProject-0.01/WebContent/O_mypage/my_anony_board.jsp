@@ -32,6 +32,16 @@
 
 }
 
+.thead-light tr th {
+	border-right : 1px solid #f5f5f5;
+}
+
+
+.board_title, .board_content {
+	text-align: left;
+	padding-left: 20px !important;
+}
+
 </style>  
 </head>
 
@@ -279,12 +289,16 @@
                                 <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
                                         <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
-                                            <th scope="col" style="width:100px;">글번호</th>
-                                            <th scope="col" >제목</th>
-                                            <th scope="col" >내용</th>
-                                            <th scope="col" style="width:100px;">댓글수</th>
-                                            <th scope="col" style="width:100px;">조회수</th>
-                                            <th scope="col">작성일자</th>
+                                            <th scope="col" style="width:5%;">글 번호</th>
+                                            <th scope="col" style="width:11%;">제목</th>
+                                            <th scope="col" style="width:11%;">내용</th>
+                                            <th scope="col" style="width:14%;">닉네임</th>
+                                            <th scope="col" style="width:5%;">댓글수</th>
+                                            <th scope="col" style="width:5%;">조회수</th>
+                                            <th scope="col" style="width:10%;">첨부파일</th>
+                                            <th scope="col" style="width:11%;">신고여부</th>
+                                            <th scope="col" style="width:11%;">신고사유</th>
+                                            <th scope="col" style="width:13%;">작성일자</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -294,15 +308,20 @@
                                     <c:forEach var="myAnonyList" items="${myAnonyList}">
                                         <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
                                             <th scope="row">${myAnonyList.ano_board_num}</th>
-                                            <td align="left">${myAnonyList.ano_board_title}</td>
-                                            <td align="left">${myAnonyList.ano_board_content}</td>
+                                            <td class="board_title">${myAnonyList.ano_board_title}</td>
+                                            <td class="board_content">${myAnonyList.ano_board_content}</td>
+                                            <td >${myAnonyList.ano_board_nick}</td>
                                             <td>${comments[myAnonyList.ano_board_num]}</td>
                                             <td>${myAnonyList.ano_board_read}</td>
+                                            <td>${myAnonyList.ano_board_file}</td>
+                                            <td>${myAnonyList.ano_board_reported}</td>
+                                            <td>${myAnonyList.ano_board_reason}</td>
                                             <td>
 	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
 					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
 					                                            type="both"/>
                                             </td>
+
                                             
                                         </tr>
                                     </c:forEach>

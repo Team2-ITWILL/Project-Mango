@@ -64,6 +64,12 @@
     max-width: inherit;
 } 
   
+.pagination{
+	margin: 10px;
+	margin-left: 40%;
+}
+
+  
   </style>  
     
 </head>
@@ -345,37 +351,64 @@
                     </div>
 
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
-                    <ul class="pagination">
+                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
+					   <!-- << (첫페이지로 가기) -->
+					<c:if test="${count!=0}"> 
 					  <li class="page-item"> 
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
+					  	<a class="page-link prev" href="myReviewListAction.arev?pageNum=1">
+					  		<i class="fa fa-angle-double-left" aria-hidden="true"></i>
 					  	</a>
 					  </li>
 					  
-                    <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
-					  	<a class="page-link prev" href="#">
-					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
-					  	</a>
-					  </li>
-					  
-					  <li class="page-item"><a class="page-link" href="#">1</a></li>
-					  <li class="page-item"><a class="page-link" href="#">2</a></li>
-					  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <!-- > (다음페이지 가기)-->
+                    <!-- < (이전페이지 가기) 설정-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
+					  	<c:if test="${startPage-pageBlock<=0}">
+					  		<c:set var="pN" value="1"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage-pageBlock>0}">
+					  		<c:set var="pN" value="${startPage-pageBlock}"/>
+					  	</c:if>
+					  
+					  	<a class="page-link prev" href="myReviewListAction.arev?pageNum=${pN}">
+					  		<i class="fa fa-angle-left" aria-hidden="true"></i>
+					  	</a>	
+					  
+					  </li>
+					
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
+					  <li class="page-item"><a class="page-link" href="myReviewListAction.arev?pageNum=${i}">${i}</a></li>
+					 
+					</c:forEach>	
+		
+					  <!-- 끝 페이지 앞으로가기 설정 -->
+					   	<c:if test="${startPage+pageBlock>pageCount}">
+					  		<c:set var="pP" value="${pageCount}"/>
+					  	</c:if>
+					  	
+					  	<c:if test="${startPage+pageBlock<=pageCount}">
+					  		<c:set var="pP" value="${startPage+pageBlock}"/>
+					  	</c:if>
+					  
+					  <li class="page-item"><%--다음 페이지 --%>
+					  	<a class="page-link next" href="myReviewListAction.arev?pageNum=${pP}">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
 						</a>
 					  </li>
+                    
+                    
+                    
                     <!-- >> (마지막페이지 가기)-->
 					  <li class="page-item">
-					  	<a class="page-link next" href="#">
-						  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
+					  	<a class="page-link next" href="myReviewListAction.arev?pageNum=${pageCount}">
+						  	<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 						</a>
 					  </li>
+					</c:if>		
 					</ul>
+                    
+
 
  
    

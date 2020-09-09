@@ -8,12 +8,10 @@ import mango.action.Action;
 import mango.action.ActionForward;
 import mango.qna_board.db.QnaBoardDAO;
 
-public class QnaBoardListSearchAction
-  implements Action
-{
-  public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-    throws Exception
-  {
+public class QnaBoardListSearchAction implements Action {
+
+	
+	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
     System.out.println("QnaBoardListSearchAction 실행");
 
     request.getParameter("UTF-8");
@@ -26,7 +24,7 @@ public class QnaBoardListSearchAction
 
     int count = qdao.getSearchQnaBoardCount(search_key, search_word);
 
-    int pageSize = 10;
+    int pageSize = 5;
     String pageNum = request.getParameter("pageNum");
 
     if (pageNum == null) {

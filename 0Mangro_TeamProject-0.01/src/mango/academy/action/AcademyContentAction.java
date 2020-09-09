@@ -1,6 +1,9 @@
 package mango.academy.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -94,6 +97,13 @@ public class AcademyContentAction implements Action{
 			endPage = pageCount;
 		}
 		int iAvgScore = (int)avgScore;
+		List<Integer> scorePerList = new ArrayList<Integer>();
+		List<Integer> scoreCntList = new ArrayList<Integer>();
+		for(int i=1;i<6;i++){
+			scorePerList.add(rdao.getReviewScoreCnt(acaMainNum, i)*100/count );
+			scoreCntList.add(rdao.getReviewScoreCnt(acaMainNum, i));
+		}
+		
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
@@ -107,6 +117,9 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("iAvgScore", iAvgScore);
 		request.setAttribute("keyList", keyList);
 		request.setAttribute("auditList", auditList);
+		request.setAttribute("scorePerList", scorePerList);
+		request.setAttribute("scoreCntList", scoreCntList);
+		
 		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
