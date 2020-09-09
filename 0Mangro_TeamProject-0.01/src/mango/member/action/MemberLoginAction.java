@@ -22,15 +22,12 @@ public class MemberLoginAction implements Action{
 		
 		MemberDAO mdao = new MemberDAO();
 		MemberBean mb = new MemberBean();
-		
 		PayMentDAO pdao = new PayMentDAO();
 		
 		mb.setMemEmail(id_email);
 		mb.setMemPwd(chk_pwd);
 		
 		int check = mdao.loginCheck(mb);
-		
-		System.out.println(check);
 		
 		if(check == 0){ // 비밀번호 불일치
 			

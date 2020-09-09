@@ -29,7 +29,6 @@
 
 
 </head>
-
 <%
 // <------------------ 로그인 세션 값 여부 ---------------------->
 	String id = (String)session.getAttribute("id_email");
@@ -40,10 +39,7 @@
 	}
 // <------------------ 로그인 세션 값 여부 ---------------------->
 %>
-
-
 <body>
-
 <% 	
 // <------------------ 회원정보 가져오기 ----------------------->	
 	MemberDAO mdao = new MemberDAO();
@@ -60,6 +56,7 @@
 
 <script type="text/javascript">
 // <----------------- 회원 정보 수정 필수 입력 -------------------->
+
 	$(function update_chk(){
 		
 		$("#update_chk").submit(function(){

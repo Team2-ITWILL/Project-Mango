@@ -121,7 +121,7 @@ public class MemberDAO extends DBconnection{
 					
 					// 정지일자 컬럼에 데이터가 존재할 때 로그인 불가	
 					}else if(!(rs.getString("mem_baned") == null)){	
-						check = -3;
+						check = -3; 
 						
 					// 탈퇴일자 컬럼과 정지일자 컬럼에 데이터가 null일 때 로그인 성공
 					}else if((rs.getString("mem_seceded") == null) 
