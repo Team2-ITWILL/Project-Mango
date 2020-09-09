@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mango.action.Action;
 import mango.action.ActionForward;
@@ -23,19 +24,16 @@ public class MyQnaListAction implements Action {
 	    System.out.println("MyQnaListAction 실행");
 	    
 	    
-	    
-		String email = request.getParameter("email");
-		
+	    HttpSession session = request.getSession();
+		String email = (String)session.getAttribute("id_email");
 	    QnaBoardDAO qdao = new QnaBoardDAO();
 	    List<QnaBoardBean> qnaboardList = null;
 	    
-	    System.out.println("이메일은 " + email);
 	    
 		
-	    int pageSize = 10;
+	    int pageSize = 5;
 	    String pageNum = request.getParameter("pageNum");
-	    //int count = qdao.getMYQnaCount(email);
-	    
+	    int count = qdao.getMYQnaCount(email);
 	    
 
 	    if (pageNum == null) {
@@ -47,32 +45,30 @@ public class MyQnaListAction implements Action {
 	    int startRow = (currentPage-1)*pageSize;
 	    int endRow = currentPage * pageSize;
 
-//	    if (count != 0) {
-//	      //qnaboardList = qdao.getMyQnaList(startRow, pageSize, email);
-//	    }
-//
-//	    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
-//	    int pageBlock = 3;
-//		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
-//
-//		int endPage = startPage+pageBlock-1;
-//
-//	    if (endPage > pageCount) {
-//	      endPage = pageCount;
-//	    }	    
-//	    
-//
-//	    request.setAttribute("count", Integer.valueOf(count));
-//	    request.setAttribute("count", Integer.valueOf(count));
-//	    request.setAttribute("pageNum", pageNum);
-//	    request.setAttribute("pageCount", Integer.valueOf(pageCount));
-//	    request.setAttribute("pageBlock", Integer.valueOf(pageBlock));
-//	    request.setAttribute("startPage", Integer.valueOf(startPage));
-//	    request.setAttribute("endPage", Integer.valueOf(endPage));
-//	    // 모든 고객센터 글 가져옴
-//	    request.setAttribute("qnaboardList", qnaboardList);
+	    if (count != 0) {
+	      qnaboardList = qdao.getMyQnaList(startRow, pageSize, email);
+	    }
+
+	    int pageCount = count/pageSize + (count % pageSize == 0 ? 0 : 1);
+	    int pageBlock = 3;
+		int startPage=((currentPage-1)/pageBlock )*pageBlock+1;
+
+		int endPage = startPage+pageBlock-1;
+
+	    if (endPage > pageCount) {
+	      endPage = pageCount;
+	    }	    
 	    
-		
+
+	    request.setAttribute("count", Integer.valueOf(count));
+	    request.setAttribute("count", Integer.valueOf(count));
+	    request.setAttribute("pageNum", pageNum);
+	    request.setAttribute("pageCount", Integer.valueOf(pageCount));
+	    request.setAttribute("pageBlock", Integer.valueOf(pageBlock));
+	    request.setAttribute("startPage", Integer.valueOf(startPage));
+	    request.setAttribute("endPage", Integer.valueOf(endPage));
+	    // 모든 고객센터 글 가져옴
+	    request.setAttribute("qnaboardList", qnaboardList);
 		
 		ActionForward forward = new ActionForward();
 	    forward.setRedirect(false);
