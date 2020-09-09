@@ -44,6 +44,11 @@
 	font-weight: 700;
 }
 
+.pagination {
+	width: 300px !important;
+    margin: auto !important;
+}
+
 </style>  
 </head>
 
@@ -318,23 +323,23 @@
 					  
 							<%-- [1] [2] [3] .... --%>  
 							<c:if test="${count gt 0 }">
+							
 							  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 							  	<c:choose>
-							  	 <c:when test="${currentPage == i}">
-								  	<li class="page-item  active">
-								  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:when>
-							  	 <c:otherwise>
-								  	<li class="page-item">
-								  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:otherwise>
-							  	 
+								  	 <c:when test="${i gt endPage}">
+									  	<li class="page-item">
+									  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
+								  	 <c:when test="${currentPage == i}">
+									  	<li class="page-item  active">
+									  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
 							  	</c:choose>
 							  </c:forEach>
 							 </c:if> 

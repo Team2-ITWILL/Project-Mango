@@ -43,6 +43,10 @@
 	padding-left: 20px !important;
 }
 
+.pagination {
+	width: 300px !important;
+    margin: auto !important;
+}
 </style>  
 </head>
 
@@ -378,27 +382,30 @@
 							  
 					  
 							<%-- [1] [2] [3] .... --%>  
-							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							
+							<%-- [1] [2] [3] .... --%>  
+							<c:if test="${count gt 0 }">
+							
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 							  	<c:choose>
-							  	 <c:when test="${currentPage == i}">
-								  	<li class="page-item  active">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:when>
-							  	 <c:otherwise>
-								  	<li class="page-item">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:otherwise>
-							  	 
+								  	 <c:when test="${i gt endPage}">
+									  	<li class="page-item">
+									  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
+								  	 <c:when test="${currentPage == i}">
+									  	<li class="page-item  active">
+									  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
 							  	</c:choose>
 							  </c:forEach>
-							  
-					  
+							 </c:if> 							
+							
 					<%-- [  >  다음페이지 가기] .... --%> 
 					
 					<%-- 블록시작번호+하나의 블럭에 보여질 페이지수=전체 페이지수보다 큰 경우 즉, 더이상 뒤로 갈 페이지가 없는 경우 총페이지개수(마지막페이지) -----------------%>  
