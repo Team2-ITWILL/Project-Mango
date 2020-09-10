@@ -153,8 +153,25 @@ public class AnonyBoardFrontController extends HttpServlet{
 				e.printStackTrace();
 			}
 			
+		}else if(command.equals("/AdminAnonyHandleReportedAction.anob")){
+			action = new AdminAnonyHandleReportedAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e){
+				System.out.println("AnonyBoardFrontController의 /AdminAnonyHandleReportedAction.anob에서 예외");
+				e.printStackTrace();
+			}
+			
+		}else if(command.equals("/AdminAnoCheckAlreadyBannedAction.anob")){
+			action = new AdminAnoCheckAlreadyBannedAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e){
+				System.out.println("AnonyBoardFrontController의 /AdminAnoCheckAlreadyBannedAction.anob에서 예외");
+				e.printStackTrace();
+			}
 		}
-		
+			
 		
 		if(forward!=null){ //new ActionForward()객체가 존재시
 			

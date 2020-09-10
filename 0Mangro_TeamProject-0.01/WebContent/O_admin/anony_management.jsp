@@ -29,9 +29,8 @@
 .ban_thisAccount, .dropReport{
 	border: 1px solid #000;
 	height: 50px;
-	padding-top: 10%;
-	font-size: 1.1em;
-	/* background-color: #000; */
+	padding-top: 7%;
+	font-size: 1em;
 	color: #000;
 	border-radius: 10px;
 	font-weight: 600;
@@ -42,6 +41,11 @@
 	background-color: #000;
 	color: #fff;
 	font-weight: 700;
+}
+
+.pagination {
+	width: 300px !important;
+    margin: auto !important;
 }
 
 </style>  
@@ -199,8 +203,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">내가 작성한 익명사담글</h4>
-                                <h6 class="card-subtitle">내가 작성한 익명사담방의 게시글이 최신순으로 표시됩니다.</h6>
+                                <h4 class="card-title">신고 내역 조회 ${count}</h4>
+                                <h6 class="card-subtitle">익명사담방의 게시글 중 신고된 항목만 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table" style="table-layout: fixed;">
@@ -222,34 +226,34 @@
                                     </thead>
                                     <tbody>
                                     <c:choose>
-                                    
-                                    <c:when test="${myAnonyListCount != 0 }">
-                                    <c:forEach var="myAnonyList" items="${myAnonyList}">
-                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
-                                            <th scope="row">${myAnonyList.ano_board_num}</th>
+                                     <%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${reportedAnonyList.ano_board_num}'" --%>
+                                    <c:when test="${count != 0 }">
+                                    <c:forEach var="reportedAnonyList" items="${reportedAnonyList}">
+                                        <tr onclick="buttonFunc('act' , event)" id="goBoard">
+                                            <th scope="row" id="ano_board_num">${reportedAnonyList.ano_board_num}</th>
                                            <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
-                                            <td >${myAnonyList.mem_email}</td>
-                                            <td>${comments[myAnonyList.ano_board_num]}</td>
-                                            <td>${myAnonyList.ano_board_read}</td>
-                                            <td>${myAnonyList.ano_board_file}</td>
+                                            <td id="mem_email">${reportedAnonyList.mem_email}</td>
+                                            <td>${comments[reportedAnonyList.ano_board_num]}</td>
+                                            <td>${reportedAnonyList.ano_board_read}</td>
+                                            <td>${reportedAnonyList.ano_board_file}</td>
                                             <td>
-	                                            <fmt:formatDate value="${myAnonyList.ano_board_date}" 
+	                                            <fmt:formatDate value="${reportedAnonyList.ano_board_date}" 
 					                                            pattern ="yyyy.MM.dd KK:mm:ss" 
 					                                            type="both"/>
                                             </td>
-                                            <td>${myAnonyList.ano_board_reported}</td>
-                                            <td>${myAnonyList.ano_board_reason}</td>
-                                            <td>${myAnonyList.ano_board_reporter}</td>
+                                            <td>${reportedAnonyList.ano_board_reported}</td>
+                                            <td>${reportedAnonyList.ano_board_reason}</td>
+                                            <td>${reportedAnonyList.ano_board_reporter}</td>
                                             
                                         
                                         <c:choose>
-                                         <c:when test="${myAnonyList.ano_board_reported ne ''}" >
+                                         <c:when test="${reportedAnonyList.ano_board_reported ne ''}" >
                                             <td>
-       	                                    	<div class="ban_thisAccount" id="ban" onclick="buttonFunc('ban',event)">계정정지</div>
+       	                                    	<div class="ban_thisAccount" name="ban_${reportedAnonyList.mem_email}" id="ban" onclick="buttonFunc('ban','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정정지</div>
                                             </td>
                                             <td>
-                                            	<div class="dropReport" id="drop" onclick="buttonFunc('drop',event)">신고삭제</div>
+                                            	<div class="dropReport drop_${reportedAnonyList.ano_board_num}" id="drop" onclick="buttonFunc('drop','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email}',event)">신고삭제</div>
                                             </td>
                                          </c:when>
                                          <c:otherwise>
@@ -264,7 +268,7 @@
                                     
                                     <c:otherwise>
                                         <tr>
-                                            <th scope="row" colspan="6">작성한 익명사담글이 없습니다.</th>
+                                            <th scope="row" colspan="11">신고된 익명사담글이 없습니다.</th>
                                         </tr>
                                     
                                     </c:otherwise>
@@ -283,16 +287,16 @@
                     <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
                     
                     <c:if test="${count > 0}">
-                    	<c:set var="endPage" value="${endPage}" />
-                    	<c:if test="${endPage gt pageCount}">
+<%--                     	<c :set var="endPage" value="${endPage}" />
+                    	<c :if test="${endPage gt pageCount}">
                     		<c:set var="endPage" value="${pageCount}" />
-                    	</c:if>
-
+                    	</c: if>
+ --%>
 					
 							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
 							
 							  <li class="page-item"> 
-							  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+							  	<a class="page-link prev" href="./AdminAnonyReportedListAction.anob?clickedPageNum=1">
 							  		<i data-feather="chevrons-left" class="svg-icon mr-2 ml-1"></i>
 							  	</a>
 							  </li>
@@ -303,12 +307,12 @@
 							<%-- 블럭 첫페이지-페이지블록(하나의 블럭에 보여줄 페이지 수)가 0보다 작을 경우 즉, 더이상 전으로 이동할 페이지가 없을 경우 1페이지로----------------%>                    	
 								<c:choose>
 			                    	<c:when test="${startPage-pageBlock<=0}">
-									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=1">
+									  	<a class="page-link prev" href="./AdminAnonyReportedListAction.anob?clickedPageNum=1">
 									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 									  	</a>
 								  	</c:when>
 								  	<c:otherwise>
-									  	<a class="page-link prev" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage-pageBlock}">
+									  	<a class="page-link prev" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${startPage-pageBlock}">
 									  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 									  	</a>
 								  	</c:otherwise>
@@ -317,26 +321,27 @@
 							  
 					  
 							<%-- [1] [2] [3] .... --%>  
-							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							<c:if test="${count gt 0 }">
+							
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 							  	<c:choose>
-							  	 <c:when test="${currentPage == i}">
-								  	<li class="page-item  active">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:when>
-							  	 <c:otherwise>
-								  	<li class="page-item">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:otherwise>
-							  	 
+								  	 <c:when test="${i gt endPage}">
+									  	<li class="page-item">
+									  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
+								  	 <c:when test="${currentPage == i}">
+									  	<li class="page-item  active">
+									  		<a class="page-link" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
 							  	</c:choose>
 							  </c:forEach>
-							  
+							 </c:if> 
 					  
 					<%-- [  >  다음페이지 가기] .... --%> 
 					
@@ -344,12 +349,12 @@
 							  <li class="page-item">
 								<c:choose>
 		                    		<c:when test="${startPage+pageBlock > pageCount}">
-									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+									  	<a class="page-link next" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${pageCount}">
 										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 										</a>
 									</c:when>  
 									<c:otherwise>
-									  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${startPage+pageBlock}">
+									  	<a class="page-link next" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${startPage+pageBlock}">
 										  	<i data-feather="chevron-right" class="svg-icon mr-2 ml-1"></i>
 										</a>
 									</c:otherwise>
@@ -359,7 +364,7 @@
 					<%-- [  >>  마지막페이지 가기] .... --%>  
 					<%-- 총페이지수(마지막페이지)대입 -----------------%>  
 						  <li class="page-item">
-						  	<a class="page-link next" href="./MyAnonyBoardListAction.anob?clickedPageNum=${pageCount}">
+						  	<a class="page-link next" href="./AdminAnonyReportedListAction.anob?clickedPageNum=${pageCount}">
 							  	<i data-feather="chevrons-right" class="svg-icon mr-2 ml-1"></i>
 							</a>
 						  </li>
@@ -369,9 +374,13 @@
                                         
  
  
-
-
-
+			<input type="hidden" value="${result}" id="result">
+			<input type="hidden" value="${ano_board_num}" id="board_num">
+			<input type="hidden" value="${mem_email}" id="email">
+			
+			<%-- ajax로 값 받아오기 --%>
+			<input type="hidden" id="checkIfBanned" >
+	
 
 
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
@@ -396,51 +405,132 @@
 
 
 
-	<!-- Partners -->
-<!-- 임시저장
-	<div class="partners">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="partners_slider_container">
-						<div class="owl-carousel owl-theme partners_slider">
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_1.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_2.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_3.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_4.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_5.png" alt=""></div>
-							Partner Item
-							<div class="owl-item partner_item"><img src="images/partner_6.png" alt=""></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
- -->
-
-
 
 <script type="text/javascript">
 
 	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
 
-	function buttonFunc(act ,event) {
-		if(act == 'ban'){
-		    event.stopPropagation();
-		    alert("계정정지");
-		    
-		}else if(act == 'drop') {
-		    event.stopPropagation();
-		    alert("신고취소");
+	
+	var urlAddr = "";
+	var ano_board_num = document.getElementById("ano_board_num").innerText;
+	var mem_email = document.getElementById("mem_email").innerText;
+	
+	function buttonFunc(act ,ano_board_num,mem_email,event) {
+		    //console.log(event.target.nodeName);
+		    //console.log(act);
+		if(event.target.nodeName == "TD"){
+			urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num+"'";
+			$("#goBoard").attr("onclick",urlAddr);
+			//document.getElementById(act).attribute("onclick",urlAddr);
 			
-		}
+		}else{
+		    
+			if(act == 'ban'){
+				
+				// [여기에 회원 테이블로부터 이미 계정정지된 계정인지 값 불러오는 액션부터 소환]
+				/* urlAddr = "location.href='./AdminAnoCheckAlreadyBannedAction.anob?mem_email=" + mem_email+"'";
+				$("#ban").attr("onclick",urlAddr); */
+				
+				// 확인용 alert
+				//alert($("#checkIfBanned").val());
+				
+				// [1. 만일 정지된 계정이라면 alert]
+				if($("#checkIfBanned").val() == 2){
+					alert("이미 정지된 계정입니다.");
+					
+				}else {
+				// [2. 이미 정지된 계정이 아니라면 계정정지하는 다른 액션페이지 호출]
+					urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
+							   + ano_board_num+"&mem_email=" + mem_email+"'";
+					$("#ban").attr("onclick",urlAddr);
+					
+				}
+				
+				
+				
+			}else{ 
+				urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
+						  + ano_board_num+"&mem_email=" + mem_email+"'";
+				$("#drop").attr("onclick",urlAddr);
+				
+			}
+		}    
+	}		
+	
+	
+	
+/* 	if(document.getElementById("result").value == "1" ){
+		//alert("계정정지가 완료되었습니다.");
+		//document.getElementById("");
+		// 속성부여하고 해당 속성가진 요소 삭제 
+		
+		//$("div[name='ban_"+$("#email").val()+"']").remove();
+		//document.getElementsByName("'ban_"+document.getElementById("email").value+"'");
+		
+		//ban_thisAccount ban_1111@naver.com 클래스를 가진 버튼을 없애기
+		
+	}else if(document.getElementById("result").value == "2" ){
+		alert("신고삭제가 완료되었습니다.");
+		
 	}
+	
+	 */
+	
+	
+	
+	
+/* 	var urlAddr = "";
+	function buttonFunc(act , event) {
+		    
+		if(act == 'ban'){
+			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
+			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=1'";
+			
+		}else if(act == 'drop'){ 
+			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
+			
+			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=2'";
+		}	
+		
+		*/		
+	
+	
+	$(function(){
+ 		console.log("페이지 열자 ajax 실행");	
+		onLoadAction();
+	});
+
+	function onLoadAction() {
+		
+	    $.ajax({
+	        type: "POST",
+	        url : "./AdminAnoCheckAlreadyBannedAction.anob",
+	        dataType : "html",
+	        data: { 
+	        		mem_email : document.getElementById("mem_email").innerText, 
+	        },
+	        success : function(data){
+	           // alert(data + "ajax성공");
+	            // 이미 계정 정지된 아이디이면
+	        	if(data == 2) {
+					//alert("이미 계정 정지되었고 " + $("#checkIfBanned").val()+"에 값을 넣을 것")	        		
+	                $("#checkIfBanned").val(data);
+	                $("div[name='ban_"+mem_email+"']").hide();
+	        	}
+	        		
+	        		
+	        	
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });//ajax
+		
+		
+		 
+	}	
 	
 	
 </script>
@@ -467,8 +557,7 @@
     <script src="styles/assets/extra-libs/c3/c3.min.js"></script>
     <script src="styles/assets/libs/chartist/dist/chartist.min.js"></script>
     <script src="styles/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    
-    <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
+  	<script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
 
