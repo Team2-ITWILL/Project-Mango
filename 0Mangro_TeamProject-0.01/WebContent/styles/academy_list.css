@@ -1022,7 +1022,7 @@ section
     display: block;
     font-size: 15px;
     font-weight: 400;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
     line-height: 30px;
     -webkit-transition: all 200ms ease;
@@ -1034,9 +1034,17 @@ section
 
 
 
-.tags_list li:hover
+.tags_list li.firstKey:hover
 {
-	background-color: #6610f2;
+	background-color: #66b5dd;
+}
+.tags_list li.secondKey:hover
+{
+	background-color: #ff0080;
+}
+.tags_list li.thirdKey:hover
+{
+	background-color: #6f42c1;
 }
 .tags_list li:hover a
 {

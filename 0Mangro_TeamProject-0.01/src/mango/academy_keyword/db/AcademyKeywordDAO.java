@@ -109,7 +109,7 @@ public class AcademyKeywordDAO extends DBconnection{
 		
 		try {
 			getConnection();
-			sql = "select * from academy_keyward where aca_main_num = ?";
+			sql = "select * from academy_keyword where aca_main_num = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acaMainNum);

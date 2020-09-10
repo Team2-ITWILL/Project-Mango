@@ -22,18 +22,24 @@
    
        
 <style type="text/css">   
+form#courses_search_form{
+	width: 105.4%;
+}
+.searchInput{
+margin-bottom: 10px;
+}
 
 li.firstKey {
-    background-color: #66b5dd !important;
+    border: 2px solid #66b5dd !important;
 
 }
 li.secondKey {
-	background-color: #ff0080 !important;
+	 border: 2px solid #ff0080 !important;
 	
 }
 
 li.thirdKey { 
-	background-color: #6f42c1 !important;
+	 border: 2px solid #6f42c1 !important;
 }
 
  .aca_profile_img{
@@ -210,7 +216,7 @@ li.thirdKey {
 		
 			console.log(search3);
 			
-			
+			  
 			$("#courses_search_select4").empty();
 			
 			$.getJSON("getListSearchThr.aca?search1="+search1+"&search2="+search2+"&search3="+search3 ,  function(data){
@@ -414,18 +420,18 @@ li.thirdKey {
 						<!-- <div class="sidebar_section_title">키워드 검색</div> -->
 						<div class="sidebar_tags">
 							<ul class="tags_list">
-								<li class="firstKey"><a href="${PageTwo}keyword=traffic">교통이 편리한</a></li>
-								<li class="firstKey"><a href="${PageTwo}keyword=stdRoom">스터디룸 있는</a></li>
-								<li class="firstKey"><a href="${PageTwo}keyword=clean">시설이 깨끗한</a></li>
-								<li class="secondKey"><a href="${PageTwo}keyword=restaurant">식당가 인근</a></li>
-								<li class="secondKey"><a href="${PageTwo}keyword=audit">청강 신청 가능한</a></li>
-								<li class="secondKey"><a href="${PageTwo}keyword=room">기숙사가 있는</a></li>
+								<li class="firstKey"><a href="${PageKeyword}keyword=traffic">교통이 편리한</a></li>
+								<li class="firstKey"><a href="${PageKeyword}keyword=stdRoom">스터디룸 있는</a></li>
+								<li class="firstKey"><a href="${PageKeyword}keyword=clean">시설이 깨끗한</a></li>
+								<li class="secondKey"><a href="${PageKeyword}keyword=restaurant">식당가 인근</a></li>
+								<li class="secondKey"><a href="${PageKeyword}keyword=audit">청강 신청 가능한</a></li>
+								<li class="secondKey"><a href="${PageKeyword}keyword=room">기숙사가 있는</a></li>
 							</ul>
 							<ul class="tags_list">
-								<li class="thirdKey"><a href="${PageTwo}keyword=long">중장기(6개월 이상)</a></li>
-								<li class="thirdKey"><a href="${PageTwo}keyword=car">차량운행이 있는</a></li>
-								<li class="thirdKey"><a href="${PageTwo}keyword=level">레벨테스트가 있는</a></li>
-								<li class="thirdKey"><a href="${PageTwo}keyword=sat">수능대비강의가 있는</a></li>
+								<li class="thirdKey"><a href="${PageKeyword}keyword=long">중장기(6개월 이상)</a></li>
+								<li class="thirdKey"><a href="${PageKeyword}keyword=car">차량운행이 있는</a></li>
+								<li class="thirdKey"><a href="${PageKeyword}keyword=level">레벨테스트가 있는</a></li>
+								<li class="thirdKey"><a href="${PageKeyword}keyword=sat">수능대비강의가 있는</a></li>
 							</ul>
 						</div>
 					</div>
@@ -451,7 +457,7 @@ li.thirdKey {
 												<div class="course_body" onclick="ToAcaContent(this, ${i.acaMainNum}, ${pageNum})">
 													<!-- 학원 사진 -->
 													<div class="aca_profile_div" style="display: inline-block;">
-														<img src="images/etc/${i.memProfileImg}" class="aca_profile_img">
+														<img src="${i.memProfileImg}" class="aca_profile_img">
 													</div>
 													<h3 class="course_title">
 														<a href="./AcademyContentAction.aca?acaMainNum=${i.acaMainNum}&pageNum=${pageNum}">
