@@ -101,17 +101,26 @@
 }
 
 li.firstKey {
-    background-color: #66b5dd !important;
+    /* background-color: #66b5dd !important; */
+    background-color: #66b5dd;
 
 }
 li.secondKey {
-	background-color: #ff0080 !important;
+	/* background-color: #ff0080 !important; */
+	background-color: #ff0080;
 	
 }
 
 li.thirdKey { 
-	background-color: #6f42c1 !important;
+	/* background-color: #6f42c1 !important; */
+	background-color: #6f42c1;
 }
+
+/* 키워드 선택 구분 클래스 */
+.selected {	
+	background-color: yellow !important;
+}
+
 
 </style>
 
@@ -189,39 +198,40 @@ li.thirdKey {
 										
 						          		
 								 	</div>
-<%---------------------[회원가입 버튼]-----------------------------------------------------------------------------------------------%>
-						      
-						      		
-						      		
+						      	      		
+<%---------------------[학원 이름]-----------------------------------------------------------------------------------------------%>							    						      		
 							        <div class="form-group mb-8">
 								        <label class="form-label" for="anony_pwd"><span>학원 이름</span></label>
 								        <input type="text" class="form-control" name="acaName" id="acaName" placeholder="ex) 망고학원" required> 
 								    </div>
 								    
-								   	<div class="sidebar_section">
-								   	
-									<!-- <div class="sidebar_section_title">키워드 검색</div> -->
+<%---------------------[키워드 선택]-----------------------------------------------------------------------------------------------%>							    
+								    
+								    <!-- 선택한 keyword -->
+									<div class="form-group mb-8">
+								        <label class="form-label" for="anony_pwd"><span>키워드 선택</span></label>
+								        <input type="text" class="form-control" name="keyword_view" placeholder="선택한 키워드" required> 
+										<input type="hidden" name="keyword">
+								    </div>
 									<div class="sidebar_tags">
 										<ul class="tags_list first">
-											<li class="firstKey traffic" onclick="selectKey(this)">교통이 편리한</li>
-											<li class="firstKey stdRoom" onclick="selectKey(this)">스터디룸 있는</li>
-											<li class="firstKey clean" onclick="selectKey(this)">시설이 깨끗한</li>
+											<li class="firstKey traffic">교통이 편리한</li>
+											<li class="firstKey stdRoom">스터디룸 있는</li>
+											<li class="firstKey clean">시설이 깨끗한</li>
 										</ul>
 										<ul class="tags_list second">	
-											<li class="secondKey restaurant" onclick="selectKey(this)">식당가 인근</li>
-											<li class="secondKey audit" onclick="selectKey(this)">청강 신청 가능한</li>
-											<li class="secondKey room" onclick="selectKey(this)">기숙사가 있는</li>
+											<li class="secondKey restaurant">식당가 인근</li>
+											<li class="secondKey audit">청강 신청 가능한</li>
+											<li class="secondKey room">기숙사가 있는</li>
 										</ul>
 										<ul class="tags_list third">
-											<li class="thirdKey long" onclick="selectKey(this)">중장기(6개월 이상)</li>
-											<li class="thirdKey car" onclick="selectKey(this)">차량운행이 있는</li>
-											<li class="thirdKey level" onclick="selectKey(this)">레벨테스트가 있는</li>
-											<li class="thirdKey sat" onclick="selectKey(this)">수능대비강의가 있는</li>
+											<li class="thirdKey long">중장기(6개월 이상)</li>
+											<li class="thirdKey car">차량운행이 있는</li>
+											<li class="thirdKey level">레벨테스트가 있는</li>
+											<li class="thirdKey sat">수능대비강의가 있는</li>
 										</ul>
-									</div>
-								</div>
-								<!-- 선택한 keyword -->
-								<input type="hidden" name="keyword">
+									</div>									
+									<br>
 
 								    
 <%---------------------[사진첨부 가이드]-----------------------------------------------------------------------------------------------%>
@@ -326,89 +336,6 @@ li.thirdKey {
 
 <!------------------------------------------------------- [스크립트 영역] -------------------------------------------->
 <script src="./styles/dist/js/sidebarmenu.js"></script>
-
-<script>
-
-function selectKey(selectedTag){
-	console.log(selectedTag);
-	
-	//클래스 속성명
-	var attr = selectedTag.getAttribute("class");
-	
-	//끝점으로부터 처음 만나는 문자열의 위치
-	//var idx = attr.lastIndexOf("firstKey");
-	var idx = attr.lastIndexOf("y");		
-	
-	//클래스 속성명 중 ~~key 이후의 속성명을 반환받아 keyword(input tag)에 저장
-	var keyword = document.querySelector("input[name='keyword']");
-	keyword.value = attr.substr(idx + 2); 
-	
-	
-	//console.log('idx : ' + idx);
-	console.log('keyword.value : ' + keyword.value);
-	
-	selectedTag.addEventListener("click", function(event){		
-		
-		//속성명 첫 글자(first, second, third 구분)
-		//var firstIdx = attr.substr(0);
-		//console.log(firstIdx);
-		
-		console.log('attr : ' + attr);
-		console.log(attr.indexOf("firstKey"));
-		//'firstKey'를 탐색했을 때 문자열이 존재한다면
-		if(attr.indexOf("firstKey") != -1){
-			alert("firstKey");
-			
-		} 
-	});
-}
-
-/* $(function(){
-	
-
-	var keyword = document.querySelector("input[name='keyword']");
-	var li = document.querySelectorAll(".tags_list li");	
-	console.log(li);
-
-
-	//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
-	//for(var i in li){		(X)
-	for(var i=0; i<li.length; i++){		
-		
-		//클래스 속성명
-		var attr = li[i].getAttribute("class");
-		//console.log(li[i].className);
-		
-		//끝점으로부터 처음 만나는 문자열의 위치
-		//var idx = attr.lastIndexOf("firstKey");
-		var idx = attr.lastIndexOf("y");	
-		
-		//클래스 속성명 중 ~~key 이후의 속성명을 반환받아 keyword(input tag)에 저장
-		keyword.value = attr.substr(idx + 2); 
-		
-		
-		//console.log('idx : ' + idx);
-		console.log('keyword.value : ' + keyword.value);
-		
-		li[i].addEventListener("click", function(event){		
-			
-			//속성명 첫 글자(first, second, third 구분)
-			//var firstIdx = attr.substr(0);
-			//console.log(firstIdx);
-			
-			console.log('attr : ' + attr);
-			console.log(attr.indexOf("firstKey"));
-			//'firstKey'를 탐색했을 때 문자열이 존재한다면
-			if(attr.indexOf("firstKey") != -1){
-				//alert("firstKey");
-				
-			} 
-		});
-	}
-}); */
-
-	
-</script>
 
 </body>
 </html>

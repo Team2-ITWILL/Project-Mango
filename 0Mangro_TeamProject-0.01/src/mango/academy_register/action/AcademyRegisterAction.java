@@ -82,6 +82,8 @@ public class AcademyRegisterAction implements Action{
 		String fNameOwner = request.getParameter("fNameOwner");
 		String f_size_owner = request.getParameter("f_size_owner");		
 		
+		String keyword = request.getParameter("keyword");
+		
 		AcademyRegisterBean bean = new AcademyRegisterBean();
 		bean.setMemEmail(email);
 		bean.setMemAddrZip(addr_zip);
@@ -91,6 +93,7 @@ public class AcademyRegisterAction implements Action{
 		bean.setfNameOwner(fNameOwner);		
 		bean.setfSizeCompany(f_size_company);
 		bean.setfSizeOwner(f_size_owner);		
+		bean.setAca_keyword(keyword);
 		
 		//result 초기화
 		result = 0;
