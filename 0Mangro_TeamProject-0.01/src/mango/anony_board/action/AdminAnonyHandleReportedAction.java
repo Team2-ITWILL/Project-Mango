@@ -26,8 +26,11 @@ public class AdminAnonyHandleReportedAction implements Action {
 		
 		System.out.println("신고를 위한 액션페이지에 입장함");
 		// adnony_management로부터 해당 글의 계정명 받아오기
-		String mem_email = request.getParameter("mem_email");
+		//String mem_email = request.getParameter("mem_email");
 		int ano_board_num = Integer.parseInt(request.getParameter("ano_board_num"));
+		
+		String mem_email = request.getParameter("mem_email");
+		System.out.println(mem_email);
 		
 		// adnony_management로부터 처리번호 받아오기
 		// 1 = 계정정지 / 2 = 신고삭제
@@ -37,23 +40,29 @@ public class AdminAnonyHandleReportedAction implements Action {
 		AnonyBoardBean anBean = new AnonyBoardBean();
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		
-		anBean.setMem_email(mem_email);
-		anBean.setAno_board_num(ano_board_num);
+		int result = andao.handleReportedANBoard(ano_board_num, procNum);
 		
-		int check = andao.handleReportedANBoard(anBean, procNum);
+		int checkIfBanned = 0;
+		
+		if(result == 1) {
+			// 신고삭제도 함께 진행하기
+			checkIfBanned = andao.checkIfAlreadyBanned(mem_email);
+		}
 		
 		
-//		request.setAttribute("check", check);
-		PrintWriter out = response.getWriter();
-		out.println(check);
+			request.setAttribute("result", result);
+			request.setAttribute("ano_board_num", ano_board_num);
+			request.setAttribute("mem_email", mem_email);
+			request.setAttribute("checkIfBanned", checkIfBanned);
 		
-//		ActionForward forward = new ActionForward();
-//		forward.setRedirect(false);
-//		forward.setPath("./4index.jsp?center=O_admin/anony_management.jsp");
-//		
-//		return forward;
-//		
-		return null;
+		
+		ActionForward forward = new ActionForward();
+		forward.setRedirect(false);
+		forward.setPath("./AdminAnonyReportedListAction.anob");
+		
+		return forward;
+		
+		
 		
 	}
 

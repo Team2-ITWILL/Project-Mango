@@ -585,69 +585,127 @@ public class AnonyBoardDAO extends DBconnection {
 		
 		return check;
 		
-	}//getAnonyBoardCount()
+	}//reportANBoard()
 	
 	
 	
 	
 	// [11. 신고 글 처리 메소드 (member테이블 update) ]
-	public int handleReportedANBoard(AnonyBoardBean anbean, int procNum){
-		int check = 0;
+	public int handleReportedANBoard(int ano_board_num, int procNum){
+		//int check = 0;
 		
+		System.out.println("ano_board_num넘어옴"+ano_board_num + " procNum넘어옴 "+ procNum);
 		// procNum = 1 (계정정지) / 2 (신고취소)
 		try {
 			
+			getConnection();
 			// 계정정지
 			if(procNum == 1) {
+				System.out.println("if문 진입");
 				
 				sql = "UPDATE member "
 						+ "SET "
 						+ "mem_baned = now() "
-						+ "WHERE mem_email = ? ";
-				
-				sql += "DELETE FROM anony_board "
-						+  "WHERE ano_board_num = ? ";
+						+ "WHERE mem_email = "
+						+ "(SELECT mem_email "
+						+ " FROM anony_board "
+						+ " WHERE ano_board_num = ? ) ";
 				
 				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, anbean.getMem_email());
-				pstmt.setInt(2, anbean.getAno_board_num());
+				pstmt.setInt(1, ano_board_num);
+						
+				System.out.println("회원 계정 정지 완료!"+procNum);
 				
 				// 신고취소	
 			}else {
 				
 				sql = "UPDATE anony_board "
-						+ "SET ano_board_reported is null, "
-						+ "    ano_board_reporter is null, "
-						+ "    ano_board_reason is null " 
+						+ "SET ano_board_reported = null, "
+						+ "    ano_board_reporter = null, "
+						+ "    ano_board_reason = null " 
 						+ "WHERE ano_board_num = ? ";
 				
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, anbean.getAno_board_num());
+				pstmt.setInt(1, ano_board_num);
+				System.out.println("신고 취소 완료!"+procNum);
 			}
 			
-			// 쿼리 실행
 			pstmt.executeUpdate();
+			// 쿼리 실행
 			
 			// 성공
-			check = 1;
+			//check = 1;
 			
-			System.out.println("회원 계정 정지 완료!"+check);
 			
 		}catch(Exception e){
 			System.out.println("handleReportedANBoard()메소드에서 예외 발생 : "+ e);				
-			
+			e.printStackTrace();
 		}finally { resourceClose();}
 		
-		return check;
+		return procNum;
 		
 		
-	}//getAnonyBoardCount()
+	}//handleReportedANBoard()
 	
 	
 	
 	
 	
 	
+	// [12. 이미 신고된 계정인지 확인하는 메소드]
+	
+	public int checkIfAlreadyBanned(String mem_email){
+		
+		int checkIfBanned = 0;
+		
+		try {
+
+			getConnection();
+				sql = "SELECT count(*) "
+					+ "FROM member "
+					+ "WHERE mem_email = ? " 
+					+ "AND mem_baned is not null ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, mem_email);
+			System.out.println("mem_email"+mem_email);
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("re.getInt"+rs.getInt(1));
+				checkIfBanned = rs.getInt(1);
+				System.out.println("if(rs.next()) {" + checkIfBanned);
+			}//if			
+			
+			// 이미 정지된 계정이라면, 신고계정에 '처리완료' 문구넣고 값을 9로 주기
+			if(checkIfBanned == 1) {
+				sql = "UPDATE anony_board "
+					+ "SET ano_board_reporter = ?"
+					+ "WHERE mem_email = ? "; 
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "계정정지처리");
+				pstmt.setString(2, mem_email);
+				
+				// 쿼리 실행
+				pstmt.executeUpdate();
+				
+				checkIfBanned = 2;
+			}
+			
+			// 성공
+			
+			
+		}catch(Exception e){
+			System.out.println("checkIfAlreadyBanned()메소드에서 예외 발생 : "+ e);				
+		
+		}finally { resourceClose();}
+		
+		
+		return checkIfBanned;
+		
+	}//checkIfAlreadyBanned()
 	
 	
 	

@@ -29,7 +29,7 @@
 .ban_thisAccount, .dropReport{
 	border: 1px solid #000;
 	height: 50px;
-	padding-top: 10%;
+	padding-top: 7%;
 	font-size: 1em;
 	color: #000;
 	border-radius: 10px;
@@ -226,10 +226,10 @@
                                     </thead>
                                     <tbody>
                                     <c:choose>
-                                    
+                                     <%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${reportedAnonyList.ano_board_num}'" --%>
                                     <c:when test="${count != 0 }">
                                     <c:forEach var="reportedAnonyList" items="${reportedAnonyList}">
-                                        <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${reportedAnonyList.ano_board_num}'">
+                                        <tr onclick="buttonFunc('act' , event)" id="goBoard">
                                             <th scope="row" id="ano_board_num">${reportedAnonyList.ano_board_num}</th>
                                            <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
@@ -250,10 +250,10 @@
                                         <c:choose>
                                          <c:when test="${reportedAnonyList.ano_board_reported ne ''}" >
                                             <td>
-       	                                    	<div class="ban_thisAccount" id="ban" onclick="buttonFunc('ban',event)">계정정지</div>
+       	                                    	<div class="ban_thisAccount" name="ban_${reportedAnonyList.mem_email}" id="ban" onclick="buttonFunc('ban','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정정지</div>
                                             </td>
                                             <td>
-                                            	<div class="dropReport" id="drop" onclick="buttonFunc('drop',event)">신고삭제</div>
+                                            	<div class="dropReport drop_${reportedAnonyList.ano_board_num}" id="drop" onclick="buttonFunc('drop','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email}',event)">신고삭제</div>
                                             </td>
                                          </c:when>
                                          <c:otherwise>
@@ -374,8 +374,13 @@
                                         
  
  
-
-
+			<input type="hidden" value="${result}" id="result">
+			<input type="hidden" value="${ano_board_num}" id="board_num">
+			<input type="hidden" value="${mem_email}" id="email">
+			
+			<%-- ajax로 값 받아오기 --%>
+			<input type="hidden" id="checkIfBanned" >
+	
 
 
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
@@ -405,7 +410,76 @@
 
 	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
 
+	
 	var urlAddr = "";
+	var ano_board_num = document.getElementById("ano_board_num").innerText;
+	var mem_email = document.getElementById("mem_email").innerText;
+	
+	function buttonFunc(act ,ano_board_num,mem_email,event) {
+		    //console.log(event.target.nodeName);
+		    //console.log(act);
+		if(event.target.nodeName == "TD"){
+			urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num+"'";
+			$("#goBoard").attr("onclick",urlAddr);
+			//document.getElementById(act).attribute("onclick",urlAddr);
+			
+		}else{
+		    
+			if(act == 'ban'){
+				
+				// [여기에 회원 테이블로부터 이미 계정정지된 계정인지 값 불러오는 액션부터 소환]
+				/* urlAddr = "location.href='./AdminAnoCheckAlreadyBannedAction.anob?mem_email=" + mem_email+"'";
+				$("#ban").attr("onclick",urlAddr); */
+				
+				// 확인용 alert
+				//alert($("#checkIfBanned").val());
+				
+				// [1. 만일 정지된 계정이라면 alert]
+				if($("#checkIfBanned").val() == 2){
+					alert("이미 정지된 계정입니다.");
+					
+				}else {
+				// [2. 이미 정지된 계정이 아니라면 계정정지하는 다른 액션페이지 호출]
+					urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
+							   + ano_board_num+"&mem_email=" + mem_email+"'";
+					$("#ban").attr("onclick",urlAddr);
+					
+				}
+				
+				
+				
+			}else{ 
+				urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
+						  + ano_board_num+"&mem_email=" + mem_email+"'";
+				$("#drop").attr("onclick",urlAddr);
+				
+			}
+		}    
+	}		
+	
+	
+	
+/* 	if(document.getElementById("result").value == "1" ){
+		//alert("계정정지가 완료되었습니다.");
+		//document.getElementById("");
+		// 속성부여하고 해당 속성가진 요소 삭제 
+		
+		//$("div[name='ban_"+$("#email").val()+"']").remove();
+		//document.getElementsByName("'ban_"+document.getElementById("email").value+"'");
+		
+		//ban_thisAccount ban_1111@naver.com 클래스를 가진 버튼을 없애기
+		
+	}else if(document.getElementById("result").value == "2" ){
+		alert("신고삭제가 완료되었습니다.");
+		
+	}
+	
+	 */
+	
+	
+	
+	
+/* 	var urlAddr = "";
 	function buttonFunc(act , event) {
 		    
 		if(act == 'ban'){
@@ -418,27 +492,33 @@
 			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=2'";
 		}	
 		
+		*/		
+	
+	
+	$(function(){
+ 		console.log("페이지 열자 ajax 실행");	
+		onLoadAction();
+	});
+
+	function onLoadAction() {
 		
-	
-	
-	
 	    $.ajax({
 	        type: "POST",
-	        url : "./AdminAnonyHandleReportedAction.anob?procNum=1",
-	        dataType : "text",
+	        url : "./AdminAnoCheckAlreadyBannedAction.anob",
+	        dataType : "html",
 	        data: { 
-	        		mem_email : document.getElementById("mem_email"), 
-	        		ano_board_num : document.getElementById("ano_board_num") 
+	        		mem_email : document.getElementById("mem_email").innerText, 
 	        },
 	        success : function(data){
-	            alert(data);
-	        	if(data == 1) {
-	               alert("회원 계정정지 성공!");
-	        		
-	        	}else {
-	               alert("쿼리실수!");
-	        		
+	           // alert(data + "ajax성공");
+	            // 이미 계정 정지된 아이디이면
+	        	if(data == 2) {
+					//alert("이미 계정 정지되었고 " + $("#checkIfBanned").val()+"에 값을 넣을 것")	        		
+	                $("#checkIfBanned").val(data);
+	                $("div[name='ban_"+mem_email+"']").hide();
 	        	}
+	        		
+	        		
 	        	
 	        },
 	        error:function(request,status,error){
@@ -446,11 +526,11 @@
 	            console.log(status);
 	       }
 	        
-	    });
+	    });//ajax
 		
 		
-	}
-		
+		 
+	}	
 	
 	
 </script>
