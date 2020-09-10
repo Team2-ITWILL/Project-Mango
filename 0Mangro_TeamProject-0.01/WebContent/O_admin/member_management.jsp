@@ -22,7 +22,18 @@
   
     
 </head>
-
+<%
+// <------------------ 로그인 세션 값 여부 ---------------------->
+	String email = (String)session.getAttribute("id_email");
+	if(email == null && email != "admin@mango.com"){
+		response.setContentType("text/html; charset=utf-8");
+		out.print("<script>");
+		out.print("window.alert('관리자 페이지입니다.');");
+		out.print("location.href='./Main.me';");
+		out.print("</script>");
+	}
+// <------------------ 로그인 세션 값 여부 ---------------------->
+%>
 <body>
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
     <div class="preloader">
