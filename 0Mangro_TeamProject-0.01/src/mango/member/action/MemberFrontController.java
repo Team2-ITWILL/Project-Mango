@@ -254,7 +254,7 @@ public class MemberFrontController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("MemberManagementAction.me : "+ e);
-			}
+			} 
 			
 /* ---------------------------------- 회원관리 끝  ---------------------------------- */	
 		
@@ -274,23 +274,6 @@ public class MemberFrontController extends HttpServlet {
 			}
 	
 /* ---------------------------------- 아이디 중복 체크 끝  ---------------------------------- */	
-		
-		
-		
-/* ---------------------------------- 회원 정보 프로필 사진 수정 시작  ---------------------------------- */	
-	
-		}else if(command.equals("/MemberProfileModifyAction.me")){
-			
-			action = new MemberProfileModifyAction();
-			
-			try {
-				forward = action.excute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("MemberProfileModifyAction.me : " + e);
-			}
-		
-/* ---------------------------------- 회원 정보 프로필 사진 수정  ---------------------------------- */	
 	
 		}
 		
