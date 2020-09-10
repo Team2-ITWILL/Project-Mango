@@ -7,7 +7,7 @@ import mango.connection.db.DBconnection;
 public class AcademyKeywordDAO extends DBconnection{
 	
 	
-	// 키워드 추가
+	// 키워드 추가(+중복 검사)
 	public int insertAcademyKeyword(AcademyKeywordBean acaKeywordBean){
 		int result = 0;
 		try {
@@ -65,42 +65,8 @@ public class AcademyKeywordDAO extends DBconnection{
 		}		
 		return result;
 		
-	} // insertAcademyKeyword() 끝
+	} // insertAcademyKeyword() 끝		
 	
-	
-	// 테이블에 행이 있는 경우(중복) 삭제
-	public int deleteIfDuplicate(AcademyKeywordBean acaKeywordBean){
-		int result = 0;
-		try {
-			getConnection();	
-			
-			//academy 테이블과 academy_register table을 join해서 데이터를 가져오기
-			sql = "insert into academy_keyward "
-				+ "(select a.aca_main_num, r.aca_keyword "
-				+ "from academy as a join academy_register as r "
-				+ "where a.aca_name = r.aca_name "
-				+ "	and a.aca_main_num = ? "
-				+ ")";
-			
-			//이거 안 해서 계속 nullpointerexception 발생했음!!
-			pstmt = con.prepareStatement(sql);			
-			
-			pstmt.setInt(1, acaKeywordBean.getAcaMainNum());
-			
-			//keyword는 academy_register 테이블에 등록된 값을 가져옴
-			//pstmt.setString(2, acaKeywordBean.getAcakeyword());
-			
-			result = pstmt.executeUpdate();			
-		
-		} catch (Exception e) {
-			System.out.println("insertAcademyKeyword()에서 예외발생");	
-			e.printStackTrace();
-		} finally {
-			resourceClose();
-		}		
-		return result;
-		
-	} // insertAcademyKeyword() 끝
 	
 	// 학원번호로 키워드 목록 반환
 	public List<AcademyKeywordBean> getAcademyKeyword(int acaMainNum){
