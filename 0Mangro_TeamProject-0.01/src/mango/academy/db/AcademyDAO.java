@@ -1775,6 +1775,32 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}		
 		return acaName;
 	}
+
+	@Override
+	public int getAcademyNumByAcaName(String acaName) {
+		int acaMainNum = 0;
+		try {
+			getConnection();
+			
+			String sql = "select * from academy "
+					+ "where aca_name = ? ";
+					//+ "and mem_admin is not null";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acaName);				
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				acaMainNum = rs.getInt("aca_main_num");				
+			
+		} catch (Exception e) {
+			System.out.println("getAcademyNumByAcaName()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return acaMainNum;
+	}
+	
 	
 	
 	
