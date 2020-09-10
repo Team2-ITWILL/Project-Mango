@@ -31,11 +31,14 @@
 </head>
 <%
 // <------------------ 로그인 세션 값 여부 ---------------------->
-	String id = (String)session.getAttribute("id_email");
-
-	//세션값이 없으면  로그인 페이지로 이동 ./MemberLogin.me
-	if(id == null){
-	   response.sendRedirect("./MemberLogin.me");
+	String email = (String)session.getAttribute("id_email");
+	if(email == null){
+		response.setContentType("text/html; charset=utf-8");
+		out.print("<script>");
+		out.print("window.alert('로그인 시 사용 가능한 페이지입니다.');");
+		out.print("location.href='./MemberLogin.me';");
+		out.print("</script>");
+//	    response.sendRedirect("./MemberLogin.me");
 	}
 // <------------------ 로그인 세션 값 여부 ---------------------->
 %>
@@ -43,7 +46,6 @@
 <% 	
 // <------------------ 회원정보 가져오기 ----------------------->	
 	MemberDAO mdao = new MemberDAO();
-	String email = (String)session.getAttribute("id_email");
 	String name = mdao.selectMember(email);
 // <------------------ 회원정보 가져오기 ----------------------->	
 
@@ -51,6 +53,9 @@
 
 //<------------------ 프로필 가져오기 ---------------------->
 	String profileImg1 = mdao.getProfileImg(email);
+	if(profileImg1 == null){
+		profileImg1 = "./images/user_profile/jadu_prifile.jpg";
+	}
 //<------------------ 프로필 가져오기 ---------------------->
 %>
 

@@ -25,7 +25,18 @@
 
 
 </head>
-
+<%
+// <------------------ 로그인 세션 값 여부 ---------------------->
+	String email = (String)session.getAttribute("id_email");
+	if(email == null){
+		response.setContentType("text/html; charset=utf-8");
+		out.print("<script>");
+		out.print("window.alert('로그인 시 사용 가능한 페이지입니다.');");
+		out.print("location.href='./MemberLogin.me';");
+		out.print("</script>");
+	}
+// <------------------ 로그인 세션 값 여부 ---------------------->
+%>
 <body>
 <script type="text/javascript">
 
@@ -47,7 +58,6 @@
 			}
 		
 			/* 회원 탈퇴 페이지 확인 버튼 클릭 시 탈퇴 확인(예/아니오) 안내창 */
-
 			var del_chk = confirm("회원 탈퇴를 하시겠습니까?");
 			
 			if(del_chk == true){ // 예를 누를 경우
