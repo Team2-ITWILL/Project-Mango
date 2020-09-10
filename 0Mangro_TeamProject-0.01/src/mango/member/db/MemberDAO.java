@@ -1,6 +1,11 @@
 package mango.member.db;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import mango.connection.db.DBconnection;
 import mango.payment.db.PaymentBean;
@@ -57,32 +62,38 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
-	/* 네이버 회원 가입  메서드 */
-	public boolean insertnaverMember(MemberBean mb){
+	/* 네이버 회원 가입  메서드 */ 
+	public int insertnaverMember(MemberBean mb) {
 		
 		int result = 0;
+		int check = 0;
 		
 		try {
 			getConnection();
-			System.out.println("DB 연결 성공 !!");
 			
-			sql = "INSERT INTO member (mem_email, mem_name, "
-					+ "mem_joindate)"
-					+ " VALUES (?,?, now())";
-			pstmt = con.prepareStatement(sql);
+			check = idCheck(mb.getMemEmail());
 			
-			pstmt.setString(1, mb.getMemEmail());
-			pstmt.setString(2, mb.getMemName());
+			System.out.println("@@@@check : "+check);
 			
-			System.out.println(mb);
-			
-			result = pstmt.executeUpdate();
-			
-			if(result != 0){
-				return true;
+			if(check == 1){
+				result = 1;
+				return result;
+				
+			}else if(check == 0){
+				
+				sql = "INSERT INTO member (mem_email, mem_name, "
+						+ "mem_joindate)"
+						+ " VALUES (?,?, now())";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, mb.getMemEmail());
+				pstmt.setString(2, mb.getMemName());
+				result = pstmt.executeUpdate();
+				
+				System.out.println("회원 가입 완료 !!");
+				
+				return result;
 			}
-			
-			System.out.println("회원 가입 완료 !!");
 			
 		} catch (Exception e) {
 			System.out.println("--> insertMember()에 SQL구문 오류" + e);
@@ -91,7 +102,7 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		} // try문 끝
 		
-		return false;
+		return result;
 	} // 네이버 회원 가입 / insertnaverMember() 끝
 	
 	
@@ -166,7 +177,7 @@ public class MemberDAO extends DBconnection{
 			
 			if(rs.next()){ // SELECT 결과에 아이디가 있을 때
 				
-				if(rs.getString("mem_email").equals(mb.getMemPwd()) 
+				if(rs.getString("mem_email").equals(mb.getMemEmail()) 
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
 					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
