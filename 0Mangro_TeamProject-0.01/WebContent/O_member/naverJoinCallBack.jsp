@@ -60,7 +60,7 @@
 						return;
 					}
 					
-					window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/0Mangro_TeamProject-0.01/MemberJoinAction.me?id_email="+email+"&id_name="+name);
+					window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/0Mangro_TeamProject-0.01/MemberNaverJoinAction.me?id_email="+email+"&id_name="+name);
 				} else {
 					console.log("callback 처리에 실패하였습니다.");
 				}

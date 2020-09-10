@@ -19,15 +19,23 @@ public class MemberNaverJoinAction implements Action{
 		mb.setMemEmail(request.getParameter("id_email"));
 		mb.setMemName(request.getParameter("id_name"));
 		
-		boolean result = false;
+		int result = 0;
 		
 		result = mdao.insertnaverMember(mb);
 		
-		if(result == false){
-			System.out.println("회원가입 실패 !!");
+		if(result == 1){
+			response.setContentType("text/html; charset=UTF-8");
+			
+			PrintWriter out = response.getWriter(); // getWriter() 호출하면 PrintWriter객체 얻을 수 있음
+			out.print("<script>");
+			out.print("alert('이미 가입한 회원입니다.');");
+			out.print("location.href='./MemberLogin.me'");
+			out.print("</script>");
+			
+//			System.out.println("회원가입 실패 !!");
 			return null;
 		
-		}else{
+		}else if(result == 0){
 			response.setContentType("text/html; charset=UTF-8");
 			
 			PrintWriter out = response.getWriter(); // getWriter() 호출하면 PrintWriter객체 얻을 수 있음
@@ -35,11 +43,11 @@ public class MemberNaverJoinAction implements Action{
 			out.print("alert('회원가입이 완료되었습니다.');");
 			out.print("location.href='/4index.jsp'");
 			out.print("</script>");
-//			return null;
+			return null;
 		}
 		
 		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);
+		forward.setRedirect(false);
 		forward.setPath("./MemberLogin.me");
 		
 		return forward;

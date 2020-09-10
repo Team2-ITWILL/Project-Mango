@@ -22,18 +22,24 @@
    
        
 <style type="text/css">   
+form#courses_search_form{
+	width: 105.4%;
+}
+.searchInput{
+margin-bottom: 10px;
+}
 
 li.firstKey {
-    background-color: #66b5dd !important;
+    border: 2px solid #66b5dd !important;
 
 }
 li.secondKey {
-	background-color: #ff0080 !important;
+	 border: 2px solid #ff0080 !important;
 	
 }
 
 li.thirdKey { 
-	background-color: #6f42c1 !important;
+	 border: 2px solid #6f42c1 !important;
 }
 
  .aca_profile_img{

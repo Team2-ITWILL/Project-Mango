@@ -416,7 +416,9 @@
 					  
 					  
 					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  	<li class="page-item"><a class="page-link" href="MyQnaList.qna?mem_email=${id_email}&pageNum=${i}">${i}</a></li>
+					  	<li class="page-item active">
+					  		<a class="page-link" href="MyQnaList.qna?mem_email=${id_email}&pageNum=${i}">${i}</a>
+					  	</li>
 					 </c:forEach>	
 		
 					  
