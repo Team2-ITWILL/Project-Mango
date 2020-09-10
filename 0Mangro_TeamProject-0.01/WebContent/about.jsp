@@ -36,7 +36,11 @@
 						<h2 class="section_title">Mango가 찾아드릴게요. <br>
 							당신의 시간은 더 소중한 곳에 쓰세요. 
 						</h2>
-						<div class="section_subtitle"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel gravida arcu Vestibulum</p></div>
+						<div class="section_subtitle">
+							<p>
+							Mango will find it for you. Spend your time on something more precious.
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -48,7 +52,7 @@
 						<div class="about_item_image"><img src="images/about1.jpg" alt=""></div>
 						<div class="about_item_title"><a href="#">국내 학원 현황을 한 곳에서</a></div>
 						<div class="about_item_text">
-							<p>여러분의 시간을 더 소중한 곳에 쓰세요. 발품 팔아 학원 가보고 소중한 시간 낭비하지 않아도 양질의 학원 정보를 한 곳에서 만나볼 수 있습니다.화이팅화이팅!화이팅화이팅!</p>
+							<p>포털 사이트는 제공하지 않는 자세한 학원 정보와 현황을 확인하실 수 있어요.</p>
 						</div>
 					</div>
 				</div>
@@ -59,7 +63,7 @@
 						<div class="about_item_image"><img src="images/about2.jpg" alt=""></div>
 						<div class="about_item_title"><a href="#">학원 선택에 큰 도움되는 정확한 후기</a></div>
 						<div class="about_item_text">
-							<p>여러분의 시간을 더 소중한 곳에 쓰세요. 발품 팔아 학원 가보고 소중한 시간 낭비하지 않아도 양질의 학원 정보를 한 곳에서 만나볼 수 있습니다.  </p>
+							<p>허위로 작성된 후기가 아닌 실제 학원 수강생들이 작성한 학원 후기로 학원 선택에 큰 도움을 드려요. </p>
 						</div>
 					</div>
 				</div>
@@ -70,7 +74,7 @@
 						<div class="about_item_image"><img src="images/about3.jpg" alt=""></div>
 						<div class="about_item_title"><a href="#">언제 어디서든 모바일로 쉽게 학원 찾기</a></div>
 						<div class="about_item_text">
-							<p>여러분의 시간을 더 소중한 곳에 쓰세요. 발품 팔아 학원 가보고 소중한 시간 낭비하지 않아도 양질의 학원 정보를 한 곳에서 만나볼 수 있습니다. 계단식 글쓰기계단식 글쓰기 계단식 글쓰기 계단식 글쓰기  </p>
+							<p>간편하게 언제 어디서든 모바일로 쉽게 학원을 찾을 수 있어요.</p>
 						</div>
 					</div>
 				</div>
@@ -158,28 +162,28 @@
 								<div class="accordion_container">
 									<div class="accordion d-flex flex-row align-items-center"><div>해외 유학생들도 즐겨 찾는 글로벌 Mango!</div></div>
 									<div class="accordion_panel">
-										<p>해외 유학생들도 즐겨 찾는 글로벌 Mango!해외 유학생들도 즐겨 찾는 글로벌 Mango!해외 유학생들도 즐겨 찾는 글로벌 Mango!해외 유학생들도 즐겨 찾는 글로벌 Mango!</p>
+										<p>다양한 언어로 정보를 제공하여 유학생들도 쉽고 빠르게 학원을 찾을 수 있어요.</p>
 									</div>
 								</div>
 
 								<div class="accordion_container">
 									<div class="accordion d-flex flex-row align-items-center active"><div>내가 원하는 키워드로 쉽게 좋은 학원 찾기</div></div>
 									<div class="accordion_panel">
-										<p>내가 원하는 키워드로 쉽게 좋은 학원 찾기내가 원하는 키워드로 쉽게 좋은 학원 찾기내가 원하는 키워드로 쉽게 좋은 학원 찾기내가 원하는 키워드로 쉽게 좋은 학원 찾기</p>
+										<p>내가 원하는 키워드로 간편하고 빠르게 좋은 학원을 찾아보세요. Mango가 편하게 찾게 도와드릴게요. </p>
 									</div>
 								</div>
 
 								<div class="accordion_container">
 									<div class="accordion d-flex flex-row align-items-center"><div>솔직한 수강후기로 유익한 수업찾기</div></div>
 									<div class="accordion_panel">
-										<p>솔직한 수강후기로 유익한 수업찾솔직한 수강후기로 유익한 수업찾기솔직한 수강후기로 유익한 수업찾기솔직한 수강후기로 유익한 수업찾기기솔직한 수강후기로 유익한 수업찾기솔직한 수강후기로 유익한 수업찾기</p>
+										<p>학원의 재학생들이 들려주는 솔직한 수강 후기로 나에게 맞는 유익한 수업을 찾아보세요.</p>
 									</div>
 								</div>
 
 								<div class="accordion_container">
 									<div class="accordion d-flex flex-row align-items-center"><div>가입하면 3일간 학원 후기 무제한 이용가능</div></div>
 									<div class="accordion_panel">
-										<p>가입하면 3일간 학원 후기 무제한 이용가능가입하면 3일간 학원 후기 무제한 이용가능가입하면 3일간 학원 후기 무제한 이용가능가입하면 3일간 학원 후기 무제한 이용가능가입하면 3일간 학원 후기 무제한 이용가능</p>
+										<p>Mango에 가입하면 보고싶은 학원의 후기를 3일간 무제한으로 이용할 수 있어요.</p>
 									</div>
 								</div>
 
@@ -286,7 +290,7 @@
 				<div class="col">
 					<div class="section_title_container text-center">
 						<h2 class="section_title">지금 가입하고 <span class="getfree">무료</span>로 등록할 수 있어요!</h2>
-						<div class="section_subtitle"><p>가입하러 고고</p></div>
+						<div class="section_subtitle"><p>Mango에 가입하여 무료 등록을 원한다면 클릭해주세요.</p></div>
 						<button type="button" class="counter_form_button" 
 						onclick="location.href='4index.jsp?center=O_academy/academy_register.jsp'">지금 등록하기</button> 
 					</div>

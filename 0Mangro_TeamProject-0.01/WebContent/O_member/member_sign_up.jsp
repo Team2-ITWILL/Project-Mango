@@ -14,6 +14,9 @@
 <!-- <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css"> -->
+
+<!-- 제이쿼리 -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js" ></script>
 <link rel="stylesheet" type="text/css" href="styles/form_basic_page.css">
 <link rel="stylesheet" type="text/css" href="styles/academy_single_responsive.css">
 
@@ -29,7 +32,21 @@
 
 </head>
 <body>
+
+
+
+
+
 <script type="text/javascript">
+
+
+	function checkBox(event){
+		
+		if($("#yackuan-check").is(":checked") == true){
+			window.open('./O_member/member_terms_of_use.jsp', '회원가입 약관','width=700, height=700');	
+		}
+		
+	}
 
 //<--------------------------- 회원가입 필수 입력란 확인 ------------------------->
 	
@@ -300,12 +317,12 @@
 					      <div class="mb-6">
 					        <div class="js-form-message">
 					          <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
-					            <input type="checkbox" class="custom-control-input" id="yackuan-check" name="termsCheckbox">
+					            <input type="checkbox" class="custom-control-input" id="yackuan-check" name="termsCheckbox" onclick="checkBox(event)">
 					            <label class="font-subhead custom-control-label" for="termsCheckbox">
 					            
 					              <p class="m-0">
-					                <a class="yackuan" href="#" target="_blank">이용약관</a> 및
-					                <a class="gaein" href="#" target="_blank">개인정보취급방침</a>에 동의합니다.
+					                <a class="yackuan" href="javascript:void(window.open('./O_member/member_terms_of_use.jsp', '회원가입 약관','width=700, height=700'))">이용약관</a> 및
+					                <a class="gaein" href="javascript:void(window.open('./O_member/member_terms_of_use.jsp', '회원가입 약관','width=700, height=700'))">개인정보취급방침</a>에 동의합니다.
 					              </p>
 					            </label>
 					          </div>
