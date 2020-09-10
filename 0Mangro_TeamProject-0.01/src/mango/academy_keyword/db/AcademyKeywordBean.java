@@ -38,5 +38,10 @@ public class AcademyKeywordBean {
 		this.acakeyword = acakeyword;
 	}
 
+	@Override
+	public String toString() {
+		return "AcademyKeywordBean [acaMainNum=" + acaMainNum + ", acakeyword=" + acakeyword + "]";
+	}
+
 	
 }
