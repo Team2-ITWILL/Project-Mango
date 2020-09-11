@@ -66,6 +66,7 @@ public class AcademyContentAction implements Action{
 		// 학원 사진
 		String regEmail = regDAO.getRegisterEmail(acaName);
 		String regImg = memDAO.getProfileImg(regEmail);
+		System.out.println(regImg);
 		
 		// 평균점수 (소숫점 한자리)
 		double avgScore = 
