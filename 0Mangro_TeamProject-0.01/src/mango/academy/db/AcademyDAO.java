@@ -3038,6 +3038,33 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 	
 	}
+
+	//등록된 학원 수
+	@Override
+	public int getRegisteredAcademyCount() {		
+		try {
+			getConnection();
+			
+			sql="select count(*) from academy where mem_email is not null";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();			
+			
+			if(rs.next()){				
+				return rs.getInt(1);
+			}			
+			
+		} catch (Exception e) {
+			System.out.println("getRegisteredAcademyCount()에서 예외 발생"+e);
+		}finally {
+			resourceClose();
+		}					
+		return 0;
+	}
+	
+	
+	
 	
 	
 	
