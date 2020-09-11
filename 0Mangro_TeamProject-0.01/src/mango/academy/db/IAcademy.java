@@ -69,5 +69,8 @@ public interface IAcademy {
 	//학원번호 가져오는 메서드
 	public int getAcademyNumByAcaName(String acaName);
 	
+	//등록된 학원 수
+	public int getRegisteredAcademyCount();
+	
 
 }

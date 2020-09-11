@@ -69,7 +69,8 @@
 										
 										<c:when test="${id_email == 'admin@mango.com' }">
 											<div class="top_bar_button admin_page">
-												<a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a>
+												<!-- <a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a> -->
+												<a href="./TotalInfo.adm">관리자 메뉴</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>
@@ -166,7 +167,8 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<c:if test="${id_email eq 'admin@mango.com'}">
-					<li class="menu_mm"><a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a></li>
+					<!-- <li class="menu_mm"><a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a></li> -->
+					<li class="menu_mm"><a href="./TotalInfo.adm">관리자 메뉴</a></li>
 				</c:if>
 				<li class="menu_mm"><a href="4index.jsp?center=about.jsp">소개</a></li>
 				<li class="menu_mm"><a href="./AcademyList.aca">학원찾기</a></li>
