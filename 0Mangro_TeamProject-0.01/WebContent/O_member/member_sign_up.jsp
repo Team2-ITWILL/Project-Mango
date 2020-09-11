@@ -42,6 +42,8 @@
 
 	function checkBox(event){
 		
+		
+		
 		if($("#yackuan-check").is(":checked") == true){
 			window.open('./O_member/member_terms_of_use.jsp', '회원가입 약관','width=700, height=700');	
 		}
