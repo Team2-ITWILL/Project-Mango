@@ -334,9 +334,6 @@
 					        </label>
 					        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
 					        		style="margin-bottom: 30px;">
-						        	<span style="display: none;" id="pwdck">
-						        		 8~20자 영문 대소문자, 숫자를 입력해 주세요.
-						        	</span> 
 					        		
 					      </div> 
 					               

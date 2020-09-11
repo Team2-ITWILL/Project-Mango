@@ -38,31 +38,28 @@
 		out.print("window.alert('로그인 시 사용 가능한 페이지입니다.');");
 		out.print("location.href='./MemberLogin.me';");
 		out.print("</script>");
-//	    response.sendRedirect("./MemberLogin.me");
 	}
 // <------------------ 로그인 세션 값 여부 ---------------------->
 %>
 <body>
 <% 	
-// <------------------ 회원정보 가져오기 ----------------------->	
+// <------------------ 회원정보 + 프로필 가져오기 ----------------------->	
 	MemberDAO mdao = new MemberDAO();
 	String name = mdao.selectMember(email);
-// <------------------ 회원정보 가져오기 ----------------------->	
-
-
-
-//<------------------ 프로필 가져오기 ---------------------->
 	String profileImg1 = mdao.getProfileImg(email);
 	if(profileImg1 == null){
 		profileImg1 = "./images/user_profile/jadu_prifile.jpg";
 	}
-//<------------------ 프로필 가져오기 ---------------------->
-%>
+// <------------------ 회원정보 + 프로필 가져오기 ----------------------->	
+%>	
+
 
 <script type="text/javascript">
 // <----------------- 회원 정보 수정 필수 입력 -------------------->
 
 	$(function update_chk(){
+		
+		var regPwd = RegExp(/^[a-zA-Z0-9]{8,20}$/); // 비밀번호
 		
 		$("#update_chk").submit(function(){
 			
@@ -81,6 +78,13 @@
 			if($("#newPw2").val() == ""){
 				alert("변경할 비밀번호 입력하세요.");
 				$("#newPw2").focus;
+				return false;
+			}
+			
+			// 변경할 비밀번호 유효성 체크
+			if( !(regPwd.test( $("#newPw1").val() )) ){
+				alert("8~20자 영문 대소문자, 숫자를 입력해 주세요.");
+				$("#newPw1").focus();
 				return false;
 			}
 			
@@ -213,7 +217,8 @@
 
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
 			      <form class="member_reFr" action="./MemberUpdateAction.me" method="post" enctype="multipart/form-data" id="update_chk" onsubmit="update_chk()">
-				      
+
+			      
       					<!-- 파일 선택 후 첨부하면 바뀐 이미지가 rounded-circle안에 미리보기로 가능하도록 구현 -->
 						  <img src="<%=profileImg1%>" alt="user" class="rounded-circle" >
 						  

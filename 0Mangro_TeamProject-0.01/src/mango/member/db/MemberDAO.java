@@ -310,8 +310,10 @@ public class MemberDAO extends DBconnection{
 				
 				result = true;
 				System.out.println("회원 정보 수정 완료 !!");
-			}else{
+				
+			}else if(!rs.next()){
 				result = false;
+				System.out.println("회원 정보 수정 실패 !!");
 			}
 			
 		} catch (Exception e) {
