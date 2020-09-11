@@ -3,6 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,6 +43,10 @@
 	padding-left: 20px !important;
 }
 
+.pagination {
+	width: 300px !important;
+    margin: auto !important;
+}
 </style>  
 </head>
 
@@ -282,7 +287,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">내가 작성한 익명사담글</h4>
+                                <h4 class="card-title">내가 작성한 익명사담글 ${count}</h4>
                                 <h6 class="card-subtitle">내가 작성한 익명사담방의 게시글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
@@ -304,7 +309,7 @@
                                     <tbody>
                                     <c:choose>
                                     
-                                    <c:when test="${myAnonyListCount != 0 }">
+                                    <c:when test="${count != 0 }">
                                     <c:forEach var="myAnonyList" items="${myAnonyList}">
                                         <tr onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${myAnonyList.ano_board_num}'">
                                             <th scope="row">${myAnonyList.ano_board_num}</th>
@@ -329,7 +334,7 @@
                                     
                                     <c:otherwise>
                                         <tr>
-                                            <th scope="row" colspan="6">작성한 익명사담글이 없습니다.</th>
+                                            <th scope="row" colspan="10">작성한 익명사담글이 없습니다.</th>
                                         </tr>
                                     
                                     </c:otherwise>
@@ -343,16 +348,11 @@
                     
  <%-------------------------------------------------- 페이징 영역  ------------------------------------------------------------------------%>
                     
+                    <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
                     <ul class="pagination">
                     
-                    <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
-                    
                     <c:if test="${count > 0}">
-                    	<c:set var="endPage" value="${endPage}" />
-                    	<c:if test="${endPage gt pageCount}">
-                    		<c:set var="endPage" value="${pageCount}" />
-                    	</c:if>
-
+                    
 					
 							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
 							
@@ -382,27 +382,30 @@
 							  
 					  
 							<%-- [1] [2] [3] .... --%>  
-							  <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							
+							<%-- [1] [2] [3] .... --%>  
+							<c:if test="${count gt 0 }">
+							
+							  <c:forEach var="i" begin="${startPage}" end="${endPage}">
 							  	<c:choose>
-							  	 <c:when test="${currentPage == i}">
-								  	<li class="page-item  active">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:when>
-							  	 <c:otherwise>
-								  	<li class="page-item">
-								  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
-								  			${i}
-								  		</a>
-								  	</li>
-							  	 </c:otherwise>
-							  	 
+								  	 <c:when test="${i gt endPage}">
+									  	<li class="page-item">
+									  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
+								  	 <c:when test="${currentPage == i}">
+									  	<li class="page-item  active">
+									  		<a class="page-link" href="./MyAnonyBoardListAction.anob?clickedPageNum=${i}">
+									  			${i}
+									  		</a>
+									  	</li>
+								  	 </c:when>
 							  	</c:choose>
 							  </c:forEach>
-							  
-					  
+							 </c:if> 							
+							
 					<%-- [  >  다음페이지 가기] .... --%> 
 					
 					<%-- 블록시작번호+하나의 블럭에 보여질 페이지수=전체 페이지수보다 큰 경우 즉, 더이상 뒤로 갈 페이지가 없는 경우 총페이지개수(마지막페이지) -----------------%>  
