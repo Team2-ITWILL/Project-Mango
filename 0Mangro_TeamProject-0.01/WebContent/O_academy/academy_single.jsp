@@ -499,7 +499,8 @@ li small {
 						
 							
 							<c:when test="${keywordVO.acakeyword eq 'traffic'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=traffic'">
 										<div class="feature_title"><i class="fa fa-subway" aria-hidden="true"></i>
 											<span>교통이 편리한</span>
 										</div>
@@ -507,7 +508,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'long'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=long'">
 										<div class="feature_title"><i class="fa fa-clock-o" aria-hidden="true"></i>
 											<span>중장기(6개월)</span>
 										</div>
@@ -516,7 +518,8 @@ li small {
 							
 							
 							<c:when test="${keywordVO.acakeyword eq 'clean'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=clean'">
 										<div class="feature_title"><i class="fa fa-university" aria-hidden="true"></i>
 											<span>시설이 깨끗한</span>
 										</div>
@@ -524,7 +527,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'audit'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=audit'">
 										<div class="feature_title"><i class="fa fa-eye" aria-hidden="true"></i>
 											<span>청강신청이 가능한</span>
 										</div>
@@ -532,7 +536,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'stdRoom'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=stdRoom'">
 										<div class="feature_title"><i class="fa fa-cubes" aria-hidden="true"></i>
 											<span>스터디룸이 있는</span>
 										</div>
@@ -540,7 +545,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'restaurant'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=restaurant'">
 										<div class="feature_title"><i class="fa fa-cutlery" aria-hidden="true"></i>
 											<span>식당가 인근</span>
 										</div>
@@ -548,7 +554,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'room'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=room'">
 										<div class="feature_title"><i class="fa fa-building-o" aria-hidden="true"></i>
 											<span>기숙사 있는</span>
 										</div>
@@ -556,7 +563,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'car'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=car'">
 										<div class="feature_title"><i class="fa fa-bus" aria-hidden="true"></i>
 											<span>학원 차량 운행이 있는</span>
 										</div>
@@ -564,7 +572,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'level'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=level'">
 										<div class="feature_title"><i class="fa fa-file-text-o" aria-hidden="true"></i>
 											<span>레벨 테스트가 있는</span>
 										</div>
@@ -572,7 +581,8 @@ li small {
 							</c:when>
 							
 							<c:when test="${keywordVO.acakeyword eq 'sat'}">
-								<div class="feature d-flex flex-row align-items-center justify-content-start">
+								<div class="feature d-flex flex-row align-items-center justify-content-start"
+									onclick="location.href='./AcademySearchList.aca?select5=basic&keyword=sat'">
 										<div class="feature_title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
 											<span>수능 대비 강의가 있는</span>
 										</div>
