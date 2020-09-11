@@ -213,5 +213,27 @@ public class AcademyRegisterDAO extends DBconnection{
 		return result;
 	}	
 	
+	//등록 요청 학원 수 얻기
+	public int getRegRequestCount(){
+		int count = 0;
+		try {
+			getConnection();
+
+			sql = "select count(*) from academy_register where confirm_date is not null";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println("getRegRequestCount()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return count;
+	}		
 	
 } // AcademyRegisterDAO클래스 끝

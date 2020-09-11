@@ -14,7 +14,7 @@ public class AcademyKeywordDAO extends DBconnection{
 			getConnection();	
 			
 			//테이블에 행이 존재하는지 확인(중복검사)
-			sql = "select * from academy_keyward "
+			sql = "select * from academy_keyword "
 					+ "where aca_main_num = ? "
 					+ "and aca_keyword = ?";
 			pstmt = con.prepareStatement(sql);			
@@ -26,7 +26,7 @@ public class AcademyKeywordDAO extends DBconnection{
 			
 			//1. 중복일 경우
 			if(rs.next()){
-				sql = "delete from academy_keyward "
+				sql = "delete from academy_keyword "
 						+ "where aca_main_num = ? "
 						+ "and aca_keyword = ?";
 				pstmt = con.prepareStatement(sql);				
@@ -40,7 +40,7 @@ public class AcademyKeywordDAO extends DBconnection{
 			//2. 중복이 아닐 경우
 			
 			//academy 테이블과 academy_register table을 join해서 데이터를 가져오기
-			sql = "insert into academy_keyward "
+			sql = "insert into academy_keyword "
 				+ "(select a.aca_main_num, r.aca_keyword "
 				+ "from academy as a join academy_register as r "
 				+ "where a.aca_name = r.aca_name "

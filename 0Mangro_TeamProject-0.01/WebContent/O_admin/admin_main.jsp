@@ -18,8 +18,8 @@
 <link href="styles/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
-<link href="styles/table_style.css" rel="stylesheet">
-  
+<link href="styles/table_style.css" rel="stylesheet">  
+   
 </head>
 
 <body>
@@ -169,19 +169,19 @@
  
 
 <%---------------------------------------------------------- 대시보드 --------------------------------------------------------------%>
-
+			
 <%----------------------------------- [회원 데이터] ---------------------------------------------------%>
                 <div class="card-group">
+                  <%----------------- [총 회원수] ---------------------------------------------%>
                     <div class="card border-right">
                         <div class="card-body">
                             <div class="d-flex d-lg-flex d-md-block align-items-center">
                                 <div>
-                                    <div class="d-inline-flex align-items-center">
-                                    
+                                    <div class="d-inline-flex align-items-center">                          
                                     
                                     <%-- 총 회원수 --%>
                                         <h2 class="text-dark mb-1 font-weight-medium">
-                                        	5,276
+                                        	${memTotal}
                                         </h2>
                                     
                                     </div>
@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                  
 
 <%----------------------------------- [등록 학원 데이터] ---------------------------------------------------%>
                     <div class="card border-right">
@@ -204,14 +204,15 @@
                                     <div class="d-inline-flex align-items-center">
                                     <%-- 총 등록 학원 수 --%>
                                         <h2 class="text-dark mb-1 font-weight-medium">
-                                        	2,890
+                                        	${acaCount}                                        	
                                         </h2>
                                     <%-- 총 등록 학원 수 --%>
                                         <span class="badge bg-danger font-12 text-white font-weight-medium badge-pill ml-2 d-md-none d-lg-block">
                                         	<span>전월대비 </span> -2.33% 
                                         </span>
                                     </div>
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">등록 학원수</h6>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">총 학원수</h6>      
+
                                 </div>
                                 <div class="ml-auto mt-md-3 mt-lg-0">
                                     <span class="opacity-7 text-muted"><i class="fa fa-handshake-o" aria-hidden="true"></i></span>
@@ -220,7 +221,29 @@
                         </div>
                     </div>
 
+ 					<div class="card border-right">
+                        <div class="card-body">
+                            <div class="d-flex d-lg-flex d-md-block align-items-center">
+                                <div>
+                                    <div class="d-inline-flex align-items-center">
+                                    <%-- 등록된 학원 수 --%>
+                                        <h2 class="text-dark mb-1 font-weight-medium">
+                                        	${registeredCount}                                        	
+                                        </h2>
+                                    <%-- 등록된 학원 수 --%>
+                                        <span class="badge bg-danger font-12 text-white font-weight-medium badge-pill ml-2 d-md-none d-lg-block">
+                                        	<span>전월대비 </span> -2.33% 
+                                        </span>
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">등록된 학원수</h6>      
 
+                                </div>
+                                <div class="ml-auto mt-md-3 mt-lg-0">
+                                    <span class="opacity-7 text-muted"><i class="fa fa-handshake-o" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card border-right">
                         <div class="card-body">
@@ -245,7 +268,7 @@
                             <div class="d-flex d-lg-flex d-md-block align-items-center">
                                 <div>
                                     <h2 class="text-dark mb-1 font-weight-medium">
-                                    	864
+                                    	${regCount}
                                     </h2>
                                     <%-- 전월 대비 증가율 --%>
                                         <span class="badge bg-primary font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none"
@@ -281,25 +304,34 @@
                                 <ul class="list-style-none mb-0">
                                 <%-- 회원현황 --%>
                                 
+                               <%-- 일반 회원 --%>
                                     <li class="mt-3">
                                         <i class="fas fa-circle text-cyan font-10 mr-2"></i>
                                         <span class="text-muted">일반 회원</span>
-                                        <span class="text-dark float-right font-weight-medium">2,386 명</span>
+                                        <span class="text-dark float-right font-weight-medium">${isNormal} 명</span>
                                     </li>
                                     
                                 <%-- 학원(관리자)회원 --%>
                                     <li class="mt-3">
-                                        <i class="fas fa-circle text-danger font-10 mr-2"></i>
+                                        <i class="fas fa-circle text-primary font-10 mr-2"></i>
                                         <span class="text-muted">학원 회원</span>
-                                        <span class="text-dark float-right font-weight-medium">2,890 명</span>
+                                        <span class="text-dark float-right font-weight-medium">${isAdmin} 명</span>
                                     </li>
                                     
-                                <%-- 일반회원 --%>
+                                <%-- 정지 회원 --%>
+		                            <li class="mt-3">
+		                                <i class="fas fa-circle text-warning font-10 mr-2"></i>
+		                                <span class="text-muted">정지 회원</span>
+		                                <span class="text-dark float-right font-weight-medium">${isBaned} 명</span>
+		                            </li>
+                                    
+                                <%-- 탈퇴회원 --%>
                                     <li class="mt-3">
-                                        <i class="fas fa-circle text-primary font-10 mr-2"></i>
+                                        <i class="fas fa-circle text-danger font-10 mr-2"></i>
                                         <span class="text-muted">탈퇴 회원</span>
-                                        <span class="text-dark float-right font-weight-medium">503 명</span>
-                                    </li>
+                                        <span class="text-dark float-right font-weight-medium">${isSeceded} 명</span>
+                                    </li>                              
+                                
                                     
                                 </ul>
                             </div>
@@ -635,9 +667,64 @@
 
 
 
+<%-- [자바스크립트] --%>    
+<script>
 
+window.onload = function(){
+	
+	// ==============================================================
+    // 회원 현황
+    // ==============================================================	
+	var pieData = {
+			 '일반 회원': ${isNormal},
+             '학원 회원': ${isAdmin},
+             '정지 회원': ${isBaned},
+             '탈퇴 회원': ${isSeceded}
+	};	
+	
+    var chart1 = c3.generate({
+        bindto: '#campaign-v2',
+        data: {
+        	
+        	json: [pieData],
+        	keys: {
+        		value: Object.keys(pieData),
+        	},            
+            type: 'donut',
+            tooltip: {
+                show: true
+            }
+        },
+        donut: {
+            label: {
+                show: false
+            },
+            title: '회원 현황',
+            width: 18
+        },
+
+        legend: {
+            hide: true
+        },
+        color: {
+            pattern: [
+                '#2EFEF7',
+                '#5f76e8',
+                '#F4FA58',                
+               	'#FA5858'
+               	//'#edf2f6',
+                //'#5f76e8',
+               	//'#ff4f70',
+                //'#01caf1'
+            ]
+        }
+    });
+
+    d3.select('#campaign-v2 .c3-chart-arcs-title').style('font-family', 'Rubik');
     
-    
+};
+
+</script>  
     
 <!----------------------------------------[자바스크립트 영역------------------------------------------------------------------->    
     <script src="styles/assets/libs/jquery/dist/jquery.min.js"></script>
@@ -660,7 +747,7 @@
     <script src="styles/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     
     <!-- 관리자메뉴 chartist 라이브러리 설정 파일 : 일반파일, 축약파일(min.js) 중 택일 -->
-    <script src="styles/dist/js/pages/dashboards/dashboard_Mango.js"></script>   
+    <script src="./O_admin/admin_main_dashboard.js"></script>    
     <!-- <script src="styles/dist/js/pages/dashboards/dashboard1.js"></script> -->   
     <!-- <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>  -->   
     

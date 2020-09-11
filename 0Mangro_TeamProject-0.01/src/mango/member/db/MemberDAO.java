@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import mango.connection.db.DBconnection;
@@ -551,5 +553,63 @@ public class MemberDAO extends DBconnection{
 		}
 		return check;
 	} // 아이디 중복 체크 / idCheck() 끝
+	
+	
+	/* 총 회원수 얻는 메서드 */
+	public int getMemberCount() {		
+		int count = 0;		
+		try {
+			getConnection();
+			
+			sql = "select count(*) from member ";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> getMemberCount()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return count;
+	} // getMemberCount
+	
+	/*관리자, 금지, 탈퇴 회원 수  */
+	public JSONObject getMemberCountDiff() {		
+		JSONObject countObj = new JSONObject();		
+		try {
+			getConnection();
+			sql = "select "
+				+ "count(*) as total, "
+				+ "count(if(mem_admin <> 0, mem_admin, NULL)) as isAdmin, "
+				+ "count(if(mem_admin = 0, mem_admin, NULL)) as isNormal, "
+				+ "count(if(mem_baned <> 0, mem_admin, NULL)) as isBaned, "
+				+ "count(if(mem_seceded <> 0, mem_seceded, NULL)) as isSeceded "
+				+ "	from member ";			
+	
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				countObj.put("total", rs.getInt(1));
+				countObj.put("isAdmin", rs.getInt(2));
+				countObj.put("isNormal", rs.getInt(3));
+				countObj.put("isBaned", rs.getInt(4));
+				countObj.put("isSeceded", rs.getInt(5));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> getMemberCountDiff()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return countObj;
+		
+	} // getMemberCountDiff
 	
 }
