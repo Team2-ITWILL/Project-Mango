@@ -21,9 +21,25 @@
 
 ******************************/
 
+/* @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:300,400,500,700,900'); */
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Press+Start+2P&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/*********************************
+2. Body and some general stuff
+*********************************/
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
+
+
 /************
 1. 1600px
 ************/
+
+
 
 @media only screen and (max-width: 1600px)
 {
@@ -293,9 +309,15 @@
 	{
 		display: none;
 	}
+	
+	
 	.home_slider_title
 	{
 		font-size: 48px;
+	}
+	
+	.resp767Title {
+		font-size: 35px;
 	}
 	.home_search_form div
 	{

@@ -43,8 +43,8 @@ public class MemberDeleteAction implements Action{
 			
 			PrintWriter out = response.getWriter();
 			out.print("<script>");
-			out.print("alert('오류가 발생하였습니다. 담당자에게 문의하세요.');");
-			out.print("location.href='./Main.me';");
+			out.print("alert('비밀번호가 틀립니다.');");
+			out.print("location.href='./MemberDelete.me';");
 			out.print("</script>");
 			out.close();
 			

@@ -30,6 +30,8 @@
 /* ----------------------------------- 로그인 아이디, 비밀번호 필수 입력 확인 ------------------------------- */
 	$(function loginCheck() {
 		
+		var regMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/) // 이메일
+		
 		$("#login").submit(function(){
 			
 			// 이메일
@@ -39,6 +41,15 @@
 				return false;
 			}
 			
+			// 이메일 유효성 검사
+		    if ( !(regMail.test( $("#id_email").val() )) ){
+				alert("이메일 형식이 올바르지 않습니다.");
+		    	$("#id_email").focus();
+		    	$("#id_email").val("");
+		    	return false;
+		    }
+
+			// 비밀번호			
 			if($("#id_password1").val() == ""){
 				alert("비밀번호를 입력하세요.");
 				$("#id_password1").focus();
@@ -50,6 +61,7 @@
 
 	
 /* ------------ 이메일 기억하기  : 입력한 이메일을 재작성하지 않고 비밀번호만 재입력하여 로그인 할 수 있게 기능 구현 ------------ */
+		
 		$("#login").ready(function(){
 			
 			$("#id_email").val(Cookies.get('key'));

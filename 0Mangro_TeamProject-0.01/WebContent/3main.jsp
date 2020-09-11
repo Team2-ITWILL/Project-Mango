@@ -422,7 +422,7 @@
 						<div class="container">
 							<div class="row">
 								<div class="col text-center">
-									<div class="home_slider_title">우리동네 학원을 찾아보세요.</div>
+									<div class="home_slider_title resp767Title">우리동네 학원을 찾아보세요.</div>
 									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">

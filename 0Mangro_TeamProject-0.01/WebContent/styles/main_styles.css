@@ -758,6 +758,7 @@ section
 }
 .section_subtitle
 {
+	font-family: 'Noto Sans KR', sans-serif;
 	line-height: 1.85;
 	margin-top: 14px;
 }
