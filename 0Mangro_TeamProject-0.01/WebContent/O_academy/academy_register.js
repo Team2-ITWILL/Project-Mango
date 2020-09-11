@@ -130,40 +130,70 @@ window.onload = function(){
 	
 	//=======================키워드 선택==========================
 	
-//	https://jsdev.kr/t/document-queryselectorall-addeventlistener/5170/2
-//	document.querySelectorAll 에서는 addEventListener가 왜 안될까요?
-//	document.getElementById는 단일 DOM 객체를 가져오지만, 
-//	document.querySelectorAll은 NodeCollection을 가져오기 때문입니다.
-//	또한 NodeCollection은 숫자 인덱스를 가지고 있고 length property를 가지고 있지만, 
-//	배열은 아니므로 forEach등의 Iterator Function을 호출할 수 없습니다.
-	
-	/*var key = document.querySelector("input[name='keyword']");
+	//	https://jsdev.kr/t/document-queryselectorall-addeventlistener/5170/2
+	//	document.querySelectorAll 에서는 addEventListener가 왜 안될까요?
+	//	document.getElementById는 단일 DOM 객체를 가져오지만, 
+	//	document.querySelectorAll은 NodeCollection을 가져오기 때문입니다.
+	//	또한 NodeCollection은 숫자 인덱스를 가지고 있고 length property를 가지고 있지만, 
+	//	배열은 아니므로 forEach등의 Iterator Function을 호출할 수 없습니다.		
+
+	var keyword = document.querySelector("input[name='keyword']");
 	var li = document.querySelectorAll(".tags_list li");	
-	console.log(li);
-	
+
 	//document.querySelectorAll은 은 forEach(for in)문을 사용할 수 없다!!!
 	//for(var i in li){		(X)
-	for(var i=0; i<li.length; i++){	
+	for(var i=0; i < li.length; i++){					
 		
-		li[i].addEventListener("click", function(event){
+		li[i].addEventListener("click", function(event){	
 			
-			var idx;			
-			console.log(li[i].className);
-			console.log(li[i].getAttribute("class"));
-			
-			//'firstKey'를 탐색했을 때 문자열이 존재한다면
-			if((idx = li[i].getAttribute('class').indexOf('firstKey')) != -1){
-				console.log(idx);
-				console.log(idx+1);
-				console.log(idx+2);
+			//selected 상태이면 해당 클래스 제거
+			if($(event.target).hasClass('selected')){
+				$(event.target).removeClass('selected');
+			//selected 상태가 아니면 키워드 선택	
+			}else{
+				//list태그 일괄 selected 클래스 제거
+				$(li).removeClass('selected');
 				
-			}
-		});
-	}
-		*/
-	
+				//이벤트가 발생한(선택한) 키워드를 이용하여 키워드태그 값 변경
+				selectKey(event.target);
+			}		
+		});			
+	}			
 	
 } //window.onload()
+
+function selectKey(selectedTag){
+	
+	//키워드 값이 들어갈 태그(form태그로 전송)
+	var keyword = document.querySelector("input[name='keyword']");
+	//키워드 선택란(화면에 보여줄 태그명)
+	var keyword_view = document.querySelector("input[name='keyword_view']");
+	
+	//클래스 속성명
+	var attr = selectedTag.getAttribute("class");
+	
+	//끝점으로부터 처음 만나는 문자열의 위치
+	var idx = attr.lastIndexOf("y"); //firstKey, secondKey, thirdKey의 끝인 y	
+	
+	//'firstKey'를 탐색했을 때 문자열이 존재한다면
+	if(	   (attr.indexOf("firstKey") != -1) 
+		|| (attr.indexOf("secondKey") != -1) 
+		|| (attr.indexOf("thirdKey") != -1))
+	{
+		//클래스 속성명 중 ~~key 이후의 속성명을 반환받아 keyword(input tag)에 저장		
+		keyword.value = attr.substr(idx + 2); 	
+		
+		//키워드 선택란에 선택한 태그명을 저장
+		keyword_view.value = selectedTag.innerText;	
+		
+		//키워드태그 css 색깔 변경
+		$(selectedTag).addClass('selected');
+		
+	}else{
+		alert("error! not defined key")
+	}
+	console.log(keyword.value);
+}		
 
 //////////////////////////////////////////////////////////////
 // [input type='file' 버튼 숨기기] -> hideBtn 뒤에 가려짐

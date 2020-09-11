@@ -1,6 +1,13 @@
 package mango.member.db;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import mango.connection.db.DBconnection;
 import mango.payment.db.PaymentBean;
@@ -57,32 +64,38 @@ public class MemberDAO extends DBconnection{
 	
 	
 	
-	/* 네이버 회원 가입  메서드 */
-	public boolean insertnaverMember(MemberBean mb){
+	/* 네이버 회원 가입  메서드 */ 
+	public int insertnaverMember(MemberBean mb) {
 		
 		int result = 0;
+		int check = 0;
 		
 		try {
 			getConnection();
-			System.out.println("DB 연결 성공 !!");
 			
-			sql = "INSERT INTO member (mem_email, mem_name, "
-					+ "mem_joindate)"
-					+ " VALUES (?,?, now())";
-			pstmt = con.prepareStatement(sql);
+			check = idCheck(mb.getMemEmail());
 			
-			pstmt.setString(1, mb.getMemEmail());
-			pstmt.setString(2, mb.getMemName());
+			System.out.println("@@@@check : "+check);
 			
-			System.out.println(mb);
-			
-			result = pstmt.executeUpdate();
-			
-			if(result != 0){
-				return true;
+			if(check == 1){
+				result = 1;
+				return result;
+				
+			}else if(check == 0){
+				
+				sql = "INSERT INTO member (mem_email, mem_name, "
+						+ "mem_joindate)"
+						+ " VALUES (?,?, now())";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, mb.getMemEmail());
+				pstmt.setString(2, mb.getMemName());
+				result = pstmt.executeUpdate();
+				
+				System.out.println("회원 가입 완료 !!");
+				
+				return result;
 			}
-			
-			System.out.println("회원 가입 완료 !!");
 			
 		} catch (Exception e) {
 			System.out.println("--> insertMember()에 SQL구문 오류" + e);
@@ -91,7 +104,7 @@ public class MemberDAO extends DBconnection{
 			resourceClose();
 		} // try문 끝
 		
-		return false;
+		return result;
 	} // 네이버 회원 가입 / insertnaverMember() 끝
 	
 	
@@ -166,7 +179,7 @@ public class MemberDAO extends DBconnection{
 			
 			if(rs.next()){ // SELECT 결과에 아이디가 있을 때
 				
-				if(rs.getString("mem_email").equals(mb.getMemPwd()) 
+				if(rs.getString("mem_email").equals(mb.getMemEmail()) 
 				&& rs.getString("mem_name").equals(mb.getMemName()) ){
 						
 					// 탈퇴일자 컬럼에 데이터가 존재할 때 로그인 불가
@@ -299,8 +312,6 @@ public class MemberDAO extends DBconnection{
 				
 				result = true;
 				System.out.println("회원 정보 수정 완료 !!");
-			}else{
-				result = false;
 			}
 			
 		} catch (Exception e) {
@@ -542,5 +553,63 @@ public class MemberDAO extends DBconnection{
 		}
 		return check;
 	} // 아이디 중복 체크 / idCheck() 끝
+	
+	
+	/* 총 회원수 얻는 메서드 */
+	public int getMemberCount() {		
+		int count = 0;		
+		try {
+			getConnection();
+			
+			sql = "select count(*) from member ";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> getMemberCount()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return count;
+	} // getMemberCount
+	
+	/*관리자, 금지, 탈퇴 회원 수  */
+	public JSONObject getMemberCountDiff() {		
+		JSONObject countObj = new JSONObject();		
+		try {
+			getConnection();
+			sql = "select "
+				+ "count(*) as total, "
+				+ "count(if(mem_admin <> 0, mem_admin, NULL)) as isAdmin, "
+				+ "count(if(mem_admin = 0, mem_admin, NULL)) as isNormal, "
+				+ "count(if(mem_baned <> 0, mem_admin, NULL)) as isBaned, "
+				+ "count(if(mem_seceded <> 0, mem_seceded, NULL)) as isSeceded "
+				+ "	from member ";			
+	
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				countObj.put("total", rs.getInt(1));
+				countObj.put("isAdmin", rs.getInt(2));
+				countObj.put("isNormal", rs.getInt(3));
+				countObj.put("isBaned", rs.getInt(4));
+				countObj.put("isSeceded", rs.getInt(5));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("--> getMemberCountDiff()에서 SQL구문 오류 : " + e);
+		} finally {
+			resourceClose();
+		}
+		return countObj;
+		
+	} // getMemberCountDiff
 	
 }

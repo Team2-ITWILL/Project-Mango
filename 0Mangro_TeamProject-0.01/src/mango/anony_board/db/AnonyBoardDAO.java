@@ -271,6 +271,19 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
+				if(rs.getString("ano_board_reported")!= null){
+					anb.setAno_board_reported(rs.getString("ano_board_reported"));
+				}else{anb.setAno_board_reported("0");}
+				
+				if(rs.getString("ano_board_reporter")!= null){
+					anb.setAno_board_reporter(rs.getString("ano_board_reporter"));
+				}else{anb.setAno_board_reporter("0");}
+				
+				if(rs.getString("ano_board_reason")!= null){
+					anb.setAno_board_reason(rs.getString("ano_board_reason"));
+				}else{anb.setAno_board_reason("0");}
+				
+				
 				System.out.println("dao에서 보여지는 anb"+anb);
 				anbList.add(anb);
 			}//while 끝
@@ -376,29 +389,77 @@ public class AnonyBoardDAO extends DBconnection {
 
 	
 	
-	// [8. 계정별 작성한 익명사담글을 반환하는 메소드 (마이페이지 내가 작성한 글 - 익명사담글)]
+	// [8. 익명사담글을 반환하는 메소드 (마이페이지 or 관리자메뉴 뷰페이지에 사용될 데이터)
+	// 조건에 따라 마이페이지 내가 작성한 글 or 신고된 익명사담글로 표시
 	// - getANBoardList 오버로딩(String을 사용할 수 없으므로 bean타입으로 매개변수 지정)
 	
 	public List<AnonyBoardBean> getANBoardList(int startRow, int eachPageSize, AnonyBoardBean anbean){
 		List<AnonyBoardBean> myAnonyList = new ArrayList<AnonyBoardBean>();
 		
+		System.out.println("신고 or 마이페이지 메소드까진 접근");
+		// 신고된 글의 여부를 확인
+		int reportedCheck = 0;
+		
+		// anbean에 set된 mem_email 데이터가 없다면
+		// 신고조회 화면에서 요청한 데이터이므로 이 단계를 수행(reportCheck에 1이 들어감)
+			
+		
 		System.out.println("getANBoardList() 메소드 실행");
+		
 		try {
 			getConnection();
-			sql = "SELECT * FROM anony_board "
-				+ "WHERE mem_email = ?" 
-				+ "ORDER BY ano_board_num DESC, ano_board_date DESC limit ?,?";
+			System.out.println("anony_management.jsp에서 넘긴 회원정보값 "+ anbean.getMem_email());
+			// [계정정보가 저장되어 있지 않으면(신고글 찾기 목적)]
+			if(anbean.getMem_email() == null){
+				
+				sql = "SELECT * FROM anony_board "
+				 	+ "WHERE ano_board_reported IS NOT NULL ";
+				
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				// 신고된 글이 있다면  1 없다면 초기한 0값
+				if(rs.next()){
+					reportedCheck = 1;
+				}
+					System.out.println("신고글 또는 마이페이지 여부 확인함 reportedCheck = "+reportedCheck);
 			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, anbean.getMem_email());
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, eachPageSize);
+			}
 			
+				// bean에 저장된 member_email이 있다면 마이페이지 찾기목적
+				
+			
+				sql = "SELECT * FROM anony_board ";
+				
+				// 신고된 글이면 (관리자메뉴 회원신고)
+				if(reportedCheck == 1){
+					sql += "WHERE ano_board_reported IS NOT NULL "  // 신고일자 -> 글번호 -> 글작성일자 순으로 정렬
+						+  "ORDER BY ano_board_reported DESC, ano_board_num DESC, ano_board_date DESC  limit ?,?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, startRow);
+					pstmt.setInt(2, eachPageSize);
+					
+					System.out.println("관리자메뉴가 발동" +anbean.getMem_email()+ sql);
+					
+				}else {
+				// 신고된 글이 아니면 (마이페이지 내가 작성한 글)	
+					sql += "WHERE mem_email = ? " 
+						+  "ORDER BY ano_board_num DESC, ano_board_date DESC limit ?,?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, anbean.getMem_email());
+					pstmt.setInt(2, startRow);
+					pstmt.setInt(3, eachPageSize);
+					System.out.println("마이페이지가 발동"+anbean.getMem_email() + sql);
+				}// if문
+				
+			
+			// 쿼리 실행
 			rs = pstmt.executeQuery();
 			
+			AnonyBoardBean anb = null;
 			// (해당 계정이 쓴)글이 있다면
 			while(rs.next()){
-				AnonyBoardBean anb = new AnonyBoardBean();
+				anb = new AnonyBoardBean();
 				anb.setAno_board_num(rs.getInt("ano_board_num"));
 				anb.setMem_email(rs.getString("mem_email"));
 				anb.setAno_board_title(rs.getString("ano_board_title"));
@@ -427,31 +488,65 @@ public class AnonyBoardDAO extends DBconnection {
 				myAnonyList.add(anb);
 			}//while 끝
 			
-			System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
+			//System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
+			//System.out.println("DAO에서 보는 글의 개수"+ myAnonyList.size());
 			
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
 			e.printStackTrace();
 		} finally { resourceClose(); }
+		
 		return myAnonyList;
-	}
 	
-	
+	}//	getANBoardList
 
 	// [9. 계정별 작성한 익명사담글의 개수 반환하는 메소드 (마이페이지 내가 작성한 글 - 익명사담글)]
 	// - getAnonyBoardCount 오버로딩(String을 사용할 수 없으므로 bean타입으로 매개변수 지정)
 	public int getAnonyBoardCount(AnonyBoardBean anbean){
 		int count = 0;
 		
+		int reportedCheck = 0;
 		try {
-			getConnection();
-			sql = "SELECT count(*) FROM anony_board "
-				+ "WHERE mem_email=?";
-				
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, anbean.getMem_email());
 			
+			getConnection();
+			System.out.println("anony_management.jsp에서 넘긴 회원정보값 "+ anbean.getMem_email());
+			// [계정정보가 저장되어 있지 않으면(신고글 찾기 목적)]
+
+			
+			sql = "SELECT count(*) FROM anony_board ";
+			
+			if(anbean.getMem_email() == null){
+				
+					sql += "WHERE ano_board_reported IS NOT NULL ";
+					
+					pstmt = con.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+				
+				// 신고된 글이 있다면  1 없다면 초기한 0값
+				if(rs.next()){
+					reportedCheck = 1;
+				}
+					System.out.println("신고글 또는 마이페이지 여부 확인함 reportedCheck = "+reportedCheck);
+			
+					// 신고된 글이면 (관리자메뉴 회원신고)
+					System.out.println("관리자메뉴가 발동" +anbean.getMem_email()+ sql);
+			}else{
+			
+				// bean에 저장된 member_email이 있다면 마이페이지 찾기목적
+				
+					
+				// 신고된 글이 아니면 (마이페이지 내가 작성한 글)	
+					sql += "WHERE mem_email = ? "; 
+						
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, anbean.getMem_email());
+					// 신고된 글이면 (마이페이지)
+					System.out.println("마이페이지가 발동"+anbean.getMem_email() + sql);
+			}// if 문		
+							
+			
+//			
 			rs = pstmt.executeQuery();
 			
 			// 게시판에 글이 0개 이상이라면 개수를 count에 담기
@@ -468,6 +563,219 @@ public class AnonyBoardDAO extends DBconnection {
 		return count;
 		
 	}//getAnonyBoardCount()
+	
+	
+	
+	// [10. 신고 접수메소드 (anony_board테이블 update) ]
+	public int reportANBoard(String ano_board_reporter, 
+			                 String ano_board_reason, 
+			                 int ano_board_num){
+		
+		int check = 0;
+
+		try {
+				
+				getConnection();
+				sql = "UPDATE anony_board "
+					+ "SET ano_board_reported = now(), "
+					+ "    ano_board_reporter = ? , "
+					+ "    ano_board_reason = ? " 
+					+ "WHERE ano_board_num = ? ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, ano_board_reporter);
+				pstmt.setString(2,ano_board_reason);
+				pstmt.setInt(3, ano_board_num);
+			
+			// 쿼리 실행
+			pstmt.executeUpdate();
+			
+			// 성공
+			
+			
+		}catch(Exception e){
+			System.out.println("reportANBoard()메소드에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}finally { resourceClose();}
+		
+		
+		return check;
+		
+	}//reportANBoard()
+	
+	
+	
+	
+	// [11. 신고 글 처리 메소드 (member테이블 update) ]
+	public int handleReportedANBoard(int ano_board_num, int procNum){
+		//int check = 0;
+		
+		System.out.println("ano_board_num넘어옴"+ano_board_num + " procNum넘어옴 "+ procNum);
+		// procNum = 1 (계정정지) / 2 (신고취소)
+		try {
+			
+			getConnection();
+			// 계정정지
+			if(procNum == 1) {
+				System.out.println("if문 진입");
+				
+				sql = "UPDATE member "
+						+ "SET "
+						+ "mem_baned = now() "
+						+ "WHERE mem_email = "
+						+ "(SELECT mem_email "
+						+ " FROM anony_board "
+						+ " WHERE ano_board_num = ? ) ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, ano_board_num);
+						
+				System.out.println("회원 계정 정지 완료!"+procNum);
+				
+				// 신고취소	
+			}else {
+				
+				sql = "UPDATE anony_board "
+						+ "SET ano_board_reported = null, "
+						+ "    ano_board_reporter = null, "
+						+ "    ano_board_reason = null " 
+						+ "WHERE ano_board_num = ? ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, ano_board_num);
+				System.out.println("신고 취소 완료!"+procNum);
+			}
+			
+			pstmt.executeUpdate();
+			// 쿼리 실행
+			
+			// 성공
+			//check = 1;
+			
+			
+		}catch(Exception e){
+			System.out.println("handleReportedANBoard()메소드에서 예외 발생 : "+ e);				
+			e.printStackTrace();
+		}finally { resourceClose();}
+		
+		return procNum;
+		
+		
+	}//handleReportedANBoard()
+	
+	
+	
+	
+	
+	
+	// [12. 이미 신고된 계정인지 확인하는 메소드]
+	
+	public int checkIfAlreadyBanned(String mem_email){
+		
+		int checkIfBanned = 0;
+		
+		try {
+
+			getConnection();
+				sql = "SELECT count(*) "
+					+ "FROM member "
+					+ "WHERE mem_email = ? " 
+					+ "AND mem_baned is not null ";
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, mem_email);
+			System.out.println("mem_email"+mem_email);
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("re.getInt"+rs.getInt(1));
+				checkIfBanned = rs.getInt(1);
+				System.out.println("if(rs.next()) {" + checkIfBanned);
+			}//if			
+			
+			// 이미 정지된 계정이라면, 신고계정에 '처리완료' 문구넣고 값을 9로 주기
+			if(checkIfBanned == 1) {
+				sql = "UPDATE anony_board "
+					+ "SET ano_board_reporter = ?"
+					+ "WHERE mem_email = ? "; 
+				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "계정정지처리");
+				pstmt.setString(2, mem_email);
+				
+				// 쿼리 실행
+				pstmt.executeUpdate();
+				
+				checkIfBanned = 2;
+			}
+			
+			// 성공
+			
+			
+		}catch(Exception e){
+			System.out.println("checkIfAlreadyBanned()메소드에서 예외 발생 : "+ e);				
+		
+		}finally { resourceClose();}
+		
+		
+		return checkIfBanned;
+		
+	}//checkIfAlreadyBanned()
+	
+	
+	// [13. 신고된 글인지 확인하는 메소드 (클릭시 열람 제한목적)]
+	
+	public int checkIfthisReported(int ano_board_num){
+		
+		int checkIfReported = 0;
+		
+		try {
+			
+			getConnection();
+			sql = "SELECT count(*) "
+					+ "FROM anony_board "
+					+ "WHERE ano_board_num = ? "
+					+ "AND ano_board_reported is not null "; 
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, ano_board_num);
+			System.out.println("ano_board_num"+ano_board_num);
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("re.getInt"+rs.getInt(1));
+				checkIfReported = rs.getInt(1);
+				System.out.println("if(rs.next()) {" + checkIfReported);
+			}//if			
+			
+			
+			
+		}catch(Exception e){
+			System.out.println("checkIfthisReported()메소드에서 예외 발생 : "+ e);				
+			
+		}finally { resourceClose();}
+		
+		
+		return checkIfReported;
+		
+	}//checkIfthisReported()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		
 }

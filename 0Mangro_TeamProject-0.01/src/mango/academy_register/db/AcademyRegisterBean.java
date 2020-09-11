@@ -35,11 +35,15 @@ public class AcademyRegisterBean {
 
 	// 승인일
 	private LocalDate confirmDate;	
+	
+	// 선택한 키워드 등록
+	private String aca_keyword;
 
+	//생성자
 	public AcademyRegisterBean() { }
 	public AcademyRegisterBean(String memEmail, String acaName, String memAddrZip, String memAddrDoro,
 			String fNameCompany, String fSizeCompany, String fSizeOwner, String fNameOwner, LocalDate registerDate,
-			LocalDate confirmDate) {
+			LocalDate confirmDate, String aca_keyword) {
 		super();
 		this.memEmail = memEmail;
 		this.acaName = acaName;
@@ -51,7 +55,10 @@ public class AcademyRegisterBean {
 		this.fNameOwner = fNameOwner;
 		this.registerDate = registerDate;
 		this.confirmDate = confirmDate;
+		this.aca_keyword = aca_keyword;
 	}
+
+
 
 	public String getMemEmail() {
 		return memEmail;
@@ -81,7 +88,7 @@ public class AcademyRegisterBean {
 		return memAddrDoro;
 	}
 
-	public void setMemAddrDoro(String memAddrDoro) { 
+	public void setMemAddrDoro(String memAddrDoro) {
 		this.memAddrDoro = memAddrDoro;
 	}
 
@@ -133,15 +140,21 @@ public class AcademyRegisterBean {
 		this.confirmDate = confirmDate;
 	}
 
+	public String getAca_keyword() {
+		return aca_keyword;
+	}
+
+	public void setAca_keyword(String aca_keyword) {
+		this.aca_keyword = aca_keyword;
+	}
+
 	@Override
 	public String toString() {
 		return "AcademyRegisterBean [memEmail=" + memEmail + ", acaName=" + acaName + ", memAddrZip=" + memAddrZip
 				+ ", memAddrDoro=" + memAddrDoro + ", fNameCompany=" + fNameCompany + ", fSizeCompany=" + fSizeCompany
 				+ ", fSizeOwner=" + fSizeOwner + ", fNameOwner=" + fNameOwner + ", registerDate=" + registerDate
-				+ ", confirmDate=" + confirmDate + "]";
+				+ ", confirmDate=" + confirmDate + ", aca_keyword=" + aca_keyword + "]";
 	}
-
-	
 	
 	
 

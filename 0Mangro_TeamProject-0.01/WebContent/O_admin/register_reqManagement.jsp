@@ -22,7 +22,7 @@
   
 <!------------------------------------[사용자 정의 함수]------------------------------ -->
 <script type="text/javascript">		
-		function approveReg(regEmail, acaName, flag){
+		function approveReg(regEmail, acaName, aca_keyword, flag){
 			
 			// create form tag
 			var regForm = document.createElement('form');
@@ -33,24 +33,32 @@
 			var input1 = document.createElement('input');
 			var input2 = document.createElement('input');
 			var input3 = document.createElement('input');
+			var input4 = document.createElement('input');
 			
 			// set attribute
 			input1.setAttribute('type', 'hidden');
-			input1.setAttribute('name', 'acaName');
-			input1.setAttribute('value', acaName);
+			input1.setAttribute('name', 'flag');
+			input1.setAttribute('value', flag);
 			
 			input2.setAttribute('type', 'hidden');
-			input2.setAttribute('name', 'flag');
-			input2.setAttribute('value', flag);
+			input2.setAttribute('name', 'acaName');
+			input2.setAttribute('value', acaName);			
 			
 			input3.setAttribute('type', 'hidden');
-			input3.setAttribute('name', 'regEmail');
-			input3.setAttribute('value', regEmail);
+			input3.setAttribute('name', 'aca_keyword');
+			input3.setAttribute('value', aca_keyword);
+			
+			input4.setAttribute('type', 'hidden');
+			input4.setAttribute('name', 'regEmail');
+			input4.setAttribute('value', regEmail);
+			
+		
 						
 			// append input to Form
 			regForm.appendChild(input1);
 			regForm.appendChild(input2);
 			regForm.appendChild(input3);
+			regForm.appendChild(input4);
 			
 			// append form to body
 			document.body.appendChild(regForm);
@@ -232,6 +240,7 @@
                                             <th scope="col">대표자신분증 파일</th>
                                             <th scope="col">신청일</th>
                                             <th scope="col">승인일</th>
+                                            <th scope="col">키워드</th>                                            
                                         </tr>                                        
                                     </thead>
                                     <tbody>
@@ -249,7 +258,7 @@
                                     		</c:when>
                                     	</c:choose>
                                     	<!-- 학원관리자 등록을 요청한 사용자의 이메일, 학원명, confirmDate flag를 전달 -->
-                                        <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${flag}')">
+                                        <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">
                                             <th scope="row">${vo.memEmail}</th>
                                             <td>${vo.acaName}</td>
                                             <td>${vo.memAddrZip}</td>
@@ -258,6 +267,7 @@
                                             <td>${vo.fNameOwner}</td>
                                             <td>${vo.registerDate}</td>
                                             <td>${vo.confirmDate}</td>
+                                            <td>${vo.aca_keyword}</td>
                                         </tr>
                                     </c:forEach>                                         
                                     </tbody>

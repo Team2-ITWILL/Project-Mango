@@ -64,7 +64,13 @@ public interface IAcademy {
 	public int changeAcademyEmail(AcademyBean vo, int flag);
 	
 	//학원 이름 찾아오는 메서드
-	public String getAcaName(String email);
+	public String getAcaName(String email);	
+
+	//학원번호 가져오는 메서드
+	public int getAcademyNumByAcaName(String acaName);
+	
+	//등록된 학원 수
+	public int getRegisteredAcademyCount();
 	
 
 }

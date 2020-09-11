@@ -66,6 +66,13 @@ public class AnonyBoardListAction implements Action{
 		request.setAttribute("comments", comments);
 		System.out.println(comments);
 		
+		// 해당글의 신고여부 조회(0이면 신고x 1이면 신고된 글)
+		//int checkIfReported = andao.checkIfthisReported(ano_board_num);
+				
+		
+		//request.setAttribute("checkIfReported", checkIfReported);
+		
+		
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("./4index.jsp?center=O_anony/anony_board.jsp");

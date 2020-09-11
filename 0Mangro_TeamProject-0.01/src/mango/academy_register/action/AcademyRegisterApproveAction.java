@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
+import mango.academy_keyword.db.AcademyKeywordBean;
+import mango.academy_keyword.db.AcademyKeywordDAO;
 import mango.academy_register.db.AcademyRegisterDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
@@ -27,6 +29,10 @@ public class AcademyRegisterApproveAction implements Action{
 		
 		//학원이름
 		String acaName = request.getParameter("acaName");
+		
+		//키워드
+		String aca_keyword = request.getParameter("aca_keyword");
+		
 		//confirm_date 값 변경 기준 flag
 		int flag = Integer.parseInt(request.getParameter("flag"));	
 		int result = 0;
@@ -61,15 +67,39 @@ public class AcademyRegisterApproveAction implements Action{
 			out.close();
 			return null;
 		}	
-				
+		
+		//====================3.academy_keyword에 키워드값 넣기============================
+		AcademyDAO acaDAO = new AcademyDAO();
+		int acaMainNum = acaDAO.getAcademyNumByAcaName(acaName);	
+		
+		AcademyKeywordBean akVO = new AcademyKeywordBean();
+		akVO.setAcaMainNum(acaMainNum);
+		akVO.setAcakeyword(aca_keyword);
+		
+		System.out.println(akVO.toString());
+		
+		result = 0;
+		if(!(aca_keyword == null || aca_keyword.equals(""))){
+			AcademyKeywordDAO akDAO = new AcademyKeywordDAO();
+			result = akDAO.insertAcademyKeyword(akVO);
+			
+			if(result == 0){
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('Insert Keyword failed');");
+				out.println("history.back();");
+				out.println("</script>");
+				out.close();
+				return null;
+			}
+		}
 		
 		
-		//=============3. academy 테이블 mem_email 컬럼 값 변경=================		
+		//=============4. academy 테이블 mem_email 컬럼 값 변경=================		
 		AcademyBean acaVO = new AcademyBean();
 		acaVO.setMem_email(regEmail);
-		acaVO.setAcaName(acaName);
+		acaVO.setAcaName(acaName);		
 		
-		AcademyDAO acaDAO = new AcademyDAO();
 		result = 0;
 		result = acaDAO.changeAcademyEmail(acaVO, flag);
 		if(result == 0){

@@ -120,6 +120,7 @@
 							<hr>
 						
 						<%-- 제목, 닉네임, 조회수, 날짜 --%>
+						<input type="hidden" id="ano_board_num" value="${boardSingle.ano_board_num }">
 						<i class="fa fa-user" aria-hidden="true"></i> <span class="icons_margin">${boardSingle.ano_board_nick }</span>
 						<img src="images/etc/eye.png" width="20"> <span class="icons_margin">${boardSingle.ano_board_read }</span>
 						<img src="images/etc/date.png" width="20"> 
@@ -177,13 +178,13 @@
 								<tr>
 									<td>
 										<label for="rea1" id="reason1">
-											<input type="radio" name="reason4report" id="rea1" checked>
+											<input type="radio" name="reason4report" id="rea1" value="영리목적/홍보성">
 											<span class="modalSpan">영리목적/홍보성</span>
 										</label>
 									</td>
 									<td>
 										<label for="rea2" id="reason2">
-											<input type="radio" name="reason4report" id="rea2">
+											<input type="radio" name="reason4report" id="rea2" value="불법정보">
 											<span class="modalSpan">불법정보</span>
 										</label>
 									</td>
@@ -191,13 +192,13 @@
 								<tr>
 									<td>
 										<label for="rea3" id="reason3">
-											<input type="radio" name="reason4report" id="rea3">
+											<input type="radio" name="reason4report" id="rea3" value="음란성/선정성">
 											<span class="modalSpan">음란성/선정성</span>
 										</label>
 									</td>
 									<td>
 										<label for="rea4" id="reason4">
-											<input type="radio" name="reason4report" id="rea4">
+											<input type="radio" name="reason4report" id="rea4" value="욕설/인신공격">
 											<span class="modalSpan">욕설/인신공격</span>
 										</label>
 									</td>
@@ -205,13 +206,13 @@
 								<tr>
 									<td>
 										<label for="rea5" id="reason5">
-											<input type="radio" name="reason4report" id="rea5">
+											<input type="radio" name="reason4report" id="rea5" value="개인정보 노출">
 											<span class="modalSpan">개인정보 노출</span>
 										</label>
 									</td>
 									<td>
 										<label for="rea6" id="reason2">
-											<input type="radio" name="reason4report" id="rea6">
+											<input type="radio" name="reason4report" id="rea6" value="반복게시(도배)">
 											<span class="modalSpan">반복게시(도배)</span>
 										</label>
 									</td>
@@ -219,9 +220,11 @@
 								<tr>
 									<td colspan="2">
 										<label for="rea7" id="reason7">
-											<input type="radio" name="reason4report" id="rea7">
+											<input type="radio" name="reason4report" id="rea7" onclick="onETCRadio()" value="$('#hiddenInput').val()">
 											<span class="modalSpan">기타</span> <br>
-											<textarea id="hiddenInput" placeholder="100자 이내로 입력해주세요." readonly></textarea>
+											<textarea id="hiddenInput" placeholder="100자 이내로 입력해주세요." 
+													  style="display: none;">
+											</textarea>
 										</label>
 									</td>
 								</tr>                        	
@@ -236,7 +239,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">창닫기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">신고하기</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="reportSubmit"
+                                onclick="reportFunc('${boardSingle.ano_board_num}',event)">신고하기</button> 
                     </div>
                 </div>
             </div>
@@ -621,16 +625,56 @@
 	// 기타 열리면 input태그
 	
 	var radioBtn = document.getElementsByName("reason4report");
+	var radioBtnChecked =  $("input:radio[name='reason4report']:checked").val();
 	var etcLabel = document.getElementById("reason7");
 	var etcInput = document.getElementById("rea7");
 	var hiddenInput = document.getElementById("hiddenInput");
 	var etc = document.getElementsByName("reason4report")[6]; 
+	var reportSubmit = $("#reportSubmit"); // 신고하기 버튼
+	var ano_board_num = document.getElementById("ano_board_num").value;
+	var mem_email = $("#session_memEmail").val();
+	var urlAddr = "";
+	function onETCRadio() {
+		
+	}//onETCRadio()	
 
-
+	
+	// [라디오 버튼 선택시 Action페이지로 이동]
+	function reportFunc(num, event) {
+/* 		event.preventDefault;
+		alert("클릭이벤트"+radioBtnChecked);
+ */		
+		
+		urlAddr = "location.href='./ReportAnonyBoardAction.anob?ano_board_num="+ano_board_num 
+				 + "&ano_board_reporter="+$("#session_memEmail").val()
+				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val()+"'";
+		
+		alert("클릭이벤트"+urlAddr);
+		
+		reportSubmit.attr("onclick",urlAddr);
+		
+	} 
+	
+	/* 	if(hiddenInput.value.length > 0){
+			($("#rea7")).attr("disabled") */
+/* 			$("radio[name='reason4report']").not($("#rea7")).attr("disabled") */
+/* 			etcInput.setAttribute("checked");
+			etcInput.focus();
+			 
+		}// if  */
+	
+	// [기타 라디오버튼 클릭시 숨겨진 입력창 나타나도록] 
+	function onETCRadio(){
+		alert("라디오7번 선택");
+		hiddenInput.removeAttribute("style");
+		hiddenInput.removeAttribute("readonly");
+		//return;
+	}
+	
+	
 	if(document.activeElement == hiddenInput) {
 		alert("인풋 액티브");
 	}
-	
 	
 
 	

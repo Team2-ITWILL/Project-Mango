@@ -1775,6 +1775,32 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		}		
 		return acaName;
 	}
+
+	@Override
+	public int getAcademyNumByAcaName(String acaName) {
+		int acaMainNum = 0;
+		try {
+			getConnection();
+			
+			String sql = "select * from academy "
+					+ "where aca_name = ? ";
+					//+ "and mem_admin is not null";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acaName);				
+			rs = pstmt.executeQuery();
+			
+			if(rs.next())
+				acaMainNum = rs.getInt("aca_main_num");				
+			
+		} catch (Exception e) {
+			System.out.println("getAcademyNumByAcaName()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return acaMainNum;
+	}
+	
 	
 	
 	
@@ -2097,8 +2123,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 														+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String review ="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg ,ifnull(r.count,0) count "
 					+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore "
@@ -2110,8 +2136,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 					+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String rating="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg "
 					+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
@@ -2123,8 +2149,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 					  + " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;	
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;	
 			
 			String basic="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg"
 					 +" from academy a left join (select aca_main_num,avg(review_score) avgscore "
@@ -2136,8 +2162,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String where="";
 			
@@ -3012,6 +3038,33 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 	
 	}
+
+	//등록된 학원 수
+	@Override
+	public int getRegisteredAcademyCount() {		
+		try {
+			getConnection();
+			
+			sql="select count(*) from academy where mem_email is not null";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();			
+			
+			if(rs.next()){				
+				return rs.getInt(1);
+			}			
+			
+		} catch (Exception e) {
+			System.out.println("getRegisteredAcademyCount()에서 예외 발생"+e);
+		}finally {
+			resourceClose();
+		}					
+		return 0;
+	}
+	
+	
+	
 	
 	
 	

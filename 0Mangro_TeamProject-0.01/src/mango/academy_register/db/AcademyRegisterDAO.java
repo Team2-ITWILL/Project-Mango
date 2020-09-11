@@ -16,18 +16,12 @@ public class AcademyRegisterDAO extends DBconnection{
 			
 			//EMAIL : FK(member table)
 			// -> member 테이블에 참조하는 값이 있어야만 register테이블에 데이터 삽입 가능
-//			String sql = "insert into academy_register("
-//					+ "mem_email, aca_name, mem_addr_zip, mem_addr_doro, "
-//					+ "f_name_company, f_size_company, f_size_owner, f_name_owner, "
-//					+ "register_date, confirm_date) "
-//					+ " values(?,?,?,?,?,?,?,?,now(),null)";
 			
 			String sql = "insert into academy_register "
-					+ "values(?,?,?,?,?,?,?,?,now(),null)";
+					+ "values(?,?,?,?,?,?,?,?,now(),null, ?)";
 			pstmt = con.prepareStatement(sql);
 			
-			System.out.println(bean.toString());
-			
+			System.out.println(bean.toString());			
 			
 			pstmt.setString(1, bean.getMemEmail());
 			pstmt.setString(2, bean.getAcaName());
@@ -39,6 +33,7 @@ public class AcademyRegisterDAO extends DBconnection{
 			pstmt.setString(8, bean.getfNameOwner());
 			//pstmt.setDate(9, java.sql.Date.valueOf(bean.getRegisterDate()));
 			//pstmt.setDate(10, java.sql.Date.valueOf(bean.getConfirmDate()));		
+			pstmt.setString(9, bean.getAca_keyword());
 			
 			result = pstmt.executeUpdate();		
 			
@@ -98,10 +93,10 @@ public class AcademyRegisterDAO extends DBconnection{
 			else
 				result = 0; //데이터 없음
 			
-			System.out.println("CheckDataExists() 수행");
+			System.out.println("CheckAdminUser() 수행");
 			
 		} catch (Exception e) {
-			System.out.println("CheckDataExists()에서 예외 발생");
+			System.out.println("CheckAdminUser()에서 예외 발생");
 			e.printStackTrace();
 		}finally{
 			resourceClose();
@@ -167,14 +162,15 @@ public class AcademyRegisterDAO extends DBconnection{
 						rs.getString("f_size_owner"),
 						rs.getString("f_name_owner"),
 						register_date,
-						confirm_date													
+						confirm_date,
+						rs.getString("aca_keyword")
 					);				
 
 				list.add(vo);
 			}
 
 		} catch (Exception e) {
-			System.out.println("getRegisterList()에서 예외 발생");
+			System.out.println("getAllRegisterList()에서 예외 발생");
 			e.printStackTrace();
 		}finally{
 			resourceClose();
@@ -217,5 +213,27 @@ public class AcademyRegisterDAO extends DBconnection{
 		return result;
 	}	
 	
+	//등록 요청 학원 수 얻기
+	public int getRegRequestCount(){
+		int count = 0;
+		try {
+			getConnection();
+
+			sql = "select count(*) from academy_register where confirm_date is not null";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println("getRegRequestCount()에서 예외 발생");
+			e.printStackTrace();
+		}finally{
+			resourceClose();
+		}		
+		return count;
+	}		
 	
 } // AcademyRegisterDAO클래스 끝

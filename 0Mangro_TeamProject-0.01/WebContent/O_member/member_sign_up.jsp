@@ -53,6 +53,10 @@
 //<--------------------------- 회원가입 필수 입력란 확인 ------------------------->
 	
 	$(function check() {
+
+		var regMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/) // 이메일
+		var regPwd = RegExp(/^[a-zA-Z0-9]{8,20}$/); // 비밀번호
+		var regName = RegExp(/^[가-힣A-Za-z]{2,20}$/); // 이름
 		
 		$("#join").submit(function() {
 				
@@ -63,6 +67,14 @@
 				return false;
 			}
 			
+			// 이름 유효성 검사
+		    if ( !(regName.test( $("#id_name").val() )) ){
+				alert("이름을 올바르게 입력하세요.");
+		    	$("#id_name").focus();
+		    	$("#id_name").val("");
+		    	return false;
+		    }
+			
 			// 이메일
 			if($("#id_email").val() == ""){
 				alert("이메일을 입력하세요.");
@@ -70,13 +82,14 @@
 				return false;
 			}
 			
-			// 이메일 형식 유효성체크
-/* 			if($("#id_email").val() == "@"){
-				alert("이메일 형식에 맞게 입력하세요.");
-				$("#id_email").focus();
-				return false;
-			} */
-			
+/* 			// 이메일 유효성 검사
+		    if ( !(regMail.test( $("#id_email").val() )) ){
+				alert("이메일 형식이 올바르지 않습니다.");
+		    	$("#id_email").focus();
+		    	$("#id_email").val("");
+		    	return false;
+		    }
+ */
 			// 비밀번호
 			if($("#id_password1").val() == ""){
 				alert("비밀번호를 입력하세요.");
@@ -84,6 +97,13 @@
 				return false;
 			}
 		
+			// 비밀번호 유효성 체크
+			if( !(regPwd.test( $("#id_password1").val() )) ){
+				alert("8~20자 영문 대소문자, 숫자를 입력해 주세요.");
+				$("#id_password1").focus();
+				return false;
+			}
+			
 			// 비밀번호 일치 확인
 			if($("#id_password1").val() != $("#id_password2").val()){
 				alert("비밀번호를 동일하게 입력하세요.");
@@ -143,12 +163,19 @@
 	function clearCorrectTag() {
 			$("#idcheckT").attr("style","display:none;");
 			$("#idcheckF").attr("style","display:none;");
-		
+			$("#emailck").attr("style","display:none;");
+			$("#pwdck").attr("style","display:none;");
 	}//clearCorrectTag() 
 
+//<--------------------------- 이메일 중복검사시 span태그를 지워주는 메소드  ----------------------------->	
+
+	
+	
 //<--------------------------- 아이디 중복 확인  ----------------------------->	
 
 	function duplCheck(event){
+		
+		var regMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/) // 이메일
 		
 		$.ajax({
 				type: "post",
@@ -156,51 +183,55 @@
 				data: {email : $("#id_email").val()},
 				dataType: "text",
 				success: function(data, textStatus){
+
+					if ( !(regMail.test( $("#id_email").val() )) ){
+						clearCorrectTag();
+						$("#emailck").val("이메일 형식에 맞게 입력하세요.").css("color", "#a64bf4");
+						$("#emailck").removeAttr("style","display:none;");
+				    	return false;
+				    
+					} else if( (regMail.test( $("#id_email").val() )) ) {
 					
-					console.log("@@@data : " + data + " / " + textStatus)
-					
-					// 1. 중복검사 결과 이미 가입된 계정일 때
-					if(data == 1){
-						
-						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
-						if($("#id_email").val() == 0){
-							clearCorrectTag();
+						// 1. 중복검사 결과 이미 가입된 계정일 때
+						if(data == 1){
 							
-						// 이메일 input에 입력값이 있지만 기존에 입력된 idcheckT지우고 idcheckF만 표시되게하기
-						}else if($("#idcheckT").val().length != 0){	
-							clearCorrectTag();
-							$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
-							//$("#idcheckF").val().css("color", "#a64bf4");
-							$("#idcheckF").removeAttr("style","display:none;"); }
-					
-					// 2. 중복검사 결과 중복이 아닐 때
-					}else{
+							// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+							if($("#id_email").val() == 0){
+								clearCorrectTag();
+								
+							// 이메일 input에 입력값이 있지만 기존에 입력된 idcheckT지우고 idcheckF만 표시되게하기
+							}else if($("#idcheckT").val().length != 0){	
+								clearCorrectTag();
+								$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
+								//$("#idcheckF").val().css("color", "#a64bf4");
+								$("#idcheckF").removeAttr("style","display:none;"); }
 						
-						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
-						if($("#id_email").val() == 0){
-							clearCorrectTag();
+						// 2. 중복검사 결과 중복이 아닐 때
 						}else{
-							// 중복된 이메일 계정을 입력 후 새로 입력하는 과정에서 backspace를 사용했을 때
-							// 기존에 입력된 idcheckT와 backspace를 감지하고 새로 추가된 idcheckF가 일시적으로 공존되는걸
-							// 방지하기 위해 clearCorrectTag()메소드 호출
-							clearCorrectTag();
-							$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
-							//$("#idcheckT").val().css("color", "#a64bf4");
-							//$("#id_email").attr("readonly", "readonly");
-							$("#idcheckT").removeAttr("style","display:none;");
-						
-						} // 안쪽 if문 끝
-					
-					} // 바깥 if문 끝
-					// 초기화
-					
+							// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+							if($("#id_email").val() == 0){
+								clearCorrectTag();
+							}else{
+								// 중복된 이메일 계정을 입력 후 새로 입력하는 과정에서 backspace를 사용했을 때
+								// 기존에 입력된 idcheckT와 backspace를 감지하고 새로 추가된 idcheckF가 일시적으로 공존되는걸
+								// 방지하기 위해 clearCorrectTag()메소드 호출
+								clearCorrectTag();
+								$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
+								//$("#idcheckT").val().css("color", "#a64bf4");
+								//$("#id_email").attr("readonly", "readonly");
+								$("#idcheckT").removeAttr("style","display:none;");
+							
+							} // 세번째 if문 끝
+						} // 두번째 if문 끝
+					} // 첫번째 if문 끝
 				}, //success 끝
-				
+						
 				error: function(data, datastatus){
 					console.log("에러 : "+ data + datastatus);
 				} // error 끝
 			
 		}); // $.ajax 끝
+			
 	} // duplCheck() 끝
 
 //<--------------------------- 아이디 중복 확인  ----------------------------->	
@@ -217,7 +248,7 @@
 						
 						
       <!-------------------------------------------- [form태그 시작] -------------------------------------------------------->
-					      <form class="sign_upClass" action="./MemberJoinAction.me" method="post" id="join" onsubmit="return check()">
+					      <form class="sign_upClass" action="./MemberJoinAction.me" method="post" id="join" onsubmit="check()">
 
 					      <div class="mb-5 mt-2">
 
@@ -285,6 +316,9 @@
 						        	<span style="display: none;" id="idcheckF">
 						        		 이미 가입한 회원입니다.
 						        	</span> 
+						        	<span style="display: none;" id="emailck">
+						        		 이메일 형식에 맞게 입력하세요.
+						        	</span> 
 						        	<span style="display: none;" id="authEmailSpan">
 						        		잠시 후 인증번호창이 활성화되면 <br>
 						        		입력한 메일로 전송된 인증번호를 입력하세요.
@@ -300,9 +334,10 @@
 					        <label class="form-label" for="id_password1">
 					          <span class="d-flex justify-content-between align-items-center">비밀번호</span>
 					        </label>
-					      </div> 
 					        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
 					        		style="margin-bottom: 30px;">
+					        		
+					      </div> 
 					               
 					      <div class="js-form-message form-group">
 					        <label class="form-label" for="id_password1">

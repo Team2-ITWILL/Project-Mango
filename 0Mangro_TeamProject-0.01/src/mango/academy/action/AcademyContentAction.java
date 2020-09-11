@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mango.academy.db.AcademyBean;
 import mango.academy.db.AcademyDAO;
@@ -136,6 +137,7 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("scorePerList", scorePerList);
 		request.setAttribute("scoreCntList", scoreCntList);
 		request.setAttribute("regImg", regImg);
+		request.setAttribute("regEmail", regEmail);
 		
 		
 		ActionForward forward = new ActionForward();
