@@ -1,19 +1,26 @@
 $(function () {
+//window.onload = function(){
 
+	//https://dgkim5360.tistory.com/entry/c3-js-cheat-sheet
+	
     // ==============================================================
     // Campaign
     // ==============================================================
-
-    var chart1 = c3.generate({
+	
+  /*  var chart1 = c3.generate({
         bindto: '#campaign-v2',
         data: {
-            columns: [               
-                ['일반 회원', 25],
-                ['학원 회원', 15],
-                ['탈퇴 회원', 10],
-                ['Indirect Sales', 15]
-            ],
-
+        	columns: [               
+            ['일반 회원', 25],
+            ['학원 회원', 15],
+            ['정지 회원', 15],
+            ['탈퇴 회원', 45]
+        	],
+        	 
+        	json: [pieData],
+        	keys: {
+        		value: Object.keys(pieData),
+        	},            
             type: 'donut',
             tooltip: {
                 show: true
@@ -23,7 +30,7 @@ $(function () {
             label: {
                 show: false
             },
-            title: 'Sales',
+            title: '회원 현황',
             width: 18
         },
 
@@ -41,6 +48,7 @@ $(function () {
     });
 
     d3.select('#campaign-v2 .c3-chart-arcs-title').style('font-family', 'Rubik');
+    */
 
     // ============================================================== 
     // income
@@ -169,4 +177,6 @@ $(function () {
     $(window).on('resize', function () {
         chart.update();
     });
-})
+    
+//}; 
+});

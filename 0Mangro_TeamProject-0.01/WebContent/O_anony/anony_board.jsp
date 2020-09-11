@@ -75,6 +75,10 @@
 			
 		}
 
+
+	
+	
+	
 </script>
 
 
@@ -121,8 +125,8 @@
 <%---------------------------------------------------------- [▼ 코멘트 1줄]  --------------------------------------------------------------------------%>
 						
 						<c:forEach var="anbList" items="${anbList}">
-						
-							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'">
+						<%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'"  --%>
+							<li class="widthAdjust" onclick="enterCheck(${anbList.ano_board_num}, '${anbList.ano_board_reported}')"; id="enterAnoSingle">
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
@@ -142,6 +146,8 @@
 												
 											</div>
 										</div>
+										<%------ 글번호 hidden ----%>
+										<input type="hidden" value="${anbList.ano_board_num}" id="hiddenAnoNum">
 										
 										
 										<%------ 글내용 ----%>
@@ -227,7 +233,35 @@
 
 
 
+
 <%---------------------------------------------------------- [스크립트 링크영역]  --------------------------------------------------------------------------%>
+
+<script type="text/javascript">
+
+	var checkIfReported =  "<c:out value='${checkIfReported}'/>";
+	var	enterAnoSingle = document.getElementById("enterAnoSingle");
+	var urlAddr = "";
+	<%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'"  --%>
+		function enterCheck(ano_board_num, reportedCheck) {
+
+			// 신고된 글이 아니므로 상세글 페이지로 이동
+			if(reportedCheck == 0){
+				urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+$("#hiddenAnoNum").val()+"'"; 
+				$("#enterAnoSingle").attr("onclick",urlAddr);
+		
+				alert("클릭이벤트"+urlAddr);
+		
+			}else {
+				alert("신고가 진행중인 글입니다.");
+			}
+			
+		}
+
+
+
+</script>
+
+
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>

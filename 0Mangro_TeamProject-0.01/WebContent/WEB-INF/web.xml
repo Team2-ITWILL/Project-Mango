@@ -178,6 +178,16 @@
   </servlet-mapping>  
   
   
+<!-- 15. 관리자 메뉴 -->	
+  <servlet>
+    <servlet-name>AdminFrontController</servlet-name>
+    <servlet-class>mango.admin.action.AdminFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminFrontController</servlet-name>
+    <url-pattern>*.adm</url-pattern>
+  </servlet-mapping>    
+  
   
   <!-- 15. ck에디터 사용을 위한 추가사항 -->
 <!-- CKFINDER START -->

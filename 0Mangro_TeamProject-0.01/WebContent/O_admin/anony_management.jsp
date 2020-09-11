@@ -448,7 +448,7 @@
 				
 				
 				
-			}else{ 
+			}else if('drop'){ 
 				urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
 						  + ano_board_num+"&mem_email=" + mem_email+"'";
 				$("#drop").attr("onclick",urlAddr);
