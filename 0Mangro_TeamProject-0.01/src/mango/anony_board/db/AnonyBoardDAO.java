@@ -271,6 +271,19 @@ public class AnonyBoardDAO extends DBconnection {
 				anb.setAno_board_nick(rs.getString("ano_board_nick"));
 				anb.setAno_board_file(rs.getString("ano_board_file"));
 				
+				if(rs.getString("ano_board_reported")!= null){
+					anb.setAno_board_reported(rs.getString("ano_board_reported"));
+				}else{anb.setAno_board_reported("0");}
+				
+				if(rs.getString("ano_board_reporter")!= null){
+					anb.setAno_board_reporter(rs.getString("ano_board_reporter"));
+				}else{anb.setAno_board_reporter("0");}
+				
+				if(rs.getString("ano_board_reason")!= null){
+					anb.setAno_board_reason(rs.getString("ano_board_reason"));
+				}else{anb.setAno_board_reason("0");}
+				
+				
 				System.out.println("dao에서 보여지는 anb"+anb);
 				anbList.add(anb);
 			}//while 끝
@@ -554,12 +567,15 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	// [10. 신고 접수메소드 (anony_board테이블 update) ]
-	public int reportANBoard(AnonyBoardBean anbean){
+	public int reportANBoard(String ano_board_reporter, 
+			                 String ano_board_reason, 
+			                 int ano_board_num){
 		
 		int check = 0;
 
 		try {
 				
+				getConnection();
 				sql = "UPDATE anony_board "
 					+ "SET ano_board_reported = now(), "
 					+ "    ano_board_reporter = ? , "
@@ -567,9 +583,9 @@ public class AnonyBoardDAO extends DBconnection {
 					+ "WHERE ano_board_num = ? ";
 				
 				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, anbean.getAno_board_reporter());
-				pstmt.setString(2, anbean.getAno_board_reason());
-				pstmt.setInt(3, anbean.getAno_board_num());
+				pstmt.setString(1, ano_board_reporter);
+				pstmt.setString(2,ano_board_reason);
+				pstmt.setInt(3, ano_board_num);
 			
 			// 쿼리 실행
 			pstmt.executeUpdate();
@@ -579,7 +595,7 @@ public class AnonyBoardDAO extends DBconnection {
 			
 		}catch(Exception e){
 			System.out.println("reportANBoard()메소드에서 예외 발생 : "+ e);				
-		
+			e.printStackTrace();
 		}finally { resourceClose();}
 		
 		
@@ -706,6 +722,45 @@ public class AnonyBoardDAO extends DBconnection {
 		return checkIfBanned;
 		
 	}//checkIfAlreadyBanned()
+	
+	
+	// [13. 신고된 글인지 확인하는 메소드 (클릭시 열람 제한목적)]
+	
+	public int checkIfthisReported(int ano_board_num){
+		
+		int checkIfReported = 0;
+		
+		try {
+			
+			getConnection();
+			sql = "SELECT count(*) "
+					+ "FROM anony_board "
+					+ "WHERE ano_board_num = ? "
+					+ "AND ano_board_reported is not null "; 
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, ano_board_num);
+			System.out.println("ano_board_num"+ano_board_num);
+			// 쿼리 실행
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("re.getInt"+rs.getInt(1));
+				checkIfReported = rs.getInt(1);
+				System.out.println("if(rs.next()) {" + checkIfReported);
+			}//if			
+			
+			
+			
+		}catch(Exception e){
+			System.out.println("checkIfthisReported()메소드에서 예외 발생 : "+ e);				
+			
+		}finally { resourceClose();}
+		
+		
+		return checkIfReported;
+		
+	}//checkIfthisReported()
 	
 	
 	

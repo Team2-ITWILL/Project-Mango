@@ -170,6 +170,16 @@ public class AnonyBoardFrontController extends HttpServlet{
 				System.out.println("AnonyBoardFrontController의 /AdminAnoCheckAlreadyBannedAction.anob에서 예외");
 				e.printStackTrace();
 			}
+			
+		}else if(command.equals("/ReportAnonyBoardAction.anob")){
+			action = new ReportAnonyBoardAction();
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e){
+				System.out.println("AnonyBoardFrontController의 /ReportAnonyBoardAction.anob에서 예외");
+				e.printStackTrace();
+			}
+			
 		}
 			
 		
