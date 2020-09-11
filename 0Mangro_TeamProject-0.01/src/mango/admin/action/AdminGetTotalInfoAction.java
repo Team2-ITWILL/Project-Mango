@@ -12,6 +12,7 @@ import mango.academy_register.db.AcademyRegisterDAO;
 import mango.action.Action;
 import mango.action.ActionForward;
 import mango.member.db.MemberDAO;
+import mango.payment.db.PayMentDAO;
 
 public class AdminGetTotalInfoAction implements Action{
 
@@ -72,6 +73,11 @@ public class AdminGetTotalInfoAction implements Action{
 		AcademyRegisterDAO arDAO = new AcademyRegisterDAO();
 		int regCount = arDAO.getRegRequestCount();
 		request.setAttribute("regCount", regCount);
+		
+		
+		//===================한달 동안 결제 금액===========================
+		PayMentDAO pdao = new PayMentDAO();
+		int monthMoney= pdao.getMonthMoney();
 		
 		
 		//=========================포워딩===============================
