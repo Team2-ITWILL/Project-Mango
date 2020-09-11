@@ -35,6 +35,9 @@ public interface IAuditRequest {
 	//승인된 청강 개수
 	public int getAuditCountApproval(int acaNum, String email);
 	
+	//청강신청 시 누적청강수 증가
+	public int addAuditCount(int acaNum, int auditNum);
+	
 	
 	
 	
