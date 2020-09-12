@@ -19,7 +19,7 @@
 <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
 
 
-<link rel="stylesheet" type="text/css" href="styles/qna_write.css"> 
+<link rel="stylesheet" type="text/css" href="styles/qna_write.css">  
 <!---------------------------------- 제이쿼리  ---------------------------------------------------->
 
 <script src="./ckeditor/ckeditor.js"></script>

@@ -36,7 +36,7 @@
 .thead-light tr th {
 	border-right : 1px solid #f5f5f5;
 }
-
+ 
 
 .board_title, .board_content {
 	text-align: left;

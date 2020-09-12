@@ -28,7 +28,7 @@
 <!-- 자바 스크립트 -->
 <script type="text/javascript">
 
-	function Check_input(){ 
+	function Check_input(){  
 
 		var qna_board_pwd = $('input[name=qna_board_pwd]').val();
 		
