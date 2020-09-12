@@ -222,8 +222,7 @@
 										<label for="rea7" id="reason7">
 											<input type="radio" name="reason4report" id="rea7" onclick="onETCRadio()" value="$('#hiddenInput').val()">
 											<span class="modalSpan">기타</span> <br>
-											<textarea id="hiddenInput" placeholder="100자 이내로 입력해주세요." 
-													  style="display: none;">
+											<textarea id="hiddenInput" placeholder="100자 이내로 입력해주세요." style="display: none;">
 											</textarea>
 										</label>
 									</td>
@@ -642,7 +641,7 @@
 		
 		location.href="./ReportAnonyBoardAction.anob?ano_board_num="+num
 				 + "&ano_board_reporter="+$("#session_memEmail").val()
-				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val()+"'";
+				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val();
 		
 	} 
 	
