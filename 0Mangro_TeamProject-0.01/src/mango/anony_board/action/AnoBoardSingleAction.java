@@ -1,6 +1,8 @@
 package mango.anony_board.action;
 
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +19,9 @@ public class AnoBoardSingleAction implements Action {
 		System.out.println("AnoBoardSingleAction excute()");
 		
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+
 		
 		// 익명글 상세 정보를 담아갈 AnonyBoardBean 객체 생성
 		AnonyBoardBean boardSingle = new AnonyBoardBean();
@@ -47,9 +52,6 @@ public class AnoBoardSingleAction implements Action {
 		// 첨부된 파일의 타입을 substring() 함수로 추출
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 
-		
-
-		
 		// request영역에 boardSingle로 담아 뷰페이지 anony_board_single.jsp로 전송
 		request.setAttribute("boardSingle", boardSingle);
 		request.setAttribute("fileType", fileType);
