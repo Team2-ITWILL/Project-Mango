@@ -2123,8 +2123,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 														+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num) w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String review ="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg ,ifnull(r.count,0) count "
 					+" from academy a left join (select aca_main_num, count(*) count,avg(review_score) avgscore "
@@ -2136,8 +2136,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 					+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String rating="select a.* ,ifnull(r.avgscore,0) avgscore,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg "
 					+" from academy a left join (select aca_main_num,avg(review_score) avgscore"
@@ -2149,8 +2149,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 					  + " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;	
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;	
 			
 			String basic="select a.* ,ifnull(r.avgscore,0) avgscore ,ifnull(m.mem_profileImg,'images/etc/default_mango.png') profileimg"
 					 +" from academy a left join (select aca_main_num,avg(review_score) avgscore "
@@ -2162,8 +2162,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 						+ " group by mem_email) m on a.mem_email = m.mem_email join ( select aca_main_num , aca_keyword "
  												 +"	from academy_keyword "
                                                  +   "  where aca_keyword =? "
-                                                 + " group by aca_main_num)k "
-					+ " on a.aca_main_num = k.aca_main_num " ;
+                                                 + " group by aca_main_num)w "
+					+ " on a.aca_main_num = w.aca_main_num " ;
 			
 			String where="";
 			
