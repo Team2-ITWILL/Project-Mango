@@ -38,7 +38,7 @@ int startPage = ((Integer)request.getAttribute("startPage")).intValue();
 int endPage = ((Integer)request.getAttribute("endPage")).intValue();
 
 
-String id_email = (String)session.getAttribute("id_email");
+String id_email = (String)session.getAttribute("id_email"); 
 
 
 

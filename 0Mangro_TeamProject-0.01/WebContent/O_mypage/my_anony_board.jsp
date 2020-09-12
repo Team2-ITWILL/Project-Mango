@@ -44,7 +44,7 @@
 }
 
 .pagination {
-	width: 300px !important;
+	width: 300px !important; 
     margin: auto !important;
 }
 </style>  
