@@ -55,11 +55,11 @@ public class AnoBoardSingleAction implements Action {
 		// 해당 글이 신고글인 경우 입장 방지
 		String ano_board_reported = boardSingle.getAno_board_reported();
 		// 만약 신고된 글이라면 
+		System.out.println("신고진행여부"+ano_board_reported);
 		if(ano_board_reported != null){
-			System.out.println("<script type='text/javascript'>");
-			System.out.println("alert('현재 신고가 진행중인 글입니다.');");
-			System.out.println("history.back();");
-			System.out.println("</script>");
+			out.println("<script type='text/javascript'>");
+			out.println("alert('현재 신고가 진행중인 글입니다.');");
+			out.println("</script>");
 		}
 		
 		
