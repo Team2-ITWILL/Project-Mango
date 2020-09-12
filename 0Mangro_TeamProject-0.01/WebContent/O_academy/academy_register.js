@@ -188,6 +188,7 @@ function selectKey(selectedTag){
 		
 		//키워드태그 css 색깔 변경
 		$(selectedTag).addClass('selected');
+		//$(selectedTag).addClass('active');
 		
 	}else{
 		alert("error! not defined key")

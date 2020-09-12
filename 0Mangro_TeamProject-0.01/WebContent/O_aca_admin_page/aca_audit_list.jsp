@@ -80,6 +80,46 @@
 			+ "&aca_num=" + aca_num
 			+ "&check=" + "delete";
 		}	
+	
+	function pagination(selectedTag){
+		
+		var li = document.querySelectorAll('.pagination .page-item');
+		var activated;
+		for(var i=0; i < li.length; i++){		
+			if($(li[i]).hasClass('active')){
+				activated = li[i];
+			}
+			
+		}
+		
+		//var activated = $('.page-item active');
+		console.log(activated);
+		
+		$(activated).removeClass('active');
+		$(selectedTag).addClass('active');
+		
+		console.log(selectedTag);
+		//console.log(activated);
+		
+	}
+	
+	window.onload = function(){
+		
+		var li = document.querySelectorAll('.pagination .page-item');
+		var active;
+		for(var i=0; i < li.length; i++){				
+			
+			li[i].addEventListener('click', function(event){
+				
+				pagination(event.target);
+			
+			});
+			
+				
+		}
+		
+		
+	}//window.onload
   </script>   
 </head>
 

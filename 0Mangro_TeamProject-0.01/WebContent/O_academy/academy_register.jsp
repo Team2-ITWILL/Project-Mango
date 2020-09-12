@@ -101,19 +101,21 @@
 }
 
 li.firstKey {
-    /* background-color: #66b5dd !important; */
-    background-color: #66b5dd;
+    /* background-color: #66b5dd !important; */ 
+    border: 2px solid #66b5dd;
 
 }
 li.secondKey {
 	/* background-color: #ff0080 !important; */
-	background-color: #ff0080;
+	/* background-color: #ff0080; */
+	border: 2px solid #ff0080;
 	
 }
 
 li.thirdKey { 
 	/* background-color: #6f42c1 !important; */
-	background-color: #6f42c1;
+	/* background-color: #6f42c1; */
+	border: 2px solid #6f42c1;
 }
 
 /* 키워드 선택 구분 클래스 */
