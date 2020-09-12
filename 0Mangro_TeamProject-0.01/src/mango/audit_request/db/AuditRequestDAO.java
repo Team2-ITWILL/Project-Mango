@@ -388,6 +388,76 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		return count;
 	}
 	
+	//청강신청이 승인된상태인지 확인하는 메서드
+	public int isApproved(int acaNum, int auditNum){
+		int result = 0;
+		
+		try {
+				getConnection();
+				
+				sql = "select a.aca_main_num, a.add_audit, ar.audit_num, ar.audit_confirm_date "
+						+ "from academy a join audit_request ar "
+						+ "on a.aca_main_num = ar.aca_main_num "
+						+ "where a.aca_main_num = ? "
+						+ "and ar.audit_num = ? "
+						+ "and ar.audit_confirm_date is not null ";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, acaNum);
+				pstmt.setInt(2, auditNum);
+				
+				rs = pstmt.executeQuery();			
+				
+				//이미 승인된 상태라면(audit_confirm_date)
+				if(rs.next()){
+					System.out.println("청강 승인된 상태(중복 승인 불가)");					
+				
+					result = 1;
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+			
+		}//isApproved()
+
+	
+
+	//청강신청 시 누적청강수 증가
+	@Override
+	public int addAuditCount(int acaNum, int auditNum) {
+		
+		int result = 0;
+		
+		try {
+			getConnection();					
+					
+			sql = "update academy a join audit_request ar "
+					+ "set a.add_audit = a.add_audit + 1 "
+					+ "where a.aca_main_num = ? "
+					+ "and ar.audit_num = ? ";				
+
+			pstmt = con.prepareStatement(sql);
+			
+			System.out.println("update academy");
+			
+			pstmt.setInt(1, acaNum);
+			pstmt.setInt(2, auditNum);
+			
+			result = pstmt.executeUpdate();		
+		
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
 	
 	
 	
