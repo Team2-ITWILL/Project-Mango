@@ -324,10 +324,17 @@
                         <div class="card">
                             <div class="">
                                 <div class="row">
-                                    <div class="col-lg-3 border-right pr-0">
-                                        <div class="card-body border-bottom">
-                                            <h4 class="card-title mt-2">청강신청 현황</h4>
+                                
+                                
+                                   <!--  <div class="col-lg-3 border-right pr-0"> -->
+                                    
+                                        <!-- <div class="card-body border-bottom"> -->
+                                        <div class="card-body">
+                                            <!-- <h4 class="card-title mt-2">청강신청 현황</h4> -->
+                                            <h2 class="card-title mt-2" style="text-align:center;">청강신청 현황</h2>
                                         </div>
+                                        
+                                        <!-- 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -354,8 +361,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-9">
+                                         -->
+                                        
+                                    <!-- </div> -->
+                                    
+                                    <!-- <div class="col-lg-9"> -->
+                                    <div class="col-lg-12">
                                         <div class="card-body b-l calender-sidebar">
                                         	
                                         	<!-- 캘린더 출력 영역 -->
