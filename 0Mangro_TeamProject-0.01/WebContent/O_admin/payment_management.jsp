@@ -96,7 +96,7 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_admin/payment_management.jsp"
+                        	<a class="sidebar-link" href="./Management.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">결제 관리</span>
@@ -237,7 +237,7 @@
 					<c:if test="${count!=0}">   
                     <!-- < (이전페이지 가기)-->
 					     <!-- < (이전페이지 가기) 설정-->
-					  <li class="page-item active">
+					  <li class="page-item">
 					  	<c:if test="${startPage-pageBlock<0}">
 					  		<c:set var="pN" value="1"/>
 					  	</c:if>
@@ -253,7 +253,7 @@
 					  
 					  
 					 <c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
+					  <li class="page-item ${pageNum == i ? 'active' : ''}"><a class="page-link" href="${Page}&pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
