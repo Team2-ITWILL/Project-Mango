@@ -2047,3 +2047,17 @@ section
 {
 	color: #14bdee;
 } */
+
+
+/* 메인 팝업 */
+
+.pop_bt {
+	
+	padding: 10px;
+    display: grid;
+    background: #000;
+    outline: none;
+    color: #fff;
+	
+	
+}

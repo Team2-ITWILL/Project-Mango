@@ -397,14 +397,14 @@
 			                </p>
 			            <div class="modal_close">
 			            	<form name="pop_form">
+			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
+			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
+			                <br>
 			                	<a href="#" onclick="close_pop()">
 			                	<span class="pop_bt">
 			                	닫기
 			                	</span>
 			                	</a>
-			                <br>
-			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
-			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
 			                </label>
 			                </form>
 			            </div>
