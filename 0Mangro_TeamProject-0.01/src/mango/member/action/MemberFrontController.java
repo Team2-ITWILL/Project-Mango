@@ -168,7 +168,7 @@ public class MemberFrontController extends HttpServlet {
 
 			
 			
-/* ---------------------------------- 회원 탈퇴 시작  ---------------------------------- */	
+/* ---------------------------------- 회원 탈퇴 시작  ------------------------------------- */	
 			
 		}else if(command.equals("/MemberDelete.me")){
 			
@@ -187,7 +187,7 @@ public class MemberFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-/* ---------------------------------- 회원 탈퇴 끝  ---------------------------------- */	
+/* ---------------------------------- 회원 탈퇴 끝  --------------------------------------- */	
 
 			
 			
@@ -210,7 +210,7 @@ public class MemberFrontController extends HttpServlet {
 				e.printStackTrace();
 			}
 		
-/* ---------------------------------- 회원 정보 수정 끝  ---------------------------------- */	
+/* ---------------------------------- 회원 정보 수정 끝  ------------------------------------ */	
 
 			
 			
@@ -233,11 +233,11 @@ public class MemberFrontController extends HttpServlet {
 				System.out.println("MemberFindPwAction.me : " + e);
 			}
 		
-/* ---------------------------------- 비밀번호 찾기 끝  ---------------------------------- */	
+/* ---------------------------------- 비밀번호 찾기 끝  ----------------------------------- */	
 			
 			
 			
-/* ---------------------------------- 회원관리 시작  ---------------------------------- */	
+/* ---------------------------------- 회원관리 시작  ------------------------------------- */	
 
 		}else if(command.equals("/MemberManagement.me")){
 			
@@ -256,7 +256,7 @@ public class MemberFrontController extends HttpServlet {
 				System.out.println("MemberManagementAction.me : "+ e);
 			} 
 			
-/* ---------------------------------- 회원관리 끝  ---------------------------------- */	
+/* ---------------------------------- 회원관리 끝  ----------------------------------------- */	
 		
 		
 			
@@ -275,8 +275,23 @@ public class MemberFrontController extends HttpServlet {
 	
 /* ---------------------------------- 아이디 중복 체크 끝  ---------------------------------- */	
 	
+		
+/* ---------------------------------- 프로필 변경 시작  ------------------------------------ */
+		
+		}else if(command.equals("/MemberProfileAction.me")){
+			
+			action = new MemberProfileAction();
+			
+			try {
+				forward = action.excute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("MemberProfileAction.me : "+ e);
+			}
+			
 		}
 		
+/* ---------------------------------- 프로필 변경 끝  -------------------------------------- */	
 		
 		
 		

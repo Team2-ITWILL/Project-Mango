@@ -42,6 +42,8 @@
 
 	function checkBox(event){
 		
+		
+		
 		if($("#yackuan-check").is(":checked") == true){
 			window.open('./O_member/member_terms_of_use.jsp', '회원가입 약관','width=700, height=700');	
 		}
@@ -80,14 +82,14 @@
 				return false;
 			}
 			
-			// 이메일 유효성 검사
+/* 			// 이메일 유효성 검사
 		    if ( !(regMail.test( $("#id_email").val() )) ){
 				alert("이메일 형식이 올바르지 않습니다.");
 		    	$("#id_email").focus();
 		    	$("#id_email").val("");
 		    	return false;
 		    }
-
+ */
 			// 비밀번호
 			if($("#id_password1").val() == ""){
 				alert("비밀번호를 입력하세요.");
@@ -162,6 +164,7 @@
 			$("#idcheckT").attr("style","display:none;");
 			$("#idcheckF").attr("style","display:none;");
 			$("#emailck").attr("style","display:none;");
+			$("#pwdck").attr("style","display:none;");
 	}//clearCorrectTag() 
 
 //<--------------------------- 이메일 중복검사시 span태그를 지워주는 메소드  ----------------------------->	
@@ -172,6 +175,8 @@
 
 	function duplCheck(event){
 		
+		var regMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/) // 이메일
+		
 		$.ajax({
 				type: "post",
 				url: "./MemberIDcheckAction.me",
@@ -179,42 +184,48 @@
 				dataType: "text",
 				success: function(data, textStatus){
 
-					// 1. 중복검사 결과 이미 가입된 계정일 때
-					if(data == 1){
-						
-						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
-						if($("#id_email").val() == 0){
-							clearCorrectTag();
-							
-						// 이메일 input에 입력값이 있지만 기존에 입력된 idcheckT지우고 idcheckF만 표시되게하기
-						}else if($("#idcheckT").val().length != 0){	
-							clearCorrectTag();
-							$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
-							//$("#idcheckF").val().css("color", "#a64bf4");
-							$("#idcheckF").removeAttr("style","display:none;"); }
+					if ( !(regMail.test( $("#id_email").val() )) ){
+						clearCorrectTag();
+						$("#emailck").val("이메일 형식에 맞게 입력하세요.").css("color", "#a64bf4");
+						$("#emailck").removeAttr("style","display:none;");
+				    	return false;
+				    
+					} else if( (regMail.test( $("#id_email").val() )) ) {
 					
-					// 2. 중복검사 결과 중복이 아닐 때
-					}else{
-						// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
-						if($("#id_email").val() == 0){
-							clearCorrectTag();
+						// 1. 중복검사 결과 이미 가입된 계정일 때
+						if(data == 1){
+							
+							// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+							if($("#id_email").val() == 0){
+								clearCorrectTag();
+								
+							// 이메일 input에 입력값이 있지만 기존에 입력된 idcheckT지우고 idcheckF만 표시되게하기
+							}else if($("#idcheckT").val().length != 0){	
+								clearCorrectTag();
+								$("#idcheckF").val("이미 가입한 회원입니다.").css("color", "#a64bf4");
+								//$("#idcheckF").val().css("color", "#a64bf4");
+								$("#idcheckF").removeAttr("style","display:none;"); }
+						
+						// 2. 중복검사 결과 중복이 아닐 때
 						}else{
-							// 중복된 이메일 계정을 입력 후 새로 입력하는 과정에서 backspace를 사용했을 때
-							// 기존에 입력된 idcheckT와 backspace를 감지하고 새로 추가된 idcheckF가 일시적으로 공존되는걸
-							// 방지하기 위해 clearCorrectTag()메소드 호출
-							clearCorrectTag();
-							$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
-							//$("#idcheckT").val().css("color", "#a64bf4");
-							//$("#id_email").attr("readonly", "readonly");
-							$("#idcheckT").removeAttr("style","display:none;");
-						
-						} // 안쪽 if문 끝
+							// 이메일 input에 입력값이 없을 때는 span태그 지우기(backspace로 지웠을 때 계속 남아있는걸 방지)
+							if($("#id_email").val() == 0){
+								clearCorrectTag();
+							}else{
+								// 중복된 이메일 계정을 입력 후 새로 입력하는 과정에서 backspace를 사용했을 때
+								// 기존에 입력된 idcheckT와 backspace를 감지하고 새로 추가된 idcheckF가 일시적으로 공존되는걸
+								// 방지하기 위해 clearCorrectTag()메소드 호출
+								clearCorrectTag();
+								$("#idcheckT").val("사용 가능한 이메일입니다.").css("color", "#a64bf4");
+								//$("#idcheckT").val().css("color", "#a64bf4");
+								//$("#id_email").attr("readonly", "readonly");
+								$("#idcheckT").removeAttr("style","display:none;");
 							
-					} // 바깥 if문 끝
-					// 초기화
-				
+							} // 세번째 if문 끝
+						} // 두번째 if문 끝
+					} // 첫번째 if문 끝
 				}, //success 끝
-					
+						
 				error: function(data, datastatus){
 					console.log("에러 : "+ data + datastatus);
 				} // error 끝
@@ -323,9 +334,10 @@
 					        <label class="form-label" for="id_password1">
 					          <span class="d-flex justify-content-between align-items-center">비밀번호</span>
 					        </label>
-					      </div> 
 					        <input type="password" class="form-control" name="id_password1" id="id_password1" placeholder="********"
 					        		style="margin-bottom: 30px;">
+					        		
+					      </div> 
 					               
 					      <div class="js-form-message form-group">
 					        <label class="form-label" for="id_password1">

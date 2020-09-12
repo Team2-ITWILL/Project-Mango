@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 
 import mango.connection.db.DBconnection;
 import mango.member.db.MemberBean;
-
+    
 public class AcademyDAO extends DBconnection implements IAcademy{
 
 	@Override
@@ -19,7 +19,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		
 		try {
 			getConnection();
-			AcademyBean bean;  
+			AcademyBean bean;     
 			String sql =" select a.* ,ifnull(r.avgscore,0) avgscore "
 						 +" from academy a left join (select aca_main_num,avg(review_score) avgscore"
 								 					+" from academy_review) r"
@@ -2457,7 +2457,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		else if(formsearch.get("main")!=null &&formsearch.get("s1")!=null &&formsearch.get("s2")!=null&&formsearch.get("s3")==null&&formsearch.get("s4")!=null){
 			
 			
-			where=" where a.aca_name like ? " 
+			where=" where a.aca_name like ? "   
 					+" and a.aca_search_addr1 =? " 
 					+" and a.aca_search_addr2 =? " 
 					+" and a.aca_category1 =? ";

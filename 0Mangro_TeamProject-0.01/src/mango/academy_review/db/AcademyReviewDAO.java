@@ -208,7 +208,7 @@ public class AcademyReviewDAO extends DBconnection implements IAcademyReview{
 		try {
 			getConnection();
 			sql = "select aca_name from academy_review group by aca_main_num "
-					+ "having count(*) > 1 order by avg(review_score) desc limit ?,1";
+					+ "having count(*) > 1 order by avg(review_score) desc, count(*) desc limit ?,1";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, rank);

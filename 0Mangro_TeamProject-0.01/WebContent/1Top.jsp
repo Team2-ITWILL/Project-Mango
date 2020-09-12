@@ -69,7 +69,8 @@
 										
 										<c:when test="${id_email == 'admin@mango.com' }">
 											<div class="top_bar_button admin_page">
-												<a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a>
+												<!-- <a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a> -->
+												<a href="./TotalInfo.adm">관리자 메뉴</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>
@@ -119,7 +120,7 @@
 								
 								<!-- 장바구니 아이콘(이용내역페이지 연결) -->
 
-								<div class="shopping_cart" onclick="location.href='4index.jsp?center=O_payment/payment_list.jsp'"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+								<div class="shopping_cart" onclick="location.href='./MyListPayment.pay'"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
 								<div class="hamburger menu_mm">
 									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
 									
@@ -166,7 +167,8 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<c:if test="${id_email eq 'admin@mango.com'}">
-					<li class="menu_mm"><a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a></li>
+					<!-- <li class="menu_mm"><a href="4index.jsp?center=O_admin/admin_main.jsp">관리자 메뉴</a></li> -->
+					<li class="menu_mm"><a href="./TotalInfo.adm">관리자 메뉴</a></li>
 				</c:if>
 				<li class="menu_mm"><a href="4index.jsp?center=about.jsp">소개</a></li>
 				<li class="menu_mm"><a href="./AcademyList.aca">학원찾기</a></li>
