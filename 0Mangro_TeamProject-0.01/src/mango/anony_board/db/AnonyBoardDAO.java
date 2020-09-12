@@ -608,14 +608,15 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	// [11. 신고 글 처리 메소드 (member테이블 update) ]
 	public int handleReportedANBoard(int ano_board_num, int procNum){
-		//int check = 0;
 		
 		System.out.println("ano_board_num넘어옴"+ano_board_num + " procNum넘어옴 "+ procNum);
-		// procNum = 1 (계정정지) / 2 (신고취소)
+		// procNum = 1 (계정정지) / 2 (신고취소) / 3 (계정복구)
 		try {
 			
 			getConnection();
-			// 계정정지
+			
+			
+			// 1  계정정지
 			if(procNum == 1) {
 				System.out.println("if문 진입");
 				
@@ -635,25 +636,25 @@ public class AnonyBoardDAO extends DBconnection {
 //------------------------------------------------------------------------------------------				
 				
 				
-				sql = "UPDATE anony_board "
-						+ "SET ano_board_title = ?,"
-						+ "ano_board_content = ?"
-						+ "WHERE ano_board_num = ?"; 
-					
-					pstmt = con.prepareStatement(sql);
-					pstmt.setString(1, "신고된 글입니다.");
-					pstmt.setString(2, "");
-					pstmt.setInt(3, ano_board_num);
-					pstmt.executeUpdate();
-				
-				System.out.println("신고 후 글 제목,내용바꾸기 완료");
-				
-				
-				
+//				sql = "UPDATE anony_board "
+//						+ "SET ano_board_title = ?,"
+//						+ "ano_board_content = ?"
+//						+ "WHERE ano_board_num = ?"; 
+//					
+//					pstmt = con.prepareStatement(sql);
+//					pstmt.setString(1, "신고된 글입니다.");
+//					pstmt.setString(2, "");
+//					pstmt.setInt(3, ano_board_num);
+//					pstmt.executeUpdate();
+//				
+//				System.out.println("신고 후 글 제목,내용바꾸기 완료");
+//				
 				
 				
-				// 신고취소	
-			}else {
+				
+				
+			// 2  신고취소	
+			}else if(procNum == 2) {
 				
 				sql = "UPDATE anony_board "
 						+ "SET ano_board_reported = null, "
@@ -682,23 +683,23 @@ public class AnonyBoardDAO extends DBconnection {
 				pstmt.executeUpdate();				
 				
 				
+//			// 3  계정만 복구	
+			}else {
 				
+				sql = "UPDATE member "
+						+ "SET "
+						+ "mem_baned = null "
+						+ "WHERE mem_email = "
+						+ "(SELECT mem_email "
+						+ " FROM anony_board "
+						+ " WHERE ano_board_num = ? ) ";
 				
-				
-				
-				
-				
-				
-				
-				
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, ano_board_num);
+				System.out.println("회원 테이블에서 계정정지 해제!"+procNum);
+				pstmt.executeUpdate();				
 				
 			}
-			
-//			pstmt.executeUpdate();
-			// 쿼리 실행
-			
-			// 성공
-			//check = 1;
 			
 			
 		}catch(Exception e){
@@ -742,16 +743,16 @@ public class AnonyBoardDAO extends DBconnection {
 				System.out.println("if(rs.next()) {" + checkIfBanned);
 			}//if			
 			
-			// 이미 정지된 계정이라면, 신고계정에 '처리완료' 문구넣고 값을 9로 주기
+			// 이미 정지된 계정이라면, 신고계정에 '처리완료' 문구넣고 값을 2로 주기
 			if(checkIfBanned == 1) {
-				sql = "UPDATE anony_board "
-					+ "SET ano_board_reporter = ?"
-					+ "WHERE mem_email = ? "; 
-				
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, "계정정지처리");
-				pstmt.setString(2, mem_email);
-				
+//				sql = "UPDATE anony_board "
+//					+ "SET ano_board_reporter = ?"
+//					+ "WHERE mem_email = ? "; 
+//				
+//				pstmt = con.prepareStatement(sql);
+//				pstmt.setString(1, "계정정지처리");
+//				pstmt.setString(2, mem_email);
+//				
 				// 쿼리 실행
 				pstmt.executeUpdate();
 				
