@@ -49,26 +49,9 @@ public class AnoBoardSingleAction implements Action {
 		}
 		
 		
-		// alert창을 사용하기 위해 out 객체 생성
-		PrintWriter out = response.getWriter();
-		
-		// 해당 글이 신고글인 경우 입장 방지
-		String ano_board_reported = boardSingle.getAno_board_reported();
-		// 만약 신고된 글이라면 
-		System.out.println("신고진행여부"+ano_board_reported);
-		if(ano_board_reported != null){
-			out.println("<script type='text/javascript'>");
-			out.println("alert('현재 신고가 진행중인 글입니다.');");
-			out.println("</script>");
-		}
-		
-		
 		// 첨부된 파일의 타입을 substring() 함수로 추출
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 
-		
-
-		
 		// request영역에 boardSingle로 담아 뷰페이지 anony_board_single.jsp로 전송
 		request.setAttribute("boardSingle", boardSingle);
 		request.setAttribute("fileType", fileType);

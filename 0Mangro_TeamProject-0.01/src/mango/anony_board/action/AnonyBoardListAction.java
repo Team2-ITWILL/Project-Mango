@@ -48,13 +48,20 @@ public class AnonyBoardListAction implements Action{
 		// 댓글의 총 개수를 반환하는 메소드 사용
 		CommentAnonyBoardDAO commDAO = new CommentAnonyBoardDAO();
 		
-		// 댓글개수 데이터들 담을 List 객체 선언
+		// 댓글개수 데이터들 담을 Map 객체 선언
 		Map<Integer,Integer> comments = new HashMap();
+		
+		// 신고여부 데이터를 담을 Map 객체 선언
+		Map<Integer,Integer> reportedCheckList = new HashMap();
 		
 		// 글의 개수만큼 반복해서 댓글개수 List에 해당 글의 댓글개수 데이터를 담기
 		for(int i=0; i<anbList.size(); i++){
 			comments.put(anbList.get(i).getAno_board_num(), commDAO.getCountANBComments(anbList.get(i).getAno_board_num()));
 			System.out.println("put("+anbList.get(i).getAno_board_num()+","+commDAO.getCountANBComments(anbList.get(i).getAno_board_num())+")");
+			
+			// 해당글의 신고여부 조회(0이면 신고x 1이면 신고된 글)
+			reportedCheckList.put(anbList.get(i).getAno_board_num(),
+								  andao.checkIfthisReported(anbList.get(i).getAno_board_num()));
 		}
 		
 		
@@ -66,11 +73,8 @@ public class AnonyBoardListAction implements Action{
 		request.setAttribute("comments", comments);
 		System.out.println(comments);
 		
-		// 해당글의 신고여부 조회(0이면 신고x 1이면 신고된 글)
-		//int checkIfReported = andao.checkIfthisReported(ano_board_num);
-				
-		
-		//request.setAttribute("checkIfReported", checkIfReported);
+		// 해당 글 번호의 신고여부(글번호,신고여부(날짜))를 HashMap 데이터 형태로 전송
+		request.setAttribute("reportedCheckList", reportedCheckList);
 		
 		
 		ActionForward forward = new ActionForward();
