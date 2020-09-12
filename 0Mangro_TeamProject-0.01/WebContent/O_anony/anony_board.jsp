@@ -126,7 +126,8 @@
 						
 						<c:forEach var="anbList" items="${anbList}">
 						<%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'"  --%>
-							<li class="widthAdjust" onclick="enterCheck(${anbList.ano_board_num}, '${anbList.ano_board_reported}')"; id="enterAnoSingle">
+							<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'" id="enterAnoSingle">
+<%-- 							<li class="widthAdjust" onclick="enterCheck(${anbList.ano_board_num}, '${anbList.ano_board_reported}')" id="enterAnoSingle"> --%>
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
@@ -245,15 +246,15 @@
 		function enterCheck(ano_board_num, reportedCheck) {
 
 			// 신고된 글이 아니므로 상세글 페이지로 이동
-			if(reportedCheck == 0){
-				urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+$("#hiddenAnoNum").val()+"'"; 
+			//(reportedCheck == 0){
+				//alert("클릭이벤트"+urlAddr);
+				urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num+"'"; 
 				$("#enterAnoSingle").attr("onclick",urlAddr);
 		
-				alert("클릭이벤트"+urlAddr);
 		
-			}else {
-				alert("신고가 진행중인 글입니다.");
-			}
+			//}else {
+				//alert("신고가 진행중인 글입니다.");
+			//}
 			
 		}
 

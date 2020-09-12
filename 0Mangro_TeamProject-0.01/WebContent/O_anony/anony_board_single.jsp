@@ -649,7 +649,7 @@
 				 + "&ano_board_reporter="+$("#session_memEmail").val()
 				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val()+"'";
 		
-		alert("클릭이벤트"+urlAddr);
+		//alert("클릭이벤트"+urlAddr);
 		
 		reportSubmit.attr("onclick",urlAddr);
 		
@@ -664,17 +664,17 @@
 		}// if  */
 	
 	// [기타 라디오버튼 클릭시 숨겨진 입력창 나타나도록] 
-	function onETCRadio(){
+/* 	function onETCRadio(){
 		alert("라디오7번 선택");
 		hiddenInput.removeAttribute("style");
 		hiddenInput.removeAttribute("readonly");
 		//return;
-	}
+	} */
 	
-	
+/* 	
 	if(document.activeElement == hiddenInput) {
 		alert("인풋 액티브");
-	}
+	} */
 	
 
 	

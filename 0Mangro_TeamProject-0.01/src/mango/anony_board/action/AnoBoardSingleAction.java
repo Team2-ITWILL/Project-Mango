@@ -1,6 +1,8 @@
 package mango.anony_board.action;
 
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +19,9 @@ public class AnoBoardSingleAction implements Action {
 		System.out.println("AnoBoardSingleAction excute()");
 		
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8"); 
+		response.setContentType("text/html; charset=UTF-8");
+
 		
 		// 익명글 상세 정보를 담아갈 AnonyBoardBean 객체 생성
 		AnonyBoardBean boardSingle = new AnonyBoardBean();
@@ -41,6 +46,20 @@ public class AnoBoardSingleAction implements Action {
 		// 첨부파일이 null값일 경우 "" 처리하여 nullpointer예외 방지
 		if(fileName == null) {
 			fileName = "";
+		}
+		
+		
+		// alert창을 사용하기 위해 out 객체 생성
+		PrintWriter out = response.getWriter();
+		
+		// 해당 글이 신고글인 경우 입장 방지
+		String ano_board_reported = boardSingle.getAno_board_reported();
+		// 만약 신고된 글이라면 
+		if(ano_board_reported != null){
+			System.out.println("<script type='text/javascript'>");
+			System.out.println("alert('현재 신고가 진행중인 글입니다.');");
+			System.out.println("history.back();");
+			System.out.println("</script>");
 		}
 		
 		
