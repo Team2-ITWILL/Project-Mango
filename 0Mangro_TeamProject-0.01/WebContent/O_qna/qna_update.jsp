@@ -27,6 +27,39 @@
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+
+<script type="text/javascript">
+
+	function Check_input(){
+
+		var mem_email = $('input[name=mem_email]').val();
+		var qna_board_pwd = $('input[name=qna_board_pwd]').val();
+		var qna_board_title = $('input[name=qna_board_title]').val();
+		var qna_board_content = $('textarea[name=qna_board_content]').val();
+		
+		if(mem_email == ''){
+			alert("이메일을 입력해주세요.");
+			mem_email.focus();
+		}
+		else if(qna_board_pwd == ''){
+			alert("글 비밀번호를 입력해주세요.");
+			return false;
+		}
+		else if(qna_board_title == ''){
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		else if(qna_board_content == null){
+			alert("내용을 입력해주세요.");
+			return false;
+		}
+		
+	}
+
+
+</script>
+
 </head>
 <body>
 
@@ -133,7 +166,8 @@
  		 
 	    <div class="btn_confirm write_div">
 	        <a href="./board.php?bo_table=qna" class="btn_cancel btn">취소</a>
-	        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">
+	        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn"
+	        onclick="javascript:return Check_input()">
 	    </div>
 	    
 	    

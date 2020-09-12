@@ -243,7 +243,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">문의답변관리</h4>
-                                <h6 class="card-subtitle">등록 요청 학원 리스트가 최신순으로 표시됩니다.</h6>
+                                <h6 class="card-subtitle">고객센터의 글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table">
