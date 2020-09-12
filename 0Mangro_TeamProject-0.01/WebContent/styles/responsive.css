@@ -292,6 +292,14 @@
 
 @media only screen and (max-width: 768px)
 {
+
+	.home_slider_content { top:55% !important; }
+	.resp767Title { color: #000; }
+	.home_slider_subtitle { color: #000;  font-size: 22px; }
+	.home_search_button {
+			background: #000;
+			border: none;
+	}
 	
 }
 

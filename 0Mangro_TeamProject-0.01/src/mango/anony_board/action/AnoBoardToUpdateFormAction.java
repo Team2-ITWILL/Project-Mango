@@ -12,10 +12,10 @@ public class AnoBoardToUpdateFormAction implements Action {
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
 		System.out.println("AnoBoardToUpdateFormAction excute()");
 		
 		request.setCharacterEncoding("UTF-8");
-
 		
 		int ano_board_num = Integer.parseInt(request.getParameter("ano_board_num"));
 		

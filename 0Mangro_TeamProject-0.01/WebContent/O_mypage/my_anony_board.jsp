@@ -36,7 +36,7 @@
 .thead-light tr th {
 	border-right : 1px solid #f5f5f5;
 }
-
+ 
 
 .board_title, .board_content {
 	text-align: left;
@@ -44,7 +44,7 @@
 }
 
 .pagination {
-	width: 300px !important;
+	width: 300px !important; 
     margin: auto !important;
 }
 </style>  
@@ -172,7 +172,7 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" href="./MyListPayment.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">멤버십 결제</span>
@@ -181,12 +181,14 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
+                        <li class="sidebar-item"> 
+                        	<a class="sidebar-link sidebar-link" 
+                        	   href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
-                        <li class="list-divider"></li> <!-- 구분선 -->
+                         <li class="list-divider"></li> <!-- 구분선 -->
                         
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
@@ -215,7 +217,7 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_qna_board.jsp" class="sidebar-link">
+                                	<a href="./MyQnaList.qna" class="sidebar-link">
                                 		<span class="hide-menu">문의게시글</span>
                                 	</a>
                                 </li>            
@@ -235,7 +237,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
+                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>
@@ -243,7 +245,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
+                                href="./MemberDelete.me" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>

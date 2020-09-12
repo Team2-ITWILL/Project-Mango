@@ -295,7 +295,10 @@
                 <!-- Start Sales Charts Section -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                    <div class="col-lg-4 col-md-12">
+                	<%----------------------------회원 현황 ---------------------------------------%>
+                	<!-- col-lg-x로 너비 조절 -->
+                    <!-- <div class="col-lg-4 col-md-12"> -->
+                    <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"><span>회원 현황</span></h4>
@@ -337,7 +340,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12">
+                    
+                    <%--------------------------서비스 결제액 추이-------------------------------%>
+                    <!-- <div class="col-lg-4 col-md-12"> -->
+                    <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"><span>서비스 결제액 추이</span></h4>
@@ -348,6 +354,9 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <%---------------------Earning by Location ---------------------------%>
+                    <!-- 
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
@@ -415,6 +424,8 @@
                         </div>
                     </div>
                 </div>
+                 -->
+                 
                 <!-- *************************************************************** -->
                 <!-- End Sales Charts Section -->
                 <!-- *************************************************************** -->
@@ -674,14 +685,37 @@ window.onload = function(){
 	
 	// ==============================================================
     // 회원 현황
-    // ==============================================================	
+    // ==============================================================
+    var isNormal = ${isNormal};
+    var isAdmin = ${isAdmin};
+    var isBaned = ${isBaned};
+    var isSeceded = ${isSeceded};
+    
+    var memMap = new Map();
+    memMap.set('isNormal', isNormal);
+    memMap.set('isAdmin', isAdmin);
+    memMap.set('isBaned', isBaned);
+    memMap.set('isSeceded', isSeceded);    
+    
+    // DB로부터 받아온 값이 null이면 0으로 처리
+    memMap.forEach(function(value, key){
+    	//console.log('value : '+value + ', key : '+key);
+    	if(value == null){
+    		value = 0;
+    	}    	
+    });    
+    //console.log(memMap);
+    	
 	var pieData = {
-			 '일반 회원': ${isNormal},
-             '학원 회원': ${isAdmin},
-             '정지 회원': ${isBaned},
-             '탈퇴 회원': ${isSeceded}
+			 '일반 회원': memMap.get('isNormal'),
+             '학원 회원': memMap.get('isAdmin'),
+             '정지 회원': memMap.get('isBaned'),
+             '탈퇴 회원': memMap.get('isSeceded')
 	};	
 	
+	console.log(pieData); 
+	
+
     var chart1 = c3.generate({
         bindto: '#campaign-v2',
         data: {
@@ -721,8 +755,8 @@ window.onload = function(){
     });
 
     d3.select('#campaign-v2 .c3-chart-arcs-title').style('font-family', 'Rubik');
-    
-};
+	
+}; 
 
 </script>  
     

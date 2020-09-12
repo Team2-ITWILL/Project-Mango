@@ -22,6 +22,26 @@
 <link rel="stylesheet" type="text/css" href="styles/qna_delete.css">
 <!---------------------------------- 제이쿼리  ---------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+
+
+<!-- 자바 스크립트 -->
+<script type="text/javascript">
+
+	function Check_input(){  
+
+		var qna_board_pwd = $('input[name=qna_board_pwd]').val();
+		
+		if(qna_board_pwd == ''){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+		
+	}
+
+
+</script>
+
 </head>
 <body>
 
@@ -63,7 +83,7 @@ int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
 		    	<input type = "password" name = "qna_board_pwd" id = "password_wr_password"
 		    	class = "frm_input required" size = "15" maxlength = "20" placeholder = "비밀번호">
 		    	
-		    	<input type = "submit" value = "확인" class = "btn_submit"> 
+		    	<input type = "submit" value = "확인" class = "btn_submit" onclick="javascript:return Check_input()"> 
 		    	
 		    	
 		    </fieldset>

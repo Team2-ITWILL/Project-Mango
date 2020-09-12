@@ -197,8 +197,8 @@
 				<!-- Feature Video -->
 				<div class="col-lg-6 feature_col">
 					<div class="feature_video d-flex flex-column align-items-center justify-content-center">
-						<div class="feature_video_background" style="background-image:url(images/video.jpg)"></div>
-						<a class="vimeo feature_video_button" href="https://player.vimeo.com/video/99340873?title=0" title="OH, PORTUGAL - IN 4K - Basti Hansen - Stock Footage">
+						<div class="feature_video_background" style="background-image:url(images/etc/about_video.jpg)"></div>
+						<a class="vimeo feature_video_button" href="images/etc/about.mp4">
 							<img src="images/play.png" alt="">
 						</a>
 					</div>

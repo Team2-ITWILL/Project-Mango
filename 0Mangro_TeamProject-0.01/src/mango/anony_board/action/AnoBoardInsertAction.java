@@ -1,5 +1,3 @@
-
-
 package mango.anony_board.action;
 
 
@@ -39,7 +37,6 @@ public class AnoBoardInsertAction implements Action {
 						new DefaultFileRenamePolicy());
 				
 				
-				
 				// [글작성 페이지 폼의 요소들을 BoardBean객체에 저장 ]
 				AnonyBoardBean anbean = new AnonyBoardBean();
 
@@ -50,18 +47,12 @@ public class AnoBoardInsertAction implements Action {
 				
 				anbean.setAno_board_file(multi.getFilesystemName("ano_board_file"));
 				
-				System.out.println(multi.getFilesystemName("ano_board_file"));
-				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				float f_size = 0;
-				
-				
 				
 				// [Action에서 처리할 값]
 				anbean.setAno_board_ip((String)request.getRemoteAddr());
 				AnonyBoardDAO andao = new AnonyBoardDAO();
 				andao.insertANBoard(anbean);
-				
-				
 				
 				ActionForward forward = new ActionForward();
 				forward.setRedirect(false);

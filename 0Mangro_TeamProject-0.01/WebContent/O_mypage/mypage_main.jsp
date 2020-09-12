@@ -23,7 +23,7 @@
     
 </head>
 
-<body>
+<body>  
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
     <div class="preloader">
         <div class="lds-ripple">
@@ -111,7 +111,8 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" 
+                        	   href="./MyListPayment.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">멤버십 결제</span>

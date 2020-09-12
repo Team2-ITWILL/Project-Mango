@@ -19,7 +19,7 @@
   
   
     
-</head>   
+</head>     
 
 
 
@@ -213,17 +213,19 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
+                        <li class="sidebar-item"> 
+                        	<a class="sidebar-link sidebar-link" 
+                        	   href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
-                        <li class="list-divider"></li> <!-- 구분선 -->
+                         <li class="list-divider"></li> <!-- 구분선 -->
                         
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_liked_academy_list.jsp"
+                        	<a class="sidebar-link sidebar-link" href="LikedAcaListAction.laca?pageNum=1"
                                 aria-expanded="false"><i data-feather="heart" class="feather-icon"></i><span
                                     class="hide-menu">좋아요 한 학원 목록</span>
                             </a>
@@ -237,12 +239,12 @@
                                     
                             <ul aria-expanded="false" class="collapse first-level base-level-line">
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_academy_review.jsp" class="sidebar-link">
+                                	<a href="myReviewListAction.arev?pageNum=1" class="sidebar-link">
                                 		<span class="hide-menu">학원후기</span>
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_anony_board.jsp" class="sidebar-link">
+                                	<a href="./MyAnonyBoardListAction.anob" class="sidebar-link">
                                 		<span class="hide-menu">익명사담글</span>
                                 	</a>
                                 </li>            
@@ -267,7 +269,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
+                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>
@@ -275,7 +277,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
+                                href="./MemberDelete.me" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>
