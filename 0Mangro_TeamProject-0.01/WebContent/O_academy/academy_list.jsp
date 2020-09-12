@@ -541,7 +541,7 @@ li.thirdKey {
 					  
 					<c:if test="${count!=0}"> 
                     <!-- < (이전페이지 가기) 설정-->
-					  <li class="page-item active">
+					  <li class="page-item">
 					  	<c:if test="${startPage-pageBlock<0}">
 					  		<c:set var="pN" value="1"/>
 					  	</c:if>
@@ -559,7 +559,7 @@ li.thirdKey {
 					
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">			  
-					  <li class="page-item"><a class="page-link" href="${PageTwo}pageNum=${i}">${i}</a></li>
+					  <li class="page-item ${pageNum == i ? 'active' : ''}"><a class="page-link" href="${PageTwo}pageNum=${i}">${i}</a></li>
 					 
 					</c:forEach>	
 		
