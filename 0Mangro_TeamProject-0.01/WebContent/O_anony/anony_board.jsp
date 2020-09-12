@@ -246,7 +246,7 @@
 		function enterCheck(ano_board_num, reportedCheck) {
 
 			if(reportedCheck == 1 ){
-				alert("신고가 진행중인 글입니다.");
+				alert("신고된 글이므로 열람이 제한됩니다. 이용에 불편을 드려 죄송합니다.");
 			}
 			
 			if(reportedCheck == 0 ){

@@ -41,7 +41,7 @@
 	.boardrevise{ color: #000; margin-left:8px;}
 	.cmCount{color:#3094ff;}
 	.ifnotwriter{  margin-top: 20px; }	
-	.nickWidth { display: inline-block; width: 150px;}
+	.nickWidth { display: inline-block; width: 250px;}
 	#replyLev { margin-left: 50px; }
 
 	
@@ -98,7 +98,7 @@
 						
 					  <c:choose>
 					  
-							<c:when test="${id_email eq boardSingle.mem_email}">
+							<c:when test="${id_email eq boardSingle.mem_email or id_email eq 'admin@mango.com'} ">
 							
 								<div class="title-btn tolistBtn boardrevise" onclick="location.href='./AnonyBoardListAction.anob'">
 									<span>목록보기</span></div> 
@@ -324,7 +324,6 @@
 	        		ano_comment_content:$("#init_content").val()
 	        },
 	        success : function(data){
-	               //alert("ajax로 댓글 넣기 성공");
 	               // 댓글 insert후 댓글 내용 입력창 비워주기
 	               $("#init_content").val("");
 	               getCommentList();
@@ -346,7 +345,7 @@
 	function update_comment(ano_comment_num){		
 
 		// [4] 수정댓글 내용 여부 검증 & 로그인여부 처리
-		if($("#update_content").val() == ""){
+		if($("#update_content"+ano_comment_num).val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
 			
@@ -358,13 +357,13 @@
 	        data: { 
 	        		ano_comment_num : ano_comment_num,
 	        		ano_board_num : $("#init_boardNum").val(),
-	        		ano_comment_content : $("#update_content").val()
+	        		ano_comment_content : $("#update_content"+ano_comment_num).val()
 	        },
 	        success : function(data){
 	               //alert("ajax로 댓글 수정하기 성공");
 	               
 	               // 댓글 수정 후 댓글 내용 입력창 비워주기
-	               $("#update_content").val("");
+	               $("#update_content"+ano_comment_num).val("");
 	               
 	               // 댓글 수정창 없애기
 	               $("#updateCommFR"+ano_comment_num).attr("style","display:none;");
@@ -416,7 +415,7 @@
 	
 	function reply_comment(ano_comment_num){
 		// [대댓글 내용 여부 검증 & 로그인여부 처리]
-		if( $("#reply_content").val() == ""){
+		if( $("#reply_content"+ano_comment_num).val() == ""){
 			alert("댓글 내용을 입력하세요.");
 			return;
 			
@@ -435,7 +434,7 @@
 	        data: { 
 	        		mem_email:$("#session_memEmail").val(), 
 	        		ano_board_num:$("#init_boardNum").val(),
-	        		ano_comment_content:$("#reply_content").val(),
+	        		ano_comment_content:$("#reply_content"+ano_comment_num).val(),
 	        		ano_re_ref:ano_comment_num,
 	        		ano_re_lev:0, // 나중에 제값 넣어주기
 	        		ano_re_seq:0 // 나중에 제값 넣어주기
@@ -443,7 +442,7 @@
 	        success : function(data){
 	               //alert("ajax로 대댓글 달기 성공");
 	               // 댓글 insert후 대댓글 내용 입력창 비워주기
-	               $("#reply_content").val("");
+	               $("#reply_content"+ano_comment_num).val("");
 	               // 대댓글 입력창 없애기
 	               $("#replyCommFR"+ano_comment_num).attr("style","display:none;");
 	               getCommentList();
@@ -465,7 +464,6 @@
 	
  	$(function(){
 	    getCommentList();
-	    
 	}); 
 
 	// [ajax를 통해 댓글 전부를 비동기식으로 불러오기]		
@@ -546,7 +544,7 @@
 		        	
 		        	// ▶ 대댓글 작성form 중 textarea
 		        	commentsHTML +=      "<textarea name='reply_content' class='form-control replytxtarea' ";
-		        	commentsHTML +=       "id='reply_content' placeholder='내용을 입력해주세요.'></textarea>";
+		        	commentsHTML +=       "id='reply_content"+allComments[i].ano_comment_num+"' placeholder='내용을 입력해주세요.'></textarea>";
 		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
 		        	commentsHTML +=       "onclick='reply_comment("+allComments[i].ano_comment_num+")'>댓글달기 </button> </div>";
 		        		             // "</form>";
@@ -560,7 +558,7 @@
 		        	
 		        	// ▶ 댓글 수정form 중 textarea
 		        	commentsHTML +=      "<textarea name='ano_comment_content' class='form-control replytxtarea' ";
-		        	commentsHTML +=       "id='update_content' placeholder='내용을 입력해주세요.'></textarea>";
+		        	commentsHTML +=       "id='update_content"+allComments[i].ano_comment_num+"' placeholder='내용을 입력해주세요.'></textarea>";
 		        	commentsHTML +=      "<button class='comments_write_button comm_btn replytxtbtn' type='button' ";
 		        	commentsHTML +=       "onclick='update_comment("+allComments[i].ano_comment_num+")'>댓글수정하기 </button> </div>";
 		        		              //"</form>";
@@ -647,9 +645,6 @@
 				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val()+"'";
 		
 	} 
-	
-	
-
 	
 	
 	
