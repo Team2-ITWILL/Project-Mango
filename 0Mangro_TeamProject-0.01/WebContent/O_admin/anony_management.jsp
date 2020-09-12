@@ -203,20 +203,25 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신고 내역 조회 ${count}</h4>
+                                <h4 class="card-title">신고 내역 조회  
+	                                <span style="font-size: 0.7em; color: #696a6b; padding-left:10px;">
+	                                	총&nbsp;<span style="font-weight: 400">${count}</span>개의 글이 있습니다.
+	                                </span>
+                                </h4>
+                                
                                 <h6 class="card-subtitle">익명사담방의 게시글 중 신고된 항목만 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
                                         <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
-                                            <th scope="col" style="width:8%;">글 번호</th>
+                                            <th scope="col" style="width:5%;">글 번호</th>
                                             <!-- <th scope="col" style="width:11%;">제목</th> -->
                                             <!-- <th scope="col" style="width:11%;">내용</th> -->
-                                            <th scope="col" style="width:14%;">계정</th>
-                                            <th scope="col" style="width:8%;">댓글수</th>
-                                            <th scope="col" style="width:8%;">조회수</th>
-                                            <th scope="col" style="width:10%;">첨부파일</th>
+                                            <th scope="col" style="width:11%;">계정</th>
+                                            <th scope="col" style="width:5%;">댓글수</th>
+                                            <!-- <th scope="col" style="width:8%;">조회수</th> -->
+                                            <th scope="col" style="width:8%;">첨부파일</th>
                                             <th scope="col" style="width:13%;">작성일자</th>
                                             <th scope="col" style="width:11%;">신고일자</th>
                                             <th scope="col" style="width:11%;">신고사유</th>
@@ -235,7 +240,7 @@
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
                                             <td id="mem_email">${reportedAnonyList.mem_email}</td>
                                             <td>${comments[reportedAnonyList.ano_board_num]}</td>
-                                            <td>${reportedAnonyList.ano_board_read}</td>
+                                            <%-- <td>${reportedAnonyList.ano_board_read}</td> --%>
                                             <td>${reportedAnonyList.ano_board_file}</td>
                                             <td>
 	                                            <fmt:formatDate value="${reportedAnonyList.ano_board_date}" 
