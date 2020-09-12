@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <!------------------------------------------ [ 메타데이터 ] --------------------------------------------------------------->
-    <meta charset="utf-8">
+    <meta charset="utf-8">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -247,7 +247,7 @@
                                     class="hide-menu">내 정보</span></a></li>
 
 <!---------------------------------------------[내 컨텐츠 영역 ]-------------------------------------------------------------->
-                        <li class="list-divider"></li> <!-- 구분선 -->
+                         <li class="list-divider"></li> <!-- 구분선 -->
                         
                         <li class="nav-small-cap"><span class="hide-menu divide" >내 컨텐츠</span></li>
                         
@@ -276,7 +276,7 @@
                                 	</a>
                                 </li>            
                                 <li class="sidebar-item">
-                                	<a href="4index.jsp?center=O_mypage/my_qna_board.jsp" class="sidebar-link">
+                                	<a href="./MyQnaList.qna" class="sidebar-link">
                                 		<span class="hide-menu">문의게시글</span>
                                 	</a>
                                 </li>            
