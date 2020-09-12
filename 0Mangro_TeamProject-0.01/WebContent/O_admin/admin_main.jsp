@@ -295,7 +295,10 @@
                 <!-- Start Sales Charts Section -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                    <div class="col-lg-4 col-md-12">
+                	<%----------------------------회원 현황 ---------------------------------------%>
+                	<!-- col-lg-x로 너비 조절 -->
+                    <!-- <div class="col-lg-4 col-md-12"> -->
+                    <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"><span>회원 현황</span></h4>
@@ -337,7 +340,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12">
+                    
+                    <%--------------------------서비스 결제액 추이-------------------------------%>
+                    <!-- <div class="col-lg-4 col-md-12"> -->
+                    <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title"><span>서비스 결제액 추이</span></h4>
@@ -348,6 +354,9 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <%---------------------Earning by Location ---------------------------%>
+                    <!-- 
                     <div class="col-lg-4 col-md-12">
                         <div class="card">
                             <div class="card-body">
@@ -415,6 +424,8 @@
                         </div>
                     </div>
                 </div>
+                 -->
+                 
                 <!-- *************************************************************** -->
                 <!-- End Sales Charts Section -->
                 <!-- *************************************************************** -->
@@ -674,12 +685,17 @@ window.onload = function(){
 	
 	// ==============================================================
     // 회원 현황
-    // ==============================================================	
+    // ==============================================================
+    var isNormal = ${isNormal};
+    var isAdmin = ${isAdmin};
+    var isBaned = ${isBaned};
+    var isSeceded = ${isSeceded};
+    	
 	var pieData = {
-			 '일반 회원': ${isNormal},
-             '학원 회원': ${isAdmin},
-             '정지 회원': ${isBaned},
-             '탈퇴 회원': ${isSeceded}
+			 '일반 회원': isNormal,
+             '학원 회원': isAdmin,
+             '정지 회원': isBaned,
+             '탈퇴 회원': isSeceded
 	};	
 	
     var chart1 = c3.generate({
