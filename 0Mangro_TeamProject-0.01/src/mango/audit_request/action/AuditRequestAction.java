@@ -103,7 +103,8 @@ public class AuditRequestAction implements Action{
 			out.println("</script>");	
 			out.close();			
 			return null;
-		}
+		}		
+	
 		
 		//------------청강 신청------------------
 		//중복신청이 아니라면 청강신청 가능

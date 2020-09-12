@@ -307,10 +307,45 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			
+			resourceClose();
+			
 		}
+		
 		
 		return check;
 		
+	}
+
+
+
+	public int getMonthMoney() {
+		int money;
+		
+		try {
+			getConnection();
+			
+						sql= "select count(pm_name)*7900 + e.pm2 "
+							+"from payment i join (select count(pm_name)*12900 pm2 "
+											+" from payment"
+											+" where pm_name='무제한 이용권 (90일)' "
+											+" and pm_start_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()) e "   
+					 	+" where pm_name='무제한 이용권 (30일)' "
+					 	+" and pm_start_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW() ";
+			
+			
+		} catch (Exception e) {
+			System.out.println("getMonthMoney()메서드에서 오류 "+e);
+		}finally {
+			
+			resourceClose();
+			
+		}
+		
+		
+		
+		return 0;
 	}
 
 	
