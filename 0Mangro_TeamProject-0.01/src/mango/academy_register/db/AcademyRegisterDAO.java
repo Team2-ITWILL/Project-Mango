@@ -194,13 +194,24 @@ public class AcademyRegisterDAO extends DBconnection{
 				pstmt.setString(1, id);	
 
 			//승인 취소
-			}else{
+			}else if(flag == 0){
 				sql = "update academy_register "
 					+ "set confirm_date = null "
 					+ "where mem_email = ?";
 				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, id);					
-			}			
+				pstmt.setString(1, id);		
+				
+			//삭제	
+			}else if(flag == -1){
+				sql = "delete from academy_register "
+						+ "where mem_email = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, id);		
+					
+			}else{
+				System.out.println("존재하지 않는 flag값 -> error");
+				return 0;
+			}
 
 			result = pstmt.executeUpdate();				
 

@@ -2,6 +2,29 @@
  * register_reqManagement.jsp에 적용되는 자바스크립트 파일
  */
 
+//=====================사업자등록증/신분증 이미지 띄우기==============================
+
+function viewRegImages(btn, filePath, fileType){
+	
+	var imgSourcePath = "./" + filePath;
+	
+	//모달창 제목 변경
+	var title = document.querySelector(".modal-title");
+	title.innerText = fileType;
+
+	//모달창의 이미지태그에 파일 삽입
+	var imgTag = document.querySelector(".insertImg");		
+	imgTag.src = imgSourcePath;
+	//console.log(imgTag);
+	
+	btn.setAttribute('data-toggle', 'modal');
+	btn.setAttribute('data-target', '.imgView');
+	
+	//console.log(btn);		
+}
+
+
+//=====================승인/취소 처리 액션페이지로 전송=====================
 function approveReg(regEmail, acaName, aca_keyword, flag){
 	
 	// create form tag
