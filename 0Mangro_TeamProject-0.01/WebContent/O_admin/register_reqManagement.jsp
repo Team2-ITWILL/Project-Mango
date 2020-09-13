@@ -19,6 +19,7 @@
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
+ 
     
 </head>
 
@@ -223,10 +224,10 @@
                                             <td>${vo.memAddrZip}</td>
                                             <td>${vo.memAddrDoro}</td>
                                             <td>
-                                           		<%-- <button type="button" class="btn btn-primary" onclick="viewRegImages(${vo.fNameCompany}, '사업자등록증 파일')">image</button> --%>
+                                           		<button type="button" class="btn btn-info" onclick="viewRegImages(this, '${vo.fNameCompany}', '사업자등록증 파일')">image</button>
                                             </td>
                                             <td>
-                                            	<%-- <button type="button" class="btn btn-primary" onclick="viewRegImages(${vo.fNameOwner}, '대표자신분증 파일')">image</button> --%>
+                                            	<button type="button" class="btn btn-info" onclick="viewRegImages(this, '${vo.fNameOwner}', '대표자신분증 파일')">image</button>
                                             </td>
                                             <td>${vo.registerDate}</td>
                                             <td>${vo.confirmDate}</td>
@@ -253,18 +254,18 @@
     				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".imgView">이미지 보기</button> -->
     				         
 					<div class="modal fade imgView">
-					
-					  <!-- <div class="modal-dialog"> -->
-					  <div class="modal-dialog modal-lg">
-					  
-					    <div class="modal-content">
+					  <!-- 가로 사이즈 이미지에 맞게 자동으로 조정  -->
+					  <div class="modal-dialog" style="width:auto;display:table"> 						 
+ 						<div class="modal-content">					    
 					      <div class="modal-header">
 					        <h4 class="modal-title">이미지 보기</h4>
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					      </div>
+					      <!-- 이미지가 들어갈 태그 -->
 					      <div class="modal-body">
-					        <!-- <p>One fine body&hellip;</p> -->
-					        <p><img src="./O_aca_regFiles/upload/images/056abd19b6db725ad2a392a648d045b4.jpg"></p>
+					        <div class="modal-Img">
+					        	<img class="insertImg" src="#">
+					        </div>
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -398,6 +399,7 @@
 
 	<!-- 이 파일에 선언된 함수들이 모여있는 자바스크립트 파일 -->
 	<script src="./O_admin/register_reqManagement.js"></script>
+
     
 </body>
 </html>

@@ -4,19 +4,23 @@
 
 //=====================사업자등록증/신분증 이미지 띄우기==============================
 
-function viewRegImages(filePath, fileType){
+function viewRegImages(btn, filePath, fileType){
 	
 	var imgSourcePath = "./" + filePath;
 	
+	//모달창 제목 변경
 	var title = document.querySelector(".modal-title");
-	var body = document.querySelector(".modal-body");
-	console.log(title);
-	console.log(body);
-	for(var i=0; i < body.childNodes.length; i++){
-		console.log(i);
-	}
+	title.innerText = fileType;
+
+	//모달창의 이미지태그에 파일 삽입
+	var imgTag = document.querySelector(".insertImg");		
+	imgTag.src = imgSourcePath;
+	//console.log(imgTag);
 	
+	btn.setAttribute('data-toggle', 'modal');
+	btn.setAttribute('data-target', '.imgView');
 	
+	//console.log(btn);		
 }
 
 
