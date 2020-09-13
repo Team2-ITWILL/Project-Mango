@@ -242,7 +242,7 @@
                         
                         
                                     
-                        <li class="sidebar-item"> 
+                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link" 
                         	   href="./MemberUpdate.me"
                                aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
@@ -286,7 +286,8 @@
                                     
 						</li>
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_audit_list.jsp"
+                        	<a class="sidebar-link sidebar-link"
+                        		href="./AuditListToMypage.adrq"
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>
@@ -306,7 +307,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="./MemberDelete.me" aria-expanded="false">
+                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>

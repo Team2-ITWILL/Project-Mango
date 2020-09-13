@@ -19,57 +19,6 @@
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
-  
-<!------------------------------------[사용자 정의 함수]------------------------------ -->
-<script type="text/javascript">		
-		function approveReg(regEmail, acaName, aca_keyword, flag){
-			
-			// create form tag
-			var regForm = document.createElement('form');
-			regForm.action = "./regChangeApproval.areg";
-			regForm.method = "get";
-			
-			// create input Tag
-			var input1 = document.createElement('input');
-			var input2 = document.createElement('input');
-			var input3 = document.createElement('input');
-			var input4 = document.createElement('input');
-			
-			// set attribute
-			input1.setAttribute('type', 'hidden');
-			input1.setAttribute('name', 'flag');
-			input1.setAttribute('value', flag);
-			
-			input2.setAttribute('type', 'hidden');
-			input2.setAttribute('name', 'acaName');
-			input2.setAttribute('value', acaName);			
-			
-			input3.setAttribute('type', 'hidden');
-			input3.setAttribute('name', 'aca_keyword');
-			input3.setAttribute('value', aca_keyword);
-			
-			input4.setAttribute('type', 'hidden');
-			input4.setAttribute('name', 'regEmail');
-			input4.setAttribute('value', regEmail);
-			
-		
-						
-			// append input to Form
-			regForm.appendChild(input1);
-			regForm.appendChild(input2);
-			regForm.appendChild(input3);
-			regForm.appendChild(input4);
-			
-			// append form to body
-			document.body.appendChild(regForm);
-			
-			console.log(regForm);
-			
-			// submit form
-			regForm.submit();				
-			
-		}	
-</script>
     
 </head>
 
@@ -243,20 +192,25 @@
                                             <th scope="col">키워드</th>                                            
                                         </tr>                                        
                                     </thead>
-                                    <tbody>
+                                    <tbody>                                    
                                     <c:forEach var="vo" items="${registerList}">
                                     	<!-- 승인,취소를 구분할 값 -->
                                     	<c:set var="flag" value="0" />
+                                    	
                                     	<c:choose>                                    		
                                     		<c:when test="${vo.confirmDate eq null}">
                                     			<!-- confirmDate가 null이면 승인 -->
+                                    			<%-- <c:out value="${flag = 1}" escapeXml="false" /> --%>
                                     			${flag = 1}
                                     		</c:when>                                    		
                                     		<c:when test="${vo.confirmDate ne null}">
                                     			<!-- confirmDate가 값이 있으면 승인 취소 -->
+                                    			<%-- <c:out value="${flag = 0}" escapeXml="false" /> --%>
                                     			${flag = 0}
                                     		</c:when>
+                                    		<c:otherwise>error</c:otherwise>
                                     	</c:choose>
+                                    	
                                     	<!-- 학원관리자 등록을 요청한 사용자의 이메일, 학원명, confirmDate flag를 전달 -->
                                         <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">
                                             <th scope="row">${vo.memEmail}</th>
@@ -276,7 +230,10 @@
                         </div>
                     </div>
                     
-
+                    <!-- flag값을 넣을 태그(jstl 조건문 이용할 때 화면에 값이 출력되게 하는 것을 막기 위함 -->
+					<!--  <form action="">
+					 	<input type="hidden" name="flag">
+					 </form> -->
                     
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
@@ -288,7 +245,8 @@
 					  </li>
 					  
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
+					 <!--  <li class="page-item active"> -->
+					  <li class="page-item">
 					  	<a class="page-link prev" href="#">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
@@ -399,6 +357,8 @@
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
 
+	<!-- 이 파일에 선언된 함수들이 모여있는 자바스크립트 파일 -->
+	<script src="./O_admin/register_reqManagement.js"></script>
     
 </body>
 </html>

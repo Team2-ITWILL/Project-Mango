@@ -713,7 +713,7 @@ window.onload = function(){
              '탈퇴 회원': memMap.get('isSeceded')
 	};	
 	
-	console.log(pieData); 
+	//console.log(pieData); 
 	
 
     var chart1 = c3.generate({
