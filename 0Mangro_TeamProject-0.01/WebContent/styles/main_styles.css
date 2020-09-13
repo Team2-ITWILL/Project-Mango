@@ -17,6 +17,7 @@
 5. Section
 6. Home
 7. Features
+
 8. Courses
 9. Counter
 10. Events
@@ -2058,6 +2059,14 @@ section
     background: #000;
     outline: none;
     color: #fff;
-	
-	
+    margin-top: 20px;
 }
+
+
+.modal_close {
+	background-color: #fff !important;
+}
+	
+#notice_content {
+	margin: 20px 0 20px 0;
+}	
