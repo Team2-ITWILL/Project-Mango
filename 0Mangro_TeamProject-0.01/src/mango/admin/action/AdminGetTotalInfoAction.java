@@ -78,6 +78,7 @@ public class AdminGetTotalInfoAction implements Action{
 		//===================한달 동안 결제 금액===========================
 		PayMentDAO pdao = new PayMentDAO();
 		int monthMoney= pdao.getMonthMoney();
+		request.setAttribute("MonthMoney", monthMoney);
 		
 		
 		//=========================포워딩===============================

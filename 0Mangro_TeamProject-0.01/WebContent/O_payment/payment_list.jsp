@@ -77,7 +77,7 @@
 				    psys+=		"<span>시작일 : <span class='service_date'>"+item.pmStartDate+"</span></span>" ;
 				    psys+=		"<span>종료일 : <span class='service_date'>"+item.pmExpDate+"</span></span>";
 				    psys+=	"</div>";
-				    psys+=	"<div class='comment_extras d-flex flex-row align-items-center justify-content-start'>;"
+				    psys+=	"<div class='comment_extras d-flex flex-row align-items-center justify-content-start'>";
 				    psys+=		"<div class='comment_extra'>";
 				    psys+=				"<img src='images/etc/date.png' width='20'>";
 				    psys+=			"남은 이용기간 :&nbsp;<span>"+(result < 0 ? 0:result)+ "일</span>";
