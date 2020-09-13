@@ -397,14 +397,14 @@
 			                </p>
 			            <div class="modal_close">
 			            	<form name="pop_form">
+			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
+			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
+			                <br>
 			                	<a href="#" onclick="close_pop()">
 			                	<span class="pop_bt">
 			                	닫기
 			                	</span>
 			                	</a>
-			                <br>
-			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
-			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
 			                </label>
 			                </form>
 			            </div>
@@ -417,13 +417,18 @@
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/mainslider6.jpg)"></div>
+					<div class="home_slider_background">
+					      <video muted autoplay loop style="z-index: 999; width: 100%;">
+					        <source src="images/etc/main_video4.mp4" type="video/mp4">
+					        <strong>Your browser does not support the video tag.</strong>
+					      </video>
+					</div>
 					<div class="home_slider_content">
 						<div class="container">
 							<div class="row">
 								<div class="col text-center">
 									<div class="home_slider_title resp767Title">우리동네 학원을 찾아보세요.</div>
-									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
+									<div class="home_slider_subtitle">당신의 숨은 재능과 잠재력을 찾으러 갈 시간이에요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 												<input type="hidden" name="select5" value="basic" id="basic">
@@ -573,8 +578,8 @@
 		<!-- Home Slider Nav -->
 
 	
-	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
-	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<!-- 	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
+	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>  -->
 		
 	</div>
 

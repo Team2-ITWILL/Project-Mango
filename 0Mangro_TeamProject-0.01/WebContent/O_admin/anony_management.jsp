@@ -26,18 +26,18 @@
 .prev, .next {font-size: 1em;}
 .thead-light tr th {border-right : 1px solid #f5f5f5;}
 .board_title, .board_content {text-align: left;padding-left: 20px !important;}
-.ban_thisAccount, .dropReport{
+.ban_thisAccount, .restore_thisAccount, .dropReport{
 	border: 1px solid #000;
 	height: 50px;
-	padding-top: 7%;
+	padding-top: 15%;
 	font-size: 1em;
 	color: #000;
 	border-radius: 10px;
-	font-weight: 600;
+	font-weight: 400;
 	
 	
 }
-.ban_thisAccount:hover, .dropReport:hover{
+.ban_thisAccount:hover,.restore_thisAccount:hover, .dropReport:hover{
 	background-color: #000;
 	color: #fff;
 	font-weight: 700;
@@ -203,25 +203,30 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">신고 내역 조회 ${count}</h4>
+                                <h4 class="card-title">신고 내역 조회  
+	                                <span style="font-size: 0.7em; color: #696a6b; padding-left:10px;">
+	                                	총&nbsp;<span style="font-weight: 400">${count}</span>개의 글이 있습니다.
+	                                </span>
+                                </h4>
+                                
                                 <h6 class="card-subtitle">익명사담방의 게시글 중 신고된 항목만 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table" style="table-layout: fixed;">
                                     <thead class="thead-light">
                                         <tr style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 100%">
-                                            <th scope="col" style="width:8%;">글 번호</th>
+                                            <th scope="col" style="width:5%;">글 번호</th>
                                             <!-- <th scope="col" style="width:11%;">제목</th> -->
                                             <!-- <th scope="col" style="width:11%;">내용</th> -->
-                                            <th scope="col" style="width:14%;">계정</th>
-                                            <th scope="col" style="width:8%;">댓글수</th>
-                                            <th scope="col" style="width:8%;">조회수</th>
-                                            <th scope="col" style="width:10%;">첨부파일</th>
+                                            <th scope="col" style="width:11%;">계정</th>
+                                            <th scope="col" style="width:5%;">댓글수</th>
+                                            <!-- <th scope="col" style="width:8%;">조회수</th> -->
+                                            <th scope="col" style="width:8%;">첨부파일</th>
                                             <th scope="col" style="width:13%;">작성일자</th>
                                             <th scope="col" style="width:11%;">신고일자</th>
                                             <th scope="col" style="width:11%;">신고사유</th>
                                             <th scope="col" style="width:11%;">신고계정</th>
-                                            <th scope="col" colspan="2" style="width:22%;">처리</th>
+                                            <th scope="col" colspan="3" style="width:22%;">처리</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -235,7 +240,7 @@
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
                                             <td id="mem_email">${reportedAnonyList.mem_email}</td>
                                             <td>${comments[reportedAnonyList.ano_board_num]}</td>
-                                            <td>${reportedAnonyList.ano_board_read}</td>
+                                            <%-- <td>${reportedAnonyList.ano_board_read}</td> --%>
                                             <td>${reportedAnonyList.ano_board_file}</td>
                                             <td>
 	                                            <fmt:formatDate value="${reportedAnonyList.ano_board_date}" 
@@ -254,6 +259,9 @@
                                             </td>
                                             <td>
                                             	<div class="dropReport drop_${reportedAnonyList.ano_board_num}" id="drop" onclick="buttonFunc('drop','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email}',event)">신고삭제</div>
+                                            </td>
+                                            <td>
+       	                                    	<div class="restore_thisAccount" name="restore_${reportedAnonyList.mem_email}" id="restore" onclick="buttonFunc('restore','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정복구</div>
                                             </td>
                                          </c:when>
                                          <c:otherwise>
@@ -416,23 +424,14 @@
 	var mem_email = document.getElementById("mem_email").innerText;
 	
 	function buttonFunc(act ,ano_board_num,mem_email,event) {
-		    //console.log(event.target.nodeName);
-		    //console.log(act);
 		if(event.target.nodeName == "TD"){
 			urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num+"'";
 			$("#goBoard").attr("onclick",urlAddr);
-			//document.getElementById(act).attribute("onclick",urlAddr);
 			
 		}else{
 		    
+			// [계정정지] 버튼을 클릭했을 때
 			if(act == 'ban'){
-				
-				// [여기에 회원 테이블로부터 이미 계정정지된 계정인지 값 불러오는 액션부터 소환]
-				/* urlAddr = "location.href='./AdminAnoCheckAlreadyBannedAction.anob?mem_email=" + mem_email+"'";
-				$("#ban").attr("onclick",urlAddr); */
-				
-				// 확인용 alert
-				//alert($("#checkIfBanned").val());
 				
 				// [1. 만일 정지된 계정이라면 alert]
 				if($("#checkIfBanned").val() == 2){
@@ -440,66 +439,39 @@
 					
 				}else {
 				// [2. 이미 정지된 계정이 아니라면 계정정지하는 다른 액션페이지 호출]
-					urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
-							   + ano_board_num+"&mem_email=" + mem_email+"'";
-					$("#ban").attr("onclick",urlAddr);
+					location.href="./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
+							   + ano_board_num+"&mem_email=" + mem_email;
+					//$("#ban").attr("onclick",urlAddr);
 					
 				}
 				
-				
-				
+			// [신고삭제] 버튼을 클릭했을 때
 			}else if('drop'){ 
-				urlAddr = "location.href='./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
-						  + ano_board_num+"&mem_email=" + mem_email+"'";
-				$("#drop").attr("onclick",urlAddr);
+				location.href="./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
+						  + ano_board_num+"&mem_email=" + mem_email;
+				//$("#drop").attr("onclick",urlAddr);
 				
-			}
-		}    
-	}		
-	
-	
-	
-/* 	if(document.getElementById("result").value == "1" ){
-		//alert("계정정지가 완료되었습니다.");
-		//document.getElementById("");
-		// 속성부여하고 해당 속성가진 요소 삭제 
-		
-		//$("div[name='ban_"+$("#email").val()+"']").remove();
-		//document.getElementsByName("'ban_"+document.getElementById("email").value+"'");
-		
-		//ban_thisAccount ban_1111@naver.com 클래스를 가진 버튼을 없애기
-		
-	}else if(document.getElementById("result").value == "2" ){
-		alert("신고삭제가 완료되었습니다.");
-		
-	}
-	
-	 */
-	
-	
-	
-	
-/* 	var urlAddr = "";
-	function buttonFunc(act , event) {
-		    
-		if(act == 'ban'){
-			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
-			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=1'";
 			
-		}else if(act == 'drop'){ 
-			event.stopPropagation(); // 부모인 tr의 기본이벤트(클릭시 익명게시판 이동) 무효화
+			// [계정복구] 버튼을 클릭했을 때
+			}else if('restore'){ 
+				location.href="./AdminAnonyHandleReportedAction.anob?procNum=3&ano_board_num="
+						+ano_board_num+"&mem_email="+mem_email;
+				//$("#restore").attr("onclick",urlAddr);
+				
+			}// 서브 if 끝
 			
-			urlAddr = "'./AdminAnonyHandleReportedAction.anob?procNum=2'";
-		}	
+		}// 메인 if끝    
 		
-		*/		
+	}// buttonFunc()  끝		
 	
 	
+	// 페이지 로딩과 동시에 실행될 메소드 호출
 	$(function(){
- 		console.log("페이지 열자 ajax 실행");	
 		onLoadAction();
 	});
 
+	// 페이지 로딩과 동시에 실행될 메소드
+	// - 계정정지 여부에 따라 버튼 활성/비활성화
 	function onLoadAction() {
 		
 	    $.ajax({
@@ -507,15 +479,18 @@
 	        url : "./AdminAnoCheckAlreadyBannedAction.anob",
 	        dataType : "html",
 	        data: { 
-	        		mem_email : document.getElementById("mem_email").innerText, 
+ 	        		mem_email : document.getElementById("mem_email").innerText  
 	        },
 	        success : function(data){
-	           // alert(data + "ajax성공");
 	            // 이미 계정 정지된 아이디이면
 	        	if(data == 2) {
-					//alert("이미 계정 정지되었고 " + $("#checkIfBanned").val()+"에 값을 넣을 것")	        		
+							        		
 	                $("#checkIfBanned").val(data);
+					// 이미 계정 정지된 경우 [계정정지] 버튼 숨기기
 	                $("div[name='ban_"+mem_email+"']").hide();
+	        	}else {
+	                $("div[name='restore_"+mem_email+"']").hide();
+	        		
 	        	}
 	        		
 	        		

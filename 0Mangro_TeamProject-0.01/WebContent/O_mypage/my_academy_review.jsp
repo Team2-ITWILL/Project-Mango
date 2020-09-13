@@ -195,7 +195,8 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" 
+                        	   href="./MyListPayment.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">멤버십 결제</span>
@@ -204,8 +205,9 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
-                          href="./MemberUpdate.me"
+  						<li class="sidebar-item"> 
+                          <a class="sidebar-link sidebar-link" 
+                             href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
@@ -261,7 +263,7 @@
 
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href=""
+                        	<a class="sidebar-link sidebar-link" href="./MemberLogout.me"
                                 aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i>
                                 <span class="hide-menu">로그아웃</span>
                             </a>
@@ -269,7 +271,7 @@
 
                         <li class="sidebar-item"> 
                         	<a class="sidebar-link sidebar-link"
-                                href="4index.jsp?center=O_member/member_secede.jsp" aria-expanded="false">
+                                href="./MemberDelete.me" aria-expanded="false">
                                 <i data-feather="box" class="feather-icon"></i>
                                 <span class="hide-menu">회원탈퇴</span>
                             </a>

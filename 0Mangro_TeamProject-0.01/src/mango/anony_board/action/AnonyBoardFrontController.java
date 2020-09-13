@@ -212,6 +212,4 @@ public class AnonyBoardFrontController extends HttpServlet{
 	}
 
 	
-	
-	
 }

@@ -1015,7 +1015,27 @@ section
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 	cursor: pointer;
+	
+	margin-right: 30px;
+	margin-bottom: 30px;
 }
+
+
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .tags_list li {
+    
+    }
+    .searchBtn{ width: 37% !important; }
+    .selectOption{ width: fit-content; }
+    .select5 { width: 87.5% !important;}
+    
+}
+
+
+
+
 
 .tags_list li a
 {
@@ -1030,6 +1050,7 @@ section
     -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
+    
 }
 
 
@@ -1049,7 +1070,7 @@ section
 .tags_list li:hover a
 {
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 
 
@@ -1136,3 +1157,10 @@ section
 a:hover {color:#6610f2;}
 
 
+/* 페이징부분 가운데정렬 */
+
+.pagination {
+	width: 400px !important; 
+	margin:auto !important;
+	margin-top: 100px !important;
+}

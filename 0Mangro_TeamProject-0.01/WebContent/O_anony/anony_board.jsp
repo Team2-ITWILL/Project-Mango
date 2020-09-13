@@ -141,10 +141,23 @@
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
 												
 										<%------ 글제목 ----%>
+										
+										<c:choose>
+											<%-- 신고가 진행중인 글=1, 열람가능한 글 = 0 --%>
+											<c:when test="${reportedCheckList[anbList.ano_board_num] ne 0}">
+												<p style="padding-top: 10px; color:#000 !important;" class="prevent_overflow po_title">
+													<span class="span-title">신고된 글입니다. 열람이 제한됩니다.</span>
+												</p>
+											</c:when>
+											
+											<c:otherwise>
 												<p style="padding-top: 10px; color:#000 !important;" class="prevent_overflow po_title">
 													<span class="span-title">${anbList.ano_board_title}</span>
 												</p>
+											
+											</c:otherwise>
 												
+										</c:choose>
 											</div>
 										</div>
 										<%------ 글번호 hidden ----%>
@@ -152,11 +165,22 @@
 										
 										
 										<%------ 글내용 ----%>
-										<div class="comment_text">
-											<p class="prevent_overflow_content">${anbList.ano_board_content}</p>
-										</div>
+										<c:choose>
+										<%-- 신고가 진행중인 글 내용 = 1, 열람가능한 글 내용 = 0 --%>
 										
-										
+											<c:when test="${reportedCheckList[anbList.ano_board_num] ne 0}">
+												<div class="comment_text">
+													<p class="prevent_overflow_content"></p>
+												</div>
+											</c:when>
+											
+											<c:otherwise>
+												<div class="comment_text">
+													<p class="prevent_overflow_content">${anbList.ano_board_content}</p>
+												</div>
+											</c:otherwise>
+											
+										</c:choose>										
 										
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra comment_tail">
@@ -246,7 +270,7 @@
 		function enterCheck(ano_board_num, reportedCheck) {
 
 			if(reportedCheck == 1 ){
-				alert("신고가 진행중인 글입니다.");
+				alert("신고된 글이므로 열람이 제한됩니다. 이용에 불편을 드려 죄송합니다.");
 			}
 			
 			if(reportedCheck == 0 ){

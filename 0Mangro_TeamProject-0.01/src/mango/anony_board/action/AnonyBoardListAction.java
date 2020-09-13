@@ -21,6 +21,7 @@ public class AnonyBoardListAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, 
 								HttpServletResponse response) throws Exception {
+		
 		System.out.println("AnonyBoardListAction excute()");
 
 		request.setCharacterEncoding("UTF-8");
