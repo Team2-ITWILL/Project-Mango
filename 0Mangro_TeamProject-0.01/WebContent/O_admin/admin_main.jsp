@@ -253,7 +253,7 @@
                                             class="set-doller">₩</sup>${MonthMoney}</h2>
                                             
                                          
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate"><span>금월 서비스 결제액</span>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate"><span>전월 서비스 결제액</span>
                                     </h6>
                                 </div>
                                 <div class="ml-auto mt-md-3 mt-lg-0">
