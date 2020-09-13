@@ -152,9 +152,7 @@ li.thirdKey {
 					      <form class="js-validate w-md-75 w-lg-50 mx-md-auto mb-11" 
 					      		action="./register.areg"
 					      		method="post"
-					      >
-					      <!-- enctype="multipart/form-data"> -->
-      
+					      		enctype="multipart/form-data">					        
       							
 						      <div class="js-form-message form-group">
 			

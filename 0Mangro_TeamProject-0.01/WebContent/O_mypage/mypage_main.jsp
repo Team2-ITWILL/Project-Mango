@@ -166,7 +166,8 @@
                                     
 						</li>
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_audit_list.jsp"
+                        	<a class="sidebar-link sidebar-link" 
+                        		href="./AuditListToMypage.adrq"
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>
@@ -217,7 +218,25 @@
                 <div class="row">   <!-- 표시하고자 하는 데이터가 row 안에 있어야 함. 삭제x -->
  
  <!----------------------------------[ 달력 ]---------------------------------------------------------->
+  				<div class="col-md-12">
+                        <div class="card">
+                            <div class="">
+                                <div class="row">
+                                        <div class="card-body">
+                                            <h2 class="card-title mt-2" style="text-align:center;">청강신청 현황</h2>
+                                        </div>                           
+                                    <div class="col-lg-12">
+                                        <div class="card-body b-l calender-sidebar">
+                                        	<!-- 캘린더 출력 영역 -->
+                                            <div id="calendar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
 
+<!-- 
                     <div class="col-md-12">
                         <div class="card">
                             <div class="">
@@ -263,7 +282,7 @@
                         </div>
                    </div>
 
-
+ -->
 
 
 
@@ -321,9 +340,55 @@
 
 
 
-
-
-    
+<%--------------------------------자바스크립트 영역--------------------------------------%>
+<script>
+	window.onload = function(){			
+	
+		//캘린더 초기화 및 실행
+		var calendar = $('#calendar').fullCalendar({	
+			editable: true,				
+		});
+		
+		//승인된 청강신청 목록(JSON Array) from AuditRequestToCalendarAction
+		var arr = ${AuditArray};
+		console.log(arr);
+		
+		//청강 데이터를 넣을 배열
+		var events = [];
+		
+		//받아온 JSON Array객체로부터 필요한 값들을 추출하여
+		//각각의 청강신청마다 JSON으로 만들어서
+		//events 배열에 삽입
+		for(var i in arr){
+			var temp = {
+        	  'title' : arr[i].auditSubject 
+        	  		  + '(' 
+        	  		  //+ arr[i].auditNum 
+        			  //+ '번 예약, ' 
+        			  + arr[i].memEmail 
+        			  + ')',
+        			  
+        	  'start' : arr[i].auditWishDate
+			};
+			
+			//JSON -> 배열에 삽입
+			events.push(temp);					
+		}			
+		//console.log(events);
+		
+		// 캘린더 Object
+		var cal = $('#calendar').fullCalendar('getCalendar');
+		// 이벤트 Object를 캘린더에 넣는다
+		cal.refresh = function(){
+			//기존 이벤트 제거
+			cal.removeEvents();
+			//새로운 이벤트 추가
+			cal.addEventSource(events);
+		}
+		//갱신
+		cal.refresh();
+	}
+</script>    
     
     
 <!----------------------------------------[자바스크립트 영역------------------------------------------------------------------->    

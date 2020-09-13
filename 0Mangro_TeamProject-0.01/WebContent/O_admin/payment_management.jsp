@@ -111,7 +111,8 @@
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 	
+                        		href="./registerGetList.areg"
                                 aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
