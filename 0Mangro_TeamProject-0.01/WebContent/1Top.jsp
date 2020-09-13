@@ -79,7 +79,7 @@
 										
 										<c:otherwise>
 											<div class="top_bar_button mypage">
-												<a href="4index.jsp?center=O_mypage/mypage_main.jsp">마이페이지</a>
+												<a href="./AuditInfoToMypage.adrq">마이페이지</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>

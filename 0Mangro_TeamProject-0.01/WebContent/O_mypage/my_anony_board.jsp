@@ -181,7 +181,8 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
+                         	 href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
@@ -223,7 +224,8 @@
                                     
 						</li>
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_audit_list.jsp"
+                        	<a class="sidebar-link sidebar-link" 
+                        		href="./AuditListToMypage.adrq"
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>

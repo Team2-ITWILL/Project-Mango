@@ -58,69 +58,7 @@
   	.audit_no {background-color: #fff; border: 1px solid; color: #000;}
   
   </style>  	  
-  
-  <script> 	
-	function fncApprove(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-				+ "audit_num=" + audit_num
-				+ "&aca_num=" + aca_num
-				+ "&check=" + "approve";
-		}	
-	
-	function fncReject(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-			+ "audit_num=" + audit_num
-			+ "&aca_num=" + aca_num
-			+ "&check=" + "reject";
-		}	 
-	
-	function fncDelete(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-			+ "audit_num=" + audit_num
-			+ "&aca_num=" + aca_num
-			+ "&check=" + "delete";
-		}	
-	
-	function pagination(selectedTag){
-		
-		var li = document.querySelectorAll('.pagination .page-item');
-		var activated;
-		for(var i=0; i < li.length; i++){		
-			if($(li[i]).hasClass('active')){
-				activated = li[i];
-			}
-			
-		}
-		
-		//var activated = $('.page-item active');
-		console.log(activated);
-		
-		$(activated).removeClass('active');
-		$(selectedTag).addClass('active');
-		
-		console.log(selectedTag);
-		//console.log(activated);
-		
-	}
-	
-	window.onload = function(){
-		
-		var li = document.querySelectorAll('.pagination .page-item');
-		var active;
-		for(var i=0; i < li.length; i++){				
-			
-			li[i].addEventListener('click', function(event){
-				
-				pagination(event.target);
-			
-			});
-			
-				
-		}
-		
-		
-	}//window.onload
-  </script>   
+
 </head>
 
 <body>
@@ -456,7 +394,8 @@
 					  </li>
 					  
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
+					  <!-- <li class="page-item active"> -->
+					  <li class="page-item">
 					  	<a class="page-link prev" href="#">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
@@ -520,6 +459,8 @@
     <script src="styles/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="styles/dist/js/pages/calendar/cal-init.js"></script>
     
+	<!-- 여기서 쓸 함수들이 정의된 자바스크립트 파일 -->    
+	<script src="./O_aca_admin_page/aca_audit_list.js"></script>
     
 </body>
 

@@ -69,6 +69,8 @@
 </head>
 
 <body>
+<%---------------------------세션으로부터 email 가져오기---------------------------------%>
+<%-- <c:set var="email" value="${sessionScope.id_email}" /> --%>
 
 <!------------------------------------------ [ 페이지로더 ] --------------------------------------------------------------->
     <!-- ============================================================== -->
@@ -132,7 +134,7 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="styles/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                     width="40">
-                                <span class="ml-2 d-none d-lg-inline-block"><span>user1</span> <span
+                                <span class="ml-2 d-none d-lg-inline-block"><span>${email}</span> <span
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
@@ -199,7 +201,8 @@
                         
                         
                                     
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/member_plofile.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
+                          href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i><span
                                     class="hide-menu">내 정보</span></a></li>
 
@@ -241,7 +244,8 @@
                                     
 						</li>
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_mypage/my_audit_list.jsp"
+                        	<a class="sidebar-link sidebar-link" 
+                       			href="./AuditListToMypage.adrq"
                                 aria-expanded="false"><i data-feather="book" class="feather-icon"></i>
                                 <span class="hide-menu">청강신청 현황</span>
                             </a>
@@ -301,7 +305,7 @@
 
 
                     <!-- 청강 신청 목록 -->
-                    <div class="col-12">
+<!--                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">청강신청목록</h4>
@@ -358,7 +362,52 @@
                             </div>
                         </div>
                     </div>
- 
+  -->
+
+                   <!-- 청강 신청 목록 -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">청강신청 현황</h4>
+                                <h6 class="card-subtitle">학원의 청강신청내역이 최근순으로 표시됩니다.</h6>
+                                <h6 style="text-decoration: underline;">총 신청 수 : ${total}, &nbsp;&nbsp; 승인된 청강 수 : ${count_approved} </h6>                                
+                            </div>
+                            <div class="table-responsive">         
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">예약번호</th>
+                                            <th scope="col">신청자(계정)</th>
+                                            <th scope="col">학원지정번호</th>
+                                            <th scope="col">학원명</th>
+                                            <th scope="col">청강신청과목</th>
+                                            <th scope="col">청강신청일자</th>
+                                            <th scope="col">청강희망일자</th>
+                                            <th scope="col">청강승인일자</th>                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<!-- 각 행별로 check값을 구분할 변수 -->
+                                    	<c:set var="idx" value="0" />	                                    	
+                                    	<c:forEach var="list" items="${requestScope.AuditList}">	                                    	                                 
+                                        <tr>	                                          
+                                            <th scope="row">${list.auditNum}</th>
+                                            <td>${list.memEmail}</td>
+                                            <td>${list.acaNum}</td>	
+                                            <td>${list.acaName}</td>
+                                            <td>${list.auditSubject}</td>
+                                            <td>${list.auditRequestDate}</td>
+                                            <td>${list.auditWishDate}</td>
+                                            <td>${list.auditConfirmDate}</td>       
+                                                                                   
+                                        </tr>     
+                                        <c:set var="idx" value="${idx + 1}" />                         
+                                       </c:forEach> 
+                                	</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
@@ -371,7 +420,8 @@
 					  </li>
 					  
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
+					  <!-- <li class="page-item active"> -->
+					  <li class="page-item">
 					  	<a class="page-link prev" href="#">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
@@ -446,8 +496,8 @@
     <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
     
-    
-
+    <!-- 이 파일에 정의할 함수들의 선언된 자바스크립트파일 -->    
+	<script src="./O_mypage/my_audit_list.js"></script>
     
 </body>
 </html>
