@@ -189,7 +189,10 @@
                                             <th scope="col">대표자신분증 파일</th>
                                             <th scope="col">신청일</th>
                                             <th scope="col">승인일</th>
-                                            <th scope="col">키워드</th>                                            
+                                            <th scope="col">키워드</th>     
+                                            <th scope="col">승인</th>     
+                                            <th scope="col">취소</th>     
+                                            <th scope="col">삭제</th> 
                                         </tr>                                        
                                     </thead>
                                     <tbody>                                    
@@ -197,31 +200,47 @@
                                     	<!-- 승인,취소를 구분할 값 -->
                                     	<c:set var="flag" value="0" />
                                     	
+                                    	<!-- 클릭 연속적으로 하다가 flag값이 잘못 변경되는 문제 발견. onclick 이벤트에서 직접 1,0,-1값 주는 방향으로 변경 -->
+                                    	<%-- 
                                     	<c:choose>                                    		
                                     		<c:when test="${vo.confirmDate eq null}">
                                     			<!-- confirmDate가 null이면 승인 -->
-                                    			<%-- <c:out value="${flag = 1}" escapeXml="false" /> --%>
-                                    			${flag = 1}
+                                    			<div style="display:none;">${flag = 1}</div>                                    			
                                     		</c:when>                                    		
                                     		<c:when test="${vo.confirmDate ne null}">
                                     			<!-- confirmDate가 값이 있으면 승인 취소 -->
-                                    			<%-- <c:out value="${flag = 0}" escapeXml="false" /> --%>
-                                    			${flag = 0}
+                                    			<div style="display:none;">${flag = 0}</div>                                        		
                                     		</c:when>
                                     		<c:otherwise>error</c:otherwise>
                                     	</c:choose>
-                                    	
+                                    	 --%>
+                                    	 
                                     	<!-- 학원관리자 등록을 요청한 사용자의 이메일, 학원명, confirmDate flag를 전달 -->
-                                        <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">
+                                        <%-- <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')"> --%>
+                                        <tr>
                                             <th scope="row">${vo.memEmail}</th>
                                             <td>${vo.acaName}</td>
                                             <td>${vo.memAddrZip}</td>
                                             <td>${vo.memAddrDoro}</td>
-                                            <td>${vo.fNameCompany}</td>
-                                            <td>${vo.fNameOwner}</td>
+                                            <td>
+                                           		<%-- <button type="button" class="btn btn-primary" onclick="viewRegImages(${vo.fNameCompany}, '사업자등록증 파일')">image</button> --%>
+                                            </td>
+                                            <td>
+                                            	<%-- <button type="button" class="btn btn-primary" onclick="viewRegImages(${vo.fNameOwner}, '대표자신분증 파일')">image</button> --%>
+                                            </td>
                                             <td>${vo.registerDate}</td>
                                             <td>${vo.confirmDate}</td>
-                                            <td>${vo.aca_keyword}</td>
+                                            <td>${vo.aca_keyword}</td>                                            
+                                            <td>
+                                            	<%-- <button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">승인</button> --%>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', 1)">승인</button>
+                                            </td>
+                                            <td>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', 0)">취소</button>
+                                            </td>
+                                            <td>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', -1)">삭제</button>
+                                            </td>
                                         </tr>
                                     </c:forEach>                                         
                                     </tbody>
@@ -229,12 +248,32 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- flag값을 넣을 태그(jstl 조건문 이용할 때 화면에 값이 출력되게 하는 것을 막기 위함 -->
-					<!--  <form action="">
-					 	<input type="hidden" name="flag">
-					 </form> -->
-                    
+    
+    				<!-----------등록한 이미지 보여주는 모달창-------->       
+    				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".imgView">이미지 보기</button> -->
+    				         
+					<div class="modal fade imgView">
+					
+					  <!-- <div class="modal-dialog"> -->
+					  <div class="modal-dialog modal-lg">
+					  
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h4 class="modal-title">이미지 보기</h4>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					      </div>
+					      <div class="modal-body">
+					        <!-- <p>One fine body&hellip;</p> -->
+					        <p><img src="./O_aca_regFiles/upload/images/056abd19b6db725ad2a392a648d045b4.jpg"></p>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+					
+					                    
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
