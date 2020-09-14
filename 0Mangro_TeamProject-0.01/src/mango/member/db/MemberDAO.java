@@ -445,7 +445,8 @@ public class MemberDAO extends DBconnection{
 						+ "where mem_email = ?";			
 
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, 1);
+				pstmt.setString(1, String.valueOf('Y'));
+				//pstmt.setInt(1, 'Y');
 				pstmt.setString(2, email);	
 				
 				
@@ -456,7 +457,8 @@ public class MemberDAO extends DBconnection{
 						+ "where mem_email = ?";			
 
 				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, 0);
+				pstmt.setString(1, String.valueOf('N'));
+				//pstmt.setInt(1, 'N');
 				pstmt.setString(2, email);	
 			}					
 			
@@ -579,21 +581,41 @@ public class MemberDAO extends DBconnection{
 		return count;
 	} // getMemberCount
 	
-	/*관리자, 금지, 탈퇴 회원 수  */
+	
+	
+	// admin_main.jsp의 회원현황 차트에 이용할 데이터를 가져오는 메서드
 	public JSONObject getMemberCountDiff() {		
 		JSONObject countObj = new JSONObject();		
 		try {
 			getConnection();
-			sql = "select "
+		/*	sql = "select "
 				+ "count(*) as total, "
 				+ "count(if(mem_admin <> 0, mem_admin, NULL)) as isAdmin, "
 				+ "count(if(mem_admin = 0, mem_admin, NULL)) as isNormal, "
-				+ "count(if(mem_baned <> 0, mem_admin, NULL)) as isBaned, "
+				+ "count(if(mem_baned <> 0, mem_baned, NULL)) as isBaned, "
 				+ "count(if(mem_seceded <> 0, mem_seceded, NULL)) as isSeceded "
-				+ "	from member ";			
+				+ "	from member ";	*/		
+			
+			
+			// 관리자, 일반, 정지, 탈퇴 회원 구분
+			//mem_admin : 'Y', 'N'으로 구분(char)
+			//mem_baned, mem_seceded : 정지,금지된 날짜 입력(varchar)			
+			sql = "select "
+				+ "count(*) as total,"
+				+ "count(if(mem_admin = 'Y', mem_admin, NULL)) as isAdmin, " 
+				+ "count(if(mem_admin = 'N', mem_admin, NULL)) as isNormal, "
+				+ "count(if(mem_baned = NULL, NULL, mem_baned)) as isBaned, "
+				+ "count(if(mem_seceded = NULL, NULL, mem_seceded)) as isSeceded "		
+				+ "from member ";		
+			
+			// * SQL에서 COUNT(*) 값은 NULL을 포함한 값을 반환 한다. 
+			//   하지만 COUNT(column_name) 을 사용한다면 NULL을 포함하지 않은 값을 반환 한다.
+			// COUNT(컬럼명)로 레코드의 NULL값 개수를 가져오려 했지만 계속 0이 나옴
+			//-> NULL이 아닌 행의 개수를 세어야 함
 	
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+			
 			
 			if(rs.next()){
 				countObj.put("total", rs.getInt(1));
