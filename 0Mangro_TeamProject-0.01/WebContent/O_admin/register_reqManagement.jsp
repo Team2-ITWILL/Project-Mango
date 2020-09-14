@@ -20,6 +20,13 @@
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
  
+<style type="text/css">
+	.prev, .next {font-size: 1em;}
+	.pagination {
+		width: 400px !important;
+	    margin: auto !important;
+	}
+</style>  
     
 </head>
 

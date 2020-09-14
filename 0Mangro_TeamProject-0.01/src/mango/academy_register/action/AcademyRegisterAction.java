@@ -29,8 +29,8 @@ public class AcademyRegisterAction implements Action{
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");
-			out.println("alert('로그인이 필요합니다!');");
-			out.println("history.back();");
+			out.println("alert('로그인이 필요한 서비스입니다.');");
+			out.println("location.href='./MemberLogin.me';");
 			out.println("</script>");
 			out.close();
 			return null;
@@ -44,7 +44,7 @@ public class AcademyRegisterAction implements Action{
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");
-			out.println("alert('DB에 등록된 정보가 있습니다.');");
+			out.println("alert('이미 등록된 정보가 있습니다. 승인을 기다려주세요.');");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
@@ -130,7 +130,7 @@ public class AcademyRegisterAction implements Action{
 		if(result == 0){
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('failed');");
+			out.println("alert('등록이 실패하였습니다. 다시 작성해주세요.');");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
@@ -138,7 +138,7 @@ public class AcademyRegisterAction implements Action{
 		}else{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('success');");
+			out.println("alert('학원 정보가 등록되었습니다. 승인을 기다려 주세요.');");
 			out.println("location.href='./4index.jsp'");
 			out.println("</script>");
 			out.close();
