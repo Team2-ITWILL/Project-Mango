@@ -15,7 +15,7 @@ public class QnaBoardDeleteAdminAction implements Action{
   public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception{
 	  
 	  
-    System.out.println("QnaBoardDeleteAdminAction 실행");
+    System.out.println("QnaBoardDeleteAdminAction 실행"); 
 
     String pageNum = request.getParameter("pageNum");
     int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));

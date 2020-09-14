@@ -92,7 +92,7 @@ String qna_board_pwd = request.getParameter("qna_board_pwd");
 		    	
 		    </div>
 		    
-
+ 
 	    
 	</div>
 	<!-- qna_container (e) -->

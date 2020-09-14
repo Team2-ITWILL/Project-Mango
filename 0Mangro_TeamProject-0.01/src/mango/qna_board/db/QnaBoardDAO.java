@@ -553,7 +553,7 @@ public class QnaBoardDAO extends DBconnection{
 		getConnection();
 		
 
-        sql = "delete from qna_board where qna_board_num = ?";
+        sql = "delete from qna_board where qna_board_num = ?"; 
         pstmt =  con.prepareStatement(sql);
         pstmt.setInt(1, num);
 
