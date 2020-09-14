@@ -219,8 +219,8 @@
                                             <!-- <th scope="col" style="width:11%;">제목</th> -->
                                             <!-- <th scope="col" style="width:11%;">내용</th> -->
                                             <th scope="col" style="width:11%;">계정</th>
-                                            <th scope="col" style="width:5%;">댓글수</th>
-                                            <!-- <th scope="col" style="width:8%;">조회수</th> -->
+                                            <!-- <th scope="col" style="width:5%;">댓글수</th> -->
+                                            <th scope="col" style="width:8%;">조회수</th>
                                             <th scope="col" style="width:8%;">첨부파일</th>
                                             <th scope="col" style="width:13%;">작성일자</th>
                                             <th scope="col" style="width:11%;">신고일자</th>
@@ -239,8 +239,8 @@
                                            <%--  <td class="board_title">${myAnonyList.ano_board_title}</td> --%>
                                             <%-- <td class="board_content">${myAnonyList.ano_board_content}</td> --%>
                                             <td id="mem_email">${reportedAnonyList.mem_email}</td>
-                                            <td>${comments[reportedAnonyList.ano_board_num]}</td>
-                                            <%-- <td>${reportedAnonyList.ano_board_read}</td> --%>
+                                            <%-- <td>${comments[reportedAnonyList.ano_board_num]}</td> --%>
+                                            <td>${reportedAnonyList.ano_board_read}</td>
                                             <td>${reportedAnonyList.ano_board_file}</td>
                                             <td>
 	                                            <fmt:formatDate value="${reportedAnonyList.ano_board_date}" 
@@ -295,11 +295,6 @@
                     <%-- 게시판에 글이 있는 경우 페이지 표시 --%>
                     
                     <c:if test="${count > 0}">
-<%--                     	<c :set var="endPage" value="${endPage}" />
-                    	<c :if test="${endPage gt pageCount}">
-                    		<c:set var="endPage" value="${pageCount}" />
-                    	</c: if>
- --%>
 					
 							<%-- [  <<  첫페이지(1페이지)로 가기    ] --%>  
 							
@@ -434,16 +429,16 @@
 			if(act == 'ban'){
 				
 				// [1. 만일 정지된 계정이라면 alert]
-				if($("#checkIfBanned").val() == 2){
+/* 				if($("#checkIfBanned").val() == 2){
 					alert("이미 정지된 계정입니다.");
 					
-				}else {
+				}else { */
 				// [2. 이미 정지된 계정이 아니라면 계정정지하는 다른 액션페이지 호출]
 					location.href="./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
 							   + ano_board_num+"&mem_email=" + mem_email;
 					//$("#ban").attr("onclick",urlAddr);
 					
-				}
+/* 				} */
 				
 			// [신고삭제] 버튼을 클릭했을 때
 			}else if('drop'){ 
@@ -466,7 +461,7 @@
 	
 	
 	// 페이지 로딩과 동시에 실행될 메소드 호출
-	$(function(){
+/* 	$(function(){
 		onLoadAction();
 	});
 
@@ -505,7 +500,7 @@
 		
 		
 		 
-	}	
+	}	  */
 	
 	
 </script>

@@ -34,7 +34,7 @@ public class AuditInfoRegisterAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register failed! 이미 등록한 과목입니다.');");
+			out.println("alert('이미 등록된 과목입니다.');");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();			
@@ -43,7 +43,7 @@ public class AuditInfoRegisterAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register failed!');");
+			out.println("alert('청강신청 과목 등록이 완료되지 않았습니다. 다시 시도해주세요.');");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();			
@@ -53,8 +53,8 @@ public class AuditInfoRegisterAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register success');");		
-			out.println("location.href='./4index.jsp?center=O_aca_admin_page/aca_admin_main.jsp'");
+			out.println("alert('청강신청 과목이 성공적으로 등록되었습니다.');");		
+			out.println("location.href='./AuditInfoToCalendar.adrq'");
 			out.println("</script>");				
 			out.close();			
 			return null;			
