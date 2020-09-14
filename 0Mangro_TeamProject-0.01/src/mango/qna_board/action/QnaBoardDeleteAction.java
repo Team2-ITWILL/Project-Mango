@@ -29,7 +29,7 @@ public class QnaBoardDeleteAction implements Action{
     
     
     if (check == 0){
-    	 
+    	  
       response.setContentType("text/html; charset=UTF-8");
       PrintWriter out = response.getWriter();
       out.println("<script>");

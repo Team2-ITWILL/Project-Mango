@@ -125,7 +125,7 @@ public class QnaBoardFrontController extends HttpServlet{
     }
     else if (command.equals("/QnaBoardDelete.qna")){
     	
-      forward = new ActionForward(); 
+      forward = new ActionForward();   
       forward.setRedirect(false);
       forward.setPath("./4index.jsp?center=O_qna/qna_delete.jsp");
       
