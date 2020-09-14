@@ -39,8 +39,8 @@ public class MemberDAO extends DBconnection{
 				
 				getConnection();
 				
-				sql = "INSERT INTO payment (mem_email, pm_use_num, pm_name, pm_start_date, pm_exp_date) "
-					+ " VALUES (?, 1,'가입 무제한 이용권 (3일)',now(), DATE_ADD(NOW(), INTERVAL 3 DAY))";
+				sql = "INSERT INTO payment (mem_email, pm_use_num, pm_name, pm_start_date, pm_exp_date, pm_check) "
+					+ " VALUES (?, 1,'가입 무제한 이용권 (3일)',now(), DATE_ADD(NOW(), INTERVAL 3 DAY), 'O')";
 				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, mb.getMemEmail());

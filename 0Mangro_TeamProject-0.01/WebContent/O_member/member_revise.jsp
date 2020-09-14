@@ -48,7 +48,7 @@
 	String name = mdao.selectMember(email);
 	String profileImg1 = mdao.getProfileImg(email);
 	if(profileImg1 == null){
-		profileImg1 = "./images/user_profile/jadu_prifile.jpg";
+		profileImg1 = "./images/etc/default_mango.png";
 	}
 // <------------------ 회원정보 + 프로필 가져오기 ----------------------->	
 %>	
@@ -102,12 +102,13 @@
 			
 		}); // submit() 끝
 	}); // update_chk() 끝
+	
 // <----------------- 회원 정보 수정 필수 입력 -------------------->
 	
 	
 	
 // <----------------- 회원 정보 프로필 수정  --------------------->
-	
+
 /* 	window.onload = function(){
 	
 	var imgTag = document.querySelector(".rounded-circle");
@@ -231,8 +232,8 @@
 						                		   name="file_img" 
 						                		   multiple=""
 						                	>
-						                	<input type="hidden" name="mem_profileImg">
-							          		<button type="button" class="hideBtn">사진변경하기</button>
+						                	<input type="hidden" name="mem_profileImg" id="mem_profileImg">
+							          		<button type="button" class="hideBtn" onclick="profileck()">사진변경하기</button>
 						              	</div>								
 					      </div>
 
