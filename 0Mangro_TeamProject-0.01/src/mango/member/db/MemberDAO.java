@@ -616,7 +616,7 @@ public class MemberDAO extends DBconnection{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			//회원 구분은 char, varchar 데이터이므로 getString값 가져오기
+			
 			if(rs.next()){
 				countObj.put("total", rs.getInt(1));
 				countObj.put("isAdmin", rs.getInt(2));
