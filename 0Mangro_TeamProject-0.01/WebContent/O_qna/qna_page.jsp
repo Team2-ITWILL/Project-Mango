@@ -95,10 +95,11 @@
 		
 			<!-- 수정 및 삭제 버튼 -->
 			<ul class="bo_v_left">
-				<li>
+
+					<c:if test="${id_email == 'admin' || id_email == 'admin@mango.com' || id_email == qbean.mem_email}">
+		
+						<li>
 					
-					<c:if test="${id_email == 'admin' || id_email == 'admin@mango.com' ||
-								  id_email == qbean.mem_email}">
 						
 						<a href="./QnaBoardUpdate.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -108,12 +109,34 @@
 					
 					</li>
 					
-				    <li>
-				    	<a href="./QnaBoardDelete.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn" onclick="del(this.href); return false;">
-				    		<i class="fa fa-trash-o" aria-hidden="true"></i>
-				    		삭제
-				    	</a>
-				    </li>
+					
+					<c:choose>
+						<c:when test="${id_email == 'admin' or id_email == 'admin@mango.com'}">
+								
+							    <li>
+							    	<a href="./QnaBoardDeleteAdmin.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn" onclick="del(this.href); return false;">
+							    		<i class="fa fa-trash-o" aria-hidden="true"></i>
+							    		삭제
+							    	</a>
+							    	
+							    </li>
+							    
+						</c:when>
+						  
+						
+						<c:otherwise>
+								<li>
+							    	<a href="./QnaBoardDelete.qna?qna_board_num=${qbean.qna_board_num}&pageNum=${pageNum}" class="btn_b01 btn" onclick="del(this.href); return false;">
+							    		<i class="fa fa-trash-o" aria-hidden="true"></i>
+							    		삭제
+							    	</a>
+							    	
+							    </li>
+						</c:otherwise>
+					</c:choose>    
+
+					    
+					    
 			    	
 			    	</c:if>
 			</ul>
