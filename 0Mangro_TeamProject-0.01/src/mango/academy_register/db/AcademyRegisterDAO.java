@@ -83,7 +83,8 @@ public class AcademyRegisterDAO extends DBconnection{
 			
 			String sql = "select * from member "
 					+ "where mem_email=? and "
-					+ "mem_admin is not null";
+					+ "mem_admin is not null and "
+					+ "mem_admin = 'Y' ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);				
 			rs = pstmt.executeQuery();

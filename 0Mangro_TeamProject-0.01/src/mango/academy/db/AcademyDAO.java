@@ -1770,7 +1770,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			String sql = "select * from academy "
 					+ "where mem_email = ? ";
-					//+ "and mem_admin is not null";
+		
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, email);				
 			rs = pstmt.executeQuery();
@@ -1795,7 +1795,7 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 			
 			String sql = "select * from academy "
 					+ "where aca_name = ? ";
-					//+ "and mem_admin is not null";
+			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, acaName);				
 			rs = pstmt.executeQuery();
