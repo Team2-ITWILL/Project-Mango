@@ -90,10 +90,26 @@
 	    	<!-- 관리자인 경우만 공지사항으로 설정할 수 있는 라디오 버튼이 나타남 -->
 	    	<c:choose>
 		    	<c:when test="${id_email eq 'admin' || id_email eq 'admin@mango.com'}">
-			    	<div class = "frm_input required">
-				    	<input type = "radio" name = "qna_notice" value = "0" checked="checked" style="display: none;">
-						<input type = "radio" name = "qna_notice" value = "1" style="font-family: 'Noto Sans KR', 'sans-serif'">  공지사항으로 설정
-			    	</div>
+		    		
+		    		 
+		    		<c:if test="${qbean.qna_notice eq '0'}">
+			    	
+				    	<div class = "frm_input required">
+					    	<input type = "radio" name = "qna_notice" value = "0"checked="checked" style="font-family: 'Noto Sans KR', 'sans-serif'" >  일반글        
+							<input type = "radio" name = "qna_notice" value = "1" style="font-family: 'Noto Sans KR', 'sans-serif'">  공지사항으로 설정
+				    	</div>
+				    	
+			    	</c:if>
+			    	
+			    	<c:if test="${qbean.qna_notice eq '1'}">
+			    	
+				    	<div class = "frm_input required">
+					    	<input type = "radio" name = "qna_notice" value = "0"checked="checked" style="font-family: 'Noto Sans KR', 'sans-serif'" >  일반글   
+							<input type = "radio" name = "qna_notice" value = "1" checked="checked" style="font-family: 'Noto Sans KR', 'sans-serif'">  공지사항으로 설정
+				    	</div>
+				    	
+			    	</c:if>
+			    	
 		    	</c:when>
 		    	
 		    	<c:otherwise>
