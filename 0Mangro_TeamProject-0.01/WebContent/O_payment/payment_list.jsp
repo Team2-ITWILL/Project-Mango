@@ -55,7 +55,7 @@
 			$(".comments_list").empty();
 			
 			
-			$.getJSON("getListMyPayMent.pay?email=${email}" ,  function(data){
+			$.getJSON("./getListMyPayMent.pay?email=${email}" ,  function(data){
 				
 				console.log(data.MyPay);
 				
@@ -77,7 +77,7 @@
 				    psys+=		"<span>시작일 : <span class='service_date'>"+item.pmStartDate+"</span></span>" ;
 				    psys+=		"<span>종료일 : <span class='service_date'>"+item.pmExpDate+"</span></span>";
 				    psys+=	"</div>";
-				    psys+=	"<div class='comment_extras d-flex flex-row align-items-center justify-content-start'>;"
+				    psys+=	"<div class='comment_extras d-flex flex-row align-items-center justify-content-start'>";
 				    psys+=		"<div class='comment_extra'>";
 				    psys+=				"<img src='images/etc/date.png' width='20'>";
 				    psys+=			"남은 이용기간 :&nbsp;<span>"+(result < 0 ? 0:result)+ "일</span>";
@@ -129,7 +129,7 @@
 						<div class="comments_title">멤버십 이용내역</div>
 						<h6 class="svc_use_num">총 <span class="allpay">1</span>회 이용</h6> 
 						
- 						<div class="paid_service_btn" onclick="location.href='4index.jsp?center=O_payment/payment_choose.jsp'">멤버십 결제하기</div>
+ 						<div class="paid_service_btn" onclick="location.href='./MainPayMent.pay'">멤버십 결제하기</div>
 						
 <%-- 						<div class="paid_service_btn" onclick="location.href='NewGetPayMent.pay?email=${email}'">멤버십 결제하기</div> --%>
 					  

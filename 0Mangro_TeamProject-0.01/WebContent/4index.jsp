@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/common_header.css">
 <link rel="stylesheet" type="text/css" href="styles/common_footer.css">
-<title>Mango - 망고 </title>
+<title>Mango</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>

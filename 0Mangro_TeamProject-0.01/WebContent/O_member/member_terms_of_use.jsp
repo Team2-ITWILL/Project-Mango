@@ -95,6 +95,20 @@ textarea{
 	font-size: 1em;
 }
 
+input.exitbtn{
+	padding: 5px;
+	width: 95%;
+	border: 1px solid #000;
+	border-radius: 10px;
+	background-color: black;
+	color:white;
+}
+input.exitbtn:HOVER {
+	background-color: #e95765;
+	border:  1px solid #e95765;
+}
+
+
 </style>
 
 <body>
@@ -355,8 +369,9 @@ textarea{
 		
 		</section>
 		
-
-	
+		<div class = "buttons">
+			<input type = "button" value = "창 닫기" onclick="window.close();" class = "exitbtn">
+		</div>
 	</div>
 	
 

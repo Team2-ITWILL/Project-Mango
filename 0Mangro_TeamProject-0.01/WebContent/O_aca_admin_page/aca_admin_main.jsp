@@ -170,28 +170,6 @@
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
-                                        Profile</a></div>
-                            </div>
                         </li>
 <!--                         ==============================================================
                         User profile and search
@@ -226,7 +204,7 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_payment/payment_list.jsp"
+                        	<a class="sidebar-link" href="./MyListPayment.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">멤버십 결제</span>
@@ -324,10 +302,17 @@
                         <div class="card">
                             <div class="">
                                 <div class="row">
-                                    <div class="col-lg-3 border-right pr-0">
-                                        <div class="card-body border-bottom">
-                                            <h4 class="card-title mt-2">청강신청 현황</h4>
+                                
+                                
+                                   <!--  <div class="col-lg-3 border-right pr-0"> -->
+                                    
+                                        <!-- <div class="card-body border-bottom"> -->
+                                        <div class="card-body">
+                                            <!-- <h4 class="card-title mt-2">청강신청 현황</h4> -->
+                                            <h2 class="card-title mt-2" style="text-align:center;">청강신청 현황</h2>
                                         </div>
+                                        
+                                        <!-- 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -354,8 +339,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-9">
+                                         -->
+                                        
+                                    <!-- </div> -->
+                                    
+                                    <!-- <div class="col-lg-9"> -->
+                                    <div class="col-lg-12">
                                         <div class="card-body b-l calender-sidebar">
                                         	
                                         	<!-- 캘린더 출력 영역 -->

@@ -40,15 +40,17 @@ public class AcademyRegisterApproveAction implements Action{
 		System.out.println(regEmail);
 		System.out.println(flag);
 		
-		//==========1. academy_register에서 승인(confirm_date 변경)
+		//==========1. academy_register에서 승인(confirm_date 변경)/취소/삭제
 		AcademyRegisterDAO arDAO = new AcademyRegisterDAO();
 		result = 0;
 		result = arDAO.changeConfirmDate(regEmail, flag);
 		if(result == 0){
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('failed changeConfirmDate');");
-			out.println("history.back();");
+			//out.println("history.back();");
+			out.println("location.href='./registerGetList.areg';");
 			out.println("</script>");
 			out.close();
 			return null;
@@ -59,43 +61,22 @@ public class AcademyRegisterApproveAction implements Action{
 		result = 0;
 		result = memDAO.changeAdmin(regEmail, flag);
 		if(result == 0){
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('failed changeAdmin');");
-			out.println("history.back();");
+			//out.println("history.back();");
+			out.println("location.href='./registerGetList.areg';");
 			out.println("</script>");
 			out.close();
 			return null;
-		}	
+		}			
 		
-		//====================3.academy_keyword에 키워드값 넣기============================
+		
+		//=============3. academy 테이블 mem_email 컬럼 값 변경=================	
 		AcademyDAO acaDAO = new AcademyDAO();
 		int acaMainNum = acaDAO.getAcademyNumByAcaName(acaName);	
 		
-		AcademyKeywordBean akVO = new AcademyKeywordBean();
-		akVO.setAcaMainNum(acaMainNum);
-		akVO.setAcakeyword(aca_keyword);
-		
-		System.out.println(akVO.toString());
-		
-		result = 0;
-		if(!(aca_keyword == null || aca_keyword.equals(""))){
-			AcademyKeywordDAO akDAO = new AcademyKeywordDAO();
-			result = akDAO.insertAcademyKeyword(akVO);
-			
-			if(result == 0){
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('Insert Keyword failed');");
-				out.println("history.back();");
-				out.println("</script>");
-				out.close();
-				return null;
-			}
-		}
-		
-		
-		//=============4. academy 테이블 mem_email 컬럼 값 변경=================		
 		AcademyBean acaVO = new AcademyBean();
 		acaVO.setMem_email(regEmail);
 		acaVO.setAcaName(acaName);		
@@ -103,23 +84,121 @@ public class AcademyRegisterApproveAction implements Action{
 		result = 0;
 		result = acaDAO.changeAcademyEmail(acaVO, flag);
 		if(result == 0){
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('failed');");
-			out.println("history.back();");
-			out.println("</script>");
-			out.close();
-			return null;
-		}else{
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			out.println("alert('success');");
-			//out.println("location.href = './4index.jsp?center=O_admin/register_reqManagement.jsp';");
+			out.println("alert('changeAcaEmail failed');");
+			//out.println("history.back();");
 			out.println("location.href='./registerGetList.areg';");
 			out.println("</script>");
 			out.close();
 			return null;
 		}	
-	}
+	
+		
+		//===================4.academy_keyword에 키워드값 넣기============================	
+		
+		AcademyKeywordDAO akDAO = new AcademyKeywordDAO();
+		AcademyKeywordBean akVO = new AcademyKeywordBean();
+		akVO.setAcaMainNum(acaMainNum);
+		akVO.setAcakeyword(aca_keyword);
+		
+		System.out.println(akVO.toString());		
+		
+		//키워드 값이 존재할 경우에만 DB에 insert
+		if(!(aca_keyword == null || aca_keyword.equals(""))){	
+			
+			//-------------------------키워드 추가------------------------
+			// 승인이 되어있는 상태에서 승인버튼을 다시 누르면 키워드 중복 insert 에러 발생
+			// =>
+			// 1. 이미 키워드가 등록되어있으면 중복오류가 발생하므로 테이블에 행이 존재하는지 확인(중복검사)
+			// 2. 중복이 아니면 insert
+			if(flag == 1){			
+				result = akDAO.insertAcademyKeyword(akVO);
+				if(result == 0){
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('Insert Keyword failed');");
+					//out.println("history.back();");
+					out.println("location.href='./registerGetList.areg';");
+					out.println("</script>");
+					out.close();
+					return null;
+				}else{
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('approve register & insert keyword success');");
+					//out.println("location.href = './4index.jsp?center=O_admin/register_reqManagement.jsp';");
+					out.println("location.href='./registerGetList.areg';");
+					out.println("</script>");
+					out.close();
+					return null;
+				}
+				
+			//flag == 0 || flag == -1
+			}else{
+				//-----------------------키워드 삭제------------------------------
+				// 취소 / 삭제 요청일 경우 keyword 테이블에서 삭제
+				result = akDAO.deleteAcademyKeyword(acaMainNum, flag);	
+				
+				// 1. 이미 키워드 삭제 처리된 상태에서 삭제요청을 추가적으로 할 경우
+				// 레코드에서 더 이상 삭제할 executeUpdate()의 결과가 0이 반환됨				
+				if(result == 0){
+					System.out.println("삭제 요청 반복! 더 이상 제거할 키워드 데이터가 없음");
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('승인되지 않았거나 이미 취소 처리가 된 상태입니다. ');");
+					out.println("location.href='./registerGetList.areg';");
+					out.println("</script>");
+					out.close();
+					return null;
+					
+				// 2. 취소처리(키워드 테이블 데이터 삭제) 후 삭제 요청
+				// -> 이미 키워드테이블 데이터가 없어서 삭제할 행이 없으므로 0이 반환됨	
+				// -> 예외적이므로 이 경우 DAO 메서드에서 -1을 반환하도록 하였음
+				}else if(result == -1){
+					System.out.println("aca_register 삭제 완료 & aca_keyword는 등록된 데이터가 없거나 이미 삭제처리가 되어 있는 상태");
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('Delete register & Delete keyword success');");
+					out.println("location.href='./registerGetList.areg';");
+					out.println("</script>");
+					out.close();
+					return null;	
+					
+				
+				//삭제처리가 수행되어 executeUpdate()의 리턴값이 1 이상이라면(삭제된 행 개수만큼 반환)
+				}else{
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('reject register & delete keyword success');");
+					//out.println("location.href = './4index.jsp?center=O_admin/register_reqManagement.jsp';");
+					out.println("location.href='./registerGetList.areg';");
+					out.println("</script>");
+					out.close();
+					return null;
+				}				
+			}					
+		}else{
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('fail! 키워드가 존재하지 않습니다');");
+			//out.println("location.href = './4index.jsp?center=O_admin/register_reqManagement.jsp';");
+			out.println("location.href='./registerGetList.areg';");
+			out.println("</script>");
+			out.close();
+			return null;
+		}
+		
+		
+		//return null;
+				
+	}//excute()
 
-}
+}//AcademyRegisterApproveAction

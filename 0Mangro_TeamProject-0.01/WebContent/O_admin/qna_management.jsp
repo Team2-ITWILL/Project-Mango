@@ -171,7 +171,8 @@
                             </a>
                         </li>
 						
-                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="4index.jsp?center=O_admin/register_reqManagement.jsp"
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" 
+                       			href="./registerGetList.areg"
                                 aria-expanded="false"><i class="fa fa-building-o" aria-hidden="true"></i>
                                 <span class="hide-menu">등록 요청 학원관리</span></a>
 						</li>
@@ -243,7 +244,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">문의답변관리</h4>
-                                <h6 class="card-subtitle">등록 요청 학원 리스트가 최신순으로 표시됩니다.</h6>
+                                <h6 class="card-subtitle">고객센터의 글이 최신순으로 표시됩니다.</h6>
                             </div>
                             <div class="table-responsive">
                                 <table class="table">

@@ -307,10 +307,59 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			
+			resourceClose();
+			
 		}
+		
 		
 		return check;
 		
+	}
+
+
+
+	public int getMonthMoney() {
+		int money=0;
+		
+		try {
+			getConnection();
+			
+						sql= " select count(*)*7900 + e.pm2 "   
+							+	" from payment i join (select count(*)*12900 pm2 " 
+										+ " from payment "
+										+ " where pm_name='무제한 이용권 (90일)' " 
+										+" and pm_start_date BETWEEN  DATE_ADD(NOW(),INTERVAL -DATE_FORMAT(now(), '%d')- "
+			+ "								date_format( (DATE_ADD(NOW(),INTERVAL - DATE_FORMAT(now(), '%d') day) ),'%d')+1 day) " 
+														+	" AND DATE_ADD(NOW(),INTERVAL -DATE_FORMAT(now(), '%d') day) ) e  "  
+			+" where i.pm_name='무제한 이용권 (30일)'"
+			+" and i.pm_start_date between DATE_ADD( NOW(),INTERVAL -DATE_FORMAT(now(), '%d') - "
+			+ "								date_format( (DATE_ADD(NOW(),INTERVAL - DATE_FORMAT(now(), '%d') day) ),'%d')+1 day) "
+								+" and DATE_ADD(NOW(),INTERVAL -DATE_FORMAT(now(), '%d') day) ";
+			
+			
+			pstmt=con.prepareStatement(sql);			
+				
+		rs=pstmt.executeQuery();
+			
+		if(rs.next()){
+			
+			money=rs.getInt(1);
+			
+		}
+		
+		} catch (Exception e) {
+			System.out.println("getMonthMoney()메서드에서 오류 "+e);
+		}finally {
+			
+			resourceClose();
+			
+		}
+		
+		
+		
+		return money;
 	}
 
 	

@@ -17,11 +17,10 @@ public class AcademyRegisterUploadAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			
-		System.out.println("AcademyRegisterUploadAction 진입");
 		
 		request.setCharacterEncoding("UTF-8");
 
+/*		
 		//업로드할 실제 서버의 경로 얻기
 		String realFolder = request.getServletContext().getRealPath("/O_aca_regFiles/upload/images/");
 		int max = 10 * 1024 * 1024; //업로드용량, 10MB
@@ -63,6 +62,7 @@ public class AcademyRegisterUploadAction implements Action{
 	 					 	
 		}
 		
+*/		
 		//프론트컨트롤러가 인식하지 못하게 하기(ajax 연동 때문)
 		return null;
 	}

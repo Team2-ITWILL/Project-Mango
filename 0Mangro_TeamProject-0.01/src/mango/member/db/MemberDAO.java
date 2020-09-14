@@ -438,24 +438,25 @@ public class MemberDAO extends DBconnection{
 		try {
 			getConnection();
 			
-			//flag == 0이면 관리자 등급으로 변경 승인 취소
-			if(flag == 0){
-				sql = "update member "
-						+ "set mem_admin = ? "
-						+ "where mem_email = ?";			
-
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, 0);
-				pstmt.setString(2, email);	
-				
 			//관리자 등급으로 변경 승인
-			}else{
+			if(flag == 1){
 				sql = "update member "
 						+ "set mem_admin = ? "
 						+ "where mem_email = ?";			
 
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, 1);
+				pstmt.setString(2, email);	
+				
+				
+			//flag == 0, -1이면 일반 user등급으로 격하
+			}else{
+				sql = "update member "
+						+ "set mem_admin = ? "
+						+ "where mem_email = ?";			
+
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, 0);
 				pstmt.setString(2, email);	
 			}					
 			

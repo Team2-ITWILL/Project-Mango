@@ -1717,18 +1717,8 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 		try {
 			getConnection();
 			
-			//flag == 0이면 관리자 등급으로 변경 승인 취소
-			if(flag == 0){
-				sql = "update academy set "					
-						+ " mem_email = null "					
-						+ " where aca_name=?";			
-				
-				pstmt = con.prepareStatement(sql);					
-				
-				pstmt.setString(1, vo.getAcaName());	
-				
 			//관리자 등급으로 변경 승인
-			}else{
+			if(flag == 1){
 				sql = "update academy set "					
 						+ " mem_email = ? "					
 						+ " where aca_name=?";			
@@ -1737,8 +1727,29 @@ public class AcademyDAO extends DBconnection implements IAcademy{
 				
 				pstmt.setString(1, vo.getMem_email());	
 				pstmt.setString(2, vo.getAcaName());
+			
+			//flag == 0이면 관리자 등급으로 변경 승인 취소
+			}else if(flag == 0){
+				sql = "update academy set "					
+						+ " mem_email = null "					
+						+ " where aca_name=?";			
+				
+				pstmt = con.prepareStatement(sql);					
+				
+				pstmt.setString(1, vo.getAcaName());				
 					
-			}					
+			//flag == -1이면 관리자 등급으로 변경 승인 취소
+			}else if(flag == -1){
+				sql = "update academy set "					
+						+ " mem_email = null "					
+						+ " where aca_name=?";						
+				pstmt = con.prepareStatement(sql);					
+				pstmt.setString(1, vo.getAcaName());	
+				
+			}else{
+				System.out.println("changeAcademyEmail() : 잘못된 flag 값 -> error");
+				return 0;
+			}
 			
 			result = pstmt.executeUpdate();			
 			

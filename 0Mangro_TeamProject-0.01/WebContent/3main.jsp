@@ -127,14 +127,14 @@
 			$(".sel2").empty();
 			$(".sel3").empty();
 			
-			$(".sel3").append("<option value=''>읍/면/동</option>");
+			$(".sel3").append("<option value='s3'>읍/면/동</option>");
 			
 			$.getJSON("getListSearchOne.aca?search1="+search1 ,  function(data){
 				
 				console.log(data.address);
 				
 				
-				var select2="<option option value=''>시/군/구</option>";
+				var select2="<option option value='s2'>시/군/구</option>";
 				$.each(data.address , function (index,item) {
 			
 					
@@ -168,7 +168,7 @@
 				console.log(data.address);
 				
 				
-				var select3="<option value=''>읍/면/동</option>";
+				var select3="<option value='s3'>읍/면/동</option>";
 				
 				$.each(data.address , function (index,item) {
 					
@@ -188,34 +188,6 @@
 		
 		
 		
-		
-		$('.right').on('click',function(){
-		
-			
-			
-			
-			$(".home_slider_background").css("background-image","url(images/mainslider"+i+".jpg)")
-			i++;
-		
-			if(i>7){
-				i=5;
-			}
-			
-			
-			
-			
-			
-			
-		})
-		$('.left').on('click',function(){
-		
-			i--;
-			if(i<5){
-				i=7;
-			}
-			$(".home_slider_background").css("background-image","url(images/mainslider"+i+".jpg)")
-			
-		})
 	
 		
 		      
@@ -397,14 +369,14 @@
 			                </p>
 			            <div class="modal_close">
 			            	<form name="pop_form">
+			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
+			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
+			                <br>
 			                	<a href="#" onclick="close_pop()">
 			                	<span class="pop_bt">
 			                	닫기
 			                	</span>
 			                	</a>
-			                <br>
-			                <label for="popChk" id="todayClose" style="font-size:0.8em;">오늘 하루동안 보지 않기
-			                <input type="checkbox" name="chkbox" value="checkbox" id="popChk" >
 			                </label>
 			                </form>
 			            </div>
@@ -417,20 +389,25 @@
 				
 				<!-- Home Slider Item -->
 				<div class="owl-item">
-					<div class="home_slider_background" style="background-image:url(images/mainslider6.jpg)"></div>
+					<div class="home_slider_background">
+					      <video muted autoplay loop style="z-index: 999; width: 100%;">
+					        <source src="images/etc/main_video4.mp4" type="video/mp4">
+					        <strong>Your browser does not support the video tag.</strong>
+					      </video>
+					</div>
 					<div class="home_slider_content">
 						<div class="container">
 							<div class="row">
 								<div class="col text-center">
 									<div class="home_slider_title resp767Title">우리동네 학원을 찾아보세요.</div>
-									<div class="home_slider_subtitle">괜찮은 학원 찾기 Mango가 도와드릴게요.</div>
+									<div class="home_slider_subtitle">당신의 숨은 재능과 잠재력을 찾으러 갈 시간이에요.</div>
 									<div class="home_slider_form_container">
 										<form action="AcademySearchList.aca" id="home_search_form_1" method="post" class="home_search_form d-flex flex-lg-row flex-column align-items-center justify-content-between">
 												<input type="hidden" name="select5" value="basic" id="basic">
 											<div class="d-flex flex-row align-items-center justify-content-start">
 												<input type="text" class="home_search_input" placeholder="검색하기" name="mainsearch">
 												<select class="dropdown_item_select home_search_input" id="add1" name="select1">
-													<option value="">시/도</option>
+													<option value="s1">시/도</option>
 													<option value="서울특별시">서울특별시</option>
 													<option value="부산광역시">부산광역시</option>
 													<option value="대구광역시">대구광역시</option>
@@ -450,15 +427,15 @@
 													<option value="제주특별자치도">제주특별자치도</option>		
 												</select>
 												<select class="dropdown_item_select home_search_input sel2"  name="select2">
-													<option value="">시/군/구</option>
+													<option value="s2">시/군/구</option>
 													
 												</select>
 												<select class="dropdown_item_select home_search_input sel3"  name="select3">
-													<option value="">읍/면/동</option>
+													<option value="s3">읍/면/동</option>
 												
 												</select>
 											</div>
-											<button type="submit" class="home_search_button">search</button>
+											<button type="button" class="home_search_button">search</button>
 										</form>
 									</div>
 								</div>
@@ -573,8 +550,8 @@
 		<!-- Home Slider Nav -->
 
 	
-	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
-	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+<!-- 	<div class="home_slider_nav home_slider_prev left"><i class="fa fa-angle-left " aria-hidden="true"></i></div>
+	<div class="home_slider_nav home_slider_next right"><i class="fa fa-angle-right" aria-hidden="true"></i></div>  -->
 		
 	</div>
 

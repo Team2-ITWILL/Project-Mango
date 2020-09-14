@@ -846,7 +846,7 @@ li small {
 																		<div class="no_membership">
 																			<h6>멤버십 회원이 되어 학원 후기를 확인하세요!<br>
 																			회원가입시 3일간 멤버십 혜택이 제공됩니다.</h6>
-																			<div class= "review_login" onclick="location.href='NewGetPayMent.pay?email=${id_email}'">
+																			<div class= "review_login" onclick="location.href='MainPayMent.pay?email=${id_email}'">
 																				<h5>멤버십 가입</h5>
 																			</div>
 																		</div>

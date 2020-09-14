@@ -124,6 +124,17 @@ public class PaymentFrontController extends HttpServlet {
 				
 			
 		
+		}else if(command.equals("/MyListPayment.pay")){
+			
+			forward=new ActionForward();
+			
+			System.out.println("여기까지");
+		
+			
+			forward.setPath("4index.jsp?center=O_payment/payment_list.jsp");
+			forward.setRedirect(false);
+			
+			
 		}
 	
 		

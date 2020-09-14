@@ -188,6 +188,7 @@ function selectKey(selectedTag){
 		
 		//키워드태그 css 색깔 변경
 		$(selectedTag).addClass('selected');
+		//$(selectedTag).addClass('active');
 		
 	}else{
 		alert("error! not defined key")
@@ -238,18 +239,26 @@ function changeImg(files, target) {
 // -> onclick이벤트에 업로드함수를 실행하면 파일선택보다 먼저 수행되어 첨부파일버튼을 다시 클릭해야 업로드가 실행되는 문제 발생
 
 function uploadFile(uploadFile, name, size) {
-
+	
 	//파일선택 후 배경이미지 변경 함수
 	var files = uploadFile.files;
 	changeImg(files, uploadFile);
+	
+	//파일 경로 및 이름
+	document.getElementsByName(name)[0].value = uploadFile.files[0].name;
+	//파일 크기
+	document.getElementsByName(size)[0].value = uploadFile.files[0].size;
+	
+//	console.log(document.getElementsByName(name)[0].value);
+//	console.log(document.getElementsByName(size)[0].value);
+//	console.log(uploadFile);
 
+//============ajax를 안 쓰고 AcademyRegisterAction에서 일괄 DB에 업로드할 것임==========================
+	
+/*	
+	//=================파일태그에 input된 파일들을 ajax로 서버에 업로드======================
 	var formData = new FormData();
 	formData.append("file", uploadFile.files[0]);
-	//formData.append("file", $("#file1")[0].files[0]);		
-	//var uploadPath = './O_aca_regFiles/upload/images/';
-	console.log('uploadFile.files[0] : ' + uploadFile.files[0]);
-	console.log('uploadFile : ' + uploadFile);
-
 	$.ajax({
 				data : formData,
 				type : "POST",
@@ -279,8 +288,11 @@ function uploadFile(uploadFile, name, size) {
 					console.log('data : ' + data);
 
 				}
-			});
-}
+			});  //ajax
+	*/
+	
+	
+}//uploadFile()
 
 //드래그앤드롭 이벤트
 //$('.content')
@@ -316,39 +328,43 @@ function uploadFiles(e) {
 
 	//드래그오버 이벤트(css) 
 	dragOver(e);
+	
 
 	var files = e.originalEvent.dataTransfer.files;
 	changeImg(files, e.target);
 
-	if (files != null) {
+	
+//	if (files != null) {
+//
+//		if (files.length > 1) {
+//			alert('파일을 하나만 올려주세요.');
+//			return;
+//		} else if (files.length < 1) {
+//			alert('폴더 업로드 불가');
+//			return;
+//		}
+//
+//		//이미지 파일이면 input태그에 값 넣기 & 배경이미지 등록
+//		if (files[0].type.match(/image.*/)) {
+//			//배경 이미지 등록(css)
+//			$(e.target).css(
+//					{
+//						"background-image" : "url("
+//								+ window.URL.createObjectURL(files[0])
+//								+ ")",
+//						"outline" : "none",
+//						"background-size" : "100% 100%"
+//					});
+//		} else {
+//			alert('이미지가 아닙니다.');
+//			return;
+//		}
 
-		if (files.length > 1) {
-			alert('파일을 하나만 올려주세요.');
-			return;
-		} else if (files.length < 1) {
-			alert('폴더 업로드 불가');
-			return;
-		}
-
-		//이미지 파일이면 input태그에 값 넣기 & 배경이미지 등록
-		if (files[0].type.match(/image.*/)) {
-			//배경 이미지 등록(css)
-			$(e.target).css(
-					{
-						"background-image" : "url("
-								+ window.URL.createObjectURL(files[0])
-								+ ")",
-						"outline" : "none",
-						"background-size" : "100% 100%"
-					});
-		} else {
-			alert('이미지가 아닙니다.');
-			return;
-		}
-
+		
+		
 		//이벤트가 발생한 input file태그 value값에 추가
 		e.target.val = files[0];
-		//input file태그 required 속성 없애기
+		//input file태그 required 속성 없애기(파일선택버튼으로 추가한 것처럼 처리되게 하기 위함)
 		$(e.target).attr('required', false);
 
 		//형제 태그 중 파일이름, 파일크기를 저장할 input태그를 선택하여 upload함수의 매개변수에 넣어줌 	
@@ -356,12 +372,12 @@ function uploadFiles(e) {
 		var fileName = $(e.target).siblings()[1];
 		var fileSize = $(e.target).siblings()[2];
 
-		//console.log('fileTag : ' + fileTag);
-		//console.log('fileName : ' + fileName);
-		//console.log('fileSize : ' + fileSize);
-
-		/////////////////////////////////////////
-		//이미지파일 서버에 업로드(ajax)
+		console.log('fileTag : ' + fileTag);
+		console.log('fileName : ' + fileName);
+		console.log('fileSize : ' + fileSize);
+		
+		//=============이미지파일 서버에 업로드(ajax)=================
+		/*
 		var formData = new FormData();
 		formData.append("file", e.target.val);
 		$.ajax({
@@ -382,9 +398,12 @@ function uploadFiles(e) {
 				//console.log('size : ' + fileSize.value);
 				//console.log('data : ' + data);
 			}
-		});
+		}); //ajax
+		*/
 
-	} else {
-		alert("error");
-	}
+		
+	//파일이 없을 경우
+//	} else {
+//		alert("error");
+//	}
 }

@@ -6,8 +6,8 @@ $(function () {
     // ==============================================================
     // Campaign
     // ==============================================================
-	
-  /*  var chart1 = c3.generate({
+/*
+    var chart1 = c3.generate({
         bindto: '#campaign-v2',
         data: {
         	columns: [               
@@ -16,11 +16,7 @@ $(function () {
             ['정지 회원', 15],
             ['탈퇴 회원', 45]
         	],
-        	 
-        	json: [pieData],
-        	keys: {
-        		value: Object.keys(pieData),
-        	},            
+                  
             type: 'donut',
             tooltip: {
                 show: true
@@ -48,8 +44,8 @@ $(function () {
     });
 
     d3.select('#campaign-v2 .c3-chart-arcs-title').style('font-family', 'Rubik');
-    */
-
+    
+*/
     // ============================================================== 
     // income
     // ============================================================== 
