@@ -545,6 +545,35 @@ public class QnaBoardDAO extends DBconnection{
   
   
   
+  // 관리자용 계정을 위한 글 삭제 메서드
+  public void DeleteQnaBoard_Admin(int num){
+	  
+      try {
+    	  
+		getConnection();
+		
+
+        sql = "delete from qna_board where qna_board_num = ?";
+        pstmt =  con.prepareStatement(sql);
+        pstmt.setInt(1, num);
+
+        pstmt.executeUpdate();
+
+		
+	} catch (Exception e) {
+		
+		
+		e.printStackTrace();
+		
+	}
+
+	  
+	  
+  }
+  
+  
+  
+  
   
   
   

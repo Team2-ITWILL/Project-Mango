@@ -49,6 +49,7 @@
 
 String pageNum = request.getParameter("pageNum");
 int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
+String qna_board_pwd = request.getParameter("qna_board_pwd");
 
 %>
 
@@ -63,33 +64,29 @@ int qna_board_num = Integer.parseInt(request.getParameter("qna_board_num"));
 		    
 		    
 		<div id = "pw_confirm" class = "mbskin">
-		    
 		    	
 		    <p>
 		    	<strong>비밀글 기능으로 보호된 글입니다.</strong>
 		    	작성자와 관리자만 삭제하실 수 있습니다.<span><br></span>
 		    	본인이라면 비밀번호를 입력하세요.
 		    </p>
-		    	
+	
+	
 		    			    				  
 		<form name="fboardpassword" action="./QnaBoardDeleteAction.qna?qna_board_num=<%=qna_board_num%>&pageNum=<%=pageNum%>" method="post">
 		    
-		    <input type = "hidden" name = "qna_board_num" value = "<%=qna_board_num%>">
-		    
-		    <fieldset>
-		    
-		    	<label for = "password_wr_password" class = "sound_only">비밀번호<strong>필수</strong></label>
-		    	
-		    	<input type = "password" name = "qna_board_pwd" id = "password_wr_password"
-		    	class = "frm_input required" size = "15" maxlength = "20" placeholder = "비밀번호">
-		    	
-		    	<input type = "submit" value = "확인" class = "btn_submit" onclick="javascript:return Check_input()"> 
-		    	
-		    	
-		    </fieldset>
-	
-		    
-		    
+					<input type = "hidden" name = "qna_board_num" value = "<%=qna_board_num%>">
+				    
+				    <fieldset>
+				    	
+				    	<label for = "password_wr_password" class = "sound_only">비밀번호<strong>필수</strong></label>
+				    	
+				    	<input type = "password" name = "qna_board_pwd" id = "password_wr_password"
+				    	class = "frm_input required" size = "15" maxlength = "20" placeholder = "비밀번호" >
+				    	
+				    	<input type = "submit" value = "확인" class = "btn_submit" onclick="javascript:return Check_input()"> 
+				   
+				    </fieldset>
 	    </form>
 		    	
 		    	

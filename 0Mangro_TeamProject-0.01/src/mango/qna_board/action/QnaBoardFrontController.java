@@ -203,6 +203,20 @@ public class QnaBoardFrontController extends HttpServlet{
         }
         
 
+    } else if (command.equals("/QnaBoardDeleteAdmin.qna")){
+    	
+    	action = new QnaBoardDeleteAdminAction();
+        
+        try{
+        	
+          forward = action.excute(request, response);
+          
+        } catch (Exception e) {
+        	
+          e.printStackTrace();
+          
+        }
+    	
     }
     
 

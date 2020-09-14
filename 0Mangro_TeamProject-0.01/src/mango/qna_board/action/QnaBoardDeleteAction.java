@@ -16,8 +16,6 @@ public class QnaBoardDeleteAction implements Action{
     
 	  
 	  
-	  
-	  
     System.out.println("QnaBoardDeleteAction 실행");
 
     String pageNum = request.getParameter("pageNum");
@@ -28,6 +26,8 @@ public class QnaBoardDeleteAction implements Action{
 
     int check = qdao.DeleteQnaBoard(qna_board_num, qna_board_pwd);
 
+    
+    
     if (check == 0){
     	
       response.setContentType("text/html; charset=UTF-8");
