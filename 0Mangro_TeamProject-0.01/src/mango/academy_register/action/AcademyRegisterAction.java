@@ -128,6 +128,7 @@ public class AcademyRegisterAction implements Action{
 		
 		int result = dao.RegisterToDB(bean);		
 		if(result == 0){
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('등록이 실패하였습니다. 다시 작성해주세요.');");
@@ -136,6 +137,7 @@ public class AcademyRegisterAction implements Action{
 			out.close();
 			return null;
 		}else{
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('학원 정보가 등록되었습니다. 승인을 기다려 주세요.');");
