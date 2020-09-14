@@ -1,6 +1,8 @@
 package mango.anony_board.action;
 
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,24 +33,30 @@ public class AdminAnonyHandleReportedAction implements Action {
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		
 		int result = andao.handleReportedANBoard(ano_board_num, procNum);
-		
-		int checkIfBanned = 0;
-		
-		if(result == 1) {
-			checkIfBanned = andao.checkIfAlreadyBanned(mem_email);
-		}
+//		
+//		int checkIfBanned = 0;
+//		
+//		if(result == 1) {
+//			checkIfBanned = andao.checkIfAlreadyBanned(mem_email);
+//		}
 		
 			request.setAttribute("result", result);
 			request.setAttribute("ano_board_num", ano_board_num);
 			request.setAttribute("mem_email", mem_email);
-			request.setAttribute("checkIfBanned", checkIfBanned);
+//			request.setAttribute("checkIfBanned", checkIfBanned);
 		
+		PrintWriter out = response.getWriter();
 		
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("./AdminAnonyReportedListAction.anob");
+		// 받아온 값을 그대로 내보내 조건에 따라 다른 alert() 송출 목적
+		// 1 = 계정정지 / 2 = 신고삭제 / 3 = 계정복구
+		out.println(result);
+			
 		
-		return forward;
+//		ActionForward forward = new ActionForward();
+//		forward.setRedirect(false);
+//		forward.setPath("./AdminAnonyReportedListAction.anob");
+		
+		return null;
 		
 		
 		

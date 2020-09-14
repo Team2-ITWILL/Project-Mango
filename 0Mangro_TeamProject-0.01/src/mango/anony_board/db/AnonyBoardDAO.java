@@ -608,13 +608,13 @@ public class AnonyBoardDAO extends DBconnection {
 	public int handleReportedANBoard(int ano_board_num, int procNum){
 		
 		System.out.println("ano_board_num넘어옴"+ano_board_num + " procNum넘어옴 "+ procNum);
-		// procNum = 1 (계정정지) / 2 (신고취소) / 3 (계정복구)
+		// procNum = 1 (계정정지) / 2 (신고삭제) / 3 (계정복구)
 		try {
 			
 			getConnection();
 			
 			
-			// 1  계정정지
+			// 1  계정정지 : member테이블의 mem_baned 컬럼에 데이터 입력
 			if(procNum == 1) {
 				System.out.println("if문 진입");
 				
@@ -634,7 +634,7 @@ public class AnonyBoardDAO extends DBconnection {
 //------------------------------------------------------------------------------------------				
 				
 				
-			// 2  신고취소	
+			// 2  신고삭제	: anony_board테이블의 신고관련 컬럼 3개 다 null값 주고 계정도 복구
 			}else if(procNum == 2) {
 				
 				sql = "UPDATE anony_board "
@@ -664,7 +664,7 @@ public class AnonyBoardDAO extends DBconnection {
 				pstmt.executeUpdate();				
 				
 				
-//			// 3  계정만 복구	
+//			// 3  계정만 복구 :	
 			}else {
 				
 				sql = "UPDATE member "
