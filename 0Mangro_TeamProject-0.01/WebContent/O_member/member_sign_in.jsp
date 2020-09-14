@@ -115,7 +115,7 @@
 				var naverLogin = new naver.LoginWithNaverId(
 					{
 						clientId: "rU2ooEzY2CNR72wYidQf",
-						callbackUrl: "http://192.168.6.19:8080/0Mangro_TeamProject-0.01/O_member/naverLoginCallBack.jsp",
+						callbackUrl: "http://192.168.6.240:8080/0Mangro_TeamProject-0.01/O_member/naverLoginCallBack.jsp",
 						isPopup: false, /* 팝업을 통한 연동처리 여부 */
 						loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
 					}
