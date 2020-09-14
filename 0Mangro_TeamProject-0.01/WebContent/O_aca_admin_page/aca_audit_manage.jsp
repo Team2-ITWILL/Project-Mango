@@ -54,7 +54,30 @@
 	  	  minDate : "+1", // 오늘날짜 이후부터 선택
 	  	  maxDate: "+5M +1D" //최대 가능한 날짜
 	  });
-  });	  
+  });	 
+     
+  //================input태그 숫자만 입력가능하도록 설정=============================
+	function inNumber(event){
+	  if(event.keyCode < 48 || event.keyCode > 57){
+		  event.returnValue = false;
+	  }
+	}
+  
+  window.onload = function(){
+	  var auditLastTime = document.querySelector("input[name='auditLastTime']");
+	  var auditAblemem = document.querySelector("input[name='auditAblemem']");
+	  
+	  auditLastTime.addEventListener('keypress', function(event){
+		 inNumber(event);
+	  });
+	  
+	  auditAblemem.addEventListener('keypress', function(event){
+			 inNumber(event);
+	  });
+
+  };
+	  
+	  
 </script>
 
 </head>
@@ -104,12 +127,18 @@
 						</tr>
 						<tr>
 							<td>해당 수업지속시간</td>
-							<td><input type="text" name="auditLastTime" class="inputaudit"></td>
+							<td>
+								<input type="text" name="auditLastTime" class="inputaudit" 
+								       onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+							</td>
 						</tr>
 						
 						<tr>
 							<td>청강 가능 인원</td>
-							<td><input type="text" name="auditAblemem" class="inputaudit"></td>
+							<td>
+								<input type="text" name="auditAblemem" class="inputaudit"
+								       onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+							</td>
 						</tr>
 						
 					</table>
