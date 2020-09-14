@@ -46,7 +46,8 @@ public class AuditRequestApproval implements Action{
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("alert('failed! 이미 청강승인이 된 상태입니다.');");
-				out.println("history.back();");
+				out.println("location.href='./ListAction.adrq'");
+				//out.println("history.back();");
 				out.println("</script>");	
 				out.close();			
 				return null;		
@@ -59,7 +60,8 @@ public class AuditRequestApproval implements Action{
 				PrintWriter out = response.getWriter();
 				out.println("<script>");
 				out.println("alert('addAuditCount failed!');");
-				out.println("history.back();");
+				out.println("location.href='./ListAction.adrq'");
+				//out.println("history.back();");
 				out.println("</script>");	
 				out.close();			
 				return null;		
@@ -77,8 +79,9 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('실패')");
-			out.println("history.back();");
+			out.println("alert('청강신청 승인이 실패하였습니다.')");
+			out.println("location.href='./ListAction.adrq'");
+			//out.println("history.back();");
 			out.println("</script>");	
 			out.close();				
 			return null;	
@@ -88,7 +91,7 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('성공')");
+			out.println("alert('청강신청 과목이 승인되었습니다.')");
 			out.println("location.href='./ListAction.adrq'");
 			out.println("</script>");	
 			out.close();				
