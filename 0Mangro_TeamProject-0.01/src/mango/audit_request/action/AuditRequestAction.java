@@ -31,8 +31,7 @@ public class AuditRequestAction implements Action{
 				 Integer.parseInt(request.getParameter("aca_num")),
 				 request.getParameter("aca_name"),	
 				 
-				 //★★★★audit_management 테이블의 subject를 fk로 등록하였기 때문에 
-				 //과목명이 반드시 일치해야한다!!!	
+				 //audit_management 테이블의 subject를 fk로 등록하였기 때문에 과목명이 일치해야 함
 				 request.getParameter("audit_subject"),	
 				 
 				 //청강신청일 : 언제 듣고 싶은지
@@ -113,7 +112,7 @@ public class AuditRequestAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register failed');");
+			out.println("alert('청강 신청 실패하였습니다.');");
 			out.println("history.back();");
 			out.println("</script>");	
 			out.close();			
@@ -122,8 +121,8 @@ public class AuditRequestAction implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('register success');");	
-			out.println("location.href='./4index.jsp'");
+			out.println("alert('청강 신청되었습니다.');");	
+			out.println("location.href='./Main.me'");
 			out.println("</script>");				
 			out.close();				
 			return null;	

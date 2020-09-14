@@ -25,7 +25,7 @@ public class AcademyRegisterGetListAction implements Action{
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");
 			out.println("alert('로그인이 필요합니다!');");
-			out.println("history.back();");
+			out.println("location.href='./MemberLogin.me;'");
 			out.println("</script>");
 			out.close();
 			return null;
@@ -36,7 +36,7 @@ public class AcademyRegisterGetListAction implements Action{
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");
-			out.println("alert('사이트 관리자가 아닙니다');");
+			out.println("alert('해당 계정은 사이트 관리자 등급이 아닙니다');");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();
