@@ -28,7 +28,7 @@ public class AuditRequestListToMyPageAction implements Action{
 			PrintWriter out = response.getWriter();			
 			out.println("<script>");
 			out.println("alert('로그인이 필요합니다!');");
-			out.println("location.href='./MemberLogin.me;'");
+			out.println("location.href='./MemberLogin.me';");
 			out.println("</script>");
 			out.close();
 			return null;
