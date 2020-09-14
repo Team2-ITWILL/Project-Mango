@@ -77,6 +77,9 @@ public class AcademyRegisterAction implements Action{
 		// 실제로 DB에 들어갈 파일경로
 		String[] realPath_Arr = new String[2];
 		
+		// 사업자등록증, 신분증 파일 순서가 뒤바뀌어 전송될 경우 구분하기 위한 값
+		String[] fileNameDiff = new String[2];
+		
 		Enumeration e = multi.getFileNames();
 		int idx = 0;
 		while(e.hasMoreElements()){				
@@ -84,6 +87,9 @@ public class AcademyRegisterAction implements Action{
 			// MultipartRequest가 파일태그명(fileName)을 통해 form에서 전송된 file태그에 접근함
 			// 파일태그명
 	 		String fileName = (String)e.nextElement();	 	 		
+	 		
+	 		// 파일명 구분
+	 		fileNameDiff[idx] = fileName;
 	 		
 	 		//클라이언트가 업로드한 파일의 원본이름
 	 		String originalFileName = multi.getOriginalFileName(fileName);	 	
@@ -96,13 +102,30 @@ public class AcademyRegisterAction implements Action{
 	 		realPath_Arr[idx] = folderPath + fileSystemName;
 	 		
 	 		System.out.println("originalFileName : " + originalFileName); 
-	 		System.out.println("realPath_Arr : " + realPath_Arr[idx]); 	
-	 		
+	 		System.out.println("realPath_Arr : " + realPath_Arr[idx]); 		 		
 	 		
 	 		//배열 인덱스 증가
 			idx++;
 		
 		}			
+		
+		//파일태그명(file1, file2)의 끝자리 문자인 숫자(1,2)를 추출해서 int에 저장
+		int[] fileIdx = new int[2];
+		for(int i=0; i<2; i++){
+			int length = fileNameDiff[i].length();
+			fileIdx[i] = Integer.parseInt(fileNameDiff[i].substring(length-1, length));
+			System.out.println("fileIdx : " + fileIdx[i]);
+			System.out.println("last char : " + fileNameDiff[i].charAt(length-1));
+		}
+		
+		// 파일태그가 역순으로 업로드 되었을 경우 swap
+		// multipartRequest 객체의 특성인지 모르겠는데 
+		// form태그 내부 마지막 순서에 위치하는 파일태그부터 먼저 가져오는 것 같음
+		if(fileIdx[0] > fileIdx[1]){
+			String temp = realPath_Arr[0];
+			realPath_Arr[0] = realPath_Arr[1];
+			realPath_Arr[1] = temp;
+		}
 
 		
 		//=============academy_register 테이블에 등록==========================
@@ -110,8 +133,12 @@ public class AcademyRegisterAction implements Action{
 		String addr_doro = multi.getParameter("addr_doro");
 		String acaName = multi.getParameter("acaName");		
 		String keyword = multi.getParameter("keyword");		
+		
+		// 파일 크기 -> academy_register.jsp의 uploadFile()함수에서 해당 태그에 맞게 
+		// 파일의 사이즈를 직접 입력해주므로 multipartRequest 객체로 인한 순서 역전 없음
 		String f_size_company = multi.getParameter("f_size_company");			
-		String f_size_owner = multi.getParameter("f_size_owner");			
+		String f_size_owner = multi.getParameter("f_size_owner");	
+			
 		
 		AcademyRegisterBean bean = new AcademyRegisterBean();
 		bean.setMemEmail(email);
