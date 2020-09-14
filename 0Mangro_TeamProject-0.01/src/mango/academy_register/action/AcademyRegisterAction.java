@@ -141,7 +141,7 @@ public class AcademyRegisterAction implements Action{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('학원 정보가 등록되었습니다. 승인을 기다려 주세요.');");
-			out.println("location.href='./4index.jsp'");
+			out.println("location.href='./Main.me'");
 			out.println("</script>");
 			out.close();
 			return null;
