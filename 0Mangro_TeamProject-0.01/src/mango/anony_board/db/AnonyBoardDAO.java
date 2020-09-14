@@ -379,7 +379,6 @@ public class AnonyBoardDAO extends DBconnection {
 		
 		}finally { resourceClose();}
 		
-		System.out.println(check);
 		return check;
 		
 		
@@ -488,9 +487,6 @@ public class AnonyBoardDAO extends DBconnection {
 				myAnonyList.add(anb);
 			}//while 끝
 			
-			//System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
-			//System.out.println("DAO에서 보는 글의 개수"+ myAnonyList.size());
-			
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
@@ -590,6 +586,7 @@ public class AnonyBoardDAO extends DBconnection {
 			// 쿼리 실행
 			pstmt.executeUpdate();
 			
+			check = 1;
 			// 성공
 			
 			
@@ -610,13 +607,13 @@ public class AnonyBoardDAO extends DBconnection {
 	public int handleReportedANBoard(int ano_board_num, int procNum){
 		
 		System.out.println("ano_board_num넘어옴"+ano_board_num + " procNum넘어옴 "+ procNum);
-		// procNum = 1 (계정정지) / 2 (신고취소) / 3 (계정복구)
+		// procNum = 1 (계정정지) / 2 (신고삭제) / 3 (계정복구)
 		try {
 			
 			getConnection();
 			
 			
-			// 1  계정정지
+			// 1  계정정지 : member테이블의 mem_baned 컬럼에 데이터 입력
 			if(procNum == 1) {
 				System.out.println("if문 진입");
 				
@@ -636,24 +633,7 @@ public class AnonyBoardDAO extends DBconnection {
 //------------------------------------------------------------------------------------------				
 				
 				
-//				sql = "UPDATE anony_board "
-//						+ "SET ano_board_title = ?,"
-//						+ "ano_board_content = ?"
-//						+ "WHERE ano_board_num = ?"; 
-//					
-//					pstmt = con.prepareStatement(sql);
-//					pstmt.setString(1, "신고된 글입니다.");
-//					pstmt.setString(2, "");
-//					pstmt.setInt(3, ano_board_num);
-//					pstmt.executeUpdate();
-//				
-//				System.out.println("신고 후 글 제목,내용바꾸기 완료");
-//				
-				
-				
-				
-				
-			// 2  신고취소	
+			// 2  신고삭제	: anony_board테이블의 신고관련 컬럼 3개 다 null값 주고 계정도 복구
 			}else if(procNum == 2) {
 				
 				sql = "UPDATE anony_board "
@@ -683,7 +663,7 @@ public class AnonyBoardDAO extends DBconnection {
 				pstmt.executeUpdate();				
 				
 				
-//			// 3  계정만 복구	
+//			// 3  계정만 복구 :	
 			}else {
 				
 				sql = "UPDATE member "
@@ -714,66 +694,7 @@ public class AnonyBoardDAO extends DBconnection {
 	
 	
 	
-	
-	
-	
-	// [12. 이미 신고된 계정인지 확인하는 메소드]
-	
-	public int checkIfAlreadyBanned(String mem_email){
-		
-		int checkIfBanned = 0;
-		
-		try {
-
-			getConnection();
-				sql = "SELECT count(*) "
-					+ "FROM member "
-					+ "WHERE mem_email = ? " 
-					+ "AND mem_baned is not null ";
-				
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, mem_email);
-			System.out.println("mem_email"+mem_email);
-			// 쿼리 실행
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				System.out.println("re.getInt"+rs.getInt(1));
-				checkIfBanned = rs.getInt(1);
-				System.out.println("if(rs.next()) {" + checkIfBanned);
-			}//if			
-			
-			// 이미 정지된 계정이라면, 신고계정에 '처리완료' 문구넣고 값을 2로 주기
-			if(checkIfBanned == 1) {
-//				sql = "UPDATE anony_board "
-//					+ "SET ano_board_reporter = ?"
-//					+ "WHERE mem_email = ? "; 
-//				
-//				pstmt = con.prepareStatement(sql);
-//				pstmt.setString(1, "계정정지처리");
-//				pstmt.setString(2, mem_email);
-//				
-				// 쿼리 실행
-				pstmt.executeUpdate();
-				
-				checkIfBanned = 2;
-			}
-			
-			// 성공
-			
-			
-		}catch(Exception e){
-			System.out.println("checkIfAlreadyBanned()메소드에서 예외 발생 : "+ e);				
-		
-		}finally { resourceClose();}
-		
-		
-		return checkIfBanned;
-		
-	}//checkIfAlreadyBanned()
-	
-	
-	// [13. 신고된 글인지 확인하는 메소드 (클릭시 열람 제한목적)]
+	// [12. 신고된 글인지 확인하는 메소드 (클릭시 열람 제한목적)]
 	
 	public int checkIfthisReported(int ano_board_num){
 		

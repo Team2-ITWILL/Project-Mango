@@ -255,13 +255,13 @@
                                         <c:choose>
                                          <c:when test="${reportedAnonyList.ano_board_reported ne ''}" >
                                             <td>
-       	                                    	<div class="ban_thisAccount" name="ban_${reportedAnonyList.mem_email}" id="ban" onclick="buttonFunc('ban','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정정지</div>
+       	                                    	<div class="ban_thisAccount" name="ban_${reportedAnonyList.mem_email}" id="ban" onclick="buttonFunc(1,'${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정정지</div>
                                             </td>
                                             <td>
-                                            	<div class="dropReport drop_${reportedAnonyList.ano_board_num}" id="drop" onclick="buttonFunc('drop','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email}',event)">신고삭제</div>
+       	                                    	<div class="restore_thisAccount" name="restore_${reportedAnonyList.mem_email}" id="restore" onclick="buttonFunc(3,'${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정복구</div>
                                             </td>
                                             <td>
-       	                                    	<div class="restore_thisAccount" name="restore_${reportedAnonyList.mem_email}" id="restore" onclick="buttonFunc('restore','${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email }',event)">계정복구</div>
+                                            	<div class="dropReport drop_${reportedAnonyList.ano_board_num}" id="drop" onclick="buttonFunc(2,'${reportedAnonyList.ano_board_num}','${reportedAnonyList.mem_email}',event)">신고삭제</div>
                                             </td>
                                          </c:when>
                                          <c:otherwise>
@@ -375,15 +375,6 @@
 					<%-- 게시판에 글이 있는 경우 페이지 표시 끝 --%>
 					</ul>
                                         
- 
- 
-			<input type="hidden" value="${result}" id="result">
-			<input type="hidden" value="${ano_board_num}" id="board_num">
-			<input type="hidden" value="${mem_email}" id="email">
-			
-			<%-- ajax로 값 받아오기 --%>
-			<input type="hidden" id="checkIfBanned" >
-	
 
 
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
@@ -411,97 +402,54 @@
 
 <script type="text/javascript">
 
+
+
+	function refresh() { location.reload(); }
+
+
 	// [계정정지 버튼을 클릭했을 때 해당 글 목록으로 이동하기 위해 부모태그인 tr에 걸어둔 location.href 이벤트 실행 방지 ]
 
-	
-	var urlAddr = "";
-	var ano_board_num = document.getElementById("ano_board_num").innerText;
-	var mem_email = document.getElementById("mem_email").innerText;
-	
-	function buttonFunc(act ,ano_board_num,mem_email,event) {
+	function buttonFunc(procNum ,ano_board_num,mem_email,event) {
+		// [일반 tr 태그를 눌렀을 때]
 		if(event.target.nodeName == "TD"){
-			urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num+"'";
-			$("#goBoard").attr("onclick",urlAddr);
+			location.href='./AnoBoardSingleAction.anob?ano_board_num='+ano_board_num;
 			
+		// [일반 td태그안의 div(신고 처리 버튼 3개 중 하나)를 눌렀을 때]
 		}else{
 		    
-			// [계정정지] 버튼을 클릭했을 때
-			if(act == 'ban'){
-				
-				// [1. 만일 정지된 계정이라면 alert]
-/* 				if($("#checkIfBanned").val() == 2){
-					alert("이미 정지된 계정입니다.");
-					
-				}else { */
-				// [2. 이미 정지된 계정이 아니라면 계정정지하는 다른 액션페이지 호출]
-					location.href="./AdminAnonyHandleReportedAction.anob?procNum=1&ano_board_num="
-							   + ano_board_num+"&mem_email=" + mem_email;
-					//$("#ban").attr("onclick",urlAddr);
-					
-/* 				} */
-				
-			// [신고삭제] 버튼을 클릭했을 때
-			}else if('drop'){ 
-				location.href="./AdminAnonyHandleReportedAction.anob?procNum=2&ano_board_num="
-						  + ano_board_num+"&mem_email=" + mem_email;
-				//$("#drop").attr("onclick",urlAddr);
-				
-			
-			// [계정복구] 버튼을 클릭했을 때
-			}else if('restore'){ 
-				location.href="./AdminAnonyHandleReportedAction.anob?procNum=3&ano_board_num="
-						+ano_board_num+"&mem_email="+mem_email;
-				//$("#restore").attr("onclick",urlAddr);
-				
-			}// 서브 if 끝
-			
-		}// 메인 if끝    
-		
+	
+		    $.ajax({
+		        type: "POST",
+		        url : "./AdminAnonyHandleReportedAction.anob?procNum="+procNum,
+		        dataType : "text",
+		        data: { 
+	 	        		ano_board_num : ano_board_num,  
+	 	        		mem_email : mem_email  
+		        },
+		        success : function(data){
+		        	
+		        	if(data == 1){
+			        	alert("계정 정지가 정상적으로 완료되었습니다.");
+			        	refresh();
+		        	}else if(data == 2){
+			        	alert("신고 삭제가 정상적으로 완료되었습니다.");
+			        	refresh();
+		        	}else{
+			        	alert("계정 복구가 정상적으로 완료되었습니다.");
+			        	refresh();
+		        		
+		        	}
+		        },
+		        error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            console.log(status);
+		       }
+		        
+		    });//ajax
+	
+	  }
+	
 	}// buttonFunc()  끝		
-	
-	
-	// 페이지 로딩과 동시에 실행될 메소드 호출
-/* 	$(function(){
-		onLoadAction();
-	});
-
-	// 페이지 로딩과 동시에 실행될 메소드
-	// - 계정정지 여부에 따라 버튼 활성/비활성화
-	function onLoadAction() {
-		
-	    $.ajax({
-	        type: "POST",
-	        url : "./AdminAnoCheckAlreadyBannedAction.anob",
-	        dataType : "html",
-	        data: { 
- 	        		mem_email : document.getElementById("mem_email").innerText  
-	        },
-	        success : function(data){
-	            // 이미 계정 정지된 아이디이면
-	        	if(data == 2) {
-							        		
-	                $("#checkIfBanned").val(data);
-					// 이미 계정 정지된 경우 [계정정지] 버튼 숨기기
-	                $("div[name='ban_"+mem_email+"']").hide();
-	        	}else {
-	                $("div[name='restore_"+mem_email+"']").hide();
-	        		
-	        	}
-	        		
-	        		
-	        	
-	        },
-	        error:function(request,status,error){
-	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            console.log(status);
-	       }
-	        
-	    });//ajax
-		
-		
-		 
-	}	  */
-	
 	
 </script>
 

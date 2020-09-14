@@ -55,19 +55,6 @@
 	    border: 5px dotted #dcdcdc !important;
 	}
 	
-/* 	.modal-content {
-	width: 700px !important;
-    height: 700px !important;
-	}
-	
-	.reportTBarea {
-	    border: 1px solid #e9ecef;
-	    padding: 50px;
-	    margin-top: 8%;
-	    margin-bottom: 8%;
-	}
-	
-	.boldSpan { font-weight: 700;} */
 </style>
 
 
@@ -619,31 +606,41 @@
 	}//openReport()
 
 	
-	// 기타 열리면 input태그
-	
-	var radioBtn = document.getElementsByName("reason4report");
-	var radioBtnChecked =  $("input:radio[name='reason4report']:checked").val();
-	var etcLabel = document.getElementById("reason7");
-	var etcInput = document.getElementById("rea7");
-	var hiddenInput = document.getElementById("hiddenInput");
-	var etc = document.getElementsByName("reason4report")[6]; 
-	var reportSubmit = $("#reportSubmit"); // 신고하기 버튼
-	var ano_board_num = document.getElementById("ano_board_num").value;
-	var mem_email = $("#session_memEmail").val();
-	var urlAddr = "";
-	function onETCRadio() {
-		
-	}//onETCRadio()	
-
-	
-	// [라디오 버튼 선택시 Action페이지로 이동]
+	// [라디오 버튼 선택시 Ajax로 Action페이지 이동]
 	function reportFunc(num, event) {
 		
-		location.href="./ReportAnonyBoardAction.anob?ano_board_num="+num
-				 + "&ano_board_reporter="+$("#session_memEmail").val()
-				 + "&ano_board_reason="+$("input:radio[name='reason4report']:checked").val();
+	    $.ajax({
+	        type: "POST",
+	        url : "./ReportAnonyBoardAction.anob",
+	        data: { 
+	        		ano_board_num : num,
+	        		ano_board_reporter : $("#session_memEmail").val(),
+	        		ano_board_reason : $("input:radio[name='reason4report']:checked").val()
+	        },
+	        success : function(data){
+	               //alert("ajax로 ReportAnonyBoardAction.anob에 값 보내기 성공"+data);
+	               // 값이 1이면 정상접수 , 0이면 실패
+	               if(data == 1){
+	            	   alert("신고 접수가 정상적으로 완료되었습니다.");
+	            	   location.href='./AnonyBoardListAction.anob';
+	               }else{
+	            	   alert("신고 접수가 완료되지 않았습니다. 다시 시도해 주세요.");
+	            	   history.go(-1);
+	               }
+	        },
+	        error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	            console.log(status);
+	       }
+	        
+	    });
 		
-	} 
+	}//reportFunc(num, event)
+		
+	
+	
+	
+	
 	
 	
 	

@@ -110,19 +110,12 @@ public class CommentAnoBoardListAction implements Action {
 		String jsonData = allComments.toJSONString();
 		System.out.println("내보낼 제이슨 객체 : "+commentArray);		
 		System.out.println("내보낼 객체 크기 : "+commentArray.size());		
-//		System.out.println("내보낼 제이슨 객체 : "+jsonData);		
-//		System.out.println("내보낼 객체 크기 : "+jsonData.length());		
+		
 		// [제이슨 객체 내보내기]
 		PrintWriter out = response.getWriter();
-//		out.println(allComments);
 		out.println(jsonData);
 		
-		// [댓글목록 데이터를 가지고 해당 게시글로 돌아가기]
 		
-/*		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("/AnoBoardSingleAction.anob?ano_board_num="+ano_board_num); */
-				
 		return null;
 	}
 
