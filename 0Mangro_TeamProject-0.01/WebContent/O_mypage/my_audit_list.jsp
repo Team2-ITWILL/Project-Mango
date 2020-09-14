@@ -64,7 +64,14 @@
     max-width: inherit;
 } 
   
-  </style>  
+
+.prev, .next {font-size: 1em;}
+.pagination {
+	width: 400px !important;
+    margin: auto !important;
+}
+
+</style>  
     
 </head>
 

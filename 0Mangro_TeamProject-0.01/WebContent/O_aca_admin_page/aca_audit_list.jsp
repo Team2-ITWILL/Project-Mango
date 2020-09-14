@@ -57,6 +57,12 @@
   	.audit_yes {background-color: #378ffd;}
   	.audit_no {background-color: #fff; border: 1px solid; color: #000;}
   
+	.prev, .next {font-size: 1em;}
+	.pagination {
+		width: 400px !important;
+	    margin: auto !important;
+	}
+	
   </style>  	  
 
 </head>

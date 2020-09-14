@@ -129,7 +129,8 @@ public class AcademyRegisterApproveAction implements Action{
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
 					out.println("<script>");
-					out.println("alert('approve register & insert keyword success');");
+					out.println("alert('승인이 완료되었습니다.');");
+					//out.println("alert('approve register & insert keyword success');");
 					//out.println("location.href = './4index.jsp?center=O_admin/register_reqManagement.jsp';");
 					out.println("location.href='./registerGetList.areg';");
 					out.println("</script>");
