@@ -19,57 +19,7 @@
 <link href="styles/dist/css/style.min.css" rel="stylesheet">
 <link href="styles/mypage_additional.css" rel="stylesheet">
 <link href="styles/table_style.css" rel="stylesheet">
-  
-<!------------------------------------[사용자 정의 함수]------------------------------ -->
-<script type="text/javascript">		
-		function approveReg(regEmail, acaName, aca_keyword, flag){
-			
-			// create form tag
-			var regForm = document.createElement('form');
-			regForm.action = "./regChangeApproval.areg";
-			regForm.method = "get";
-			
-			// create input Tag
-			var input1 = document.createElement('input');
-			var input2 = document.createElement('input');
-			var input3 = document.createElement('input');
-			var input4 = document.createElement('input');
-			
-			// set attribute
-			input1.setAttribute('type', 'hidden');
-			input1.setAttribute('name', 'flag');
-			input1.setAttribute('value', flag);
-			
-			input2.setAttribute('type', 'hidden');
-			input2.setAttribute('name', 'acaName');
-			input2.setAttribute('value', acaName);			
-			
-			input3.setAttribute('type', 'hidden');
-			input3.setAttribute('name', 'aca_keyword');
-			input3.setAttribute('value', aca_keyword);
-			
-			input4.setAttribute('type', 'hidden');
-			input4.setAttribute('name', 'regEmail');
-			input4.setAttribute('value', regEmail);
-			
-		
-						
-			// append input to Form
-			regForm.appendChild(input1);
-			regForm.appendChild(input2);
-			regForm.appendChild(input3);
-			regForm.appendChild(input4);
-			
-			// append form to body
-			document.body.appendChild(regForm);
-			
-			console.log(regForm);
-			
-			// submit form
-			regForm.submit();				
-			
-		}	
-</script>
+ 
     
 </head>
 
@@ -240,34 +190,58 @@
                                             <th scope="col">대표자신분증 파일</th>
                                             <th scope="col">신청일</th>
                                             <th scope="col">승인일</th>
-                                            <th scope="col">키워드</th>                                            
+                                            <th scope="col">키워드</th>     
+                                            <th scope="col">승인</th>     
+                                            <th scope="col">취소</th>     
+                                            <th scope="col">삭제</th> 
                                         </tr>                                        
                                     </thead>
-                                    <tbody>
+                                    <tbody>                                    
                                     <c:forEach var="vo" items="${registerList}">
                                     	<!-- 승인,취소를 구분할 값 -->
                                     	<c:set var="flag" value="0" />
+                                    	
+                                    	<!-- 클릭 연속적으로 하다가 flag값이 잘못 변경되는 문제 발견. onclick 이벤트에서 직접 1,0,-1값 주는 방향으로 변경 -->
+                                    	<%-- 
                                     	<c:choose>                                    		
                                     		<c:when test="${vo.confirmDate eq null}">
                                     			<!-- confirmDate가 null이면 승인 -->
-                                    			${flag = 1}
+                                    			<div style="display:none;">${flag = 1}</div>                                    			
                                     		</c:when>                                    		
                                     		<c:when test="${vo.confirmDate ne null}">
                                     			<!-- confirmDate가 값이 있으면 승인 취소 -->
-                                    			${flag = 0}
+                                    			<div style="display:none;">${flag = 0}</div>                                        		
                                     		</c:when>
+                                    		<c:otherwise>error</c:otherwise>
                                     	</c:choose>
+                                    	 --%>
+                                    	 
                                     	<!-- 학원관리자 등록을 요청한 사용자의 이메일, 학원명, confirmDate flag를 전달 -->
-                                        <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">
+                                        <%-- <tr onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')"> --%>
+                                        <tr>
                                             <th scope="row">${vo.memEmail}</th>
                                             <td>${vo.acaName}</td>
                                             <td>${vo.memAddrZip}</td>
                                             <td>${vo.memAddrDoro}</td>
-                                            <td>${vo.fNameCompany}</td>
-                                            <td>${vo.fNameOwner}</td>
+                                            <td>
+                                           		<button type="button" class="btn btn-info" onclick="viewRegImages(this, '${vo.fNameCompany}', '사업자등록증 파일')">image</button>
+                                            </td>
+                                            <td>
+                                            	<button type="button" class="btn btn-info" onclick="viewRegImages(this, '${vo.fNameOwner}', '대표자신분증 파일')">image</button>
+                                            </td>
                                             <td>${vo.registerDate}</td>
                                             <td>${vo.confirmDate}</td>
-                                            <td>${vo.aca_keyword}</td>
+                                            <td>${vo.aca_keyword}</td>                                            
+                                            <td>
+                                            	<%-- <button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', '${flag}')">승인</button> --%>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', 1)">승인</button>
+                                            </td>
+                                            <td>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', 0)">취소</button>
+                                            </td>
+                                            <td>
+                                            	<button type="button" class="btn btn-primary" onclick="approveReg('${vo.memEmail}', '${vo.acaName}', '${vo.aca_keyword}', -1)">삭제</button>
+                                            </td>
                                         </tr>
                                     </c:forEach>                                         
                                     </tbody>
@@ -275,9 +249,32 @@
                             </div>
                         </div>
                     </div>
-                    
-
-                    
+    
+    				<!-----------등록한 이미지 보여주는 모달창-------->       
+    				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".imgView">이미지 보기</button> -->
+    				         
+					<div class="modal fade imgView">
+					  <!-- 가로 사이즈 이미지에 맞게 자동으로 조정  -->
+					  <div class="modal-dialog" style="width:auto;display:table"> 						 
+ 						<div class="modal-content">					    
+					      <div class="modal-header">
+					        <h4 class="modal-title">이미지 보기</h4>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					      </div>
+					      <!-- 이미지가 들어갈 태그 -->
+					      <div class="modal-body">
+					        <div class="modal-Img">
+					        	<img class="insertImg" src="#">
+					        </div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+					
+					                    
                     <!-- 페이징 영역 : li class속성에 동적으로 active를 주면 해당 페이지 숫자bgcolor 설정됨 -->
                     <ul class="pagination">
                     <!-- << (첫페이지로 가기) -->
@@ -288,7 +285,8 @@
 					  </li>
 					  
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
+					 <!--  <li class="page-item active"> -->
+					  <li class="page-item">
 					  	<a class="page-link prev" href="#">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
@@ -398,6 +396,9 @@
     <script src="styles/dist/js/pages/dashboards/dashboard1.min.js"></script>    
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="styles/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>    
+
+	<!-- 이 파일에 선언된 함수들이 모여있는 자바스크립트 파일 -->
+	<script src="./O_admin/register_reqManagement.js"></script>
 
     
 </body>

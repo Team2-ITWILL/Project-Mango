@@ -126,7 +126,8 @@
 						
 						<c:forEach var="anbList" items="${anbList}">
 						<%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'"  --%>
-							<li class="widthAdjust" onclick="enterCheck(${anbList.ano_board_num}, '${anbList.ano_board_reported}')"; id="enterAnoSingle">
+						<%-- 	<li class="widthAdjust" onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'" id="enterAnoSingle"> --%>
+								<li class="widthAdjust" onclick="enterCheck( ${anbList.ano_board_num}, ${reportedCheckList[anbList.ano_board_num]} )" id="enterAnoSingle"> 
 								<div class="comment_item d-flex flex-row align-items-start jutify-content-start">
 									<img src="images/etc/default_mango.png" class="user_profile" width="60" >
 
@@ -140,10 +141,23 @@
 												<span class="icons_margin">${anbList.ano_board_nick}</span>
 												
 										<%------ 글제목 ----%>
+										
+										<c:choose>
+											<%-- 신고가 진행중인 글=1, 열람가능한 글 = 0 --%>
+											<c:when test="${reportedCheckList[anbList.ano_board_num] ne 0}">
+												<p style="padding-top: 10px; color:#000 !important;" class="prevent_overflow po_title">
+													<span class="span-title">신고된 글입니다. 열람이 제한됩니다.</span>
+												</p>
+											</c:when>
+											
+											<c:otherwise>
 												<p style="padding-top: 10px; color:#000 !important;" class="prevent_overflow po_title">
 													<span class="span-title">${anbList.ano_board_title}</span>
 												</p>
+											
+											</c:otherwise>
 												
+										</c:choose>
 											</div>
 										</div>
 										<%------ 글번호 hidden ----%>
@@ -151,11 +165,22 @@
 										
 										
 										<%------ 글내용 ----%>
-										<div class="comment_text">
-											<p class="prevent_overflow_content">${anbList.ano_board_content}</p>
-										</div>
+										<c:choose>
+										<%-- 신고가 진행중인 글 내용 = 1, 열람가능한 글 내용 = 0 --%>
 										
-										
+											<c:when test="${reportedCheckList[anbList.ano_board_num] ne 0}">
+												<div class="comment_text">
+													<p class="prevent_overflow_content"></p>
+												</div>
+											</c:when>
+											
+											<c:otherwise>
+												<div class="comment_text">
+													<p class="prevent_overflow_content">${anbList.ano_board_content}</p>
+												</div>
+											</c:otherwise>
+											
+										</c:choose>										
 										
 										<div class="comment_extras d-flex flex-row align-items-center justify-content-start">
 											<div class="comment_extra comment_tail">
@@ -241,22 +266,19 @@
 	var checkIfReported =  "<c:out value='${checkIfReported}'/>";
 	var	enterAnoSingle = document.getElementById("enterAnoSingle");
 	var urlAddr = "";
-	<%-- onclick="location.href='./AnoBoardSingleAction.anob?ano_board_num=${anbList.ano_board_num}'"  --%>
+	
 		function enterCheck(ano_board_num, reportedCheck) {
 
-			// 신고된 글이 아니므로 상세글 페이지로 이동
-			if(reportedCheck == 0){
-				urlAddr = "location.href='./AnoBoardSingleAction.anob?ano_board_num="+$("#hiddenAnoNum").val()+"'"; 
-				$("#enterAnoSingle").attr("onclick",urlAddr);
-		
-				alert("클릭이벤트"+urlAddr);
-		
-			}else {
-				alert("신고가 진행중인 글입니다.");
+			if(reportedCheck == 1 ){
+				alert("신고된 글이므로 열람이 제한됩니다. 이용에 불편을 드려 죄송합니다.");
+			}
+			
+			if(reportedCheck == 0 ){
+				location.href="./AnoBoardSingleAction.anob?ano_board_num="+ano_board_num; 
+				
 			}
 			
 		}
-
 
 
 </script>

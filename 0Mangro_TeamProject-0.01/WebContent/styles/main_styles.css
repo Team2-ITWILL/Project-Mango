@@ -17,6 +17,7 @@
 5. Section
 6. Home
 7. Features
+
 8. Courses
 9. Counter
 10. Events
@@ -815,12 +816,12 @@ section
 	font-size: 60px;
 	font-weight: 700;
 	line-height: 1.2;
-	color: #000;
+	color: #fff;
 }
 .home_slider_subtitle
 {
 	font-size: 24px;
-	color: #76777a;
+	color: #fff;
 	margin-top: 9px;
 }
 .home_slider_form_container
@@ -903,7 +904,7 @@ section
 {
 	width: 120px;
 	height: 46px;
-	background: #000;
+	background: transparent;
 	border: none;
 	outline: none;
 	border-radius: 3px;
@@ -913,6 +914,9 @@ section
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	cursor: pointer;
+	border: 2px solid #fff;
+	
+	
 }
 .home_slider_nav
 {
@@ -2044,3 +2048,25 @@ section
 {
 	color: #14bdee;
 } */
+
+
+/* 메인 팝업 */
+
+.pop_bt {
+	
+	padding: 10px;
+    display: grid;
+    background: #000;
+    outline: none;
+    color: #fff;
+    margin-top: 20px;
+}
+
+
+.modal_close {
+	background-color: #fff !important;
+}
+	
+#notice_content {
+	margin: 20px 0 20px 0;
+}	

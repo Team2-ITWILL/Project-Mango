@@ -48,10 +48,6 @@ public class MyAnonyBoardListAction implements Action {
 			// [클릭한 페이지번호가 null인 경우(처음 페이지 호출된 경우) "1"값 대입]
 			if(clickedPageNum == null) {	clickedPageNum = "1";  }
 			
-			
-					
-						
-			
 			// [클릭으로 인해 현재 보여지는 페이지 번호를 정수타입으로 변경]
 			int currentPage = Integer.parseInt(clickedPageNum);
 			request.setAttribute("currentPage", currentPage);

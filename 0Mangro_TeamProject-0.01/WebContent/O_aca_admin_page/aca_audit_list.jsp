@@ -58,29 +58,7 @@
   	.audit_no {background-color: #fff; border: 1px solid; color: #000;}
   
   </style>  	  
-  
-  <script> 	
-	function fncApprove(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-				+ "audit_num=" + audit_num
-				+ "&aca_num=" + aca_num
-				+ "&check=" + "approve";
-		}	
-	
-	function fncReject(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-			+ "audit_num=" + audit_num
-			+ "&aca_num=" + aca_num
-			+ "&check=" + "reject";
-		}	 
-	
-	function fncDelete(audit_num, aca_num){
-		location.href = "./AuditApproval.adrq?"
-			+ "audit_num=" + audit_num
-			+ "&aca_num=" + aca_num
-			+ "&check=" + "delete";
-		}	
-  </script>   
+
 </head>
 
 <body>
@@ -154,28 +132,6 @@
                                         class="text-dark">님, 안녕하세요.</span> <i data-feather="chevron-down"
                                         class="svg-icon"></i></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
-                                        Profile</a></div>
-                            </div>
                         </li>
 <!--                         ==============================================================
                         User profile and search
@@ -210,7 +166,7 @@
                         </li>
 
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link" href="4index.jsp?center=O_mypage/payment_list.jsp"
+                        	<a class="sidebar-link" href="./MyListPayment.pay"
                                 aria-expanded="false">
                                 <i data-feather="sidebar" class="feather-icon"></i>
                                 <span class="hide-menu">멤버십 결제</span>
@@ -220,7 +176,7 @@
                         
                                     
                         <li class="sidebar-item"> 
-                        	<a class="sidebar-link sidebar-link" href="4index.jsp?center=O_member/member_revise.jsp"
+                        	<a class="sidebar-link sidebar-link" href="./MemberUpdate.me"
                                 aria-expanded="false"><i data-feather="user" class="feather-icon"></i>
                                 <span class="hide-menu">내 정보</span>
 							</a>
@@ -416,7 +372,8 @@
 					  </li>
 					  
                     <!-- < (이전페이지 가기)-->
-					  <li class="page-item active">
+					  <!-- <li class="page-item active"> -->
+					  <li class="page-item">
 					  	<a class="page-link prev" href="#">
 					  		<i data-feather="chevron-left" class="svg-icon mr-2 ml-1"></i>
 					  	</a>
@@ -480,6 +437,8 @@
     <script src="styles/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="styles/dist/js/pages/calendar/cal-init.js"></script>
     
+	<!-- 여기서 쓸 함수들이 정의된 자바스크립트 파일 -->    
+	<script src="./O_aca_admin_page/aca_audit_list.js"></script>
     
 </body>
 

@@ -23,18 +23,10 @@ public class AdminAnoCheckAlreadyBannedAction implements Action {
 		// 0 : 계정정지x  1: 계정정지 o  2: 계정정지o+삭제o
 		int checkIfBanned = andao.checkIfAlreadyBanned(mem_email);
 		
-		//request.setAttribute("checkIfBanned", checkIfBanned);
-		
-		System.out.println("계정정지여부 액션페이지 왔다감");
 		
 		PrintWriter out = response.getWriter();
-		System.out.println("계정정지여부 액션페이지의 값"+checkIfBanned);
 		out.println(checkIfBanned);		
-//		ActionForward forward = new ActionForward();
-//		forward.setRedirect(false);
-//		forward.setPath("./AdminAnonyReportedListAction.anob");
-//		
+		
 		return null;
-//		
 	}
 }

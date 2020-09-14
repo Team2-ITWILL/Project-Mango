@@ -35,16 +35,19 @@ public class ListMypayMentaciton implements Action {
 		JSONArray jdao=dao.getListMyPayMent(pb);
 	
 		
+		ActionForward forward =new ActionForward();
 		
 		JSONObject jo = new JSONObject();
+//		forward.setRedirect(false);
+//		forward.setPath("4index.jsp?center=O_payment/payment_list.jsp");
+//		
+		
 		
 		jo.put("MyPay", jdao);
 		
 		out.print(jo);
 		
-//		ActionForward forward =new ActionForward();
-//		
-//		forward.setRedirect(true);
+		
 		
 		return null;
 

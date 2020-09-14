@@ -22,7 +22,6 @@ public class AnoBoardWriteAction implements Action {
 			AnonyBoardDAO andao = new AnonyBoardDAO();
 			String nick = andao.getRandomNickname();
 			
-			System.out.println(nick);
 			request.setAttribute("nick", nick);
 			
 			ActionForward forward = new ActionForward();

@@ -79,7 +79,7 @@
 										
 										<c:otherwise>
 											<div class="top_bar_button mypage">
-												<a href="4index.jsp?center=O_mypage/mypage_main.jsp">마이페이지</a>
+												<a href="./AuditInfoToMypage.adrq">마이페이지</a>
 											</div>
 											<div class="top_bar_button logout">
 												<a href="./MemberLogout.me">로그아웃</a>
@@ -120,7 +120,7 @@
 								
 								<!-- 장바구니 아이콘(이용내역페이지 연결) -->
 
-								<div class="shopping_cart" onclick="location.href='4index.jsp?center=O_payment/payment_list.jsp'"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+								<div class="shopping_cart" onclick="location.href='./MyListPayment.pay'"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
 								<div class="hamburger menu_mm">
 									<i class="fa fa-bars menu_mm" aria-hidden="true"></i>
 									

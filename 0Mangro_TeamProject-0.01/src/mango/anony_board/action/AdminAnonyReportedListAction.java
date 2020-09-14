@@ -26,12 +26,10 @@ public class AdminAnonyReportedListAction implements Action {
 		// [이메일 계정 값 세션영역에서 가져오기]
 		HttpSession session = request.getSession();
 		String mem_email = (String)session.getAttribute("id_email");
-
 		
 		// [DAO와 BEAN 객체 생성]
 		AnonyBoardDAO andao = new AnonyBoardDAO();
 		AnonyBoardBean anBean = new AnonyBoardBean();
-		
 		
 		// [페이징 처리를 위한 값 세팅]--------------------------------------------------------------------------
 		
@@ -44,10 +42,6 @@ public class AdminAnonyReportedListAction implements Action {
 		
 		// [클릭한 페이지번호가 null인 경우(처음 페이지 호출된 경우) "1"값 대입]
 		if(clickedPageNum == null) {	clickedPageNum = "1";  }
-		
-		
-				
-					
 		
 		// [클릭으로 인해 현재 보여지는 페이지 번호를 정수타입으로 변경]
 		int currentPage = Integer.parseInt(clickedPageNum);
@@ -103,7 +97,6 @@ public class AdminAnonyReportedListAction implements Action {
 					);
 		}
 				
-	
 		
 		// 글 List를 request영역에 저장
 		request.setAttribute("reportedAnonyList", reportedAnonyList);
