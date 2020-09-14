@@ -41,7 +41,7 @@ public class MemberNaverJoinAction implements Action{
 			PrintWriter out = response.getWriter(); // getWriter() 호출하면 PrintWriter객체 얻을 수 있음
 			out.print("<script>");
 			out.print("alert('회원가입이 완료되었습니다.');");
-			out.print("location.href='/4index.jsp'");
+			out.print("location.href='./MemberLogin.me'");
 			out.print("</script>");
 			return null;
 		}
