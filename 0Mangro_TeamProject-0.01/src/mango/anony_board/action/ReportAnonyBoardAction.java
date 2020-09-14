@@ -1,5 +1,7 @@
 package mango.anony_board.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,11 +29,10 @@ public class ReportAnonyBoardAction implements Action {
 		request.setAttribute("checkReportDone", checkReportDone);
 		
 		
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("./AnonyBoardListAction.anob");
+		PrintWriter out = response.getWriter();
+		out.println(checkReportDone);
 		
-		return forward;
+		return null;
 		
 	}
 

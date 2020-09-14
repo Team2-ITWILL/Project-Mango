@@ -488,9 +488,6 @@ public class AnonyBoardDAO extends DBconnection {
 				myAnonyList.add(anb);
 			}//while 끝
 			
-			//System.out.println("DAO에서 보는 myAnonyList"+myAnonyList);
-			//System.out.println("DAO에서 보는 글의 개수"+ myAnonyList.size());
-			
 			
 		} catch (Exception e) {
 			System.out.println("getANBoardList(멤버계정)메소드 쿼리에서 예외 발생 : "+ e);				
@@ -590,6 +587,7 @@ public class AnonyBoardDAO extends DBconnection {
 			// 쿼리 실행
 			pstmt.executeUpdate();
 			
+			check = 1;
 			// 성공
 			
 			
@@ -634,23 +632,6 @@ public class AnonyBoardDAO extends DBconnection {
 						
 				System.out.println("회원 계정 정지 완료!"+procNum);
 //------------------------------------------------------------------------------------------				
-				
-				
-//				sql = "UPDATE anony_board "
-//						+ "SET ano_board_title = ?,"
-//						+ "ano_board_content = ?"
-//						+ "WHERE ano_board_num = ?"; 
-//					
-//					pstmt = con.prepareStatement(sql);
-//					pstmt.setString(1, "신고된 글입니다.");
-//					pstmt.setString(2, "");
-//					pstmt.setInt(3, ano_board_num);
-//					pstmt.executeUpdate();
-//				
-//				System.out.println("신고 후 글 제목,내용바꾸기 완료");
-//				
-				
-				
 				
 				
 			// 2  신고취소	
