@@ -375,15 +375,6 @@
 					<%-- 게시판에 글이 있는 경우 페이지 표시 끝 --%>
 					</ul>
                                         
- 
- <%-- 
-			<input type="hidden" value="${result}" id="result">
-			<input type="hidden" value="${ano_board_num}" id="board_num">
-			<input type="hidden" value="${mem_email}" id="email">
-			
-			ajax로 값 받아오기
-			<input type="hidden" id="checkIfBanned" > --%>
-	
 
 
  <!----------------------------------[ 마이페이지 센터영역(표시내용 바뀌는 곳) 끝 ]---------------------------------------------------------->
