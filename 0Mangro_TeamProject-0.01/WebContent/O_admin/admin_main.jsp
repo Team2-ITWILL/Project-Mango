@@ -683,8 +683,12 @@
 
 window.onload = function(){
 	
+	
 	// ==============================================================
     // 회원 현황
+    // c3.js library
+    // https://c3js.org/samples/chart_donut.html
+    // https://c3js.org/reference.html
     // ==============================================================
     var isNormal = ${isNormal};
     var isAdmin = ${isAdmin};
@@ -727,15 +731,17 @@ window.onload = function(){
             type: 'donut',
             tooltip: {
                 show: true
-            }
+            },
+        	
         },
         donut: {
             label: {
                 show: false
             },
             title: '회원 현황',
-            width: 18
+            width: 22
         },
+        
 
         legend: {
             hide: true
@@ -752,8 +758,8 @@ window.onload = function(){
                 //'#01caf1'
             ]
         }
-    });
-
+    });   
+        
     d3.select('#campaign-v2 .c3-chart-arcs-title').style('font-family', 'Rubik');
 	
 }; 

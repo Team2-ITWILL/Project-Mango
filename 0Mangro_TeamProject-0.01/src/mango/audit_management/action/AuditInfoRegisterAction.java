@@ -2,6 +2,7 @@ package mango.audit_management.action;
 
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +23,46 @@ public class AuditInfoRegisterAction implements Action{
 		bean.setAcaNum(Integer.parseInt(request.getParameter("acaNum")));
 		bean.setAcaName(request.getParameter("acaName"));
 		bean.setAuditAvailSubj(request.getParameter("auditAvailSubj"));
-		bean.setAuditAvailDate(LocalDate.parse(request.getParameter("auditAvailDate")));
-		bean.setAuditLastTime(Integer.parseInt(request.getParameter("auditLastTime")));
+		
+		LocalDate auditAvailDate = null;
+		try {
+			auditAvailDate = LocalDate.parse(request.getParameter("auditAvailDate"));
+			
+		} catch (/*DateTimeParseException*/ Exception e) {
+			e.printStackTrace();
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('숫자만 입력해주세요!');");
+			out.println("history.back();");
+			out.println("</script>");	
+			out.close();			
+			return null;	
+		}
+		
+		int auditLastTime;
+		try {
+			auditLastTime = Integer.parseInt(request.getParameter("auditLastTime"));
+			
+		} catch (/*NumberFormatException*/ Exception e) {
+			e.printStackTrace();
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('숫자만 입력해주세요!');");
+			out.println("history.back();");
+			out.println("</script>");	
+			out.close();			
+			return null;	
+		} 
+		
+		bean.setAuditAvailDate(auditAvailDate);
+		bean.setAuditLastTime(auditLastTime);				
+		/*bean.setAuditAvailDate(LocalDate.parse(request.getParameter("auditAvailDate")));
+		bean.setAuditLastTime(Integer.parseInt(request.getParameter("auditLastTime")));*/		
+		
 		bean.setAuditAblemem(Integer.parseInt(request.getParameter("auditAblemem")));
 		
 		AuditManagementDAO dao = new AuditManagementDAO();

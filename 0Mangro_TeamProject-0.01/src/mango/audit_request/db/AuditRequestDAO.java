@@ -361,17 +361,17 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 	}
 
 	@Override
-	public int getAuditCountOfSubject(String subject/*, String aca_name*/) {
+	public int getAuditCountOfSubject(String subject, String aca_name) {
 		int count = 0;
 		try {
 			getConnection();
 			String sql = "select count(*) from audit_request "
-					+ "where audit_wish_subject = ? ";
-					//+ "and aca_name = ? ";			
+					+ "where audit_wish_subject = ? "
+					+ "and aca_name = ? ";			
 			pstmt = con.prepareStatement(sql);	
 			
 			pstmt.setString(1, subject);
-			//pstmt.setString(2, aca_name);
+			pstmt.setString(2, aca_name);
 			
 			rs = pstmt.executeQuery();
 			
