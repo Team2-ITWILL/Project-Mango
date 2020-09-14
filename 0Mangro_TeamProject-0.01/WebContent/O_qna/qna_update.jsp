@@ -91,7 +91,7 @@
 	    	<c:choose>
 		    	<c:when test="${id_email eq 'admin' || id_email eq 'admin@mango.com'}">
 		    		
-		    		
+		    		 
 		    		<c:if test="${qbean.qna_notice eq '0'}">
 			    	
 				    	<div class = "frm_input required">

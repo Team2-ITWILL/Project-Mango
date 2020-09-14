@@ -68,7 +68,7 @@
 <div class = "qna_container container">
 
 	<form name="fwrite" id="fwrite" action="./QnaBoardWriteAction.qna" enctype="multipart/form-data" autocomplete="off" style="width:100%">
-		
+		 
 	 	<!-- write box (s) -->
 	 	<div class="bo_w_info write_div">
 	    	
