@@ -334,10 +334,12 @@
 			var temp = {
         	  'title' : arr[i].auditSubject 
         	  		  + '(' 
+        	  		  + arr[i].acaName
         	  		  //+ arr[i].auditNum 
         			  //+ '번 예약, ' 
-        			  + arr[i].memEmail 
+        			  //+ arr[i].memEmail 
         			  + ')',
+        			  
         			  
         	  'start' : arr[i].auditWishDate
 			};

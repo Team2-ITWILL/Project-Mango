@@ -33,7 +33,7 @@ public interface IAuditRequest {
 	public int ApprovalAudit(AuditRequestBean app, String check);
 	
 	//과목 당 청강신청이 들어온 개수
-	public int getAuditCountOfSubject(String subject/*, String aca_name*/);
+	public int getAuditCountOfSubject(String subject, String aca_name);
 	
 	//누적 청강수 불러오기(학원관리자)
 	public int getAuditCount(int acaNum, String email);

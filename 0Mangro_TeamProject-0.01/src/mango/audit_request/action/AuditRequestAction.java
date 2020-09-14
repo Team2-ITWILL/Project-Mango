@@ -53,7 +53,9 @@ public class AuditRequestAction implements Action{
 		List<AuditManagementBean> amList = amDAO.getListAuditMangement(formVO);
 		
 		//과목 당 청강신청이 들어온 수
-		int subCount = dao.getAuditCountOfSubject(request.getParameter("audit_subject"));		
+		int subCount = dao.getAuditCountOfSubject(request.getParameter("audit_subject"), request.getParameter("aca_name"));		
+		System.out.println("audit_subject : " + request.getParameter("audit_subject"));
+		System.out.println("getAuditCountOfSubject() : " + subCount);
 		
 		for(AuditManagementBean beanOfList : amList){
 			//폼에서 선택한 과목이 학원관리자가 등록한 청강신청 가능 과목 목록에 존재한다면
@@ -122,7 +124,8 @@ public class AuditRequestAction implements Action{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
 			out.println("alert('청강 신청되었습니다.');");	
-			out.println("location.href='./Main.me'");
+			//out.println("location.href='./Main.me'");
+			out.println("history.go(-2);");
 			out.println("</script>");				
 			out.close();				
 			return null;	
