@@ -79,7 +79,7 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('청강신청 승인이 실패하였습니다.')");
+			out.println("alert('처리 과정에서 문제가 발생하였습니다. 관리자에게 문의하세요.')");
 			out.println("location.href='./ListAction.adrq'");
 			//out.println("history.back();");
 			out.println("</script>");	
@@ -91,7 +91,7 @@ public class AuditRequestApproval implements Action{
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('청강신청 과목이 승인되었습니다.')");
+			out.println("alert('처리 완료')");
 			out.println("location.href='./ListAction.adrq'");
 			out.println("</script>");	
 			out.close();				
