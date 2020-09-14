@@ -21,6 +21,7 @@ import mango.action.ActionForward;
 import mango.audit_management.db.AuditManagementBean;
 import mango.audit_management.db.AuditManagementDAO;
 import mango.member.db.MemberDAO;
+import mango.payment.db.PayMentDAO;
 
 // 학원 상세페이지 출력
 public class AcademyContentAction implements Action{
@@ -30,7 +31,7 @@ public class AcademyContentAction implements Action{
 		
 		request.setCharacterEncoding("utf-8");
 		int acaMainNum = Integer.parseInt(request.getParameter("acaMainNum"));
-		/*String id = (String)request.getSession().getAttribute("userid");*/
+		String id_email = (String)request.getSession().getAttribute("id_email");
 		
 		// 학원DAO
 		AcademyDAO dao = new AcademyDAO();
@@ -51,6 +52,8 @@ public class AcademyContentAction implements Action{
 		
 		// 회원 DAO (학원등록 사진)
 		MemberDAO memDAO = new MemberDAO();
+		// 결제 DAO
+		PayMentDAO payDAO = new PayMentDAO();
 		
 		
 		// 학원 상세내용
@@ -121,6 +124,7 @@ public class AcademyContentAction implements Action{
 			scoreCntList.add(rdao.getReviewScoreCnt(acaMainNum, i));
 		}
 		
+		String membership = payDAO.checkPayment(id_email);
 		
 		request.setAttribute("academyBean", bean);
 		request.setAttribute("count", count); //모든속성저장 Integer -> Object형저장
@@ -138,6 +142,7 @@ public class AcademyContentAction implements Action{
 		request.setAttribute("scoreCntList", scoreCntList);
 		request.setAttribute("regImg", regImg);
 		request.setAttribute("regEmail", regEmail);
+		request.setAttribute("membership", membership);
 		
 		
 		ActionForward forward = new ActionForward();
