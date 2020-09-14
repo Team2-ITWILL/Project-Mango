@@ -690,7 +690,7 @@ li small {
 										<div class="tab_panel_text">
 											<p>학원을 등록하고 청강가능 과목을 등록해보세요!</p>
 										</div>
-									<div class="tab_panel_registerBtn" style="margin: 30px auto;">등록하기</div>
+									<div class="tab_panel_registerBtn" style="margin: 30px auto;" onclick="location.href='4index.jsp?center=O_academy/academy_register.jsp'">등록하기</div>
 									
 								</c:if>	
 
