@@ -140,7 +140,8 @@ public class PayMentDAO extends DBconnection implements IPayMent{
 			+					 " from payment"
 			+ "						group by mem_email) m "
 			+" on p.mem_email = m.mem_email "
-			+" where p.mem_email=? ";     
+			+" where p.mem_email=? "
+			+ " order by p.pm_start_date desc ";     
 			
 			
 			
