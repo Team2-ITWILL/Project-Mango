@@ -36,6 +36,7 @@
 	font-weight: 400;
 	
 	
+	
 }
 .ban_thisAccount:hover,.restore_thisAccount:hover, .dropReport:hover{
 	background-color: #000;
