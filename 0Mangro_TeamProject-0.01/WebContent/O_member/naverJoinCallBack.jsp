@@ -29,7 +29,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "{rU2ooEzY2CNR72wYidQf}", // "내 애플리케이션의 Client ID"
-				callbackUrl: "{http://192.168.6.240:8080/0Mangro_TeamProject-0.01/O_member/naverJoinCallBack.jsp}",
+				callbackUrl: "{http://192.168.6.222:8080/0Mangro_TeamProject-0.01/O_member/naverJoinCallBack.jsp}",
 				// "2번에서 지정한 Callback URL",
 				isPopup: false, // 팝업을 통한 연동처리 여부, true면 팝업
 				callbackHandle: true 
