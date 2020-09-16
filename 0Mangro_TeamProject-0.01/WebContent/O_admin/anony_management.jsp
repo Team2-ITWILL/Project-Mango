@@ -29,11 +29,12 @@
 .ban_thisAccount, .restore_thisAccount, .dropReport{
 	border: 1px solid #000;
 	height: 50px;
-	padding-top: 15%;
+	padding-top: 10%;
 	font-size: 1em;
 	color: #000;
 	border-radius: 10px;
 	font-weight: 400;
+	
 	
 	
 }
