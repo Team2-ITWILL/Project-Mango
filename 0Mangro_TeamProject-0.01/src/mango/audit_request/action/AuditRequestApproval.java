@@ -51,28 +51,43 @@ public class AuditRequestApproval implements Action{
 				out.println("</script>");	
 				out.close();			
 				return null;		
-			}
+				
+			}else{
 			
-			//===================누적청강수 증가=======================	
-			result = dao.addAuditCount(acaNum, auditNum);
-			if(result == 0){
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>");
-				out.println("alert('addAuditCount failed!');");
-				out.println("location.href='./ListAction.adrq'");
-				//out.println("history.back();");
-				out.println("</script>");	
-				out.close();			
-				return null;		
+				//===================누적청강수 증가=======================	
+				result = dao.addAuditCount(acaNum, auditNum);
+				
+				System.out.println("@@@누적청강수 증가 메서드 종료@@@");
+				System.out.println("addAuditCount : " + result);
+				
+				if(result == 0){
+					response.setContentType("text/html; charset=utf-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('addAuditCount failed!');");
+					out.println("location.href='./ListAction.adrq'");
+					//out.println("history.back();");
+					out.println("</script>");	
+					out.close();			
+					return null;		
+				}
 			}
+			//System.out.println("@@@if(check.equals(approve))@@@ 조건문 마지막");
 			
+		}else{
+			//System.out.println("@@@if(check.equals(approve))@@@ 조건문 통과");
+			//System.out.println("@@@else(check == approve가 아닐 경우) @@@");
 		}
 
 		
 		//============청강 승인,취소,삭제================
-		result = 0;	
+		System.out.println("@@@ApprovalAudit() 실행 전@@@");
+		
+		//System.out.println("@@@서버 무한대기상태 들어가는 지점@@@");
+		//result = 0;	
 		result = dao.ApprovalAudit(bean, check);	
+		
+		System.out.println("@@@ApprovalAudit() 실행 후 @@@ : " + result);
 		
 		//ApprovalAudit() 실패
 		if(result == 0){
