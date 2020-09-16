@@ -225,6 +225,8 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		try {
 			getConnection();
 			
+			System.out.println("@@@ApprovalAudit() 진입@@@");
+			
 			System.out.println("check : " + check);
 			System.out.println("getAuditNum : " + app.getAuditNum());
 			System.out.println("getAcaNum : " + app.getAcaNum());
@@ -418,7 +420,10 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+				//여기서 자원해제 코드를 넣지 않아서 서버 처리가 되지 않고 무한 대기에 빠지는 문제가 발생	
+			}  finally{
+				resourceClose();
+			}	
 			return result;
 			
 		}//isApproved()
@@ -452,7 +457,11 @@ public class AuditRequestDAO extends DBconnection implements IAuditRequest{
 		} catch (Exception e) {
 			
 			e.printStackTrace();
-		}
+			
+		//여기서 자원해제 코드를 넣지 않아서 서버 처리가 되지 않고 무한 대기에 빠지는 문제가 발생	
+		}  finally{
+			resourceClose();
+		}		
 		return result;
 	}
 	
